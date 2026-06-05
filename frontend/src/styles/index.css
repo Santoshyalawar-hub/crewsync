@@ -1,0 +1,159 @@
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
+@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --brand-navy: #0f172a;      /* deep charcoal */
+  --brand-blue: #ff6b35;      /* primary orange */
+  --brand-slate: #111827;
+  --brand-emerald: #fbbf24;   /* warm amber accent */
+  --bg-page: #f8f7f5;
+  --bg-card: #ffffff;
+  --border-soft: #e5e7eb;
+  --text-primary: #111827;
+  --text-muted: #6b7280;
+  --shadow-soft: 0 18px 60px -18px rgba(17, 24, 39, 0.16);
+}
+
+body {
+  margin: 0;
+  font-family: "Plus Jakarta Sans", system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+  background: var(--bg-page);
+  color: var(--text-primary);
+}
+
+.app-surface {
+  min-height: 100vh;
+  background: radial-gradient(circle at 20% 20%, rgba(0, 0, 128, 0.06), transparent 35%),
+    radial-gradient(circle at 80% 0%, rgba(37, 99, 235, 0.08), transparent 32%),
+    radial-gradient(circle at 10% 70%, rgba(14, 165, 233, 0.08), transparent 45%),
+    var(--bg-page);
+}
+
+.page-shell {
+  position: relative;
+  padding: 24px 24px 32px;
+}
+
+.page-hero {
+  background: linear-gradient(120deg, #0f172a, #ff6b35 55%, #fbbf24);
+  color: #ffffff;
+  border-radius: 20px;
+  padding: 20px 24px;
+  box-shadow: var(--shadow-soft);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.page-hero h1 {
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+.page-hero p {
+  margin: 6px 0 0;
+  color: rgba(255, 255, 255, 0.86);
+  font-weight: 500;
+}
+
+.page-hero .pill {
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  color: #fff;
+}
+
+.glass-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-soft);
+  border-radius: 18px;
+  box-shadow: var(--shadow-soft);
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--brand-navy);
+  background: rgba(0, 0, 128, 0.06);
+  border: 1px solid rgba(0, 0, 128, 0.14);
+}
+
+.subtle-label {
+  text-transform: uppercase;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+  font-weight: 800;
+}
+
+.glass-nav {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--border-soft);
+  box-shadow: 0 10px 40px -18px rgba(0, 0, 0, 0.18);
+}
+
+/* Custom Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Specific Navy Utility for clarity if needed */
+.text-navy { color: #000080; }
+.bg-navy { background-color: #000080; }
+
+.animated-gradient {
+  background: radial-gradient(circle at 0% 0%, #1e3a8a 0, #020617 35%, #011a8b 70%, #020617 100%);
+  background-size: 200% 200%;
+  animation: gradientFlow 16s ease-in-out infinite;
+}
+
+@keyframes gradientFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
