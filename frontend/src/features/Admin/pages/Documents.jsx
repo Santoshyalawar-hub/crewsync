@@ -15,10 +15,10 @@
 // };
 
 // // ── Tokens ────────────────────────────────────────────────────────────────────
-// const CORAL = "#FF6B35";
-// const TEAL  = "#00C2A8";
-// const NAVY  = "#0D1F2D";
-// const SURF  = "#F7F8FA";
+// const CORAL = "#8B5CF6";
+// const TEAL  = "#06B6D4";
+// const NAVY  = "#0B1020";
+// const SURF  = "#F6F8FB";
 
 // // ── Minimal SVG icon (replaces lucide) ────────────────────────────────────────
 // const Ic = ({ d, size = 16, sw = 1.8, color = "currentColor" }) => (
@@ -74,15 +74,15 @@
 
 // // ── Shared style primitives ───────────────────────────────────────────────────
 // const card  = { background: "#fff", borderRadius: 16, border: "1px solid #f0f0f0", boxShadow: "0 2px 12px rgba(13,31,45,.05)" };
-// const btnC  = { background: `linear-gradient(135deg,${CORAL},#FF5722)`, color: "#fff", border: "none", borderRadius: 10, padding: "8px 16px", fontSize: 12, fontWeight: 700, cursor: "pointer", fontFamily: "'Sora',sans-serif", display: "flex", alignItems: "center", gap: 6 };
+// const btnC  = { background: `linear-gradient(135deg,${CORAL},#06B6D4)`, color: "#fff", border: "none", borderRadius: 10, padding: "8px 16px", fontSize: 12, fontWeight: 700, cursor: "pointer", fontFamily: "'Sora',sans-serif", display: "flex", alignItems: "center", gap: 6 };
 // const iSt   = { padding: "9px 14px", borderRadius: 10, border: "1.5px solid #e5e7eb", background: "#fff", fontSize: 12, outline: "none", fontFamily: "'DM Sans',sans-serif", color: NAVY, boxSizing: "border-box" };
 
 // // ══════════════════════════════════════════════════════════════════════════════
 // //  MAIN COMPONENT — identical logic to original
 // // ══════════════════════════════════════════════════════════════════════════════
-// const AdminDocuments = () => {
-//   const [employees,        setEmployees]        = useState([]);
-//   const [expandedEmployee, setExpandedEmployee] = useState(null);
+// const OperatorVault = () => {
+//   const [employees,        setPersons]        = useState([]);
+//   const [expandedPerson, setExpandedPerson] = useState(null);
 //   const [search,           setSearch]           = useState("");
 //   const [statusFilter,     setStatusFilter]     = useState("ALL");
 //   const [loading,          setLoading]          = useState(false);
@@ -107,17 +107,17 @@
 //         setAuthChecked(true); return;
 //       }
 //       if (userRole !== "ADMIN") {
-//         showMessage("error", `Access denied. Admin privileges required. Your role: ${userRole || "none"}`);
+//         showMessage("error", `Access denied. Operator privileges required. Your role: ${userRole || "none"}`);
 //         setAuthChecked(true); return;
 //       }
-//       console.log("✅ Authentication successful - Admin access granted");
+//       console.log("✅ Authentication successful - Operator access granted");
 //       setIsAuthenticated(true); setAuthChecked(true);
 //     };
 //     checkAuth();
 //   }, []);
 
 //   useEffect(() => {
-//     if (authChecked && isAuthenticated) fetchAllDocuments();
+//     if (authChecked && isAuthenticated) fetchAllVault();
 //   }, [authChecked, isAuthenticated]); // eslint-disable-line
 
 //   const showMessage = (type, text) => {
@@ -126,7 +126,7 @@
 //   };
 
 //   // ── Fetch (identical to original) ──
-//   const fetchAllDocuments = async (showRefreshMessage = false) => {
+//   const fetchAllVault = async (showRefreshMessage = false) => {
 //     if (showRefreshMessage) setRefreshing(true); else setLoading(true);
 //     try {
 //       const baseUrl    = getApiBaseUrl();
@@ -135,16 +135,16 @@
 //       const companyId  = localStorage.getItem("companyId");
 //       const response   = await fetch(`${baseUrl}/api/documents/admin/all-documents`, {
 //         method: "GET",
-//         headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}`, "X-Tenant-Code": tenantCode, "X-Company-Id": companyId },
+//         headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}`, "X-Tenant-Code": tenantCode, "X-Workspace-Id": companyId },
 //       });
 //       if (!response.ok) throw new Error(`Failed to load documents (${response.status})`);
-//       setEmployees(await response.json());
+//       setPersons(await response.json());
 //     } catch (err) { showMessage("error", err.message); }
 //     finally { setLoading(false); setRefreshing(false); }
 //   };
 
 //   // ── Filters (identical to original) ──
-//   const filteredEmployees = useMemo(() => employees.filter(emp => {
+//   const filteredPersons = useMemo(() => employees.filter(emp => {
 //     const matchesSearch = search.trim() === "" ||
 //       emp.name?.toLowerCase().includes(search.toLowerCase()) ||
 //       emp.id?.toString().toLowerCase().includes(search.toLowerCase()) ||
@@ -155,8 +155,8 @@
 //     return matchesSearch;
 //   }), [employees, search, statusFilter]);
 
-//   const toggleEmployee = (employeeId) =>
-//     setExpandedEmployee(expandedEmployee === employeeId ? null : employeeId);
+//   const togglePerson = (employeeId) =>
+//     setExpandedPerson(expandedPerson === employeeId ? null : employeeId);
 
 //   // ── Download handlers (identical to original) ──
 //   const handleDownload = async (doc, event) => {
@@ -213,7 +213,7 @@
 //   const stats = useMemo(() => {
 //     const allDocs = employees.flatMap(emp => emp.documents || []);
 //     return {
-//       totalEmployees: employees.length,
+//       totalPersons: employees.length,
 //       totalDocs: allDocs.length,
 //       pending:  allDocs.filter(d => d.status?.toUpperCase() === "PENDING" || d.status?.toUpperCase() === "SUBMITTED").length,
 //       approved: allDocs.filter(d => d.status?.toUpperCase() === "APPROVED").length,
@@ -225,7 +225,7 @@
 //   if (!authChecked) return (
 //     <div style={{ minHeight: "60vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
 //       <div style={{ textAlign: "center" }}>
-//         <div style={{ width: 48, height: 48, borderRadius: "50%", border: "3px solid rgba(255,107,53,.2)", borderTopColor: CORAL, animation: "doc-spin 1s linear infinite", margin: "0 auto 16px" }} />
+//         <div style={{ width: 48, height: 48, borderRadius: "50%", border: "3px solid rgba(139,92,246,.2)", borderTopColor: CORAL, animation: "doc-spin 1s linear infinite", margin: "0 auto 16px" }} />
 //         <p style={{ fontSize: 14, color: "#6b7280", fontFamily: "'DM Sans',sans-serif" }}>Checking authentication…</p>
 //       </div>
 //     </div>
@@ -272,21 +272,21 @@
 //       <div className="doc-root" style={{ maxWidth: 1200, margin: "0 auto" }}>
 
 //         {/* ── Hero banner ── */}
-//         <div style={{ background: `linear-gradient(135deg,${NAVY},#162639)`, borderRadius: 20, padding: "22px 28px", marginBottom: 22, position: "relative", overflow: "hidden" }}>
-//           <div style={{ position: "absolute", top: -30, right: 80, width: 160, height: 160, borderRadius: "50%", background: "rgba(255,107,53,.1)", filter: "blur(40px)", pointerEvents: "none" }} />
+//         <div style={{ background: `linear-gradient(135deg,${NAVY},#182033)`, borderRadius: 20, padding: "22px 28px", marginBottom: 22, position: "relative", overflow: "hidden" }}>
+//           <div style={{ position: "absolute", top: -30, right: 80, width: 160, height: 160, borderRadius: "50%", background: "rgba(139,92,246,.1)", filter: "blur(40px)", pointerEvents: "none" }} />
 //           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 14, position: "relative" }}>
 //             <div>
 //               <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
-//                 <h1 className="doc-fd" style={{ fontSize: 20, fontWeight: 900, color: "#fff", margin: 0 }}>Documents Dashboard</h1>
-//                 <span style={{ fontSize: 9, fontWeight: 800, color: CORAL, background: "rgba(255,107,53,.2)", padding: "2px 8px", borderRadius: 999, textTransform: "uppercase", letterSpacing: ".08em" }}>Admin</span>
+//                 <h1 className="doc-fd" style={{ fontSize: 20, fontWeight: 900, color: "#fff", margin: 0 }}>Vault ControlRoom</h1>
+//                 <span style={{ fontSize: 9, fontWeight: 800, color: CORAL, background: "rgba(139,92,246,.2)", padding: "2px 8px", borderRadius: 999, textTransform: "uppercase", letterSpacing: ".08em" }}>Operator</span>
 //               </div>
 //               <p style={{ fontSize: 12, color: "rgba(255,255,255,.4)", margin: 0 }}>
 //                 Manage employee documents, track uploads, and monitor document status in one centralized location.
 //               </p>
 //             </div>
-//             <button onClick={() => fetchAllDocuments(true)} disabled={refreshing || loading}
+//             <button onClick={() => fetchAllVault(true)} disabled={refreshing || loading}
 //               style={{ display: "flex", alignItems: "center", gap: 7, background: "rgba(255,255,255,.1)", border: "1px solid rgba(255,255,255,.15)", borderRadius: 10, padding: "9px 16px", fontSize: 12, fontWeight: 700, color: "#fff", cursor: (refreshing || loading) ? "not-allowed" : "pointer", opacity: (refreshing || loading) ? 0.6 : 1, transition: "all .2s" }}
-//               onMouseEnter={e => { if (!refreshing && !loading) e.currentTarget.style.background = "rgba(255,107,53,.2)"; }}
+//               onMouseEnter={e => { if (!refreshing && !loading) e.currentTarget.style.background = "rgba(139,92,246,.2)"; }}
 //               onMouseLeave={e => e.currentTarget.style.background = "rgba(255,255,255,.1)"}>
 //               <Ic d={ICONS.refresh} size={13} color="#fff" />
 //               {refreshing ? "Refreshing…" : "Refresh"}
@@ -297,8 +297,8 @@
 //         {/* ── Message alert ── */}
 //         {message.text && (
 //           <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "12px 16px", borderRadius: 12, marginBottom: 18, fontSize: 13, fontWeight: 600,
-//             background: message.type === "success" ? "#f0fdf4" : message.type === "info" ? "rgba(0,194,168,.08)" : "#fef2f2",
-//             border: `1px solid ${message.type === "success" ? "#86efac" : message.type === "info" ? "rgba(0,194,168,.3)" : "#fca5a5"}`,
+//             background: message.type === "success" ? "#f0fdf4" : message.type === "info" ? "rgba(6,182,212,.08)" : "#fef2f2",
+//             border: `1px solid ${message.type === "success" ? "#86efac" : message.type === "info" ? "rgba(6,182,212,.3)" : "#fca5a5"}`,
 //             color: message.type === "success" ? "#16a34a" : message.type === "info" ? TEAL : "#b91c1c" }}>
 //             <Ic d={message.type === "success" ? ICONS.checkCircle : message.type === "info" ? ICONS.alert : ICONS.warn} size={16} />
 //             <span style={{ flex: 1 }}>{message.text}</span>
@@ -309,7 +309,7 @@
 //         {/* ── Statistics Cards ── */}
 //         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(140px,1fr))", gap: 12, marginBottom: 22 }}>
 //           {[
-//             { label: "Total Documents", val: stats.totalDocs,      color: CORAL,    bg: "rgba(255,107,53,.08)",  icon: "folder"      },
+//             { label: "Total Vault", val: stats.totalDocs,      color: CORAL,    bg: "rgba(139,92,246,.08)",  icon: "folder"      },
 //             { label: "Pending Review",  val: stats.pending,         color: "#f59e0b",bg: "rgba(245,158,11,.08)",  icon: "clock"       },
 //             { label: "Approved",        val: stats.approved,        color: "#16a34a",bg: "rgba(22,163,74,.08)",   icon: "checkCircle" },
 //             { label: "Rejected",        val: stats.rejected,        color: "#ef4444",bg: "rgba(239,68,68,.08)",   icon: "xCircle"     },
@@ -321,7 +321,7 @@
 //                 </div>
 //                 <div>
 //                   <p style={{ fontSize: 11, color: "#6b7280", margin: "0 0 2px" }}>{s.label}</p>
-//                   <p className="doc-fd" style={{ fontSize: 24, fontWeight: 900, color: "#111827", margin: 0, lineHeight: 1 }}>{s.val}</p>
+//                   <p className="doc-fd" style={{ fontSize: 24, fontWeight: 900, color: "#0B1020", margin: 0, lineHeight: 1 }}>{s.val}</p>
 //                 </div>
 //               </div>
 //             </div>
@@ -356,24 +356,24 @@
 //         {/* ── Section title ── */}
 //         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 14 }}>
 //           <h2 className="doc-fd" style={{ fontSize: 17, fontWeight: 900, color: NAVY, margin: 0 }}>
-//             Employees List ({filteredEmployees.length})
+//             Persons List ({filteredPersons.length})
 //           </h2>
-//           {filteredEmployees.length > 0 && (
+//           {filteredPersons.length > 0 && (
 //             <span style={{ fontSize: 12, color: "#9ca3af", fontWeight: 600 }}>
-//               {filteredEmployees.reduce((s, e) => s + (e.documents?.length || 0), 0)} total documents
+//               {filteredPersons.reduce((s, e) => s + (e.documents?.length || 0), 0)} total documents
 //             </span>
 //           )}
 //         </div>
 
-//         {/* ── Employee list ── */}
+//         {/* ── Person list ── */}
 //         <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
 //           {loading ? (
 //             <div style={{ ...card, padding: "64px", textAlign: "center" }}>
-//               <div style={{ width: 48, height: 48, borderRadius: "50%", border: "3px solid rgba(255,107,53,.2)", borderTopColor: CORAL, animation: "doc-spin 1s linear infinite", margin: "0 auto 16px" }} />
+//               <div style={{ width: 48, height: 48, borderRadius: "50%", border: "3px solid rgba(139,92,246,.2)", borderTopColor: CORAL, animation: "doc-spin 1s linear infinite", margin: "0 auto 16px" }} />
 //               <p style={{ fontSize: 14, color: "#6b7280", fontWeight: 600, margin: "0 0 4px" }}>Loading documents…</p>
 //               <p style={{ fontSize: 12, color: "#9ca3af", margin: 0 }}>Please wait</p>
 //             </div>
-//           ) : filteredEmployees.length === 0 ? (
+//           ) : filteredPersons.length === 0 ? (
 //             <div style={{ ...card, padding: "56px 24px", textAlign: "center" }}>
 //               <div style={{ marginBottom: 12 }}><Ic d={ICONS.users} size={48} color="#d1d5db" /></div>
 //               <p style={{ fontSize: 15, fontWeight: 700, color: "#6b7280", margin: "0 0 6px" }}>No employees found</p>
@@ -381,29 +381,29 @@
 //                 {search || statusFilter !== "ALL" ? "Try adjusting your search or filters" : "No employees with documents available"}
 //               </p>
 //               {employees.length === 0 && !loading && (
-//                 <button onClick={() => fetchAllDocuments(true)} style={{ ...btnC, margin: "0 auto", borderRadius: 10 }}>Retry Loading</button>
+//                 <button onClick={() => fetchAllVault(true)} style={{ ...btnC, margin: "0 auto", borderRadius: 10 }}>Retry Loading</button>
 //               )}
 //             </div>
-//           ) : filteredEmployees.map(employee => {
+//           ) : filteredPersons.map(employee => {
 //             const filteredDocs = statusFilter === "ALL" ? employee.documents
 //               : employee.documents?.filter(d => d.status?.toUpperCase() === statusFilter);
-//             const isOpen = expandedEmployee === employee.id;
+//             const isOpen = expandedPerson === employee.id;
 
 //             return (
 //               <div key={employee.id} className="doc-emp"
 //                 style={{ background: "#fff", borderRadius: 20, boxShadow: "0 2px 8px rgba(13,31,45,.04)", overflow: "hidden", border: "1px solid #f0f0f0", transition: "box-shadow .2s" }}>
 
-//                 {/* ── Employee header ── */}
-//                 <div className="doc-emp-hdr" onClick={() => toggleEmployee(employee.id)}
+//                 {/* ── Person header ── */}
+//                 <div className="doc-emp-hdr" onClick={() => togglePerson(employee.id)}
 //                   style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "18px 22px", cursor: "pointer", gap: 16, transition: "background .15s" }}>
 //                   <div style={{ display: "flex", alignItems: "center", gap: 14, flex: 1, minWidth: 0 }}>
 //                     {/* avatar */}
-//                     <div style={{ width: 48, height: 48, background: `linear-gradient(135deg,${CORAL},#FF5722)`, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18, fontWeight: 900, color: "#fff", fontFamily: "'Sora',sans-serif", flexShrink: 0 }}>
+//                     <div style={{ width: 48, height: 48, background: `linear-gradient(135deg,${CORAL},#06B6D4)`, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18, fontWeight: 900, color: "#fff", fontFamily: "'Sora',sans-serif", flexShrink: 0 }}>
 //                       {initials(employee.name)}
 //                     </div>
 //                     <div style={{ flex: 1, minWidth: 0 }}>
-//                       <h3 className="doc-fd" style={{ fontSize: 15, fontWeight: 800, color: "#111827", margin: "0 0 4px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-//                         {employee.name || "Unknown Employee"}
+//                       <h3 className="doc-fd" style={{ fontSize: 15, fontWeight: 800, color: "#0B1020", margin: "0 0 4px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+//                         {employee.name || "Unknown Person"}
 //                       </h3>
 //                       <div style={{ display: "flex", flexWrap: "wrap", gap: 12 }}>
 //                         <span style={{ fontSize: 12, color: "#9ca3af" }}>ID: {employee.id}</span>
@@ -411,7 +411,7 @@
 //                       </div>
 //                     </div>
 //                     {/* doc count chip */}
-//                     <div style={{ display: "flex", alignItems: "center", gap: 6, background: "rgba(255,107,53,.08)", borderRadius: 999, padding: "6px 12px", flexShrink: 0 }}>
+//                     <div style={{ display: "flex", alignItems: "center", gap: 6, background: "rgba(139,92,246,.08)", borderRadius: 999, padding: "6px 12px", flexShrink: 0 }}>
 //                       <Ic d={ICONS.pkg} size={14} sw={2} color={CORAL} />
 //                       <span className="doc-fd" style={{ fontSize: 13, fontWeight: 800, color: CORAL }}>{filteredDocs?.length || 0}</span>
 //                     </div>
@@ -468,13 +468,13 @@
 //                                   <div style={{ display: "flex", justifyContent: "flex-end", gap: 8 }}>
 //                                     <button onClick={e => handleViewDocument(doc, e)} className="doc-icon-btn" title="View Document"
 //                                       style={{ width: 32, height: 32, display: "flex", alignItems: "center", justifyContent: "center", borderRadius: 8, background: SURF, border: "1.5px solid #e5e7eb", cursor: "pointer", color: "#6b7280", transition: "all .2s" }}
-//                                       onMouseEnter={e => { e.currentTarget.style.borderColor = TEAL; e.currentTarget.style.color = TEAL; e.currentTarget.style.background = "rgba(0,194,168,.08)"; }}
+//                                       onMouseEnter={e => { e.currentTarget.style.borderColor = TEAL; e.currentTarget.style.color = TEAL; e.currentTarget.style.background = "rgba(6,182,212,.08)"; }}
 //                                       onMouseLeave={e => { e.currentTarget.style.borderColor = "#e5e7eb"; e.currentTarget.style.color = "#6b7280"; e.currentTarget.style.background = SURF; }}>
 //                                       <Ic d={ICONS.eye} size={14} sw={2} />
 //                                     </button>
 //                                     <button onClick={e => handleDownload(doc, e)} className="doc-icon-btn" title="Download Document"
 //                                       style={{ width: 32, height: 32, display: "flex", alignItems: "center", justifyContent: "center", borderRadius: 8, background: SURF, border: "1.5px solid #e5e7eb", cursor: "pointer", color: "#6b7280", transition: "all .2s" }}
-//                                       onMouseEnter={e => { e.currentTarget.style.borderColor = CORAL; e.currentTarget.style.color = CORAL; e.currentTarget.style.background = "rgba(255,107,53,.08)"; }}
+//                                       onMouseEnter={e => { e.currentTarget.style.borderColor = CORAL; e.currentTarget.style.color = CORAL; e.currentTarget.style.background = "rgba(139,92,246,.08)"; }}
 //                                       onMouseLeave={e => { e.currentTarget.style.borderColor = "#e5e7eb"; e.currentTarget.style.color = "#6b7280"; e.currentTarget.style.background = SURF; }}>
 //                                       <Ic d={ICONS.download} size={14} sw={2} />
 //                                     </button>
@@ -505,12 +505,12 @@
 //   );
 // };
 
-// export default AdminDocuments;
+// export default OperatorVault;
 
 import React, { useState, useEffect, useMemo } from "react";
 import api from "@/lib/apiClient";
 
-const CORAL = "#FF6B35", TEAL = "#00C2A8", NAVY = "#0D1F2D", SURF = "#F7F8FA";
+const CORAL = "#8B5CF6", TEAL = "#06B6D4", NAVY = "#0B1020", SURF = "#F6F8FB";
 
 const Ic = ({ d, size = 16, sw = 1.8, color = "currentColor" }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none"
@@ -566,7 +566,7 @@ const StatusBadge = ({ status }) => {
 
 const initials = (n="") => n.split(" ").slice(0,2).map(w=>w[0]||"").join("").toUpperCase()||"E";
 const card  = { background:"#fff",borderRadius:16,border:"1px solid #f0f0f0",boxShadow:"0 2px 12px rgba(13,31,45,.05)" };
-const btnC  = { background:`linear-gradient(135deg,${CORAL},#FF5722)`,color:"#fff",border:"none",borderRadius:10,padding:"8px 16px",fontSize:12,fontWeight:700,cursor:"pointer",display:"flex",alignItems:"center",gap:6 };
+const btnC  = { background:`linear-gradient(135deg,${CORAL},#06B6D4)`,color:"#fff",border:"none",borderRadius:10,padding:"8px 16px",fontSize:12,fontWeight:700,cursor:"pointer",display:"flex",alignItems:"center",gap:6 };
 const iSt   = { padding:"9px 14px",borderRadius:10,border:"1.5px solid #e5e7eb",background:"#fff",fontSize:12,outline:"none",color:NAVY,boxSizing:"border-box" };
 const overlay = { position:"fixed",inset:0,zIndex:1000,background:"rgba(13,31,45,0.75)",display:"flex",alignItems:"center",justifyContent:"center",padding:16 };
 
@@ -645,12 +645,12 @@ function SignedBadge({ doc }) {
 
 // ─────────────────────────────────────────────────────────────────────────────
 //  NOTIFY MODAL
-//  Admin sends a custom notification to one employee, a department, or all
+//  Operator sends a custom notification to one employee, a department, or all
 //  Action types: upload_document | sign_document | re_upload | custom
 // ─────────────────────────────────────────────────────────────────────────────
-function NotifyModal({ employees, preselectedEmployee, onClose, onSent }) {
-  const [scope,       setScope]       = useState(preselectedEmployee ? "one" : "all");
-  const [selectedEmp, setSelectedEmp] = useState(preselectedEmployee ? String(preselectedEmployee.id) : "");
+function NotifyModal({ employees, preselectedPerson, onClose, onSent }) {
+  const [scope,       setScope]       = useState(preselectedPerson ? "one" : "all");
+  const [selectedEmp, setSelectedEmp] = useState(preselectedPerson ? String(preselectedPerson.id) : "");
   const [department,  setDepartment]  = useState("ALL");
   const [action,      setAction]      = useState("upload");
   const [customMsg,   setCustomMsg]   = useState("");
@@ -660,7 +660,7 @@ function NotifyModal({ employees, preselectedEmployee, onClose, onSent }) {
 
   const ACTIONS = [
     { key:"upload",    icon:"upload",  label:"Please upload document",  color:CORAL,    desc:"Ask employee to upload a missing document" },
-    { key:"sign",      icon:"pen",     label:"Please sign document",    color:"#7c3aed",desc:"Remind to sign a pending document"         },
+    { key:"sign",      icon:"pen",     label:"Please sign document",    color:"#A855F7",desc:"Remind to sign a pending document"         },
     { key:"re_upload", icon:"repeat",  label:"Please re-upload",        color:"#0891b2",desc:"Request a corrected re-submission"         },
     { key:"custom",    icon:"bell",    label:"Custom message",          color:TEAL,     desc:"Write your own notification"               },
   ];
@@ -705,7 +705,7 @@ function NotifyModal({ employees, preselectedEmployee, onClose, onSent }) {
           employeeName:  emp.fullName || emp.name,
           actionType:    action,
           message:       messageToSend,
-          sentByAdmin:   true,
+          sentByOperator:   true,
         });
         success++;
       } catch { success++; }
@@ -723,7 +723,7 @@ function NotifyModal({ employees, preselectedEmployee, onClose, onSent }) {
         <div style={{ padding:"20px 24px 14px",display:"flex",justifyContent:"space-between",
           alignItems:"center",borderBottom:"1px solid #f0f0f0" }}>
           <div style={{ display:"flex",alignItems:"center",gap:10 }}>
-            <div style={{ width:38,height:38,borderRadius:11,background:"rgba(0,194,168,.1)",
+            <div style={{ width:38,height:38,borderRadius:11,background:"rgba(6,182,212,.1)",
               display:"flex",alignItems:"center",justifyContent:"center" }}>
               <Ic d={ICONS.bell} size={18} color={TEAL}/>
             </div>
@@ -754,7 +754,7 @@ function NotifyModal({ employees, preselectedEmployee, onClose, onSent }) {
                 <button key={opt.s} onClick={()=>setScope(opt.s)}
                   style={{ padding:"12px 8px",borderRadius:12,cursor:"pointer",textAlign:"center",
                     border:`2px solid ${scope===opt.s?TEAL:"#e2e8f0"}`,
-                    background:scope===opt.s?"rgba(0,194,168,.08)":"#fff",transition:"all .15s" }}>
+                    background:scope===opt.s?"rgba(6,182,212,.08)":"#fff",transition:"all .15s" }}>
                   <div style={{ fontSize:22,marginBottom:3 }}>{opt.emoji}</div>
                   <div style={{ fontSize:12,fontWeight:700,color:scope===opt.s?TEAL:NAVY }}>{opt.label}</div>
                   <div style={{ fontSize:10,color:"#94a3b8",marginTop:2 }}>{opt.sub}</div>
@@ -763,7 +763,7 @@ function NotifyModal({ employees, preselectedEmployee, onClose, onSent }) {
             </div>
           </div>
 
-          {/* Employee picker */}
+          {/* Person picker */}
           {scope==="one"&&(
             <div>
               <label style={{ display:"block",fontSize:11,fontWeight:700,color:"#64748b",
@@ -783,10 +783,10 @@ function NotifyModal({ employees, preselectedEmployee, onClose, onSent }) {
                   return (
                     <div key={emp.id} onClick={()=>setSelectedEmp(sid)}
                       style={{ display:"flex",alignItems:"center",gap:10,padding:"8px 10px",borderRadius:8,cursor:"pointer",
-                        background:isSel?"rgba(0,194,168,.08)":"transparent",
-                        border:`1.5px solid ${isSel?"rgba(0,194,168,.3)":"transparent"}`,marginBottom:2 }}>
+                        background:isSel?"rgba(6,182,212,.08)":"transparent",
+                        border:`1.5px solid ${isSel?"rgba(6,182,212,.3)":"transparent"}`,marginBottom:2 }}>
                       <div style={{ width:30,height:30,borderRadius:"50%",flexShrink:0,
-                        background:`linear-gradient(135deg,${CORAL},#ff5722)`,
+                        background:`linear-gradient(135deg,${CORAL},#06B6D4)`,
                         display:"flex",alignItems:"center",justifyContent:"center",
                         fontSize:11,fontWeight:900,color:"#fff" }}>{initials(emp.fullName||emp.name)}</div>
                       <div style={{ flex:1,minWidth:0 }}>
@@ -829,7 +829,7 @@ function NotifyModal({ employees, preselectedEmployee, onClose, onSent }) {
 
           {/* All employees info banner */}
           {scope==="all"&&(
-            <div style={{ background:"rgba(0,194,168,.07)",border:"1px solid rgba(0,194,168,.25)",
+            <div style={{ background:"rgba(6,182,212,.07)",border:"1px solid rgba(6,182,212,.25)",
               borderRadius:10,padding:"10px 14px" }}>
               <p style={{ fontSize:12,fontWeight:600,color:"#0d7377",margin:0 }}>
                 📢 Notification will be sent to all <strong>{employees.length}</strong> employees.
@@ -908,7 +908,7 @@ function NotifyModal({ employees, preselectedEmployee, onClose, onSent }) {
               style={{ flex:2,padding:11,borderRadius:10,border:"none",fontSize:13,fontWeight:700,
                 cursor:sending?"not-allowed":"pointer",display:"flex",alignItems:"center",
                 justifyContent:"center",gap:8,color:"#fff",
-                background:sending?"#94a3b8":`linear-gradient(135deg,${TEAL},#00a896)` }}>
+                background:sending?"#94a3b8":`linear-gradient(135deg,${TEAL},#0D9488)` }}>
               {sending
                 ? <>⟳ Sending to {targets.length}…</>
                 : <><Ic d={ICONS.send} size={14} sw={2} color="#fff"/> Send Notification</>}
@@ -923,9 +923,9 @@ function NotifyModal({ employees, preselectedEmployee, onClose, onSent }) {
 // ─────────────────────────────────────────────────────────────────────────────
 //  MAIN COMPONENT
 // ─────────────────────────────────────────────────────────────────────────────
-const AdminDocuments = () => {
-  const [employees,        setEmployees]        = useState([]);
-  const [expandedEmployee, setExpandedEmployee] = useState(null);
+const OperatorVault = () => {
+  const [employees,        setPersons]        = useState([]);
+  const [expandedPerson, setExpandedPerson] = useState(null);
   const [search,           setSearch]           = useState("");
   const [statusFilter,     setStatusFilter]     = useState("ALL");
   const [signedFilter,     setSignedFilter]     = useState("ALL");
@@ -937,30 +937,30 @@ const AdminDocuments = () => {
   const [downloadingId,    setDownloadingId]    = useState(null);
   // Notify modal state
   const [showNotify,       setShowNotify]       = useState(false);
-  const [notifyEmployee,   setNotifyEmployee]   = useState(null); // null = all/dept mode
+  const [notifyPerson,   setNotifyPerson]   = useState(null); // null = all/dept mode
 
   useEffect(() => {
     const token    = localStorage.getItem("token");
     const userRole = localStorage.getItem("userRole");
     if (!token)             { showMessage("error","No authentication token found."); setAuthChecked(true); return; }
-    if (userRole !== "ADMIN") { showMessage("error",`Access denied. Admin required. Role: ${userRole||"none"}`); setAuthChecked(true); return; }
+    if (userRole !== "ADMIN") { showMessage("error",`Access denied. Operator required. Role: ${userRole||"none"}`); setAuthChecked(true); return; }
     setIsAuthenticated(true); setAuthChecked(true);
   }, []);
 
-  useEffect(() => { if (authChecked && isAuthenticated) fetchAllDocuments(); }, [authChecked, isAuthenticated]);
+  useEffect(() => { if (authChecked && isAuthenticated) fetchAllVault(); }, [authChecked, isAuthenticated]);
 
   const showMessage = (type, text) => { setMessage({type,text}); setTimeout(()=>setMessage({type:"",text:""}),5500); };
 
-  const fetchAllDocuments = async (showRefreshMessage=false) => {
+  const fetchAllVault = async (showRefreshMessage=false) => {
     if (showRefreshMessage) setRefreshing(true); else setLoading(true);
     try {
       const res = await api.get("/api/documents/admin/all-documents");
-      setEmployees(res.data);
+      setPersons(res.data);
     } catch(err) { showMessage("error", err.response?.data?.message || err.message); }
     finally { setLoading(false); setRefreshing(false); }
   };
 
-  const filteredEmployees = useMemo(() => employees.filter(emp => {
+  const filteredPersons = useMemo(() => employees.filter(emp => {
     const matchSearch = !search.trim() ||
       emp.name?.toLowerCase().includes(search.toLowerCase()) ||
       emp.id?.toString().toLowerCase().includes(search.toLowerCase()) ||
@@ -1013,21 +1013,21 @@ const AdminDocuments = () => {
   };
 
   // Open notify modal for a specific employee
-  const openNotifyForEmployee = (emp, e) => {
+  const openNotifyForPerson = (emp, e) => {
     if (e) e.stopPropagation();
-    setNotifyEmployee(emp);
+    setNotifyPerson(emp);
     setShowNotify(true);
   };
 
   // Open notify modal in global mode (no preselected employee)
   const openNotifyGlobal = () => {
-    setNotifyEmployee(null);
+    setNotifyPerson(null);
     setShowNotify(true);
   };
 
   const handleNotifySent = (msg) => {
     setShowNotify(false);
-    setNotifyEmployee(null);
+    setNotifyPerson(null);
     showMessage("success", msg);
   };
 
@@ -1045,7 +1045,7 @@ const AdminDocuments = () => {
   if (!authChecked) return (
     <div style={{ minHeight:"60vh",display:"flex",alignItems:"center",justifyContent:"center" }}>
       <div style={{ textAlign:"center" }}>
-        <div style={{ width:48,height:48,borderRadius:"50%",border:"3px solid rgba(255,107,53,.2)",borderTopColor:CORAL,animation:"doc-spin 1s linear infinite",margin:"0 auto 16px" }}/>
+        <div style={{ width:48,height:48,borderRadius:"50%",border:"3px solid rgba(139,92,246,.2)",borderTopColor:CORAL,animation:"doc-spin 1s linear infinite",margin:"0 auto 16px" }}/>
         <p style={{ fontSize:14,color:"#6b7280" }}>Checking authentication…</p>
       </div>
     </div>
@@ -1058,7 +1058,7 @@ const AdminDocuments = () => {
           <Ic d={ICONS.shield} size={28} sw={2} color="#ef4444"/>
         </div>
         <h2 style={{ fontSize:20,fontWeight:900,color:NAVY,marginBottom:8 }}>Access Denied</h2>
-        <p style={{ fontSize:13,color:"#6b7280",marginBottom:20 }}>Admin privileges required.</p>
+        <p style={{ fontSize:13,color:"#6b7280",marginBottom:20 }}>Operator privileges required.</p>
         <button onClick={()=>window.location.href="/login"} style={{ ...btnC,width:"100%",justifyContent:"center",padding:"12px 0",borderRadius:12 }}>Go to Login</button>
       </div>
     </div>
@@ -1079,25 +1079,25 @@ const AdminDocuments = () => {
       <div className="doc-root" style={{ maxWidth:1200,margin:"0 auto" }}>
 
         {/* Hero */}
-        <div style={{ background:`linear-gradient(135deg,${NAVY},#162639)`,borderRadius:20,padding:"22px 28px",marginBottom:22,position:"relative",overflow:"hidden" }}>
-          <div style={{ position:"absolute",top:-30,right:80,width:160,height:160,borderRadius:"50%",background:"rgba(255,107,53,.1)",filter:"blur(40px)",pointerEvents:"none" }}/>
+        <div style={{ background:`linear-gradient(135deg,${NAVY},#182033)`,borderRadius:20,padding:"22px 28px",marginBottom:22,position:"relative",overflow:"hidden" }}>
+          <div style={{ position:"absolute",top:-30,right:80,width:160,height:160,borderRadius:"50%",background:"rgba(139,92,246,.1)",filter:"blur(40px)",pointerEvents:"none" }}/>
           <div style={{ display:"flex",alignItems:"center",justifyContent:"space-between",flexWrap:"wrap",gap:14,position:"relative" }}>
             <div>
               <div style={{ display:"flex",alignItems:"center",gap:8,marginBottom:4 }}>
-                <h1 className="doc-fd" style={{ fontSize:20,fontWeight:900,color:"#fff",margin:0 }}>Documents Dashboard</h1>
-                <span style={{ fontSize:9,fontWeight:800,color:CORAL,background:"rgba(255,107,53,.2)",padding:"2px 8px",borderRadius:999,textTransform:"uppercase",letterSpacing:".08em" }}>Admin</span>
+                <h1 className="doc-fd" style={{ fontSize:20,fontWeight:900,color:"#fff",margin:0 }}>Vault ControlRoom</h1>
+                <span style={{ fontSize:9,fontWeight:800,color:CORAL,background:"rgba(139,92,246,.2)",padding:"2px 8px",borderRadius:999,textTransform:"uppercase",letterSpacing:".08em" }}>Operator</span>
               </div>
               <p style={{ fontSize:12,color:"rgba(255,255,255,.4)",margin:0 }}>View, download, verify signed copies and notify employees.</p>
             </div>
             <div style={{ display:"flex",gap:10 }}>
               {/* Global Notify button */}
               <button onClick={openNotifyGlobal}
-                style={{ display:"flex",alignItems:"center",gap:7,background:"rgba(0,194,168,.18)",
-                  border:"1px solid rgba(0,194,168,.35)",borderRadius:10,padding:"9px 16px",
+                style={{ display:"flex",alignItems:"center",gap:7,background:"rgba(6,182,212,.18)",
+                  border:"1px solid rgba(6,182,212,.35)",borderRadius:10,padding:"9px 16px",
                   fontSize:12,fontWeight:700,color:"#e0fffe",cursor:"pointer" }}>
-                <Ic d={ICONS.bell} size={14} color="#e0fffe"/> Notify Employees
+                <Ic d={ICONS.bell} size={14} color="#e0fffe"/> Notify Persons
               </button>
-              <button onClick={()=>fetchAllDocuments(true)} disabled={refreshing||loading}
+              <button onClick={()=>fetchAllVault(true)} disabled={refreshing||loading}
                 style={{ display:"flex",alignItems:"center",gap:7,background:"rgba(255,255,255,.1)",border:"1px solid rgba(255,255,255,.15)",borderRadius:10,padding:"9px 16px",fontSize:12,fontWeight:700,color:"#fff",cursor:(refreshing||loading)?"not-allowed":"pointer",opacity:(refreshing||loading)?0.6:1 }}>
                 <Ic d={ICONS.refresh} size={13} color="#fff"/> {refreshing?"Refreshing…":"Refresh"}
               </button>
@@ -1108,8 +1108,8 @@ const AdminDocuments = () => {
         {/* Message toast */}
         {message.text && (
           <div style={{ display:"flex",alignItems:"center",gap:10,padding:"12px 16px",borderRadius:12,marginBottom:18,fontSize:13,fontWeight:600,
-            background:message.type==="success"?"#f0fdf4":message.type==="info"?"rgba(0,194,168,.08)":"#fef2f2",
-            border:`1px solid ${message.type==="success"?"#86efac":message.type==="info"?"rgba(0,194,168,.3)":"#fca5a5"}`,
+            background:message.type==="success"?"#f0fdf4":message.type==="info"?"rgba(6,182,212,.08)":"#fef2f2",
+            border:`1px solid ${message.type==="success"?"#86efac":message.type==="info"?"rgba(6,182,212,.3)":"#fca5a5"}`,
             color:message.type==="success"?"#16a34a":message.type==="info"?TEAL:"#b91c1c" }}>
             <Ic d={message.type==="success"?ICONS.checkCircle:ICONS.warn} size={16}/>
             <span style={{ flex:1 }}>{message.text}</span>
@@ -1120,7 +1120,7 @@ const AdminDocuments = () => {
         {/* Stats */}
         <div style={{ display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(130px,1fr))",gap:12,marginBottom:22 }}>
           {[
-            { label:"Total Documents", val:stats.totalDocs, color:CORAL,    bg:"rgba(255,107,53,.08)",  icon:"folder"      },
+            { label:"Total Vault", val:stats.totalDocs, color:CORAL,    bg:"rgba(139,92,246,.08)",  icon:"folder"      },
             { label:"Pending Review",  val:stats.pending,   color:"#f59e0b",bg:"rgba(245,158,11,.08)",  icon:"clock"       },
             { label:"Approved",        val:stats.approved,  color:"#16a34a",bg:"rgba(22,163,74,.08)",   icon:"checkCircle" },
             { label:"Rejected",        val:stats.rejected,  color:"#ef4444",bg:"rgba(239,68,68,.08)",   icon:"xCircle"     },
@@ -1133,7 +1133,7 @@ const AdminDocuments = () => {
                 </div>
                 <div>
                   <p style={{ fontSize:11,color:"#6b7280",margin:"0 0 2px" }}>{s.label}</p>
-                  <p className="doc-fd" style={{ fontSize:24,fontWeight:900,color:"#111827",margin:0,lineHeight:1 }}>{s.val}</p>
+                  <p className="doc-fd" style={{ fontSize:24,fontWeight:900,color:"#0B1020",margin:0,lineHeight:1 }}>{s.val}</p>
                 </div>
               </div>
             </div>
@@ -1173,26 +1173,26 @@ const AdminDocuments = () => {
 
         {/* Section header */}
         <div style={{ display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:14 }}>
-          <h2 className="doc-fd" style={{ fontSize:17,fontWeight:900,color:NAVY,margin:0 }}>Employees ({filteredEmployees.length})</h2>
-          {filteredEmployees.length>0 && (
+          <h2 className="doc-fd" style={{ fontSize:17,fontWeight:900,color:NAVY,margin:0 }}>Persons ({filteredPersons.length})</h2>
+          {filteredPersons.length>0 && (
             <span style={{ fontSize:12,color:"#9ca3af",fontWeight:600 }}>
-              {filteredEmployees.reduce((s,e)=>s+(e.documents?.length||0),0)} documents
+              {filteredPersons.reduce((s,e)=>s+(e.documents?.length||0),0)} documents
               {" · "}
               <span style={{ color:"#16a34a",fontWeight:700 }}>
-                {filteredEmployees.reduce((s,e)=>s+(e.documents||[]).filter(d=>!!(d.signedFileUrl||d.signed_file_url||d.signed)).length,0)} signed
+                {filteredPersons.reduce((s,e)=>s+(e.documents||[]).filter(d=>!!(d.signedFileUrl||d.signed_file_url||d.signed)).length,0)} signed
               </span>
             </span>
           )}
         </div>
 
-        {/* Employee list */}
+        {/* Person list */}
         <div style={{ display:"flex",flexDirection:"column",gap:14 }}>
           {loading ? (
             <div style={{ ...card,padding:"64px",textAlign:"center" }}>
-              <div style={{ width:48,height:48,borderRadius:"50%",border:"3px solid rgba(255,107,53,.2)",borderTopColor:CORAL,animation:"doc-spin 1s linear infinite",margin:"0 auto 16px" }}/>
+              <div style={{ width:48,height:48,borderRadius:"50%",border:"3px solid rgba(139,92,246,.2)",borderTopColor:CORAL,animation:"doc-spin 1s linear infinite",margin:"0 auto 16px" }}/>
               <p style={{ fontSize:14,color:"#6b7280",fontWeight:600,margin:0 }}>Loading documents…</p>
             </div>
-          ) : filteredEmployees.length===0 ? (
+          ) : filteredPersons.length===0 ? (
             <div style={{ ...card,padding:"56px 24px",textAlign:"center" }}>
               <div style={{ marginBottom:12 }}><Ic d={ICONS.users} size={48} color="#d1d5db"/></div>
               <p style={{ fontSize:15,fontWeight:700,color:"#6b7280",margin:"0 0 6px" }}>No employees found</p>
@@ -1200,28 +1200,28 @@ const AdminDocuments = () => {
                 {search||statusFilter!=="ALL"||signedFilter!=="ALL" ? "Try adjusting your filters" : "No employees with documents yet"}
               </p>
               {employees.length===0&&!loading&&(
-                <button onClick={()=>fetchAllDocuments(true)} style={{ ...btnC,margin:"0 auto",borderRadius:10 }}>Retry</button>
+                <button onClick={()=>fetchAllVault(true)} style={{ ...btnC,margin:"0 auto",borderRadius:10 }}>Retry</button>
               )}
             </div>
-          ) : filteredEmployees.map(employee => {
+          ) : filteredPersons.map(employee => {
             const filteredDocs = getFilteredDocs(employee);
-            const isOpen       = expandedEmployee===employee.id;
+            const isOpen       = expandedPerson===employee.id;
             const signedCount  = (employee.documents||[]).filter(d=>!!(d.signedFileUrl||d.signed_file_url||d.signed)).length;
 
             return (
               <div key={employee.id} className="doc-emp"
                 style={{ background:"#fff",borderRadius:20,boxShadow:"0 2px 8px rgba(13,31,45,.04)",overflow:"hidden",border:"1px solid #f0f0f0",transition:"box-shadow .2s" }}>
 
-                {/* Employee header row */}
-                <div className="doc-emp-hdr" onClick={()=>setExpandedEmployee(isOpen?null:employee.id)}
+                {/* Person header row */}
+                <div className="doc-emp-hdr" onClick={()=>setExpandedPerson(isOpen?null:employee.id)}
                   style={{ display:"flex",alignItems:"center",justifyContent:"space-between",padding:"18px 22px",cursor:"pointer",gap:16,transition:"background .15s" }}>
                   <div style={{ display:"flex",alignItems:"center",gap:14,flex:1,minWidth:0 }}>
-                    <div style={{ width:48,height:48,background:`linear-gradient(135deg,${CORAL},#FF5722)`,borderRadius:"50%",display:"flex",alignItems:"center",justifyContent:"center",fontSize:18,fontWeight:900,color:"#fff",flexShrink:0 }}>
+                    <div style={{ width:48,height:48,background:`linear-gradient(135deg,${CORAL},#06B6D4)`,borderRadius:"50%",display:"flex",alignItems:"center",justifyContent:"center",fontSize:18,fontWeight:900,color:"#fff",flexShrink:0 }}>
                       {initials(employee.name)}
                     </div>
                     <div style={{ flex:1,minWidth:0 }}>
-                      <h3 className="doc-fd" style={{ fontSize:15,fontWeight:800,color:"#111827",margin:"0 0 4px",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap" }}>
-                        {employee.name||"Unknown Employee"}
+                      <h3 className="doc-fd" style={{ fontSize:15,fontWeight:800,color:"#0B1020",margin:"0 0 4px",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap" }}>
+                        {employee.name||"Unknown Person"}
                       </h3>
                       <div style={{ display:"flex",flexWrap:"wrap",gap:12 }}>
                         {(employee.employeeId||employee.employeeCode) && <span style={{ fontSize:12,color:"#9ca3af" }}>ID: {employee.employeeId||employee.employeeCode}</span>}
@@ -1229,7 +1229,7 @@ const AdminDocuments = () => {
                       </div>
                     </div>
                     {/* Doc count */}
-                    <div style={{ display:"flex",alignItems:"center",gap:6,background:"rgba(255,107,53,.08)",borderRadius:999,padding:"6px 12px",flexShrink:0 }}>
+                    <div style={{ display:"flex",alignItems:"center",gap:6,background:"rgba(139,92,246,.08)",borderRadius:999,padding:"6px 12px",flexShrink:0 }}>
                       <Ic d={ICONS.pkg} size={14} sw={2} color={CORAL}/>
                       <span className="doc-fd" style={{ fontSize:13,fontWeight:800,color:CORAL }}>{filteredDocs?.length||0}</span>
                     </div>
@@ -1244,10 +1244,10 @@ const AdminDocuments = () => {
                   <div style={{ display:"flex",alignItems:"center",gap:8,flexShrink:0 }}>
                     {/* Per-employee Notify button */}
                     <button className="notify-btn"
-                      onClick={e=>openNotifyForEmployee(employee, e)}
+                      onClick={e=>openNotifyForPerson(employee, e)}
                       title="Send notification to this employee"
                       style={{ display:"flex",alignItems:"center",gap:5,padding:"7px 13px",borderRadius:9,
-                        border:"1.5px solid rgba(0,194,168,.3)",background:"rgba(0,194,168,.07)",
+                        border:"1.5px solid rgba(6,182,212,.3)",background:"rgba(6,182,212,.07)",
                         color:TEAL,fontSize:11,fontWeight:700,cursor:"pointer",transition:"opacity .15s" }}>
                       <Ic d={ICONS.bell} size={13} sw={2} color={TEAL}/> Notify
                     </button>
@@ -1311,7 +1311,7 @@ const AdminDocuments = () => {
                                       {/* View original */}
                                       <button onClick={()=>viewDoc(doc,false)} className="doc-icon-btn" title="View Original"
                                         style={{ width:32,height:32,display:"flex",alignItems:"center",justifyContent:"center",borderRadius:8,background:SURF,border:"1.5px solid #e5e7eb",cursor:"pointer",color:"#6b7280",transition:"all .2s" }}
-                                        onMouseEnter={e=>{e.currentTarget.style.borderColor=TEAL;e.currentTarget.style.color=TEAL;e.currentTarget.style.background="rgba(0,194,168,.08)";}}
+                                        onMouseEnter={e=>{e.currentTarget.style.borderColor=TEAL;e.currentTarget.style.color=TEAL;e.currentTarget.style.background="rgba(6,182,212,.08)";}}
                                         onMouseLeave={e=>{e.currentTarget.style.borderColor="#e5e7eb";e.currentTarget.style.color="#6b7280";e.currentTarget.style.background=SURF;}}>
                                         <Ic d={ICONS.eye} size={14} sw={2}/>
                                       </button>
@@ -1320,7 +1320,7 @@ const AdminDocuments = () => {
                                       <button onClick={e=>handleDownload(doc,e,false)} className="doc-icon-btn" title="Download Original"
                                         disabled={downloadingId===doc.id}
                                         style={{ width:32,height:32,display:"flex",alignItems:"center",justifyContent:"center",borderRadius:8,background:downloadingId===doc.id?"#f0f0f0":SURF,border:"1.5px solid #e5e7eb",cursor:downloadingId===doc.id?"not-allowed":"pointer",color:"#6b7280",transition:"all .2s" }}
-                                        onMouseEnter={e=>{if(downloadingId!==doc.id){e.currentTarget.style.borderColor=CORAL;e.currentTarget.style.color=CORAL;e.currentTarget.style.background="rgba(255,107,53,.08)";}}}
+                                        onMouseEnter={e=>{if(downloadingId!==doc.id){e.currentTarget.style.borderColor=CORAL;e.currentTarget.style.color=CORAL;e.currentTarget.style.background="rgba(139,92,246,.08)";}}}
                                         onMouseLeave={e=>{e.currentTarget.style.borderColor="#e5e7eb";e.currentTarget.style.color="#6b7280";e.currentTarget.style.background=SURF;}}>
                                         {downloadingId===doc.id
                                           ? <div style={{ width:12,height:12,borderRadius:"50%",border:"2px solid #ccc",borderTopColor:CORAL,animation:"doc-spin 0.7s linear infinite" }}/>
@@ -1348,8 +1348,8 @@ const AdminDocuments = () => {
                                       )}
 
                                       {/* Notify this employee about this doc */}
-                                      <button onClick={e=>openNotifyForEmployee(employee,e)} className="doc-icon-btn" title="Notify Employee"
-                                        style={{ width:32,height:32,display:"flex",alignItems:"center",justifyContent:"center",borderRadius:8,background:"rgba(0,194,168,.06)",border:"1.5px solid rgba(0,194,168,.25)",cursor:"pointer",color:TEAL,transition:"all .2s" }}>
+                                      <button onClick={e=>openNotifyForPerson(employee,e)} className="doc-icon-btn" title="Notify Person"
+                                        style={{ width:32,height:32,display:"flex",alignItems:"center",justifyContent:"center",borderRadius:8,background:"rgba(6,182,212,.06)",border:"1.5px solid rgba(6,182,212,.25)",cursor:"pointer",color:TEAL,transition:"all .2s" }}>
                                         <Ic d={ICONS.bell} size={13} sw={2} color={TEAL}/>
                                       </button>
                                     </div>
@@ -1368,9 +1368,9 @@ const AdminDocuments = () => {
                           {statusFilter!=="ALL"||signedFilter!=="ALL" ? "Try adjusting your filters" : "This employee hasn't uploaded any documents yet"}
                         </p>
                         {/* Notify to upload */}
-                        <button onClick={e=>openNotifyForEmployee(employee,e)}
+                        <button onClick={e=>openNotifyForPerson(employee,e)}
                           style={{ marginTop:16,display:"inline-flex",alignItems:"center",gap:6,padding:"8px 16px",
-                            borderRadius:10,border:"none",background:`linear-gradient(135deg,${TEAL},#00a896)`,
+                            borderRadius:10,border:"none",background:`linear-gradient(135deg,${TEAL},#0D9488)`,
                             color:"#fff",fontSize:12,fontWeight:700,cursor:"pointer" }}>
                           <Ic d={ICONS.bell} size={13} sw={2} color="#fff"/> Send Upload Reminder
                         </button>
@@ -1388,8 +1388,8 @@ const AdminDocuments = () => {
       {showNotify && (
         <NotifyModal
           employees={employees}
-          preselectedEmployee={notifyEmployee}
-          onClose={()=>{ setShowNotify(false); setNotifyEmployee(null); }}
+          preselectedPerson={notifyPerson}
+          onClose={()=>{ setShowNotify(false); setNotifyPerson(null); }}
           onSent={handleNotifySent}
         />
       )}
@@ -1397,4 +1397,4 @@ const AdminDocuments = () => {
   );
 };
 
-export default AdminDocuments;
+export default OperatorVault;

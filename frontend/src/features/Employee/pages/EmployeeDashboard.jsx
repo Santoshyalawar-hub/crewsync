@@ -18,10 +18,10 @@
 // // const cleanBase = API_BASE_URL.replace(/\/+$/, "");
 
 // // const T = {
-// //   navy: "#0D1F2D",
-// //   coral: "#FF6B35",
-// //   teal: "#00C2A8",
-// //   navyMid: "#1E3448",
+// //   navy: "#0B1020",
+// //   coral: "#8B5CF6",
+// //   teal: "#06B6D4",
+// //   navyMid: "#374151",
 // //   bg: "#F5F7FB",
 // //   card: "#FFFFFF",
 // //   border: "#E8ECF2",
@@ -60,8 +60,8 @@
 // //   overflow:hidden;
 // //   cursor:pointer;
 // //   position:relative;
-// //   background:linear-gradient(135deg,rgba(255,107,53,.15),rgba(0,194,168,.15));
-// //   border:3px solid rgba(255,107,53,.3);
+// //   background:linear-gradient(135deg,rgba(139,92,246,.15),rgba(6,182,212,.15));
+// //   border:3px solid rgba(139,92,246,.3);
 // //   transition:all .2s;
 // // }
 // // .edb-avatar-ring:hover { border-color:${T.coral}; }
@@ -88,15 +88,15 @@
 // // .edb-animate { animation:edbFadeUp .4s ease both; }
 // // `;
 
-// // export default function EmployeeDashboard() {
+// // export default function PersonControlRoom() {
 // //   const navigate = useNavigate();
 // //   const fileInputRef = useRef(null);
 
 // //   const handleProfileClick = () => navigate("/employee/dashboard");
-// //   const handleLeaveClick = () => navigate("/employee/leaves");
+// //   const handleTimeAwayClick = () => navigate("/employee/leaves");
 
-// //   const [employeeName, setEmployeeName] = useState("");
-// //   const [employeePhotoUrl, setEmployeePhotoUrl] = useState("");
+// //   const [employeeName, setPersonName] = useState("");
+// //   const [employeePhotoUrl, setPersonPhotoUrl] = useState("");
 // //   const [loading, setLoading] = useState(true);
 // //   const [loadError, setLoadError] = useState("");
 // //   const [uploading, setUploading] = useState(false);
@@ -107,10 +107,10 @@
 // //   const [headerStats, setHeaderStats] = useState({
 // //     todayStatus: null,
 // //     performanceStatus: null,
-// //     thisMonthAttendancePercent: null,
-// //     availableLeave: TOTAL_LEAVES,
-// //     takenLeave: 0,
-// //     usedLeaveDays: 0,
+// //     thisMonthPresencePercent: null,
+// //     availableTimeAway: TOTAL_LEAVES,
+// //     takenTimeAway: 0,
+// //     usedTimeAwayDays: 0,
 // //   });
 
 // //   const safeUrl = (path) => {
@@ -126,22 +126,22 @@
 // //     };
 // //   };
 
-// //   const calcLeaveSummary = (leaves) => {
-// //     const approvedLeaves = leaves.filter(
+// //   const calcTimeAwaySummary = (leaves) => {
+// //     const approvedTimeAways = leaves.filter(
 // //       (l) => (l.status || "").toUpperCase() === "APPROVED"
 // //     );
 
-// //     const usedLeaveDays = approvedLeaves.reduce(
+// //     const usedTimeAwayDays = approvedTimeAways.reduce(
 // //       (sum, leave) => sum + (Number(leave.totalDays) || 0),
 // //       0
 // //     );
 
-// //     const availableLeave = Math.max(0, TOTAL_LEAVES - usedLeaveDays);
+// //     const availableTimeAway = Math.max(0, TOTAL_LEAVES - usedTimeAwayDays);
 
 // //     return {
-// //       availableLeave,
-// //       usedLeaveDays,
-// //       approvedCount: approvedLeaves.length,
+// //       availableTimeAway,
+// //       usedTimeAwayDays,
+// //       approvedCount: approvedTimeAways.length,
 // //     };
 // //   };
 
@@ -188,7 +188,7 @@
 // //       const data = await res.json();
 
 // //       if (res.ok && data.success) {
-// //         setEmployeePhotoUrl(data.data.photoUrl);
+// //         setPersonPhotoUrl(data.data.photoUrl);
 // //         setUploadSuccess("Photo updated!");
 // //         setTimeout(() => {
 // //           setUploadSuccess("");
@@ -219,7 +219,7 @@
 // //       const data = await res.json();
 
 // //       if (res.ok && data.success) {
-// //         setEmployeePhotoUrl("");
+// //         setPersonPhotoUrl("");
 // //         setUploadSuccess("Photo removed");
 // //         setTimeout(() => {
 // //           setUploadSuccess("");
@@ -245,7 +245,7 @@
 // //         const userId = localStorage.getItem("userId");
 
 // //         if (!userId) {
-// //           setEmployeeName("Employee");
+// //           setPersonName("Person");
 // //           setLoadError("Session missing");
 // //           setLoading(false);
 // //           return;
@@ -261,12 +261,12 @@
 // //           if (r.ok) {
 // //             const j = await r.json();
 // //             const u = j.data || {};
-// //             const name = u.fullName || u.name || u.firstName || "Employee";
-// //             setEmployeeName(name);
+// //             const name = u.fullName || u.name || u.firstName || "Person";
+// //             setPersonName(name);
 // //             localStorage.setItem("employeeName", name);
 
 // //             const photo = u.profilePhotoUrl || u.photoUrl || u.avatarUrl || "";
-// //             if (photo) setEmployeePhotoUrl(photo);
+// //             if (photo) setPersonPhotoUrl(photo);
 // //           }
 // //         } catch {}
 
@@ -276,7 +276,7 @@
 // //           });
 // //           if (r.ok) {
 // //             const j = await r.json();
-// //             if (j.data && !employeePhotoUrl) setEmployeePhotoUrl(j.data);
+// //             if (j.data && !employeePhotoUrl) setPersonPhotoUrl(j.data);
 // //           }
 // //         } catch {}
 
@@ -285,21 +285,21 @@
 // //           if (r.ok) {
 // //             const j = await r.json();
 // //             const leaves = j.data || [];
-// //             const summary = calcLeaveSummary(leaves);
+// //             const summary = calcTimeAwaySummary(leaves);
 
 // //             setHeaderStats((p) => ({
 // //               ...p,
-// //               availableLeave: summary.availableLeave,
-// //               takenLeave: summary.approvedCount,
-// //               usedLeaveDays: summary.usedLeaveDays,
+// //               availableTimeAway: summary.availableTimeAway,
+// //               takenTimeAway: summary.approvedCount,
+// //               usedTimeAwayDays: summary.usedTimeAwayDays,
 // //             }));
 // //           }
 // //         } catch {
 // //           setHeaderStats((p) => ({
 // //             ...p,
-// //             availableLeave: TOTAL_LEAVES,
-// //             takenLeave: 0,
-// //             usedLeaveDays: 0,
+// //             availableTimeAway: TOTAL_LEAVES,
+// //             takenTimeAway: 0,
+// //             usedTimeAwayDays: 0,
 // //           }));
 // //         }
 
@@ -312,7 +312,7 @@
 // //             const d = j.data || {};
 // //             setHeaderStats((p) => ({
 // //               ...p,
-// //               todayStatus: d.todayStatus || d.todayAttendance || "No data",
+// //               todayStatus: d.todayStatus || d.todayPresence || "No data",
 // //               performanceStatus: d.performance || d.performanceStatus || "Good",
 // //             }));
 // //           }
@@ -334,7 +334,7 @@
 
 // //             setHeaderStats((p) => ({
 // //               ...p,
-// //               thisMonthAttendancePercent: pct,
+// //               thisMonthPresencePercent: pct,
 // //             }));
 // //           }
 // //         } catch {}
@@ -362,10 +362,10 @@
 // //     })();
 // //   }, []);
 
-// //   const displayName = loading ? "…" : employeeName || "Employee";
-// //   const attendancePercent = headerStats.thisMonthAttendancePercent;
-// //   const availableLeave = headerStats.availableLeave;
-// //   const usedLeaveDays = headerStats.usedLeaveDays;
+// //   const displayName = loading ? "…" : employeeName || "Person";
+// //   const attendancePercent = headerStats.thisMonthPresencePercent;
+// //   const availableTimeAway = headerStats.availableTimeAway;
+// //   const usedTimeAwayDays = headerStats.usedTimeAwayDays;
 // //   const { month, year } = getCurrentMonthYear();
 
 // //   if (loading) {
@@ -613,7 +613,7 @@
 // //                 width: 100,
 // //                 height: 100,
 // //                 borderRadius: "50%",
-// //                 background: "rgba(255,107,53,.06)",
+// //                 background: "rgba(139,92,246,.06)",
 // //                 pointerEvents: "none",
 // //               }}
 // //             />
@@ -641,7 +641,7 @@
 // //                       display: "flex",
 // //                       alignItems: "center",
 // //                       justifyContent: "center",
-// //                       background: `linear-gradient(135deg,rgba(255,107,53,.12),rgba(0,194,168,.12))`,
+// //                       background: `linear-gradient(135deg,rgba(139,92,246,.12),rgba(6,182,212,.12))`,
 // //                     }}
 // //                   >
 // //                     <User size={28} color={T.coral} />
@@ -668,7 +668,7 @@
 // //                 <h2 className="fd" style={{ fontSize: 20, fontWeight: 900, color: T.navy, margin: 0 }}>
 // //                   {displayName}
 // //                 </h2>
-// //                 <p style={{ fontSize: 12, color: "#64748b", marginTop: 2 }}>Employee</p>
+// //                 <p style={{ fontSize: 12, color: "#64748b", marginTop: 2 }}>Person</p>
 // //               </div>
 // //             </div>
 
@@ -695,7 +695,7 @@
 // //                     letterSpacing: ".06em",
 // //                   }}
 // //                 >
-// //                   {month}/{year} Attendance
+// //                   {month}/{year} Presence
 // //                 </p>
 // //                 <p className="fd" style={{ fontSize: 20, fontWeight: 900, color: T.navy }}>
 // //                   {attendancePercent != null ? `${attendancePercent}%` : "—"}
@@ -716,11 +716,11 @@
 // //               </div>
 
 // //               <div
-// //                 onClick={handleLeaveClick}
+// //                 onClick={handleTimeAwayClick}
 // //                 style={{
-// //                   background: availableLeave > 10 ? "#ECFDF5" : availableLeave > 0 ? "#FFFBEB" : "#FEF2F2",
+// //                   background: availableTimeAway > 10 ? "#ECFDF5" : availableTimeAway > 0 ? "#FFFBEB" : "#FEF2F2",
 // //                   border: `1.5px solid ${
-// //                     availableLeave > 10 ? "#A7F3D0" : availableLeave > 0 ? "#FDE68A" : "#FECACA"
+// //                     availableTimeAway > 10 ? "#A7F3D0" : availableTimeAway > 0 ? "#FDE68A" : "#FECACA"
 // //                   }`,
 // //                   borderRadius: 12,
 // //                   padding: "10px 12px",
@@ -737,10 +737,10 @@
 // //                     letterSpacing: ".06em",
 // //                   }}
 // //                 >
-// //                   Leave Balance
+// //                   TimeAway Balance
 // //                 </p>
 // //                 <p className="fd" style={{ fontSize: 20, fontWeight: 900, color: T.navy }}>
-// //                   {availableLeave}
+// //                   {availableTimeAway}
 // //                 </p>
 // //                 <p
 // //                   style={{
@@ -754,7 +754,7 @@
 // //                   }}
 // //                 >
 // //                   <Calendar size={10} />
-// //                   {usedLeaveDays} used · {availableLeave} remaining of {TOTAL_LEAVES}
+// //                   {usedTimeAwayDays} used · {availableTimeAway} remaining of {TOTAL_LEAVES}
 // //                 </p>
 // //               </div>
 // //             </div>
@@ -811,8 +811,8 @@
 // const cleanBase = API_BASE_URL.replace(/\/+$/, "");
 
 // const T = {
-//   navy: "#0D1F2D", coral: "#FF6B35", teal: "#00C2A8",
-//   navyMid: "#1E3448", bg: "#F5F7FB", border: "#E8ECF2",
+//   navy: "#0B1020", coral: "#8B5CF6", teal: "#06B6D4",
+//   navyMid: "#374151", bg: "#F5F7FB", border: "#E8ECF2",
 // };
 // const TOTAL_LEAVES = 24;
 
@@ -826,8 +826,8 @@
 // .edb-stat-chip { display:inline-flex; align-items:center; gap:6px; border-radius:999px;
 //   padding:5px 12px; font-size:11px; font-weight:600; border:1.5px solid; }
 // .edb-avatar-ring { border-radius:50%; overflow:hidden; cursor:pointer; position:relative;
-//   background:linear-gradient(135deg,rgba(255,107,53,.15),rgba(0,194,168,.15));
-//   border:3px solid rgba(255,107,53,.3); transition:all .2s; }
+//   background:linear-gradient(135deg,rgba(139,92,246,.15),rgba(6,182,212,.15));
+//   border:3px solid rgba(139,92,246,.3); transition:all .2s; }
 // .edb-avatar-ring:hover { border-color:${T.coral}; }
 // .edb-avatar-ring .cam-overlay { position:absolute; inset:0; background:rgba(0,0,0,0);
 //   display:flex; align-items:center; justify-content:center; opacity:0; transition:all .2s; }
@@ -897,7 +897,7 @@
 //     <div style={{
 //       width: "100%", height: "100%", display: "flex",
 //       alignItems: "center", justifyContent: "center",
-//       background: "linear-gradient(135deg,rgba(255,107,53,.18),rgba(0,194,168,.18))",
+//       background: "linear-gradient(135deg,rgba(139,92,246,.18),rgba(6,182,212,.18))",
 //       color: T.coral, fontFamily: "'Sora',sans-serif", fontWeight: 800, fontSize: 22,
 //     }}>
 //       {initials}
@@ -906,13 +906,13 @@
 // }
 
 // /* ── Main component ── */
-// export default function EmployeeDashboard() {
+// export default function PersonControlRoom() {
 //   const navigate      = useNavigate();
 //   const modalInputRef = useRef(null);
 
-//   const handleLeaveClick = () => navigate("/employee/leaves");
+//   const handleTimeAwayClick = () => navigate("/employee/leaves");
 
-//   const [employeeName,   setEmployeeName]   = useState("");
+//   const [employeeName,   setPersonName]   = useState("");
 //   const [photoUrl,       setPhotoUrl]       = useState("");
 //   const [photoKey,       setPhotoKey]       = useState(0);
 //   const [loading,        setLoading]        = useState(true);
@@ -924,7 +924,7 @@
 //   const [stats, setStats] = useState({
 //     todayStatus: null, performanceStatus: null,
 //     attendancePct: null,
-//     availableLeave: TOTAL_LEAVES, usedLeaveDays: 0,
+//     availableTimeAway: TOTAL_LEAVES, usedTimeAwayDays: 0,
 //   });
 
 //   /* ── helpers ── */
@@ -1057,7 +1057,7 @@
 //       const hdrs   = { "Content-Type": "application/json", ...authHdrs() };
 
 //       if (!userId) {
-//         setEmployeeName("Employee");
+//         setPersonName("Person");
 //         setLoadError("Session missing — please log in");
 //         setLoading(false);
 //         return;
@@ -1076,8 +1076,8 @@
 //             const u = j.data || {};
 
 //             // fullName confirmed from User.java
-//             setEmployeeName(u.fullName || u.name || "Employee");
-//             localStorage.setItem("employeeName", u.fullName || u.name || "Employee");
+//             setPersonName(u.fullName || u.name || "Person");
+//             localStorage.setItem("employeeName", u.fullName || u.name || "Person");
 
 //             // profilePhotoUrl confirmed from User.java
 //             // storePhoto → fixPhotoUrl converts localhost:8080 → real server
@@ -1085,7 +1085,7 @@
 //           }
 //         } catch {}
 
-//         /* Leaves */
+//         /* TimeAways */
 //         try {
 //           const r = await fetch(safeUrl(`/api/leaves/my-leaves`), { headers: hdrs });
 //           if (r.ok) {
@@ -1095,20 +1095,20 @@
 //             const used     = approved.reduce((s, l) => s + (Number(l.totalDays) || 0), 0);
 //             setStats(p => ({
 //               ...p,
-//               availableLeave: Math.max(0, TOTAL_LEAVES - used),
-//               usedLeaveDays:  used,
+//               availableTimeAway: Math.max(0, TOTAL_LEAVES - used),
+//               usedTimeAwayDays:  used,
 //             }));
 //           }
 //         } catch {}
 
-//         /* Dashboard */
+//         /* ControlRoom */
 //         try {
 //           const r = await fetch(safeUrl(`/api/dashboard/employee/${userId}`), { headers: hdrs });
 //           if (r.ok) {
 //             const j = await r.json(); const d = j.data || {};
 //             setStats(p => ({
 //               ...p,
-//               todayStatus:       d.todayStatus       || d.todayAttendance || "—",
+//               todayStatus:       d.todayStatus       || d.todayPresence || "—",
 //               performanceStatus: d.performanceStatus || d.performance     || "Good",
 //             }));
 //           }
@@ -1146,7 +1146,7 @@
 //     })();
 //   }, []);
 
-//   const displayName    = loading ? "…" : employeeName || "Employee";
+//   const displayName    = loading ? "…" : employeeName || "Person";
 //   const { month, year } = getCurrentMonthYear();
 
 //   /* ── Loading screen ── */
@@ -1269,7 +1269,7 @@
 
 //           {/* decorative circle */}
 //           <div style={{ position: "absolute", top: -20, right: -20, width: 100, height: 100,
-//             borderRadius: "50%", background: "rgba(255,107,53,.06)", pointerEvents: "none" }} />
+//             borderRadius: "50%", background: "rgba(139,92,246,.06)", pointerEvents: "none" }} />
 
 //           {/* profile row */}
 //           <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 18, flexWrap: "wrap" }}>
@@ -1290,7 +1290,7 @@
 //               <h2 className="fd" style={{ fontSize: 20, fontWeight: 900, color: T.navy, margin: 0 }}>
 //                 {displayName}
 //               </h2>
-//               <p style={{ fontSize: 12, color: "#64748b", marginTop: 2 }}>Employee</p>
+//               <p style={{ fontSize: 12, color: "#64748b", marginTop: 2 }}>Person</p>
 //             </div>
 //           </div>
 
@@ -1304,7 +1304,7 @@
 //               borderRadius: 12, padding: "10px 12px" }}>
 //               <p style={{ fontSize: 10, color: "#64748b", marginBottom: 4,
 //                 textTransform: "uppercase", letterSpacing: ".06em" }}>
-//                 {month}/{year} Attendance
+//                 {month}/{year} Presence
 //               </p>
 //               <p className="fd" style={{ fontSize: 20, fontWeight: 900, color: T.navy }}>
 //                 {stats.attendancePct != null ? `${stats.attendancePct}%` : "—"}
@@ -1317,14 +1317,14 @@
 
 //             {/* leave */}
 //             <div
-//               onClick={handleLeaveClick}
+//               onClick={handleTimeAwayClick}
 //               style={{
 //                 background:
-//                   stats.availableLeave > 10 ? "#ECFDF5" :
-//                   stats.availableLeave > 0  ? "#FFFBEB" : "#FEF2F2",
+//                   stats.availableTimeAway > 10 ? "#ECFDF5" :
+//                   stats.availableTimeAway > 0  ? "#FFFBEB" : "#FEF2F2",
 //                 border: `1.5px solid ${
-//                   stats.availableLeave > 10 ? "#A7F3D0" :
-//                   stats.availableLeave > 0  ? "#FDE68A" : "#FECACA"
+//                   stats.availableTimeAway > 10 ? "#A7F3D0" :
+//                   stats.availableTimeAway > 0  ? "#FDE68A" : "#FECACA"
 //                 }`,
 //                 borderRadius: 12, padding: "10px 12px",
 //                 cursor: "pointer", transition: "all .2s ease",
@@ -1332,15 +1332,15 @@
 //             >
 //               <p style={{ fontSize: 10, color: "#64748b", marginBottom: 4,
 //                 textTransform: "uppercase", letterSpacing: ".06em" }}>
-//                 Leave Balance
+//                 TimeAway Balance
 //               </p>
 //               <p className="fd" style={{ fontSize: 20, fontWeight: 900, color: T.navy }}>
-//                 {stats.availableLeave}
+//                 {stats.availableTimeAway}
 //               </p>
 //               <p style={{ fontSize: 10, color: "#64748b", marginTop: 2,
 //                 display: "flex", alignItems: "center", gap: 4, flexWrap: "wrap" }}>
 //                 <Calendar size={10} />
-//                 {stats.usedLeaveDays} used · {stats.availableLeave} remaining of {TOTAL_LEAVES}
+//                 {stats.usedTimeAwayDays} used · {stats.availableTimeAway} remaining of {TOTAL_LEAVES}
 //               </p>
 //             </div>
 //           </div>
@@ -1373,7 +1373,7 @@ import api, { API_BASE_URL } from "@/lib/apiClient";
 import { Calendar, Clock, Activity, Camera, Upload, X, Check, TrendingUp, Lock } from "lucide-react";
 
 const cleanBase = API_BASE_URL.replace(/\/+$/, "");
-const T = { navy:"#0D1F2D", coral:"#FF6B35", teal:"#00C2A8", navyMid:"#1E3448", bg:"#F5F7FB", border:"#E8ECF2" };
+const T = { navy:"#0B1020", coral:"#8B5CF6", teal:"#06B6D4", navyMid:"#374151", bg:"#F5F7FB", border:"#E8ECF2" };
 const FALLBACK_TOTAL = 24;
 
 const CSS = `
@@ -1383,15 +1383,15 @@ const CSS = `
 .edb-card { background:#fff; border:1.5px solid #E8ECF2; border-radius:18px; box-shadow:0 2px 12px rgba(13,31,45,.05); transition:box-shadow .2s; }
 .edb-card:hover { box-shadow:0 4px 20px rgba(13,31,45,.09); }
 .edb-stat-chip { display:inline-flex; align-items:center; gap:6px; border-radius:999px; padding:5px 12px; font-size:11px; font-weight:600; border:1.5px solid; }
-.edb-avatar-ring { border-radius:50%; overflow:hidden; cursor:pointer; position:relative; background:linear-gradient(135deg,rgba(255,107,53,.15),rgba(0,194,168,.15)); border:3px solid rgba(255,107,53,.3); transition:all .2s; }
-.edb-avatar-ring:hover { border-color:#FF6B35; }
+.edb-avatar-ring { border-radius:50%; overflow:hidden; cursor:pointer; position:relative; background:linear-gradient(135deg,rgba(139,92,246,.15),rgba(6,182,212,.15)); border:3px solid rgba(139,92,246,.3); transition:all .2s; }
+.edb-avatar-ring:hover { border-color:#8B5CF6; }
 .edb-avatar-ring .cam-overlay { position:absolute; inset:0; background:rgba(0,0,0,0); display:flex; align-items:center; justify-content:center; opacity:0; transition:all .2s; }
 .edb-avatar-ring:hover .cam-overlay { background:rgba(0,0,0,.45); opacity:1; }
 @keyframes edbFadeUp { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
 .edb-animate { animation:edbFadeUp .4s ease both; }
 @keyframes spin { to{transform:rotate(360deg)} }
 .edb-action-card { background:#fff; border:1.5px solid #E8ECF2; border-radius:14px; padding:14px 16px; cursor:pointer; transition:all .2s; display:flex; align-items:center; gap:12px; }
-.edb-action-card:hover { border-color:#FF6B35; box-shadow:0 4px 16px rgba(255,107,53,.12); transform:translateY(-1px); }
+.edb-action-card:hover { border-color:#8B5CF6; box-shadow:0 4px 16px rgba(139,92,246,.12); transform:translateY(-1px); }
 @media(max-width:640px){.edb-mini-grid{grid-template-columns:1fr!important}}
 `;
 
@@ -1410,16 +1410,16 @@ function Avatar({ src, name }) {
   useEffect(() => { setErr(false); }, [src]);
   const initials = (name||"?").trim().split(/\s+/).map(w=>w[0]).join("").slice(0,2).toUpperCase();
   if (src && !err) return <img src={src} alt={name||"Profile"} style={{width:"100%",height:"100%",objectFit:"cover",display:"block"}} onError={()=>setErr(true)} />;
-  return <div style={{width:"100%",height:"100%",display:"flex",alignItems:"center",justifyContent:"center",background:"linear-gradient(135deg,rgba(255,107,53,.18),rgba(0,194,168,.18))",color:"#FF6B35",fontFamily:"'Sora',sans-serif",fontWeight:800,fontSize:22}}>{initials}</div>;
+  return <div style={{width:"100%",height:"100%",display:"flex",alignItems:"center",justifyContent:"center",background:"linear-gradient(135deg,rgba(139,92,246,.18),rgba(6,182,212,.18))",color:"#8B5CF6",fontFamily:"'Sora',sans-serif",fontWeight:800,fontSize:22}}>{initials}</div>;
 }
 
-export default function EmployeeDashboard({ navigateTo }) {
+export default function PersonControlRoom({ navigateTo }) {
   const fileInputRef = useRef(null);
 
-  const [employeeName,  setEmployeeName]  = useState(localStorage.getItem("employeeName")||"");
-  const [employeeRole,  setEmployeeRole]  = useState("Employee");
-  const [employeeEmail, setEmployeeEmail] = useState(localStorage.getItem("userEmail")||"");
-  const [employeeId,    setEmployeeId]    = useState(localStorage.getItem("employeeId")||"");
+  const [employeeName,  setPersonName]  = useState(localStorage.getItem("employeeName")||"");
+  const [employeeRole,  setPersonRole]  = useState("Person");
+  const [employeeEmail, setPersonEmail] = useState(localStorage.getItem("userEmail")||"");
+  const [employeeId,    setPersonId]    = useState(localStorage.getItem("employeeId")||"");
   const [photoUrl,      setPhotoUrl]      = useState("");
   const [photoKey,      setPhotoKey]      = useState(0);
   const [loading,       setLoading]       = useState(true);
@@ -1430,8 +1430,8 @@ export default function EmployeeDashboard({ navigateTo }) {
   const [pwdSummary,    setPwdSummary]    = useState(null);
   const [stats, setStats] = useState({
     todayStatus:null, performanceStatus:null, attendancePct:null,
-    totalEntitlement:FALLBACK_TOTAL, usedLeaveDays:0,
-    remainingDays:FALLBACK_TOTAL, pendingLeaves:0
+    totalEntitlement:FALLBACK_TOTAL, usedTimeAwayDays:0,
+    remainingDays:FALLBACK_TOTAL, pendingTimeAways:0
   });
 
   const storePhoto = raw => {
@@ -1558,11 +1558,11 @@ export default function EmployeeDashboard({ navigateTo }) {
             if (id) {
               userId = id;
               localStorage.setItem("userId", id);
-              if (u.email) { localStorage.setItem("userEmail",u.email); setEmployeeEmail(u.email); }
+              if (u.email) { localStorage.setItem("userEmail",u.email); setPersonEmail(u.email); }
               const n = u.fullName||u.full_name||u.name||"";
-              if (n) { localStorage.setItem("employeeName",n); setEmployeeName(n); }
+              if (n) { localStorage.setItem("employeeName",n); setPersonName(n); }
               if (u.profilePhotoUrl) storePhoto(u.profilePhotoUrl);
-              if (u.employeeId) { localStorage.setItem("employeeId",u.employeeId); setEmployeeId(u.employeeId); }
+              if (u.employeeId) { localStorage.setItem("employeeId",u.employeeId); setPersonId(u.employeeId); }
               break;
             }
           } catch {}
@@ -1575,20 +1575,20 @@ export default function EmployeeDashboard({ navigateTo }) {
             const r = await api.get(`/api/users/${userId}`);
             const u = r.data?.data||r.data||{};
             const n = u.fullName||u.full_name||u.name||"";
-            if (n) { setEmployeeName(n); localStorage.setItem("employeeName",n); }
+            if (n) { setPersonName(n); localStorage.setItem("employeeName",n); }
             const em = u.email||"";
-            if (em) { setEmployeeEmail(em); localStorage.setItem("userEmail",em); }
+            if (em) { setPersonEmail(em); localStorage.setItem("userEmail",em); }
             const pos = u.position||u.designation||u.jobTitle||"";
-            if (pos) setEmployeeRole(pos);
+            if (pos) setPersonRole(pos);
             if (u.profilePhotoUrl) storePhoto(u.profilePhotoUrl);
           } catch {
             try {
               const r2 = await api.get("/api/users/me");
               const u2 = r2.data?.data||r2.data||{};
               const n2 = u2.fullName||u2.full_name||u2.name||"";
-              if (n2) { setEmployeeName(n2); localStorage.setItem("employeeName",n2); }
+              if (n2) { setPersonName(n2); localStorage.setItem("employeeName",n2); }
               const em2 = u2.email||"";
-              if (em2) { setEmployeeEmail(em2); localStorage.setItem("userEmail",em2); }
+              if (em2) { setPersonEmail(em2); localStorage.setItem("userEmail",em2); }
               if (u2.profilePhotoUrl) storePhoto(u2.profilePhotoUrl);
             } catch {}
           }
@@ -1603,11 +1603,11 @@ export default function EmployeeDashboard({ navigateTo }) {
         try {
           const r = await api.get("/api/leaves/my-balance");
           const b = r.data?.data||{};
-          const total     = Number(b.totalEntitlement??b.totalLeaves??b.total??FALLBACK_TOTAL);
-          const used      = Number(b.usedDays??b.usedLeaves??b.used??0);
-          const remaining = Number(b.remainingDays??b.remainingLeaves??b.remaining??Math.max(0,total-used));
-          const pending   = Number(b.pendingLeaves??b.pending??0);
-          setStats(p=>({...p,totalEntitlement:total,usedLeaveDays:used,remainingDays:remaining,pendingLeaves:pending}));
+          const total     = Number(b.totalEntitlement??b.totalTimeAways??b.total??FALLBACK_TOTAL);
+          const used      = Number(b.usedDays??b.usedTimeAways??b.used??0);
+          const remaining = Number(b.remainingDays??b.remainingTimeAways??b.remaining??Math.max(0,total-used));
+          const pending   = Number(b.pendingTimeAways??b.pending??0);
+          setStats(p=>({...p,totalEntitlement:total,usedTimeAwayDays:used,remainingDays:remaining,pendingTimeAways:pending}));
           balanceFetched = true;
         } catch {}
 
@@ -1618,7 +1618,7 @@ export default function EmployeeDashboard({ navigateTo }) {
             const approved = leaves.filter(l=>(l.status||"").toUpperCase()==="APPROVED");
             const pending  = leaves.filter(l=>(l.status||"").toUpperCase()==="PENDING").length;
             const used     = approved.reduce((s,l)=>s+(Number(l.totalDays)||0),0);
-            setStats(p=>({...p,totalEntitlement:FALLBACK_TOTAL,usedLeaveDays:used,remainingDays:Math.max(0,FALLBACK_TOTAL-used),pendingLeaves:pending}));
+            setStats(p=>({...p,totalEntitlement:FALLBACK_TOTAL,usedTimeAwayDays:used,remainingDays:Math.max(0,FALLBACK_TOTAL-used),pendingTimeAways:pending}));
           } catch {}
         }
 
@@ -1652,7 +1652,7 @@ export default function EmployeeDashboard({ navigateTo }) {
     })();
   }, []);
 
-  const displayName = employeeName||localStorage.getItem("employeeName")||"Employee";
+  const displayName = employeeName||localStorage.getItem("employeeName")||"Person";
   const {month,year} = getCurrentMonthYear();
   const leaveColor = stats.remainingDays>10
     ? {bg:"#ECFDF5",border:"#A7F3D0"}
@@ -1734,7 +1734,7 @@ export default function EmployeeDashboard({ navigateTo }) {
       {/* ── MAIN CONTENT ── */}
       <div style={{padding:"20px 24px"}}>
         <div className="edb-card edb-animate" style={{padding:20,position:"relative",overflow:"hidden"}}>
-          <div style={{position:"absolute",top:-20,right:-20,width:100,height:100,borderRadius:"50%",background:"rgba(255,107,53,.06)",pointerEvents:"none"}}/>
+          <div style={{position:"absolute",top:-20,right:-20,width:100,height:100,borderRadius:"50%",background:"rgba(139,92,246,.06)",pointerEvents:"none"}}/>
 
           <div style={{display:"flex",alignItems:"center",gap:14,marginBottom:18,flexWrap:"wrap"}}>
             <div className="edb-avatar-ring" style={{width:68,height:68,flexShrink:0}} onClick={()=>setShowModal(true)}>
@@ -1745,7 +1745,7 @@ export default function EmployeeDashboard({ navigateTo }) {
               <p style={{fontSize:10,fontWeight:700,color:T.coral,textTransform:"uppercase",letterSpacing:".1em",marginBottom:2}}>Welcome back</p>
               <h2 className="fd" style={{fontSize:20,fontWeight:900,color:T.navy,margin:0}}>{displayName}</h2>
               <p style={{fontSize:12,color:"#64748b",marginTop:2}}>
-                {employeeRole||"Employee"}
+                {employeeRole||"Person"}
                 {employeeId&&<span style={{marginLeft:8,color:"#94a3b8"}}>· {employeeId}</span>}
               </p>
             </div>
@@ -1753,7 +1753,7 @@ export default function EmployeeDashboard({ navigateTo }) {
 
           <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10,marginBottom:14}} className="edb-mini-grid">
             <div style={{background:"#F8FAFF",border:`1.5px solid ${T.border}`,borderRadius:12,padding:"10px 12px"}}>
-              <p style={{fontSize:10,color:"#64748b",marginBottom:4,textTransform:"uppercase",letterSpacing:".06em"}}>{month}/{year} Attendance</p>
+              <p style={{fontSize:10,color:"#64748b",marginBottom:4,textTransform:"uppercase",letterSpacing:".06em"}}>{month}/{year} Presence</p>
               <p className="fd" style={{fontSize:20,fontWeight:900,color:T.navy}}>{stats.attendancePct!=null?`${stats.attendancePct}%`:"—"}</p>
               <p style={{fontSize:10,color:T.teal,marginTop:2,display:"flex",alignItems:"center",gap:4}}><Activity size={10}/> Monthly avg</p>
             </div>
@@ -1761,11 +1761,11 @@ export default function EmployeeDashboard({ navigateTo }) {
               onClick={()=>navigateTo&&navigateTo("em_leave")}
               style={{background:leaveColor.bg,border:`1.5px solid ${leaveColor.border}`,borderRadius:12,padding:"10px 12px",cursor:navigateTo?"pointer":"default",transition:"all .2s ease"}}
             >
-              <p style={{fontSize:10,color:"#64748b",marginBottom:4,textTransform:"uppercase",letterSpacing:".06em"}}>Leave Balance</p>
+              <p style={{fontSize:10,color:"#64748b",marginBottom:4,textTransform:"uppercase",letterSpacing:".06em"}}>TimeAway Balance</p>
               <p className="fd" style={{fontSize:20,fontWeight:900,color:T.navy}}>{stats.remainingDays}</p>
               <p style={{fontSize:10,color:"#64748b",marginTop:2,display:"flex",alignItems:"center",gap:4,flexWrap:"wrap"}}>
-                <Calendar size={10}/>{stats.usedLeaveDays} used · {stats.remainingDays} of {stats.totalEntitlement} left
-                {stats.pendingLeaves>0&&` · ${stats.pendingLeaves} pending`}
+                <Calendar size={10}/>{stats.usedTimeAwayDays} used · {stats.remainingDays} of {stats.totalEntitlement} left
+                {stats.pendingTimeAways>0&&` · ${stats.pendingTimeAways} pending`}
               </p>
             </div>
           </div>
@@ -1773,9 +1773,9 @@ export default function EmployeeDashboard({ navigateTo }) {
           <div style={{display:"flex",flexWrap:"wrap",gap:6}}>
             <span className="edb-stat-chip" style={{background:"#EBF8FF",color:"#0369A1",borderColor:"#BAE6FD"}}><Clock size={10}/> Today: {stats.todayStatus||"—"}</span>
             <span className="edb-stat-chip" style={{background:"#ECFDF5",color:"#065F46",borderColor:"#A7F3D0"}}><TrendingUp size={10}/> {stats.performanceStatus||"Good"}</span>
-            {stats.pendingLeaves>0&&(
+            {stats.pendingTimeAways>0&&(
               <span className="edb-stat-chip" style={{background:"#FFFBEB",color:"#92400E",borderColor:"#FDE68A"}}>
-                <Calendar size={10}/> {stats.pendingLeaves} leave{stats.pendingLeaves>1?"s":""} pending
+                <Calendar size={10}/> {stats.pendingTimeAways} leave{stats.pendingTimeAways>1?"s":""} pending
               </span>
             )}
           </div>
@@ -1790,7 +1790,7 @@ export default function EmployeeDashboard({ navigateTo }) {
               onClick={()=>navigateTo&&navigateTo("em_change_pwd")}
               style={{background:pwdLimitHit?"#fef2f2":"#fff",border:`1.5px solid ${pwdLimitHit?"#fecaca":T.border}`}}
             >
-              <div style={{width:36,height:36,borderRadius:10,flexShrink:0,background:pwdLimitHit?"linear-gradient(135deg,#fee2e2,#fecaca)":"linear-gradient(135deg,rgba(255,107,53,.12),rgba(0,194,168,.12))",display:"flex",alignItems:"center",justifyContent:"center"}}>
+              <div style={{width:36,height:36,borderRadius:10,flexShrink:0,background:pwdLimitHit?"linear-gradient(135deg,#fee2e2,#fecaca)":"linear-gradient(135deg,rgba(139,92,246,.12),rgba(6,182,212,.12))",display:"flex",alignItems:"center",justifyContent:"center"}}>
                 <Lock size={16} color={pwdLimitHit?"#dc2626":T.coral}/>
               </div>
               <div style={{flex:1,minWidth:0}}>

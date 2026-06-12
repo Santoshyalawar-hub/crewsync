@@ -3,15 +3,15 @@ import api from "@/lib/apiClient";
 
 /* ── design tokens ── */
 const T = {
-  navy:"#0D1F2D", mid:"#1E3448", coral:"#FF6B35", teal:"#00C2A8",
+  navy:"#0B1020", mid:"#374151", coral:"#8B5CF6", teal:"#06B6D4",
   bg:"#F8FAFC", card:"#ffffff", border:"#E2E8F0",
   text:"#1e293b", muted:"#64748b", faint:"#94a3b8",
 };
 
 /* ── role visual config ── */
 const ROLE_CFG = {
-  CEO:           { grad:"linear-gradient(135deg,#FF6B35,#FF9A00)", dot:"#FF6B35", light:"rgba(255,107,53,.08)",  text:"#C2410C" },
-  "Co-Founder":  { grad:"linear-gradient(135deg,#7C3AED,#A855F7)", dot:"#7C3AED", light:"rgba(124,58,237,.08)", text:"#5B21B6" },
+  CEO:           { grad:"linear-gradient(135deg,#8B5CF6,#FF9A00)", dot:"#8B5CF6", light:"rgba(139,92,246,.08)",  text:"#C2410C" },
+  "Co-Founder":  { grad:"linear-gradient(135deg,#A855F7,#A855F7)", dot:"#A855F7", light:"rgba(124,58,237,.08)", text:"#5B21B6" },
   CTO:           { grad:"linear-gradient(135deg,#0284C7,#38BDF8)", dot:"#0284C7", light:"rgba(2,132,199,.08)",   text:"#075985" },
   CFO:           { grad:"linear-gradient(135deg,#059669,#34D399)", dot:"#059669", light:"rgba(5,150,105,.08)",   text:"#065F46" },
   COO:           { grad:"linear-gradient(135deg,#D97706,#FBBF24)", dot:"#D97706", light:"rgba(217,119,6,.08)",   text:"#92400E" },
@@ -21,7 +21,7 @@ const ROLE_CFG = {
   "Team Lead":   { grad:"linear-gradient(135deg,#6366F1,#A5B4FC)", dot:"#6366F1", light:"rgba(99,102,241,.08)",  text:"#4338CA" },
   "Team Member": { grad:"linear-gradient(135deg,#475569,#94A3B8)", dot:"#475569", light:"rgba(71,85,105,.08)",   text:"#334155" },
 };
-const rc = role => ROLE_CFG[role] || { grad:`linear-gradient(135deg,#0D1F2D,#1E3448)`, dot:"#0D1F2D", light:"rgba(13,31,45,.06)", text:"#0D1F2D" };
+const rc = role => ROLE_CFG[role] || { grad:`linear-gradient(135deg,#0B1020,#374151)`, dot:"#0B1020", light:"rgba(13,31,45,.06)", text:"#0B1020" };
 
 /* ── layout ── */
 const NW=216, NH=190, HG=44, VG=64;
@@ -161,7 +161,7 @@ const NodeCard = ({ node, pos, canEdit, onAdd, onEdit, onDelete, dimmed }) => {
           {canEdit && (
             <div style={{ display:"flex", gap:5, justifyContent:"center", marginTop:9, flexWrap:"wrap" }}>
               <button onMouseDown={e=>e.stopPropagation()} onClick={()=>onAdd(node)} style={btnStyle("#0D9488","rgba(13,148,136,.08)")}>＋ Add</button>
-              <button onMouseDown={e=>e.stopPropagation()} onClick={()=>onEdit(node)} style={btnStyle("#FF6B35","rgba(255,107,53,.08)")}>✎ Edit</button>
+              <button onMouseDown={e=>e.stopPropagation()} onClick={()=>onEdit(node)} style={btnStyle("#8B5CF6","rgba(139,92,246,.08)")}>✎ Edit</button>
               <button onMouseDown={e=>e.stopPropagation()} onClick={()=>onDelete(node)} style={btnStyle("#EF4444","rgba(239,68,68,.07)")}>✕ Del</button>
             </div>
           )}
@@ -227,10 +227,10 @@ const Sel = ({value, onChange, children, style={}}) => (
 const PrimaryBtn = ({onClick, label, disabled}) => (
   <button onClick={onClick} disabled={disabled} style={{
     width:"100%", padding:"12px", borderRadius:11,
-    background:disabled?"#e2e8f0":`linear-gradient(135deg,${T.coral},#ff8c5a)`,
+    background:disabled?"#e2e8f0":`linear-gradient(135deg,${T.coral},#FBBF24)`,
     color:disabled?T.faint:"#fff", border:"none", fontSize:13, fontWeight:800,
     cursor:disabled?"not-allowed":"pointer", fontFamily:"'Sora',sans-serif",
-    boxShadow:disabled?"none":"0 4px 16px rgba(255,107,53,.3)",
+    boxShadow:disabled?"none":"0 4px 16px rgba(139,92,246,.3)",
     transition:"all .2s",
   }}>{label}</button>
 );
@@ -240,7 +240,7 @@ const FPill = ({label, active, onClick}) => (
   <button onClick={onClick} style={{
     padding:"6px 14px", borderRadius:20,
     border:`1.5px solid ${active?T.coral:T.border}`,
-    background:active?"rgba(255,107,53,.08)":"#fff",
+    background:active?"rgba(139,92,246,.08)":"#fff",
     color:active?T.coral:T.muted,
     fontSize:11, fontWeight:active?700:500, cursor:"pointer",
     fontFamily:"'DM Sans',sans-serif", transition:"all .15s",
@@ -249,7 +249,7 @@ const FPill = ({label, active, onClick}) => (
 );
 
 /* ══════════════════════════════ MAIN COMPONENT ══════════════════════════════ */
-export default function HierarchyTree({ canEdit = true }) {
+export default function PeopleMapTree({ canEdit = true }) {
   const [tree,     setTree]    = useState(null);
   const [loading,  setLoading] = useState(true);
   const [error,    setError]   = useState("");
@@ -422,7 +422,7 @@ export default function HierarchyTree({ canEdit = true }) {
   if(error) return (
     <div style={{display:"flex",alignItems:"center",justifyContent:"center",height:"100vh",background:T.bg,flexDirection:"column",gap:12}}>
       <p style={{color:"#ef4444",fontSize:13,fontFamily:"'DM Sans',sans-serif"}}>{error}</p>
-      <button onClick={load} style={{padding:"8px 18px",borderRadius:9,border:`1.5px solid ${T.coral}`,background:"rgba(255,107,53,.08)",color:T.coral,fontSize:12,fontWeight:700,cursor:"pointer"}}>Retry</button>
+      <button onClick={load} style={{padding:"8px 18px",borderRadius:9,border:`1.5px solid ${T.coral}`,background:"rgba(139,92,246,.08)",color:T.coral,fontSize:12,fontWeight:700,cursor:"pointer"}}>Retry</button>
     </div>
   );
 
@@ -443,16 +443,16 @@ export default function HierarchyTree({ canEdit = true }) {
         borderBottom:"1px solid rgba(255,255,255,.06)",
       }}>
         <div>
-          <p style={{fontSize:10,fontWeight:700,color:T.coral,textTransform:"uppercase",letterSpacing:".14em",marginBottom:2}}>SamayaHR · Organization</p>
-          <h1 style={{fontSize:18,fontWeight:900,color:"#fff",margin:0,fontFamily:"'Sora',sans-serif",letterSpacing:"-.01em"}}>Org Chart</h1>
+          <p style={{fontSize:10,fontWeight:700,color:T.coral,textTransform:"uppercase",letterSpacing:".14em",marginBottom:2}}>CrewSync · Network</p>
+          <h1 style={{fontSize:18,fontWeight:900,color:"#fff",margin:0,fontFamily:"'Sora',sans-serif",letterSpacing:"-.01em"}}>PeopleMap</h1>
         </div>
         <div style={{marginLeft:"auto",display:"flex",alignItems:"center",gap:8}}>
           {canEdit && !tree && (
             <button onClick={()=>{setForm({name:"",role:"CEO",designation:"",department:""});setRootModal(true);}} style={{
               padding:"8px 18px",borderRadius:10,
-              background:`linear-gradient(135deg,${T.coral},#ff8c5a)`,
+              background:`linear-gradient(135deg,${T.coral},#FBBF24)`,
               color:"#fff",border:"none",fontSize:12,fontWeight:700,cursor:"pointer",
-              fontFamily:"'DM Sans',sans-serif",boxShadow:"0 4px 14px rgba(255,107,53,.35)",
+              fontFamily:"'DM Sans',sans-serif",boxShadow:"0 4px 14px rgba(139,92,246,.35)",
             }}>＋ Create Root Node</button>
           )}
           <div style={{fontSize:11,color:"rgba(255,255,255,.4)",background:"rgba(255,255,255,.07)",padding:"5px 12px",borderRadius:8}}>

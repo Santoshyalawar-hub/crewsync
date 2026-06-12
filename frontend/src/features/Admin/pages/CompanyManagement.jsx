@@ -7,7 +7,7 @@ import {
 
 /* ── Design tokens ── */
 const T = {
-  navy: "#0D1F2D", navyMid: "#1E3448", coral: "#FF6B35", teal: "#00C2A8",
+  navy: "#0B1020", navyMid: "#374151", coral: "#8B5CF6", teal: "#06B6D4",
   bg: "#F5F7FB", border: "#E8ECF2",
 };
 
@@ -17,7 +17,7 @@ const CSS = `
 .cm .fd { font-family:'Sora',sans-serif; }
 .cm-card { background:#fff; border:1.5px solid ${T.border}; border-radius:18px; box-shadow:0 2px 14px rgba(13,31,45,.05); }
 .cm-input { width:100%; border:1.5px solid ${T.border}; border-radius:10px; padding:10px 14px; font-size:13px; font-family:'DM Sans',sans-serif; color:${T.navy}; outline:none; transition:border-color .2s,box-shadow .2s; background:#fff; }
-.cm-input:focus { border-color:${T.coral}; box-shadow:0 0 0 3px rgba(255,107,53,.1); }
+.cm-input:focus { border-color:${T.coral}; box-shadow:0 0 0 3px rgba(139,92,246,.1); }
 .cm-label { font-size:11px; font-weight:700; color:#64748b; margin-bottom:6px; display:block; text-transform:uppercase; letter-spacing:.06em; }
 .cm-stat { background:#fff; border:1.5px solid ${T.border}; border-radius:16px; padding:18px 20px; display:flex; align-items:center; gap:14px; }
 .cm-field { padding:12px 14px; background:#F8FAFF; border:1px solid ${T.border}; border-radius:10px; }
@@ -30,11 +30,11 @@ const PLAN_LABELS = { BASIC: "Basic", STANDARD: "Standard", PREMIUM: "Premium" }
 const PLAN_COLORS = {
   BASIC:    { bg: "rgba(148,163,184,.1)", color: "#94a3b8", border: "rgba(148,163,184,.3)" },
   STANDARD: { bg: "rgba(99,102,241,.1)",  color: "#6366f1", border: "rgba(99,102,241,.3)"  },
-  PREMIUM:  { bg: "rgba(255,107,53,.1)",  color: T.coral,   border: "rgba(255,107,53,.3)"  },
+  PREMIUM:  { bg: "rgba(139,92,246,.1)",  color: T.coral,   border: "rgba(139,92,246,.3)"  },
 };
 
-export default function CompanyManagement() {
-  const [company,    setCompany]    = useState(null);
+export default function WorkspaceOperations() {
+  const [company,    setWorkspace]    = useState(null);
   const [loading,    setLoading]    = useState(true);
   const [error,      setError]      = useState(null);
   const [editing,    setEditing]    = useState(false);
@@ -47,7 +47,7 @@ export default function CompanyManagement() {
   const companyId  = localStorage.getItem("companyId")  || "";
 
   /* ── Fetch company ── */
-  const fetchCompany = useCallback(async () => {
+  const fetchWorkspace = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
@@ -68,7 +68,7 @@ export default function CompanyManagement() {
             data = list.find(c => String(c.id) === companyId || c.tenantCode === tenantCode) || list[0];
         }
       }
-      setCompany(data || null);
+      setWorkspace(data || null);
       if (data) setForm({
         displayName:   data.displayName   || data.companyName || "",
         officialEmail: data.officialEmail || data.email       || "",
@@ -90,7 +90,7 @@ export default function CompanyManagement() {
     } finally { setLoading(false); }
   }, [tenantCode, companyId]);
 
-  useEffect(() => { fetchCompany(); }, [fetchCompany]);
+  useEffect(() => { fetchWorkspace(); }, [fetchWorkspace]);
 
   /* ── Save changes ── */
   const saveChanges = async () => {
@@ -98,7 +98,7 @@ export default function CompanyManagement() {
     setError(null);
     try {
       const id = companyId || company?.id;
-      if (!id) throw new Error("Company ID not found.");
+      if (!id) throw new Error("Workspace ID not found.");
 
       if (logoFile) {
         const fd = new FormData();
@@ -110,11 +110,11 @@ export default function CompanyManagement() {
       } else {
         await api.put(`/api/global-admin/companies/${id}`, form);
       }
-      setSuccessMsg("Company information updated successfully!");
+      setSuccessMsg("Workspace information updated successfully!");
       setTimeout(() => setSuccessMsg(null), 4000);
       setEditing(false);
       setLogoFile(null);
-      await fetchCompany();
+      await fetchWorkspace();
     } catch (err) {
       console.error("Save company error:", err);
       setError(err.response?.data?.message || "Failed to save changes.");
@@ -137,19 +137,19 @@ export default function CompanyManagement() {
 
       {/* ── HERO ── */}
       <div style={{ background: `linear-gradient(135deg,${T.navy},${T.navyMid})`, padding: "22px 26px", position: "relative", overflow: "hidden", marginBottom: 22 }}>
-        <div style={{ position: "absolute", top: -50, right: 60, width: 180, height: 180, borderRadius: "50%", background: "rgba(255,107,53,.07)", pointerEvents: "none" }} />
+        <div style={{ position: "absolute", top: -50, right: 60, width: 180, height: 180, borderRadius: "50%", background: "rgba(139,92,246,.07)", pointerEvents: "none" }} />
         <div style={{ position: "relative", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 12 }}>
           <div>
-            <p style={{ fontSize: 11, fontWeight: 700, color: T.coral, textTransform: "uppercase", letterSpacing: ".12em", marginBottom: 4 }}>SamayaHR · Administration</p>
-            <h1 className="fd" style={{ fontSize: 23, fontWeight: 900, color: "#fff", margin: 0 }}>Company Management</h1>
+            <p style={{ fontSize: 11, fontWeight: 700, color: T.coral, textTransform: "uppercase", letterSpacing: ".12em", marginBottom: 4 }}>CrewSync · Operatoristration</p>
+            <h1 className="fd" style={{ fontSize: 23, fontWeight: 900, color: "#fff", margin: 0 }}>Workspace Control</h1>
             <p style={{ fontSize: 13, color: "rgba(255,255,255,.5)", marginTop: 4 }}>Manage your company profile and subscription settings.</p>
           </div>
           <div style={{ display: "flex", gap: 10 }}>
-            <button onClick={fetchCompany} style={{ display: "flex", alignItems: "center", gap: 7, padding: "9px 16px", borderRadius: 11, border: "1px solid rgba(255,255,255,.2)", background: "rgba(255,255,255,.08)", color: "#fff", fontSize: 12, fontWeight: 700, cursor: "pointer", fontFamily: "DM Sans" }}>
+            <button onClick={fetchWorkspace} style={{ display: "flex", alignItems: "center", gap: 7, padding: "9px 16px", borderRadius: 11, border: "1px solid rgba(255,255,255,.2)", background: "rgba(255,255,255,.08)", color: "#fff", fontSize: 12, fontWeight: 700, cursor: "pointer", fontFamily: "DM Sans" }}>
               <RefreshCw size={13} /> Refresh
             </button>
             {!editing && (
-              <button onClick={() => setEditing(true)} style={{ display: "flex", alignItems: "center", gap: 7, padding: "9px 16px", borderRadius: 11, border: "none", background: `linear-gradient(135deg,${T.coral},#ff5722)`, color: "#fff", fontSize: 12, fontWeight: 700, cursor: "pointer", fontFamily: "DM Sans", boxShadow: "0 4px 16px rgba(255,107,53,.3)" }}>
+              <button onClick={() => setEditing(true)} style={{ display: "flex", alignItems: "center", gap: 7, padding: "9px 16px", borderRadius: 11, border: "none", background: `linear-gradient(135deg,${T.coral},#06B6D4)`, color: "#fff", fontSize: 12, fontWeight: 700, cursor: "pointer", fontFamily: "DM Sans", boxShadow: "0 4px 16px rgba(139,92,246,.3)" }}>
                 <Edit2 size={13} /> Edit Profile
               </button>
             )}
@@ -183,8 +183,8 @@ export default function CompanyManagement() {
         ) : !company ? (
           <div className="cm-card" style={{ padding: "48px 24px", textAlign: "center" }}>
             <span style={{ fontSize: 44, display: "block", marginBottom: 12 }}>🏢</span>
-            <p className="fd" style={{ fontSize: 16, fontWeight: 800, color: T.navy, marginBottom: 6 }}>No Company Found</p>
-            <p style={{ fontSize: 13, color: "#94a3b8" }}>Company profile could not be loaded. Please contact your Global Admin.</p>
+            <p className="fd" style={{ fontSize: 16, fontWeight: 800, color: T.navy, marginBottom: 6 }}>No Workspace Found</p>
+            <p style={{ fontSize: 13, color: "#94a3b8" }}>Workspace profile could not be loaded. Please contact your Global Operator.</p>
           </div>
         ) : (
           <>
@@ -193,7 +193,7 @@ export default function CompanyManagement() {
               {[
                 { Icon: Building2, label: "Tenant Code",   value: company.tenantCode || tenantCode || "—", color: T.coral   },
                 { Icon: Shield,    label: "Plan",           value: company.plan       || "BASIC",           color: "#6366f1" },
-                { Icon: Users,     label: "Seats",          value: company.maxEmployees || "Unlimited",     color: T.teal    },
+                { Icon: Users,     label: "Seats",          value: company.maxPersons || "Unlimited",     color: T.teal    },
                 { Icon: Calendar,  label: "Member Since",   value: company.createdAt
                     ? new Date(company.createdAt).toLocaleDateString("en-IN", { month: "short", year: "numeric" })
                     : "—",
@@ -216,7 +216,7 @@ export default function CompanyManagement() {
               <div style={{ background: `linear-gradient(90deg,${T.navy},${T.navyMid})`, padding: "14px 20px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
                   <Building2 size={16} color={T.coral} />
-                  <p className="fd" style={{ fontSize: 14, fontWeight: 800, color: "#fff" }}>Company Profile</p>
+                  <p className="fd" style={{ fontSize: 14, fontWeight: 800, color: "#fff" }}>Workspace Profile</p>
                 </div>
                 {company.plan && <PlanBadge plan={company.plan} />}
               </div>
@@ -245,7 +245,7 @@ export default function CompanyManagement() {
                   <>
                     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
                       {[
-                        { label: "Company Name",   key: "displayName"   },
+                        { label: "Workspace Name",   key: "displayName"   },
                         { label: "Official Email", key: "officialEmail" },
                         { label: "Phone",          key: "phone"         },
                         { label: "Website",        key: "website"       },
@@ -276,7 +276,7 @@ export default function CompanyManagement() {
                         Cancel
                       </button>
                       <button onClick={saveChanges} disabled={saving}
-                        style={{ display: "inline-flex", alignItems: "center", gap: 7, padding: "10px 20px", borderRadius: 11, background: `linear-gradient(135deg,${T.coral},#ff5722)`, color: "#fff", fontSize: 13, fontWeight: 800, border: "none", cursor: saving ? "not-allowed" : "pointer", opacity: saving ? .7 : 1, fontFamily: "DM Sans", boxShadow: "0 4px 16px rgba(255,107,53,.3)" }}>
+                        style={{ display: "inline-flex", alignItems: "center", gap: 7, padding: "10px 20px", borderRadius: 11, background: `linear-gradient(135deg,${T.coral},#06B6D4)`, color: "#fff", fontSize: 13, fontWeight: 800, border: "none", cursor: saving ? "not-allowed" : "pointer", opacity: saving ? .7 : 1, fontFamily: "DM Sans", boxShadow: "0 4px 16px rgba(139,92,246,.3)" }}>
                         {saving ? "Saving…" : "Save Changes"}
                       </button>
                     </div>

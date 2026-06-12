@@ -3,7 +3,7 @@ import { DollarSign, CheckCircle, XCircle, CreditCard, Eye, Filter } from "lucid
 import api from "@/lib/apiClient";
 
 const T = {
-  navy:"#0D1F2D", navyMid:"#1E3448", coral:"#FF6B35", teal:"#00C2A8",
+  navy:"#0B1020", navyMid:"#374151", coral:"#8B5CF6", teal:"#06B6D4",
   bg:"#F5F7FB", border:"#E8ECF2",
 };
 
@@ -24,7 +24,7 @@ const CSS = `
 
 const STATUS_STYLE = {
   PENDING:  { bg:"#FFFBEB", color:"#B45309", border:"#FDE68A" },
-  APPROVED: { bg:"rgba(0,194,168,.08)", color:"#0D7A6A", border:"rgba(0,194,168,.3)" },
+  APPROVED: { bg:"rgba(6,182,212,.08)", color:"#0D7A6A", border:"rgba(6,182,212,.3)" },
   REJECTED: { bg:"#FEF2F2", color:"#991B1B", border:"#FECACA" },
   PAID:     { bg:"rgba(99,102,241,.08)", color:"#4F46E5", border:"rgba(99,102,241,.25)" },
 };
@@ -32,7 +32,7 @@ const STATUS_STYLE = {
 const fmtDate = d => d ? new Date(d).toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"numeric"}) : "—";
 const fmtAmt  = a => a != null ? `₹${Number(a).toLocaleString("en-IN",{minimumFractionDigits:2})}` : "—";
 
-export default function AdminReimbursements() {
+export default function OperatorClaimsDesk() {
   const [items,      setItems]      = useState([]);
   const [loading,    setLoading]    = useState(true);
   const [filterStatus, setFilter]   = useState("ALL");
@@ -103,10 +103,10 @@ export default function AdminReimbursements() {
 
       {/* HERO */}
       <div style={{background:`linear-gradient(135deg,${T.navy},${T.navyMid})`,padding:"22px 26px",position:"relative",overflow:"hidden"}}>
-        <div style={{position:"absolute",top:-50,right:60,width:180,height:180,borderRadius:"50%",background:"rgba(255,107,53,.07)",pointerEvents:"none"}}/>
+        <div style={{position:"absolute",top:-50,right:60,width:180,height:180,borderRadius:"50%",background:"rgba(139,92,246,.07)",pointerEvents:"none"}}/>
         <div style={{position:"relative"}}>
-          <p style={{fontSize:11,fontWeight:700,color:T.coral,textTransform:"uppercase",letterSpacing:".12em",marginBottom:4}}>SamayaHR · Finance</p>
-          <h1 className="fd" style={{fontSize:23,fontWeight:900,color:"#fff",margin:0}}>Reimbursements</h1>
+          <p style={{fontSize:11,fontWeight:700,color:T.coral,textTransform:"uppercase",letterSpacing:".12em",marginBottom:4}}>CrewSync · MoneyOps</p>
+          <h1 className="fd" style={{fontSize:23,fontWeight:900,color:"#fff",margin:0}}>ClaimsDesk</h1>
           <p style={{fontSize:13,color:"rgba(255,255,255,.5)",marginTop:4}}>Review and process employee reimbursement claims</p>
         </div>
       </div>
@@ -135,7 +135,7 @@ export default function AdminReimbursements() {
           {["ALL","PENDING","APPROVED","REJECTED","PAID"].map(f => (
             <button key={f} onClick={() => setFilter(f)}
               style={{padding:"5px 13px",borderRadius:8,border:`1.5px solid ${filterStatus===f ? T.coral : T.border}`,
-                background: filterStatus===f ? `rgba(255,107,53,.08)` : "#fff",
+                background: filterStatus===f ? `rgba(139,92,246,.08)` : "#fff",
                 color: filterStatus===f ? T.coral : "#64748b",
                 fontSize:11,fontWeight:700,cursor:"pointer",fontFamily:"'DM Sans',sans-serif",transition:"all .15s"}}>
               {f}
@@ -148,14 +148,14 @@ export default function AdminReimbursements() {
           <div style={{background:`linear-gradient(90deg,${T.navy},${T.navyMid})`,padding:"12px 18px",display:"flex",alignItems:"center",gap:10}}>
             <DollarSign size={15} color={T.coral}/>
             <p className="fd" style={{fontSize:13,fontWeight:800,color:"#fff"}}>Claims</p>
-            <span style={{marginLeft:"auto",padding:"2px 9px",borderRadius:999,background:"rgba(255,107,53,.2)",color:T.coral,fontSize:10,fontWeight:700}}>
+            <span style={{marginLeft:"auto",padding:"2px 9px",borderRadius:999,background:"rgba(139,92,246,.2)",color:T.coral,fontSize:10,fontWeight:700}}>
               {filtered.length}
             </span>
           </div>
 
           {/* Header */}
           <div style={{display:"grid",gridTemplateColumns:"2fr 1fr 1fr 1fr 1fr",gap:12,padding:"10px 18px",borderBottom:`1.5px solid ${T.border}`,background:"#FAFBFF"}}>
-            {["Employee","Type","Amount","Date","Actions"].map(h => (
+            {["Person","Type","Amount","Date","Actions"].map(h => (
               <p key={h} style={{fontSize:10,fontWeight:700,color:"#94a3b8",textTransform:"uppercase",letterSpacing:".07em",margin:0}}>{h}</p>
             ))}
           </div>
@@ -174,7 +174,7 @@ export default function AdminReimbursements() {
               return (
                 <div key={item.id} className="ar-row">
                   <div>
-                    <p style={{fontSize:13,fontWeight:700,color:T.navy,margin:0}}>Employee #{item.userId}</p>
+                    <p style={{fontSize:13,fontWeight:700,color:T.navy,margin:0}}>Person #{item.userId}</p>
                     <p style={{fontSize:11,color:"#94a3b8",margin:"2px 0 0"}}>{item.description?.slice(0,50)}{item.description?.length>50?"…":""}</p>
                   </div>
                   <p style={{fontSize:12,color:"#64748b",margin:0}}>{item.reimbursementType || "—"}</p>
@@ -191,7 +191,7 @@ export default function AdminReimbursements() {
                     {item.status === "PENDING" && (
                       <>
                         <button className="ar-btn" disabled={actionBusy} onClick={() => approve(item.id)}
-                          style={{background:"rgba(0,194,168,.1)",color:"#0D7A6A"}}>
+                          style={{background:"rgba(6,182,212,.1)",color:"#0D7A6A"}}>
                           <CheckCircle size={10}/> Approve
                         </button>
                         <button className="ar-btn" disabled={actionBusy}
@@ -223,7 +223,7 @@ export default function AdminReimbursements() {
             onClick={e => e.stopPropagation()}>
             <p className="fd" style={{fontSize:16,fontWeight:900,color:T.navy,marginBottom:18}}>Reimbursement Details</p>
             {[
-              ["Employee ID", selected.employeeId || selected.employeeCode || selected.userId],
+              ["Person ID", selected.employeeId || selected.employeeCode || selected.userId],
               ["Type", selected.reimbursementType],
               ["Amount", fmtAmt(selected.amount)],
               ["Expense Date", fmtDate(selected.expenseDate)],

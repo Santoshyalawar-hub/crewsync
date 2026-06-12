@@ -1,6 +1,6 @@
 // import React, { useState } from "react";
 // import { useNavigate } from "react-router-dom";
-// import logo from "../public/assets/Zlabs-Logo.png";
+// import logo from "../public/assets/crewsync-mark.svg";
 
 // const getApiBaseUrl = () => {
 //   const fromEnv =
@@ -37,7 +37,7 @@
 //   { icon: "🕒", text: "Real-time attendance tracking" },
 //   { icon: "📊", text: "Powerful analytics & reports" },
 //   { icon: "🔒", text: "Enterprise-grade security" },
-//   { icon: "📱", text: "Mobile app for iOS & Android" },
+//   { icon: "📱", text: "Pocket app for iOS & Android" },
 // ];
 
 // const LoginPage = () => {
@@ -66,12 +66,12 @@
 //   };
 
 //   const getTitle = () =>
-//     activeTab === "company" ? "Company Sign In" : "Employee Sign In";
+//     activeTab === "company" ? "Workspace Sign In" : "Person Sign In";
 
 //   const handleSubmit = async (e) => {
 //     e.preventDefault();
-//     const isCompany = activeTab === "company";
-//     const payload = isCompany
+//     const isWorkspace = activeTab === "company";
+//     const payload = isWorkspace
 //       ? { officialEmail: loginData.email, tenantCode: loginData.companyKey }
 //       : { email: loginData.email, password: loginData.password };
 
@@ -96,7 +96,7 @@
 
 //       localStorage.setItem("token", `Bearer ${token}`);
 
-//       if (isCompany) {
+//       if (isWorkspace) {
 //         localStorage.setItem("companyId", String(data?.data?.companyId || ""));
 //         localStorage.setItem("companyName", data?.data?.displayName || "");
 //         localStorage.setItem("tenantCode", data?.data?.tenantCode || "");
@@ -181,13 +181,13 @@
 //         .ticker-anim { animation: ticker 22s linear infinite; }
 
 //         .coral-btn {
-//           background: linear-gradient(135deg, #FF6B35 0%, #FF5722 100%);
-//           box-shadow: 0 4px 20px rgba(255,107,53,0.35);
+//           background: linear-gradient(135deg, #8B5CF6 0%, #06B6D4 100%);
+//           box-shadow: 0 4px 20px rgba(139,92,246,0.35);
 //           transition: all .25s;
 //         }
 //         .coral-btn:hover {
 //           transform: translateY(-2px);
-//           box-shadow: 0 8px 30px rgba(255,107,53,0.45);
+//           box-shadow: 0 8px 30px rgba(139,92,246,0.45);
 //         }
 //         .coral-btn:disabled {
 //           opacity: .7;
@@ -202,26 +202,26 @@
 //           background: #FAFAFA;
 //           padding: 11px 14px;
 //           font-size: 14px;
-//           color: #0D1F2D;
+//           color: #0B1020;
 //           outline: none;
 //           transition: border-color .2s, background .2s, box-shadow .2s;
 //         }
 //         .input-field:focus {
-//           border-color: #FF6B35;
+//           border-color: #8B5CF6;
 //           background: #fff;
-//           box-shadow: 0 0 0 3px rgba(255,107,53,0.10);
+//           box-shadow: 0 0 0 3px rgba(139,92,246,0.10);
 //         }
 //         .input-field::placeholder { color: #9CA3AF; }
 
 //         .tab-active {
-//           color: #FF6B35;
-//           border-bottom: 2.5px solid #FF6B35;
+//           color: #8B5CF6;
+//           border-bottom: 2.5px solid #8B5CF6;
 //         }
 //         .tab-inactive {
 //           color: #9CA3AF;
 //           border-bottom: 2.5px solid transparent;
 //         }
-//         .tab-inactive:hover { color: #0D1F2D; }
+//         .tab-inactive:hover { color: #0B1020; }
 
 //         .ticker-mask {
 //           mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
@@ -235,12 +235,12 @@
 //       <div className="hidden md:flex md:w-[40%] lg:w-[42%] relative overflow-hidden text-white flex-col">
 
 //         {/* Background */}
-//         <div className="absolute inset-0" style={{ background: 'linear-gradient(160deg, #0a0f1e 0%, #0D1F2D 40%, #111d33 100%)' }} />
+//         <div className="absolute inset-0" style={{ background: 'linear-gradient(160deg, #0a0f1e 0%, #0B1020 40%, #111d33 100%)' }} />
 
 //         {/* Orbs */}
-//         <div className="absolute -top-20 -left-20 w-72 h-72 rounded-full blur-3xl opacity-20" style={{ background: '#FF6B35' }} />
-//         <div className="absolute top-1/2 -right-16 w-64 h-64 rounded-full blur-3xl opacity-15" style={{ background: '#00C2A8' }} />
-//         <div className="absolute bottom-[-60px] left-16 w-80 h-80 rounded-full blur-3xl opacity-15" style={{ background: '#FF6B35' }} />
+//         <div className="absolute -top-20 -left-20 w-72 h-72 rounded-full blur-3xl opacity-20" style={{ background: '#8B5CF6' }} />
+//         <div className="absolute top-1/2 -right-16 w-64 h-64 rounded-full blur-3xl opacity-15" style={{ background: '#06B6D4' }} />
+//         <div className="absolute bottom-[-60px] left-16 w-80 h-80 rounded-full blur-3xl opacity-15" style={{ background: '#8B5CF6' }} />
 
 //         {/* Grid overlay */}
 //         <div className="absolute inset-0 opacity-[0.04] pointer-events-none" style={{
@@ -260,8 +260,8 @@
 //               height: `${p.size}px`,
 //               '--dur': `${p.duration}s`,
 //               '--delay': `${p.delay}s`,
-//               background: 'rgba(255,107,53,0.6)',
-//               boxShadow: '0 0 12px rgba(255,107,53,0.5)',
+//               background: 'rgba(139,92,246,0.6)',
+//               boxShadow: '0 0 12px rgba(139,92,246,0.5)',
 //             }}
 //           />
 //         ))}
@@ -272,29 +272,29 @@
 //           {/* Logo box */}
 //           <div className="flex items-center gap-4 mb-auto">
 //             <div className="relative group">
-//               <div className="absolute -inset-1.5 rounded-2xl blur-lg opacity-30 group-hover:opacity-50 transition duration-500" style={{ background: '#FF6B35' }} />
+//               <div className="absolute -inset-1.5 rounded-2xl blur-lg opacity-30 group-hover:opacity-50 transition duration-500" style={{ background: '#8B5CF6' }} />
 //               <div className="relative w-[72px] h-[72px] bg-white rounded-2xl shadow-2xl border border-white/10 flex items-center justify-center overflow-hidden">
 //                 {/* scan line */}
 //                 <div className="absolute inset-0 pointer-events-none z-20">
 //                   <div className="scan-line absolute left-0 w-full h-[2px]"
-//                     style={{ background: 'linear-gradient(90deg, transparent, #FF6B35, transparent)', opacity: .5 }} />
+//                     style={{ background: 'linear-gradient(90deg, transparent, #8B5CF6, transparent)', opacity: .5 }} />
 //                 </div>
 //                 {/* shimmer */}
 //                 <div className="absolute inset-0 pointer-events-none overflow-hidden">
 //                   <div className="shimmer absolute top-0 left-0 w-1/2 h-full"
 //                     style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent)' }} />
 //                 </div>
-//                 <img src={logo} alt="SamayaHR" className="relative z-10 h-12 w-12 object-contain group-hover:scale-105 transition-transform duration-500" />
+//                 <img src={logo} alt="CrewSync" className="relative z-10 h-12 w-12 object-contain group-hover:scale-105 transition-transform duration-500" />
 //                 {/* corner accents */}
-//                 <div className="absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 rounded-tl-lg" style={{ borderColor: '#FF6B35' }} />
-//                 <div className="absolute bottom-0 right-0 w-3 h-3 border-b-2 border-r-2 rounded-br-lg" style={{ borderColor: '#00C2A8' }} />
+//                 <div className="absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 rounded-tl-lg" style={{ borderColor: '#8B5CF6' }} />
+//                 <div className="absolute bottom-0 right-0 w-3 h-3 border-b-2 border-r-2 rounded-br-lg" style={{ borderColor: '#06B6D4' }} />
 //               </div>
 //             </div>
 //             <div>
 //               <p className="font-black text-xl tracking-tight" style={{ fontFamily: 'Sora, sans-serif' }}>
-//                 Samaya<span style={{ color: '#FF6B35' }}>HR</span>
+//                 CrewSync<span style={{ color: '#8B5CF6' }}>PeopleOps</span>
 //               </p>
-//               <p className="text-xs text-gray-500 font-medium mt-0.5">Your Trusted HR Companion</p>
+//               <p className="text-xs text-gray-500 font-medium mt-0.5">Your Trusted PeopleOps Companion</p>
 //             </div>
 //           </div>
 
@@ -302,22 +302,22 @@
 //           <div className="flex-1 flex flex-col justify-center py-10">
 //             <div className="fade-up-1">
 //               <div className="inline-flex items-center gap-2 text-xs font-bold tracking-widest uppercase px-3 py-1.5 rounded-full mb-6"
-//                 style={{ background: 'rgba(255,107,53,0.12)', border: '1px solid rgba(255,107,53,0.25)', color: '#FF6B35' }}>
+//                 style={{ background: 'rgba(139,92,246,0.12)', border: '1px solid rgba(139,92,246,0.25)', color: '#8B5CF6' }}>
 //                 <span className="relative flex h-1.5 w-1.5">
-//                   <span className="pulse-ring absolute inline-flex h-full w-full rounded-full" style={{ background: '#FF6B35' }} />
-//                   <span className="relative inline-flex rounded-full h-1.5 w-1.5" style={{ background: '#FF6B35' }} />
+//                   <span className="pulse-ring absolute inline-flex h-full w-full rounded-full" style={{ background: '#8B5CF6' }} />
+//                   <span className="relative inline-flex rounded-full h-1.5 w-1.5" style={{ background: '#8B5CF6' }} />
 //                 </span>
 //                 Trusted by 1000+ companies
 //               </div>
 
 //               <h2 className="text-3xl font-black leading-tight mb-3" style={{ fontFamily: 'Sora, sans-serif' }}>
-//                 HR that works as hard<br />
-//                 <span style={{ background: 'linear-gradient(135deg,#FF6B35,#FF9A5C)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+//                 PeopleOps that works as hard<br />
+//                 <span style={{ background: 'linear-gradient(135deg,#8B5CF6,#60A5FA)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
 //                   as your team does.
 //                 </span>
 //               </h2>
 //               <p className="text-gray-400 text-sm leading-relaxed mb-8 max-w-xs">
-//                 From attendance to payroll, SamayaHR automates the routine so you can focus on what matters.
+//                 From attendance to payroll, CrewSync automates the routine so you can focus on what matters.
 //               </p>
 //             </div>
 
@@ -327,7 +327,7 @@
 //                 {[...FEATURES, ...FEATURES].map((f, i) => (
 //                   <div key={i} className="flex items-center gap-2 px-5 shrink-0">
 //                     <span className="w-7 h-7 rounded-lg flex items-center justify-center text-sm shrink-0"
-//                       style={{ background: 'rgba(255,107,53,0.15)' }}>{f.icon}</span>
+//                       style={{ background: 'rgba(139,92,246,0.15)' }}>{f.icon}</span>
 //                     <span className="text-xs font-semibold text-gray-300 whitespace-nowrap">{f.text}</span>
 //                     <span className="text-gray-700 ml-4">◆</span>
 //                   </div>
@@ -341,19 +341,19 @@
 //             <div className="rounded-2xl p-5" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)' }}>
 //               <div className="flex gap-1 mb-3">
 //                 {[...Array(5)].map((_, i) => (
-//                   <svg key={i} className="w-3.5 h-3.5" fill="#FF6B35" viewBox="0 0 24 24">
+//                   <svg key={i} className="w-3.5 h-3.5" fill="#8B5CF6" viewBox="0 0 24 24">
 //                     <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
 //                   </svg>
 //                 ))}
 //               </div>
 //               <p className="text-sm leading-relaxed text-gray-300 mb-4">
-//                 "With SamayaHR, our team can check in, track leaves and view payslips from anywhere. HR work feels lighter and paydays are smoother."
+//                 "With CrewSync, our team can check in, track leaves and view payslips from anywhere. PeopleOps work feels lighter and paydays are smoother."
 //               </p>
 //               <div className="flex items-center gap-3">
 //                 <div className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-black text-white coral-btn shrink-0">R</div>
 //                 <div>
 //                   <p className="text-xs font-bold text-white">Riya Sharma</p>
-//                   <p className="text-[10px] text-gray-500">HR Partner, Client Organization</p>
+//                   <p className="text-[10px] text-gray-500">PeopleOps Partner, Client Network</p>
 //                 </div>
 //               </div>
 //             </div>
@@ -365,14 +365,14 @@
 //       {/* ══════════════════════════════════════════
 //           RIGHT PANEL — form area
 //       ══════════════════════════════════════════ */}
-//       <div className="flex-1 flex flex-col relative" style={{ backgroundColor: '#F7F8FA' }}>
+//       <div className="flex-1 flex flex-col relative" style={{ backgroundColor: '#F6F8FB' }}>
 
 //         {/* Back button */}
 //         <div className="absolute top-6 left-6 z-10">
 //           <button
 //             type="button"
 //             onClick={handleReturnHome}
-//             className="flex items-center gap-2 px-4 py-2 text-sm font-semibold text-gray-500 hover:text-[#0D1F2D] hover:bg-white rounded-xl transition-all duration-200 border border-transparent hover:border-gray-200 hover:shadow-sm"
+//             className="flex items-center gap-2 px-4 py-2 text-sm font-semibold text-gray-500 hover:text-[#0B1020] hover:bg-white rounded-xl transition-all duration-200 border border-transparent hover:border-gray-200 hover:shadow-sm"
 //           >
 //             <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 //               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
@@ -387,9 +387,9 @@
 //             {/* Logo + title */}
 //             <div className="text-center mb-8 fade-up-1">
 //               <div className="inline-block mb-4">
-//                 <img src="/assets/Zlabs-Logo.png" alt="SamayaHR" className="h-[80px] w-[80px] object-contain mx-auto" />
+//                 <img src="/assets/crewsync-mark.svg" alt="CrewSync" className="h-[80px] w-[80px] object-contain mx-auto" />
 //               </div>
-//               <h1 className="text-2xl font-black text-[#0D1F2D] mb-1.5" style={{ fontFamily: 'Sora, sans-serif' }}>
+//               <h1 className="text-2xl font-black text-[#0B1020] mb-1.5" style={{ fontFamily: 'Sora, sans-serif' }}>
 //                 Welcome back
 //               </h1>
 //               <p className="text-sm text-gray-500">
@@ -405,11 +405,11 @@
 
 //                 {/* Big sign-in card */}
 //                 <div className="w-full bg-white rounded-3xl shadow-xl shadow-gray-200/60 border border-gray-100 p-8 mb-6">
-//                   <div className="flex items-center gap-3 mb-6 p-4 rounded-2xl" style={{ background: '#F7F8FA' }}>
+//                   <div className="flex items-center gap-3 mb-6 p-4 rounded-2xl" style={{ background: '#F6F8FB' }}>
 //                     <div className="w-10 h-10 rounded-xl flex items-center justify-center text-xl shrink-0"
-//                       style={{ background: 'rgba(255,107,53,0.10)' }}>🔐</div>
+//                       style={{ background: 'rgba(139,92,246,0.10)' }}>🔐</div>
 //                     <div>
-//                       <p className="text-sm font-bold text-[#0D1F2D]">Secure Sign In</p>
+//                       <p className="text-sm font-bold text-[#0B1020]">Secure Sign In</p>
 //                       <p className="text-xs text-gray-400">Your data is protected with AES-256 encryption</p>
 //                     </div>
 //                   </div>
@@ -433,7 +433,7 @@
 
 //                   <p className="mt-4 text-xs text-gray-500 text-center">
 //                     Don't have an account?{" "}
-//                     <a href="/solutions/bookdemo" className="font-bold" style={{ color: '#FF6B35' }}>
+//                     <a href="/solutions/bookdemo" className="font-bold" style={{ color: '#8B5CF6' }}>
 //                       Book a Demo →
 //                     </a>
 //                   </p>
@@ -454,7 +454,7 @@
 
 //                 {/* Tabs */}
 //                 <div className="flex border-b border-gray-100 mb-6 gap-1">
-//                   {[["employee","👤 Employee"],["company","🏢 Company"]].map(([tab, label]) => (
+//                   {[["employee","👤 Person"],["company","🏢 Workspace"]].map(([tab, label]) => (
 //                     <button
 //                       key={tab}
 //                       type="button"
@@ -466,7 +466,7 @@
 //                   ))}
 //                 </div>
 
-//                 <h2 className="text-lg font-black text-[#0D1F2D] mb-5 text-center" style={{ fontFamily: 'Sora, sans-serif' }}>
+//                 <h2 className="text-lg font-black text-[#0B1020] mb-5 text-center" style={{ fontFamily: 'Sora, sans-serif' }}>
 //                   {getTitle()}
 //                 </h2>
 
@@ -511,7 +511,7 @@
 //                     <div>
 //                       <div className="flex items-center justify-between mb-1.5">
 //                         <label className="text-xs font-semibold text-gray-600">Password</label>
-//                         <a href="/forgot-password" className="text-xs font-semibold" style={{ color: '#FF6B35' }}>
+//                         <a href="/forgot-password" className="text-xs font-semibold" style={{ color: '#8B5CF6' }}>
 //                           Forgot password?
 //                         </a>
 //                       </div>
@@ -556,7 +556,7 @@
 //                 <button
 //                   type="button"
 //                   onClick={() => setShowForm(false)}
-//                   className="mt-5 w-full text-center text-xs font-semibold text-gray-400 hover:text-[#FF6B35] transition-colors"
+//                   className="mt-5 w-full text-center text-xs font-semibold text-gray-400 hover:text-[#8B5CF6] transition-colors"
 //                 >
 //                   ← Back to sign-in screen
 //                 </button>
@@ -566,9 +566,9 @@
 //             {/* ToS */}
 //             <p className="mt-8 text-[11px] text-gray-400 text-center leading-relaxed fade-up-4">
 //               By logging in, you agree to our{" "}
-//               <a href="/terms" className="underline underline-offset-2 hover:text-[#FF6B35] transition-colors">Terms of Service</a>
+//               <a href="/terms" className="underline underline-offset-2 hover:text-[#8B5CF6] transition-colors">Terms of Service</a>
 //               {" "}and{" "}
-//               <a href="/privacy" className="underline underline-offset-2 hover:text-[#FF6B35] transition-colors">Privacy Policy</a>.
+//               <a href="/privacy" className="underline underline-offset-2 hover:text-[#8B5CF6] transition-colors">Privacy Playbook</a>.
 //             </p>
 //           </div>
 //         </div>
@@ -576,7 +576,7 @@
 //         {/* Footer */}
 //         <footer className="w-full py-4 text-center border-t border-gray-100 bg-white">
 //           <p className="text-[11px] text-gray-400">
-//             © {new Date().getFullYear()} Zlabs Innovation Private Limited. All rights reserved.
+//             © {new Date().getFullYear()} CrewSync Technologies. All rights reserved.
 //           </p>
 //         </footer>
 //       </div>
@@ -590,7 +590,7 @@
 
 // import React, { useState, useEffect } from "react";
 // import { useNavigate } from "react-router-dom";
-// import logo from "../public/assets/Zlabs-Logo.png";
+// import logo from "../public/assets/crewsync-mark.svg";
 
 // /* ─── API helper ─────────────────────────────────── */
 // const getApiBaseUrl = () => {
@@ -621,11 +621,11 @@
 //   {id:4,left:"72%",bottom:"-18%",size:3,dur:22,delay:5  },
 //   {id:5,left:"85%",bottom:"-10%",size:5,dur:28,delay:2  },
 // ];
-// const HR_FEATURES = [
-//   {icon:"⏱️",text:"Smart Attendance"},      {icon:"💸",text:"Instant Payroll"},
-//   {icon:"🏖️",text:"Leave Automation"},      {icon:"📊",text:"People Analytics"},
-//   {icon:"🔐",text:"Bank-Grade Security"},   {icon:"📱",text:"Mobile App Access"},
-//   {icon:"🚀",text:"Paperless Onboarding"},  {icon:"🎯",text:"OKR Tracking"},
+// const PeopleOps_FEATURES = [
+//   {icon:"⏱️",text:"Presence Intelligence"},      {icon:"💸",text:"Instant Payouts"},
+//   {icon:"🏖️",text:"TimeAway Automation"},      {icon:"📊",text:"People Signals"},
+//   {icon:"🔐",text:"Bank-Grade Trust"},   {icon:"📱",text:"Pocket Console Access"},
+//   {icon:"🚀",text:"Paperless JoinerFlow"},  {icon:"🎯",text:"OKR Tracking"},
 // ];
 
 // function Counter({target,suffix=""}) {
@@ -658,8 +658,8 @@
 
 //   const handleSubmit = async e => {
 //     e.preventDefault();
-//     const isCompany = activeTab==="company";
-//     const payload   = isCompany
+//     const isWorkspace = activeTab==="company";
+//     const payload   = isWorkspace
 //       ? {officialEmail:loginData.email, tenantCode:loginData.companyKey}
 //       : {email:loginData.email, password:loginData.password};
 //     setLoading(true);
@@ -671,7 +671,7 @@
 //       const token=data?.data?.token??null;
 //       if(!token){alert("Login succeeded but token missing");return;}
 //       localStorage.setItem("token",`Bearer ${token}`);
-//       if(isCompany){
+//       if(isWorkspace){
 //         localStorage.setItem("companyId",  String(data?.data?.companyId||""));
 //         localStorage.setItem("companyName",data?.data?.displayName||"");
 //         localStorage.setItem("tenantCode", data?.data?.tenantCode||"");
@@ -730,8 +730,8 @@
 //     .f3{animation:fade-up .45s ease both .25s}.f4{animation:fade-up .45s ease both .35s}
 //     .f5{animation:fade-up .45s ease both .45s}
 
-//     .coral-btn{background:linear-gradient(135deg,#FF6B35,#FF5722);box-shadow:0 4px 20px rgba(255,107,53,.35);transition:all .25s}
-//     .coral-btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(255,107,53,.45)}
+//     .coral-btn{background:linear-gradient(135deg,#8B5CF6,#06B6D4);box-shadow:0 4px 20px rgba(139,92,246,.35);transition:all .25s}
+//     .coral-btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(139,92,246,.45)}
 //     .coral-btn:disabled{opacity:.7;transform:none;cursor:not-allowed}
 
 //     .ifield{
@@ -741,7 +741,7 @@
 //       font-family:'DM Sans',sans-serif;
 //     }
 //     .ifield::placeholder{color:rgba(255,255,255,.25)}
-//     .ifield:focus{border-color:#FF6B35;background:rgba(255,255,255,.10);box-shadow:0 0 0 4px rgba(255,107,53,.12)}
+//     .ifield:focus{border-color:#8B5CF6;background:rgba(255,255,255,.10);box-shadow:0 0 0 4px rgba(139,92,246,.12)}
 
 //     .glass-d{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.10);backdrop-filter:blur(12px)}
 //     .tm{mask-image:linear-gradient(to right,transparent,black 8%,black 92%,transparent);-webkit-mask-image:linear-gradient(to right,transparent,black 8%,black 92%,transparent)}
@@ -753,19 +753,19 @@
 
 //       {/* ═══════════════ LEFT PANEL ═══════════════ */}
 //       <div className="hidden md:flex md:w-[44%] relative overflow-hidden text-white flex-col"
-//         style={{background:'linear-gradient(155deg,#08101e 0%,#0D1F2D 50%,#0e2235 100%)'}}>
+//         style={{background:'linear-gradient(155deg,#08101e 0%,#0B1020 50%,#0e2235 100%)'}}>
 
 //         {/* rotating rings */}
 //         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none">
 //           <div className="ss"  style={{width:600,height:600,borderRadius:'50%',border:'1px solid rgba(255,255,255,.03)'}} />
 //           <div className="sr"  style={{position:'absolute',inset:36,borderRadius:'50%',border:'1px solid rgba(255,255,255,.04)'}} />
-//           <div className="ss"  style={{position:'absolute',inset:80,borderRadius:'50%',border:'1px solid rgba(255,107,53,.07)'}} />
+//           <div className="ss"  style={{position:'absolute',inset:80,borderRadius:'50%',border:'1px solid rgba(139,92,246,.07)'}} />
 //         </div>
 
 //         {/* orbs */}
-//         <div className="gp absolute pointer-events-none" style={{top:-80,left:-80,width:320,height:320,borderRadius:'50%',filter:'blur(80px)',background:'rgba(255,107,53,.22)'}} />
-//         <div className="gp absolute pointer-events-none" style={{top:'50%',right:-60,width:260,height:260,borderRadius:'50%',filter:'blur(70px)',background:'rgba(0,194,168,.14)',animationDelay:'.8s'}} />
-//         <div className="gp absolute pointer-events-none" style={{bottom:-60,left:40,width:300,height:300,borderRadius:'50%',filter:'blur(80px)',background:'rgba(255,107,53,.16)',animationDelay:'1.5s'}} />
+//         <div className="gp absolute pointer-events-none" style={{top:-80,left:-80,width:320,height:320,borderRadius:'50%',filter:'blur(80px)',background:'rgba(139,92,246,.22)'}} />
+//         <div className="gp absolute pointer-events-none" style={{top:'50%',right:-60,width:260,height:260,borderRadius:'50%',filter:'blur(70px)',background:'rgba(6,182,212,.14)',animationDelay:'.8s'}} />
+//         <div className="gp absolute pointer-events-none" style={{bottom:-60,left:40,width:300,height:300,borderRadius:'50%',filter:'blur(80px)',background:'rgba(139,92,246,.16)',animationDelay:'1.5s'}} />
 
 //         {/* grid */}
 //         <div className="absolute inset-0 pointer-events-none" style={{opacity:.035,backgroundImage:'linear-gradient(rgba(255,255,255,1) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,1) 1px,transparent 1px)',backgroundSize:'52px 52px'}} />
@@ -774,7 +774,7 @@
 //         {LEFT_PARTICLES.map(p=>(
 //           <span key={p.id} className="absolute rounded-full p-left pointer-events-none"
 //             style={{left:p.left,bottom:p.bottom,width:p.size,height:p.size,'--d':`${p.dur}s`,'--dl':`${p.delay}s`,
-//               background:'rgba(255,107,53,.65)',boxShadow:'0 0 10px rgba(255,107,53,.5)'}} />
+//               background:'rgba(139,92,246,.65)',boxShadow:'0 0 10px rgba(139,92,246,.5)'}} />
 //         ))}
 
 //         {/* content */}
@@ -783,17 +783,17 @@
 //           {/* logo */}
 //           <div className="flex items-center gap-3 mb-auto f1">
 //             <div className="relative group">
-//               <div className="absolute -inset-1.5 rounded-2xl blur-lg opacity-25 group-hover:opacity-50 transition-all" style={{background:'#FF6B35'}} />
+//               <div className="absolute -inset-1.5 rounded-2xl blur-lg opacity-25 group-hover:opacity-50 transition-all" style={{background:'#8B5CF6'}} />
 //               <div className="relative flex items-center justify-center overflow-hidden" style={{width:60,height:60,background:'white',borderRadius:16,boxShadow:'0 20px 60px rgba(0,0,0,.4)',border:'1px solid rgba(255,255,255,.2)'}}>
-//                 <div className="scan absolute left-0 w-full" style={{height:2,background:'linear-gradient(90deg,transparent,#FF6B35,transparent)',opacity:.6,zIndex:20}} />
+//                 <div className="scan absolute left-0 w-full" style={{height:2,background:'linear-gradient(90deg,transparent,#8B5CF6,transparent)',opacity:.6,zIndex:20}} />
 //                 <div className="shim absolute top-0 left-0 h-full pointer-events-none" style={{width:'50%',background:'linear-gradient(90deg,transparent,rgba(255,255,255,.3),transparent)'}} />
-//                 <img src={logo} alt="SamayaHR" className="relative z-10 object-contain group-hover:scale-110 transition-transform duration-500" style={{width:40,height:40}} />
-//                 <div className="absolute top-0 left-0" style={{width:12,height:12,borderTop:'2px solid #FF6B35',borderLeft:'2px solid #FF6B35',borderTopLeftRadius:6}} />
-//                 <div className="absolute bottom-0 right-0" style={{width:12,height:12,borderBottom:'2px solid #00C2A8',borderRight:'2px solid #00C2A8',borderBottomRightRadius:6}} />
+//                 <img src={logo} alt="CrewSync" className="relative z-10 object-contain group-hover:scale-110 transition-transform duration-500" style={{width:40,height:40}} />
+//                 <div className="absolute top-0 left-0" style={{width:12,height:12,borderTop:'2px solid #8B5CF6',borderLeft:'2px solid #8B5CF6',borderTopLeftRadius:6}} />
+//                 <div className="absolute bottom-0 right-0" style={{width:12,height:12,borderBottom:'2px solid #06B6D4',borderRight:'2px solid #06B6D4',borderBottomRightRadius:6}} />
 //               </div>
 //             </div>
 //             <div>
-//               <p className="font-black text-xl tracking-tight" style={{fontFamily:'Sora,sans-serif'}}>Samaya<span style={{color:'#FF6B35'}}>HR</span></p>
+//               <p className="font-black text-xl tracking-tight" style={{fontFamily:'Sora,sans-serif'}}>CrewSync<span style={{color:'#8B5CF6'}}>PeopleOps</span></p>
 //               <p className="text-gray-600 font-semibold" style={{fontSize:10,letterSpacing:'0.12em',textTransform:'uppercase',marginTop:2}}>Workplace OS</p>
 //             </div>
 //           </div>
@@ -801,27 +801,27 @@
 //           {/* hero */}
 //           <div className="flex-1 flex flex-col justify-center py-8">
 //             <div className="f2 mb-6">
-//               <div className="inline-flex items-center gap-2 text-xs font-bold tracking-widest uppercase px-3 py-1.5 rounded-full mb-5" style={{background:'rgba(255,107,53,.12)',border:'1px solid rgba(255,107,53,.25)',color:'#FF6B35'}}>
+//               <div className="inline-flex items-center gap-2 text-xs font-bold tracking-widest uppercase px-3 py-1.5 rounded-full mb-5" style={{background:'rgba(139,92,246,.12)',border:'1px solid rgba(139,92,246,.25)',color:'#8B5CF6'}}>
 //                 <span className="relative flex" style={{width:6,height:6}}>
-//                   <span className="pr absolute inline-flex rounded-full" style={{width:'100%',height:'100%',background:'#FF6B35'}} />
-//                   <span className="relative inline-flex rounded-full" style={{width:6,height:6,background:'#FF6B35'}} />
+//                   <span className="pr absolute inline-flex rounded-full" style={{width:'100%',height:'100%',background:'#8B5CF6'}} />
+//                   <span className="relative inline-flex rounded-full" style={{width:6,height:6,background:'#8B5CF6'}} />
 //                 </span>
-//                  Indian companies run on SamayaHR
+//                  Indian companies run on CrewSync
 //               </div>
 //               <h2 className="font-black leading-tight mb-4" style={{fontSize:'1.9rem',fontFamily:'Sora,sans-serif'}}>
 //                 Your people deserve<br />
-//                 <span style={{background:'linear-gradient(135deg,#FF6B35,#FFAA5C)',WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent'}}>
+//                 <span style={{background:'linear-gradient(135deg,#8B5CF6,#60A5FA)',WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent'}}>
 //                   better than a spreadsheet.
 //                 </span>
 //               </h2>
 //               <p className="text-sm leading-relaxed max-w-xs" style={{color:'rgba(255,255,255,.4)'}}>
-//                 SamayaHR handles your payroll, attendance, leaves, and performance reviews — so you can focus on the part that actually matters: your people.
+//                 CrewSync handles your payroll, attendance, leaves, and performance reviews — so you can focus on the part that actually matters: your people.
 //               </p>
 //             </div>
 
 //             {/* stats */}
 //             <div className="f3 grid grid-cols-3 gap-2.5 mb-7">
-//               {[{v:70,s:"%",l:"Admin Time Saved"},{v:99,s:"%",l:"Payroll Accuracy"},{v:5,s:"min",l:"To Run Payroll"}].map(x=>(
+//               {[{v:70,s:"%",l:"Operator Time Saved"},{v:99,s:"%",l:"Payouts Accuracy"},{v:5,s:"min",l:"To Run Payouts"}].map(x=>(
 //                 <div key={x.l} className="glass-d rounded-2xl p-3 text-center" style={{animationName:'border-dance',animationDuration:'3s',animationIterationCount:'infinite'}}>
 //                   <p className="font-black text-white" style={{fontSize:'1.4rem',fontFamily:'Sora,sans-serif'}}><Counter target={x.v} suffix={x.s} /></p>
 //                   <p className="text-gray-500 font-medium leading-tight" style={{fontSize:10,marginTop:2}}>{x.l}</p>
@@ -832,9 +832,9 @@
 //             {/* ticker */}
 //             <div className="f4 overflow-hidden tm mb-7">
 //               <div className="tick flex whitespace-nowrap">
-//                 {[...HR_FEATURES,...HR_FEATURES].map((f,i)=>(
+//                 {[...PeopleOps_FEATURES,...PeopleOps_FEATURES].map((f,i)=>(
 //                   <div key={i} className="flex items-center gap-2 shrink-0" style={{paddingLeft:16,paddingRight:16}}>
-//                     <span className="flex items-center justify-center rounded-lg text-xs" style={{width:24,height:24,background:'rgba(255,107,53,.15)'}}>{f.icon}</span>
+//                     <span className="flex items-center justify-center rounded-lg text-xs" style={{width:24,height:24,background:'rgba(139,92,246,.15)'}}>{f.icon}</span>
 //                     <span className="font-semibold whitespace-nowrap" style={{fontSize:12,color:'rgba(255,255,255,.4)'}}>{f.text}</span>
 //                     <span style={{color:'rgba(255,255,255,.15)',marginLeft:12,fontSize:8}}>◆</span>
 //                   </div>
@@ -844,15 +844,15 @@
 
 //             {/* testimonial */}
 //             <div className="f5 glass-d rounded-2xl p-5">
-//               <div className="flex gap-0.5 mb-3">{[...Array(5)].map((_,i)=><svg key={i} style={{width:14,height:14}} fill="#FF6B35" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>)}</div>
+//               <div className="flex gap-0.5 mb-3">{[...Array(5)].map((_,i)=><svg key={i} style={{width:14,height:14}} fill="#8B5CF6" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>)}</div>
 //               <p className="text-sm leading-relaxed mb-4" style={{color:'rgba(255,255,255,.65)'}}>
-//                 "Onboarding our 20-person team used to take a week. With SamayaHR it took a single afternoon. The payroll automation alone paid for itself on day one."
+//                 "JoinerFlow our 20-person team used to take a week. With CrewSync it took a single afternoon. The payroll automation alone paid for itself on day one."
 //               </p>
 //               <div className="flex items-center gap-3">
 //                 <div className="coral-btn flex items-center justify-center rounded-full font-black text-white shrink-0" style={{width:32,height:32,fontSize:12}}>P</div>
 //                 <div>
 //                   <p className="text-xs font-bold text-white">Priya M</p>
-//                   <p style={{fontSize:10,color:'rgba(255,255,255,.35)'}}>Head of HR </p>
+//                   <p style={{fontSize:10,color:'rgba(255,255,255,.35)'}}>Head of PeopleOps </p>
 //                 </div>
 //               </div>
 //             </div>
@@ -865,9 +865,9 @@
 //         style={{background:'linear-gradient(150deg,#0f1c2e 0%,#0a1624 50%,#0d1e30 100%)'}}>
 
 //         {/* orbs */}
-//         <div className="gp absolute pointer-events-none" style={{top:-60,right:-40,width:280,height:280,borderRadius:'50%',filter:'blur(70px)',background:'rgba(0,194,168,.12)'}} />
-//         <div className="gp absolute pointer-events-none" style={{bottom:-40,right:-60,width:240,height:240,borderRadius:'50%',filter:'blur(60px)',background:'rgba(255,107,53,.10)',animationDelay:'1s'}} />
-//         <div className="gp absolute pointer-events-none" style={{top:'45%',left:-30,width:200,height:200,borderRadius:'50%',filter:'blur(60px)',background:'rgba(255,107,53,.08)',animationDelay:'2s'}} />
+//         <div className="gp absolute pointer-events-none" style={{top:-60,right:-40,width:280,height:280,borderRadius:'50%',filter:'blur(70px)',background:'rgba(6,182,212,.12)'}} />
+//         <div className="gp absolute pointer-events-none" style={{bottom:-40,right:-60,width:240,height:240,borderRadius:'50%',filter:'blur(60px)',background:'rgba(139,92,246,.10)',animationDelay:'1s'}} />
+//         <div className="gp absolute pointer-events-none" style={{top:'45%',left:-30,width:200,height:200,borderRadius:'50%',filter:'blur(60px)',background:'rgba(139,92,246,.08)',animationDelay:'2s'}} />
 
 //         {/* grid */}
 //         <div className="absolute inset-0 pointer-events-none" style={{opacity:.03,backgroundImage:'linear-gradient(rgba(255,255,255,1) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,1) 1px,transparent 1px)',backgroundSize:'48px 48px'}} />
@@ -876,14 +876,14 @@
 //         {RIGHT_PARTICLES.map(p=>(
 //           <span key={p.id} className="absolute rounded-full p-right pointer-events-none"
 //             style={{left:p.left,bottom:p.bottom,width:p.size,height:p.size,'--d':`${p.dur}s`,'--dl':`${p.delay}s`,
-//               background:'rgba(0,194,168,.55)',boxShadow:'0 0 10px rgba(0,194,168,.4)'}} />
+//               background:'rgba(6,182,212,.55)',boxShadow:'0 0 10px rgba(6,182,212,.4)'}} />
 //         ))}
 
 //         {/* floating deco cards */}
 //         <div className="fc absolute hidden lg:block pointer-events-none" style={{top:28,right:28,opacity:.18}}>
 //           <div className="glass-d flex items-center gap-2 px-3" style={{width:148,height:56,borderRadius:16}}>
 //             <span style={{fontSize:20}}>💰</span>
-//             <div><p className="font-bold text-white" style={{fontSize:11}}>Payroll Run</p><p style={{fontSize:10,color:'#4ade80'}}>Processed ✓</p></div>
+//             <div><p className="font-bold text-white" style={{fontSize:11}}>Payout Run</p><p style={{fontSize:10,color:'#4ade80'}}>Processed ✓</p></div>
 //           </div>
 //         </div>
 //         <div className="fci absolute hidden lg:block pointer-events-none" style={{bottom:100,left:20,opacity:.15}}>
@@ -911,8 +911,8 @@
 
 //             {/* greeting */}
 //             <div className="text-center f1" style={{marginBottom:28}}>
-//               <div className="inline-flex items-center justify-center relative" style={{width:60,height:60,borderRadius:18,background:'rgba(255,107,53,.15)',border:'1.5px solid rgba(255,107,53,.25)',marginBottom:16}}>
-//                 <img src="/assets/Zlabs-Logo.png" alt="SamayaHR" style={{width:36,height:36,objectFit:'contain'}} />
+//               <div className="inline-flex items-center justify-center relative" style={{width:60,height:60,borderRadius:18,background:'rgba(139,92,246,.15)',border:'1.5px solid rgba(139,92,246,.25)',marginBottom:16}}>
+//                 <img src="/assets/crewsync-mark.svg" alt="CrewSync" style={{width:36,height:36,objectFit:'contain'}} />
 //                 <div className="absolute" style={{top:-4,right:-4,width:14,height:14,borderRadius:'50%',background:'#22c55e',border:'2px solid #0a1624',display:'flex',alignItems:'center',justifyContent:'center'}}>
 //                   <span className="pr" style={{display:'block',width:6,height:6,borderRadius:'50%',background:'white'}} />
 //                 </div>
@@ -932,21 +932,21 @@
 
 //                   {/* feature pills */}
 //                   <div className="flex flex-wrap gap-2" style={{marginBottom:20}}>
-//                     {[{icon:"⏱️",l:"Attendance"},{icon:"💸",l:"Payroll"},{icon:"🏖️",l:"Leaves"},{icon:"📊",l:"Analytics"},{icon:"🔐",l:"Security"}].map(f=>(
+//                     {[{icon:"⏱️",l:"Presence"},{icon:"💸",l:"Payouts"},{icon:"🏖️",l:"TimeAways"},{icon:"📊",l:"Signals"},{icon:"🔐",l:"Trust"}].map(f=>(
 //                       <div key={f.l} className="flex items-center gap-1.5" style={{padding:'6px 12px',borderRadius:999,fontSize:12,fontWeight:600,color:'rgba(255,255,255,.5)',background:'rgba(255,255,255,.06)',border:'1px solid rgba(255,255,255,.08)'}}>
 //                         <span>{f.icon}</span>{f.l}
 //                       </div>
 //                     ))}
-//                     <div className="flex items-center" style={{padding:'6px 12px',borderRadius:999,fontSize:12,fontWeight:700,color:'#FF6B35',background:'rgba(255,107,53,.10)',border:'1px solid rgba(255,107,53,.2)'}}>
+//                     <div className="flex items-center" style={{padding:'6px 12px',borderRadius:999,fontSize:12,fontWeight:700,color:'#8B5CF6',background:'rgba(139,92,246,.10)',border:'1px solid rgba(139,92,246,.2)'}}>
 //                       +8 more →
 //                     </div>
 //                   </div>
 
 //                   {/* security note */}
-//                   <div className="flex items-start gap-3 rounded-2xl" style={{marginBottom:20,padding:'14px',background:'rgba(0,194,168,.08)',border:'1px solid rgba(0,194,168,.15)'}}>
+//                   <div className="flex items-start gap-3 rounded-2xl" style={{marginBottom:20,padding:'14px',background:'rgba(6,182,212,.08)',border:'1px solid rgba(6,182,212,.15)'}}>
 //                     <span style={{fontSize:20,marginTop:2}}>🛡️</span>
 //                     <div>
-//                       <p className="font-bold text-white" style={{fontSize:12}}>Enterprise-Grade Security</p>
+//                       <p className="font-bold text-white" style={{fontSize:12}}>Enterprise-Grade Trust</p>
 //                       <p style={{fontSize:11,color:'rgba(255,255,255,.35)',marginTop:2}}>AES-256 encryption, 2FA, SSO and a full audit log — your data is locked down tight.</p>
 //                     </div>
 //                   </div>
@@ -958,7 +958,7 @@
 
 //                   <p className="text-center" style={{marginTop:16,fontSize:12,color:'rgba(255,255,255,.25)'}}>
 //                     New here?{" "}
-//                     <a href="/solutions/bookdemo" style={{fontWeight:700,color:'#FF6B35'}}>Get a free personalised demo →</a>
+//                     <a href="/solutions/bookdemo" style={{fontWeight:700,color:'#8B5CF6'}}>Get a free personalised demo →</a>
 //                   </p>
 //                 </div>
 
@@ -974,7 +974,7 @@
 
 //                 {/* tabs */}
 //                 <div className="flex gap-1 rounded-2xl p-1" style={{marginBottom:24,background:'rgba(255,255,255,.06)'}}>
-//                   {[["employee","👤 Employee"],["company","🏢 Company"]].map(([tab,label])=>(
+//                   {[["employee","👤 Person"],["company","🏢 Workspace"]].map(([tab,label])=>(
 //                     <button key={tab} type="button" onClick={()=>setActiveTab(tab)}
 //                       className={`flex-1 rounded-xl font-bold transition-all ${activeTab===tab?"coral-btn text-white shadow-lg":""}`}
 //                       style={{padding:'10px',fontSize:12,color:activeTab===tab?'white':'rgba(255,255,255,.4)'}}>
@@ -1015,7 +1015,7 @@
 //                     <div>
 //                       <div style={{display:'flex',justifyContent:'space-between',marginBottom:6}}>
 //                         <label style={{fontSize:11,fontWeight:600,color:'rgba(255,255,255,.4)'}}>Password</label>
-//                         <a href="/forgot-password" style={{fontSize:11,fontWeight:700,color:'#FF6B35'}}>Forgot password?</a>
+//                         <a href="/forgot-password" style={{fontSize:11,fontWeight:700,color:'#8B5CF6'}}>Forgot password?</a>
 //                       </div>
 //                       <div style={{position:'relative'}}>
 //                         <div style={{position:'absolute',left:14,top:'50%',transform:'translateY(-50%)',color:'rgba(255,255,255,.3)'}}>
@@ -1056,7 +1056,7 @@
 //               By signing in, you agree to our{" "}
 //               <a href="/terms"   style={{textDecoration:'underline',color:'rgba(255,255,255,.35)'}}>Terms of Service</a>
 //               {" "}&amp;{" "}
-//               <a href="/privacy" style={{textDecoration:'underline',color:'rgba(255,255,255,.35)'}}>Privacy Policy</a>.
+//               <a href="/privacy" style={{textDecoration:'underline',color:'rgba(255,255,255,.35)'}}>Privacy Playbook</a>.
 //             </p>
 //           </div>
 //         </div>
@@ -1064,7 +1064,7 @@
 //         {/* footer */}
 //         <div className="relative z-10 text-center py-3" style={{borderTop:'1px solid rgba(255,255,255,.05)'}}>
 //           <p style={{fontSize:11,color:'rgba(255,255,255,.18)'}}>
-//             © {new Date().getFullYear()} Zlabs Innovation Private Limited. All rights reserved.
+//             © {new Date().getFullYear()} CrewSync Technologies. All rights reserved.
 //           </p>
 //         </div>
 //       </div>
@@ -1077,7 +1077,7 @@
 
 // import React, { useState, useEffect, useRef } from "react";
 // import { useNavigate } from "react-router-dom";
-// import logo from "../public/assets/Zlabs-Logo.png";
+// import logo from "../public/assets/crewsync-mark.svg";
 
 // /* ─── API helper ─────────────────────────────────── */
 // const getApiBaseUrl = () => {
@@ -1090,7 +1090,7 @@
 // const API_BASE_URL = getApiBaseUrl();
 
 // /* ─── Animated Left Panel ─────────────────────────── */
-// function HROrbitScene() {
+// function PeopleOpsOrbitScene() {
 //   const canvasRef = useRef(null);
 //   const animRef = useRef(null);
 
@@ -1115,7 +1115,7 @@
 //       vx: (Math.random() - 0.5) * 0.3,
 //       vy: (Math.random() - 0.5) * 0.3,
 //       alpha: Math.random() * 0.5 + 0.1,
-//       color: Math.random() > 0.5 ? "#FF6B35" : "#00C2A8",
+//       color: Math.random() > 0.5 ? "#8B5CF6" : "#06B6D4",
 //     }));
 
 //     // Orbit nodes
@@ -1133,7 +1133,7 @@
 //       speed: Math.random() * 1.5 + 0.5,
 //       length: Math.random() * 60 + 40,
 //       alpha: Math.random() * 0.3 + 0.1,
-//       color: Math.random() > 0.5 ? "#FF6B35" : "#00C2A8",
+//       color: Math.random() > 0.5 ? "#8B5CF6" : "#06B6D4",
 //     }));
 
 //     // Pulse rings emanating from center
@@ -1164,9 +1164,9 @@
 //         if (s.y > H + s.length) { s.y = -s.length; s.x = Math.random() * W; }
 //         const grad = ctx.createLinearGradient(s.x, s.y - s.length, s.x, s.y);
 //         grad.addColorStop(0, "transparent");
-//         grad.addColorStop(1, s.color.replace(")", `,${s.alpha})`).replace("rgb", "rgba").replace("#FF6B35", `rgba(255,107,53,${s.alpha})`).replace("#00C2A8", `rgba(0,194,168,${s.alpha})`));
+//         grad.addColorStop(1, s.color.replace(")", `,${s.alpha})`).replace("rgb", "rgba").replace("#8B5CF6", `rgba(139,92,246,${s.alpha})`).replace("#06B6D4", `rgba(6,182,212,${s.alpha})`));
 //         ctx.save();
-//         ctx.strokeStyle = s.color === "#FF6B35" ? `rgba(255,107,53,${s.alpha})` : `rgba(0,194,168,${s.alpha})`;
+//         ctx.strokeStyle = s.color === "#8B5CF6" ? `rgba(139,92,246,${s.alpha})` : `rgba(6,182,212,${s.alpha})`;
 //         ctx.lineWidth = 1.5;
 //         ctx.beginPath(); ctx.moveTo(s.x, s.y - s.length); ctx.lineTo(s.x, s.y); ctx.stroke();
 //         ctx.restore();
@@ -1180,7 +1180,7 @@
 //         ctx.save();
 //         ctx.beginPath();
 //         ctx.arc(cx, cy, p.r, 0, Math.PI * 2);
-//         ctx.strokeStyle = `rgba(255,107,53,${a})`;
+//         ctx.strokeStyle = `rgba(139,92,246,${a})`;
 //         ctx.lineWidth = 1.5;
 //         ctx.stroke();
 //         ctx.restore();
@@ -1208,7 +1208,7 @@
 
 //           // Glow
 //           const grd = ctx.createRadialGradient(nx, ny, 0, nx, ny, 22);
-//           grd.addColorStop(0, oi % 2 === 0 ? "rgba(255,107,53,0.3)" : "rgba(0,194,168,0.3)");
+//           grd.addColorStop(0, oi % 2 === 0 ? "rgba(139,92,246,0.3)" : "rgba(6,182,212,0.3)");
 //           grd.addColorStop(1, "transparent");
 //           ctx.beginPath();
 //           ctx.arc(nx, ny, 22, 0, Math.PI * 2);
@@ -1220,7 +1220,7 @@
 //           ctx.arc(nx, ny, 14, 0, Math.PI * 2);
 //           ctx.fillStyle = "rgba(10,22,36,0.9)";
 //           ctx.fill();
-//           ctx.strokeStyle = oi % 2 === 0 ? "rgba(255,107,53,0.5)" : "rgba(0,194,168,0.5)";
+//           ctx.strokeStyle = oi % 2 === 0 ? "rgba(139,92,246,0.5)" : "rgba(6,182,212,0.5)";
 //           ctx.lineWidth = 1.5;
 //           ctx.stroke();
 
@@ -1234,7 +1234,7 @@
 //           ctx.save();
 //           const lineGrad = ctx.createLinearGradient(cx, cy, nx, ny);
 //           lineGrad.addColorStop(0, "transparent");
-//           lineGrad.addColorStop(1, oi % 2 === 0 ? "rgba(255,107,53,0.15)" : "rgba(0,194,168,0.15)");
+//           lineGrad.addColorStop(1, oi % 2 === 0 ? "rgba(139,92,246,0.15)" : "rgba(6,182,212,0.15)");
 //           ctx.strokeStyle = lineGrad;
 //           ctx.lineWidth = 1;
 //           ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(nx, ny); ctx.stroke();
@@ -1245,8 +1245,8 @@
 //       // Center core
 //       // Outer glow
 //       const coreGlow = ctx.createRadialGradient(cx, cy, 0, cx, cy, 55);
-//       coreGlow.addColorStop(0, "rgba(255,107,53,0.25)");
-//       coreGlow.addColorStop(0.6, "rgba(255,107,53,0.08)");
+//       coreGlow.addColorStop(0, "rgba(139,92,246,0.25)");
+//       coreGlow.addColorStop(0.6, "rgba(139,92,246,0.08)");
 //       coreGlow.addColorStop(1, "transparent");
 //       ctx.beginPath(); ctx.arc(cx, cy, 55, 0, Math.PI * 2);
 //       ctx.fillStyle = coreGlow; ctx.fill();
@@ -1257,7 +1257,7 @@
 //       ctx.rotate(t * 0.5);
 //       ctx.beginPath();
 //       ctx.arc(0, 0, 36, 0, Math.PI * 2);
-//       ctx.strokeStyle = "rgba(255,107,53,0.4)";
+//       ctx.strokeStyle = "rgba(139,92,246,0.4)";
 //       ctx.lineWidth = 1.5;
 //       ctx.setLineDash([6, 6]);
 //       ctx.stroke();
@@ -1269,7 +1269,7 @@
 //       ctx.rotate(-t * 0.3);
 //       ctx.beginPath();
 //       ctx.arc(0, 0, 28, 0, Math.PI * 2);
-//       ctx.strokeStyle = "rgba(0,194,168,0.3)";
+//       ctx.strokeStyle = "rgba(6,182,212,0.3)";
 //       ctx.lineWidth = 1;
 //       ctx.setLineDash([3, 9]);
 //       ctx.stroke();
@@ -1281,7 +1281,7 @@
 //       ctx.arc(cx, cy, 22, 0, Math.PI * 2);
 //       ctx.fillStyle = "rgba(10,22,36,0.95)";
 //       ctx.fill();
-//       ctx.strokeStyle = "rgba(255,107,53,0.6)";
+//       ctx.strokeStyle = "rgba(139,92,246,0.6)";
 //       ctx.lineWidth = 2;
 //       ctx.stroke();
 
@@ -1292,7 +1292,7 @@
 //         if (p.y < 0) p.y = H; if (p.y > H) p.y = 0;
 //         ctx.beginPath();
 //         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-//         ctx.fillStyle = p.color === "#FF6B35" ? `rgba(255,107,53,${p.alpha})` : `rgba(0,194,168,${p.alpha})`;
+//         ctx.fillStyle = p.color === "#8B5CF6" ? `rgba(139,92,246,${p.alpha})` : `rgba(6,182,212,${p.alpha})`;
 //         ctx.fill();
 //       });
 
@@ -1300,7 +1300,7 @@
 //       const scanY = ((t * 60) % (H + 40)) - 20;
 //       const scanGrad = ctx.createLinearGradient(0, scanY - 8, 0, scanY + 8);
 //       scanGrad.addColorStop(0, "transparent");
-//       scanGrad.addColorStop(0.5, "rgba(0,194,168,0.07)");
+//       scanGrad.addColorStop(0.5, "rgba(6,182,212,0.07)");
 //       scanGrad.addColorStop(1, "transparent");
 //       ctx.fillStyle = scanGrad;
 //       ctx.fillRect(0, scanY - 8, W, 16);
@@ -1323,7 +1323,7 @@
 //   );
 // }
 
-// /* ─── Floating HR Metric Cards ───────────────────── */
+// /* ─── Floating PeopleOps Metric Cards ───────────────────── */
 // function FloatingCards() {
 //   return (
 //     <>
@@ -1332,14 +1332,14 @@
 //         position: "absolute", top: 40, left: 24, zIndex: 10,
 //         animation: "floatA 4s ease-in-out infinite",
 //         background: "rgba(255,255,255,0.06)",
-//         border: "1px solid rgba(255,107,53,0.25)",
+//         border: "1px solid rgba(139,92,246,0.25)",
 //         backdropFilter: "blur(12px)",
 //         borderRadius: 16, padding: "10px 16px",
 //         display: "flex", alignItems: "center", gap: 10,
 //       }}>
-//         <div style={{ width: 32, height: 32, borderRadius: 10, background: "rgba(255,107,53,0.15)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 16 }}>💸</div>
+//         <div style={{ width: 32, height: 32, borderRadius: 10, background: "rgba(139,92,246,0.15)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 16 }}>💸</div>
 //         <div>
-//           <div style={{ fontSize: 11, fontWeight: 700, color: "#fff", fontFamily: "Sora,sans-serif" }}>Payroll Done</div>
+//           <div style={{ fontSize: 11, fontWeight: 700, color: "#fff", fontFamily: "Sora,sans-serif" }}>Payout Complete</div>
 //           <div style={{ fontSize: 10, color: "#4ade80", marginTop: 1 }}>✓ 248 employees</div>
 //         </div>
 //       </div>
@@ -1349,12 +1349,12 @@
 //         position: "absolute", bottom: 80, right: 24, zIndex: 10,
 //         animation: "floatB 5s ease-in-out infinite",
 //         background: "rgba(255,255,255,0.06)",
-//         border: "1px solid rgba(0,194,168,0.25)",
+//         border: "1px solid rgba(6,182,212,0.25)",
 //         backdropFilter: "blur(12px)",
 //         borderRadius: 16, padding: "10px 16px",
 //         display: "flex", alignItems: "center", gap: 10,
 //       }}>
-//         <div style={{ width: 32, height: 32, borderRadius: 10, background: "rgba(0,194,168,0.15)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 16 }}>⏰</div>
+//         <div style={{ width: 32, height: 32, borderRadius: 10, background: "rgba(6,182,212,0.15)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 16 }}>⏰</div>
 //         <div>
 //           <div style={{ fontSize: 11, fontWeight: 700, color: "#fff", fontFamily: "Sora,sans-serif" }}>Team Check-In</div>
 //           <div style={{ fontSize: 10, color: "#2dd4bf", marginTop: 1 }}>48 / 50 present</div>
@@ -1371,9 +1371,9 @@
 //         borderRadius: 16, padding: "10px 16px",
 //         display: "flex", alignItems: "center", gap: 10,
 //       }}>
-//         <div style={{ width: 32, height: 32, borderRadius: 10, background: "rgba(255,107,53,0.1)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 16 }}>🏖️</div>
+//         <div style={{ width: 32, height: 32, borderRadius: 10, background: "rgba(139,92,246,0.1)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 16 }}>🏖️</div>
 //         <div>
-//           <div style={{ fontSize: 11, fontWeight: 700, color: "#fff", fontFamily: "Sora,sans-serif" }}>Leave Approved</div>
+//           <div style={{ fontSize: 11, fontWeight: 700, color: "#fff", fontFamily: "Sora,sans-serif" }}>TimeAway Cleared</div>
 //           <div style={{ fontSize: 10, color: "rgba(255,255,255,0.4)", marginTop: 1 }}>3 requests · instant</div>
 //         </div>
 //       </div>
@@ -1394,9 +1394,9 @@
 //         width: 44, height: 44, borderRadius: 14,
 //         background: "white",
 //         display: "flex", alignItems: "center", justifyContent: "center",
-//         boxShadow: "0 0 30px rgba(255,107,53,0.4)",
+//         boxShadow: "0 0 30px rgba(139,92,246,0.4)",
 //       }}>
-//         <img src={logo} alt="SamayaHR" style={{ width: 30, height: 30, objectFit: "contain" }} />
+//         <img src={logo} alt="CrewSync" style={{ width: 30, height: 30, objectFit: "contain" }} />
 //       </div>
 //     </div>
 //   );
@@ -1423,8 +1423,8 @@
 
 //   const handleSubmit = async e => {
 //     e.preventDefault();
-//     const isCompany = activeTab === "company";
-//     const payload = isCompany
+//     const isWorkspace = activeTab === "company";
+//     const payload = isWorkspace
 //       ? { officialEmail: loginData.email, tenantCode: loginData.companyKey }
 //       : { email: loginData.email, password: loginData.password };
 //     setLoading(true);
@@ -1435,7 +1435,7 @@
 //       const token = data?.data?.token ?? null;
 //       if (!token) { alert("Login succeeded but token missing"); return; }
 //       localStorage.setItem("token", `Bearer ${token}`);
-//       if (isCompany) {
+//       if (isWorkspace) {
 //         localStorage.setItem("companyId",   String(data?.data?.companyId || ""));
 //         localStorage.setItem("companyName", data?.data?.displayName || "");
 //         localStorage.setItem("tenantCode",  data?.data?.tenantCode || "");
@@ -1478,8 +1478,8 @@
 //     .f3{animation:fade-up .45s ease both .25s} .f4{animation:fade-up .45s ease both .35s}
 //     .f5{animation:fade-up .45s ease both .45s}
 
-//     .coral-btn{background:linear-gradient(135deg,#FF6B35,#FF5722);box-shadow:0 4px 20px rgba(255,107,53,.35);transition:all .25s}
-//     .coral-btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(255,107,53,.45)}
+//     .coral-btn{background:linear-gradient(135deg,#8B5CF6,#06B6D4);box-shadow:0 4px 20px rgba(139,92,246,.35);transition:all .25s}
+//     .coral-btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(139,92,246,.45)}
 //     .coral-btn:disabled{opacity:.7;transform:none;cursor:not-allowed}
 
 //     .ifield{
@@ -1489,7 +1489,7 @@
 //       font-family:'DM Sans',sans-serif;
 //     }
 //     .ifield::placeholder{color:rgba(255,255,255,.25)}
-//     .ifield:focus{border-color:#FF6B35;background:rgba(255,255,255,.10);box-shadow:0 0 0 4px rgba(255,107,53,.12)}
+//     .ifield:focus{border-color:#8B5CF6;background:rgba(255,255,255,.10);box-shadow:0 0 0 4px rgba(139,92,246,.12)}
 
 //     .glass-d{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.10);backdrop-filter:blur(12px)}
 //   `;
@@ -1500,10 +1500,10 @@
 
 //       {/* ═══════════════ LEFT PANEL — ANIMATION ONLY ═══════════════ */}
 //       <div className="hidden md:flex md:w-[44%] relative overflow-hidden"
-//         style={{ background: "linear-gradient(155deg,#08101e 0%,#0D1F2D 50%,#0e2235 100%)" }}>
+//         style={{ background: "linear-gradient(155deg,#08101e 0%,#0B1020 50%,#0e2235 100%)" }}>
 
 //         {/* Canvas animation */}
-//         <HROrbitScene />
+//         <PeopleOpsOrbitScene />
 
 //         {/* Floating metric cards */}
 //         <FloatingCards />
@@ -1517,7 +1517,7 @@
 //           textAlign: "center", zIndex: 10, pointerEvents: "none",
 //         }}>
 //           <p style={{ fontSize: 11, fontWeight: 700, color: "rgba(255,255,255,0.12)", letterSpacing: "0.2em", textTransform: "uppercase", fontFamily: "Sora,sans-serif" }}>
-//             Samaya<span style={{ color: "rgba(255,107,53,0.3)" }}>HR</span> · Workplace OS
+//             CrewSync<span style={{ color: "rgba(139,92,246,0.3)" }}>PeopleOps</span> · Workplace OS
 //           </p>
 //         </div>
 //       </div>
@@ -1527,9 +1527,9 @@
 //         style={{ background: "linear-gradient(150deg,#0f1c2e 0%,#0a1624 50%,#0d1e30 100%)" }}>
 
 //         {/* orbs */}
-//         <div className="gp absolute pointer-events-none" style={{ top: -60, right: -40, width: 280, height: 280, borderRadius: "50%", filter: "blur(70px)", background: "rgba(0,194,168,.12)" }} />
-//         <div className="gp absolute pointer-events-none" style={{ bottom: -40, right: -60, width: 240, height: 240, borderRadius: "50%", filter: "blur(60px)", background: "rgba(255,107,53,.10)", animationDelay: "1s" }} />
-//         <div className="gp absolute pointer-events-none" style={{ top: "45%", left: -30, width: 200, height: 200, borderRadius: "50%", filter: "blur(60px)", background: "rgba(255,107,53,.08)", animationDelay: "2s" }} />
+//         <div className="gp absolute pointer-events-none" style={{ top: -60, right: -40, width: 280, height: 280, borderRadius: "50%", filter: "blur(70px)", background: "rgba(6,182,212,.12)" }} />
+//         <div className="gp absolute pointer-events-none" style={{ bottom: -40, right: -60, width: 240, height: 240, borderRadius: "50%", filter: "blur(60px)", background: "rgba(139,92,246,.10)", animationDelay: "1s" }} />
+//         <div className="gp absolute pointer-events-none" style={{ top: "45%", left: -30, width: 200, height: 200, borderRadius: "50%", filter: "blur(60px)", background: "rgba(139,92,246,.08)", animationDelay: "2s" }} />
 
 //         {/* grid */}
 //         <div className="absolute inset-0 pointer-events-none" style={{ opacity: .03, backgroundImage: "linear-gradient(rgba(255,255,255,1) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,1) 1px,transparent 1px)", backgroundSize: "48px 48px" }} />
@@ -1552,8 +1552,8 @@
 
 //             {/* greeting */}
 //             <div className="text-center f1" style={{ marginBottom: 28 }}>
-//               <div className="inline-flex items-center justify-center relative" style={{ width: 60, height: 60, borderRadius: 18, background: "rgba(255,107,53,.15)", border: "1.5px solid rgba(255,107,53,.25)", marginBottom: 16 }}>
-//                 <img src="/assets/Zlabs-Logo.png" alt="SamayaHR" style={{ width: 36, height: 36, objectFit: "contain" }} />
+//               <div className="inline-flex items-center justify-center relative" style={{ width: 60, height: 60, borderRadius: 18, background: "rgba(139,92,246,.15)", border: "1.5px solid rgba(139,92,246,.25)", marginBottom: 16 }}>
+//                 <img src="/assets/crewsync-mark.svg" alt="CrewSync" style={{ width: 36, height: 36, objectFit: "contain" }} />
 //                 <div className="absolute" style={{ top: -4, right: -4, width: 14, height: 14, borderRadius: "50%", background: "#22c55e", border: "2px solid #0a1624" }} />
 //               </div>
 //               <h1 className="font-black text-white" style={{ fontSize: "1.5rem", fontFamily: "Sora,sans-serif", marginBottom: 6 }}>
@@ -1568,20 +1568,20 @@
 //               <div className="f2">
 //                 <div className="glass-d rounded-3xl p-6" style={{ marginBottom: 20 }}>
 //                   <div className="flex flex-wrap gap-2" style={{ marginBottom: 20 }}>
-//                     {[{ icon: "⏱️", l: "Attendance" }, { icon: "💸", l: "Payroll" }, { icon: "🏖️", l: "Leaves" }, { icon: "📊", l: "Analytics" }, { icon: "🔐", l: "Security" }].map(f => (
+//                     {[{ icon: "⏱️", l: "Presence" }, { icon: "💸", l: "Payouts" }, { icon: "🏖️", l: "TimeAways" }, { icon: "📊", l: "Signals" }, { icon: "🔐", l: "Trust" }].map(f => (
 //                       <div key={f.l} className="flex items-center gap-1.5" style={{ padding: "6px 12px", borderRadius: 999, fontSize: 12, fontWeight: 600, color: "rgba(255,255,255,.5)", background: "rgba(255,255,255,.06)", border: "1px solid rgba(255,255,255,.08)" }}>
 //                         <span>{f.icon}</span>{f.l}
 //                       </div>
 //                     ))}
-//                     <div className="flex items-center" style={{ padding: "6px 12px", borderRadius: 999, fontSize: 12, fontWeight: 700, color: "#FF6B35", background: "rgba(255,107,53,.10)", border: "1px solid rgba(255,107,53,.2)" }}>
+//                     <div className="flex items-center" style={{ padding: "6px 12px", borderRadius: 999, fontSize: 12, fontWeight: 700, color: "#8B5CF6", background: "rgba(139,92,246,.10)", border: "1px solid rgba(139,92,246,.2)" }}>
 //                       +8 more →
 //                     </div>
 //                   </div>
 
-//                   <div className="flex items-start gap-3 rounded-2xl" style={{ marginBottom: 20, padding: "14px", background: "rgba(0,194,168,.08)", border: "1px solid rgba(0,194,168,.15)" }}>
+//                   <div className="flex items-start gap-3 rounded-2xl" style={{ marginBottom: 20, padding: "14px", background: "rgba(6,182,212,.08)", border: "1px solid rgba(6,182,212,.15)" }}>
 //                     <span style={{ fontSize: 20, marginTop: 2 }}>🛡️</span>
 //                     <div>
-//                       <p className="font-bold text-white" style={{ fontSize: 12 }}>Enterprise-Grade Security</p>
+//                       <p className="font-bold text-white" style={{ fontSize: 12 }}>Enterprise-Grade Trust</p>
 //                       <p style={{ fontSize: 11, color: "rgba(255,255,255,.35)", marginTop: 2 }}>AES-256 encryption, 2FA, SSO and a full audit log — your data is locked down tight.</p>
 //                     </div>
 //                   </div>
@@ -1593,7 +1593,7 @@
 
 //                   <p className="text-center" style={{ marginTop: 16, fontSize: 12, color: "rgba(255,255,255,.25)" }}>
 //                     New here?{" "}
-//                     <a href="/solutions/bookdemo" style={{ fontWeight: 700, color: "#FF6B35" }}>Get a free personalised demo →</a>
+//                     <a href="/solutions/bookdemo" style={{ fontWeight: 700, color: "#8B5CF6" }}>Get a free personalised demo →</a>
 //                   </p>
 //                 </div>
 
@@ -1607,7 +1607,7 @@
 //               <div className="f2 glass-d rounded-3xl p-6">
 //                 {/* tabs */}
 //                 <div className="flex gap-1 rounded-2xl p-1" style={{ marginBottom: 24, background: "rgba(255,255,255,.06)" }}>
-//                   {[["employee", "👤 Employee"], ["company", "🏢 Company"]].map(([tab, label]) => (
+//                   {[["employee", "👤 Person"], ["company", "🏢 Workspace"]].map(([tab, label]) => (
 //                     <button key={tab} type="button" onClick={() => setActiveTab(tab)}
 //                       className={`flex-1 rounded-xl font-bold transition-all ${activeTab === tab ? "coral-btn text-white shadow-lg" : ""}`}
 //                       style={{ padding: "10px", fontSize: 12, color: activeTab === tab ? "white" : "rgba(255,255,255,.4)" }}>
@@ -1646,7 +1646,7 @@
 //                     <div>
 //                       <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 6 }}>
 //                         <label style={{ fontSize: 11, fontWeight: 600, color: "rgba(255,255,255,.4)" }}>Password</label>
-//                         <a href="/forgot-password" style={{ fontSize: 11, fontWeight: 700, color: "#FF6B35" }}>Forgot password?</a>
+//                         <a href="/forgot-password" style={{ fontSize: 11, fontWeight: 700, color: "#8B5CF6" }}>Forgot password?</a>
 //                       </div>
 //                       <div style={{ position: "relative" }}>
 //                         <div style={{ position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)", color: "rgba(255,255,255,.3)" }}>
@@ -1685,7 +1685,7 @@
 //               By signing in, you agree to our{" "}
 //               <a href="/terms"   style={{ textDecoration: "underline", color: "rgba(255,255,255,.35)" }}>Terms of Service</a>
 //               {" "}&amp;{" "}
-//               <a href="/privacy" style={{ textDecoration: "underline", color: "rgba(255,255,255,.35)" }}>Privacy Policy</a>.
+//               <a href="/privacy" style={{ textDecoration: "underline", color: "rgba(255,255,255,.35)" }}>Privacy Playbook</a>.
 //             </p>
 //           </div>
 //         </div>
@@ -1693,7 +1693,7 @@
 //         {/* footer */}
 //         <div className="relative z-10 text-center py-3" style={{ borderTop: "1px solid rgba(255,255,255,.05)" }}>
 //           <p style={{ fontSize: 11, color: "rgba(255,255,255,.18)" }}>
-//             © {new Date().getFullYear()} Zlabs Innovation Private Limited. All rights reserved.
+//             © {new Date().getFullYear()} CrewSync Technologies. All rights reserved.
 //           </p>
 //         </div>
 //       </div>
@@ -1704,7 +1704,7 @@
 //animation added  7/3/2026
 // import React, { useState, useEffect, useRef } from "react";
 // import { useNavigate } from "react-router-dom";
-// import logo from "/assets/Zlabs-Logo.png?url";
+// import logo from "/assets/crewsync-mark.svg?url";
 
 // const getApiBaseUrl = () => {
 //   const fromEnv = import.meta.env?.VITE_API_BASE_URL && import.meta.env.VITE_API_BASE_URL.trim();
@@ -1717,7 +1717,7 @@
 // /* ══════════════════════════════════════════
 //    LEFT PANEL — Original orbit canvas animation
 // ══════════════════════════════════════════ */
-// function HROrbitScene() {
+// function PeopleOpsOrbitScene() {
 //   const canvasRef = useRef(null);
 //   const animRef   = useRef(null);
 
@@ -1740,9 +1740,9 @@
 //       { r: 138, speed: -0.006, nodes: 5, offset: Math.PI / 5 },
 //       { r: 198, speed:  0.004, nodes: 6, offset: Math.PI / 9 },
 //     ];
-//     const COLS = ["rgba(255,107,53,","rgba(255,160,80,","rgba(255,70,30,"];
+//     const COLS = ["rgba(139,92,246,","rgba(255,160,80,","rgba(255,70,30,"];
 
-//     const PCOLS = ["rgba(255,107,53,","rgba(255,160,80,","rgba(255,200,100,","rgba(0,194,168,"];
+//     const PCOLS = ["rgba(139,92,246,","rgba(255,160,80,","rgba(255,200,100,","rgba(6,182,212,"];
 //     const particles = Array.from({ length: 65 }, () => ({
 //       x: Math.random() * W, y: Math.random() * H,
 //       r: Math.random() * 1.8 + 0.4,
@@ -1761,7 +1761,7 @@
 
 //       // grid
 //       ctx.save();
-//       ctx.strokeStyle = "rgba(255,107,53,0.05)";
+//       ctx.strokeStyle = "rgba(139,92,246,0.05)";
 //       ctx.lineWidth = 1;
 //       for (let x = 0; x < W; x += 44) { ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,H); ctx.stroke(); }
 //       for (let y = 0; y < H; y += 44) { ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(W,y); ctx.stroke(); }
@@ -1783,7 +1783,7 @@
 //         p.r += p.speed; if (p.r > p.max) p.r = 0;
 //         const a = (1 - p.r / p.max) * 0.22;
 //         ctx.beginPath(); ctx.arc(cx, cy, p.r, 0, Math.PI * 2);
-//         ctx.strokeStyle = `rgba(255,107,53,${a})`;
+//         ctx.strokeStyle = `rgba(139,92,246,${a})`;
 //         ctx.lineWidth = 1.5; ctx.stroke();
 //       });
 
@@ -1819,7 +1819,7 @@
 
 //       // core glow
 //       const cg = ctx.createRadialGradient(cx, cy, 0, cx, cy, 55);
-//       cg.addColorStop(0, "rgba(255,107,53,0.42)");
+//       cg.addColorStop(0, "rgba(139,92,246,0.42)");
 //       cg.addColorStop(0.5, "rgba(255,80,20,0.14)");
 //       cg.addColorStop(1, "transparent");
 //       ctx.beginPath(); ctx.arc(cx, cy, 55, 0, Math.PI * 2);
@@ -1827,7 +1827,7 @@
 
 //       ctx.save(); ctx.translate(cx, cy); ctx.rotate(t * 0.4);
 //       ctx.beginPath(); ctx.arc(0, 0, 32, 0, Math.PI * 2);
-//       ctx.strokeStyle = "rgba(255,107,53,0.55)"; ctx.lineWidth = 1.5;
+//       ctx.strokeStyle = "rgba(139,92,246,0.55)"; ctx.lineWidth = 1.5;
 //       ctx.setLineDash([6, 6]); ctx.stroke(); ctx.setLineDash([]);
 //       ctx.restore();
 
@@ -1839,7 +1839,7 @@
 
 //       ctx.beginPath(); ctx.arc(cx, cy, 17, 0, Math.PI * 2);
 //       ctx.fillStyle = "rgba(8,4,2,0.96)"; ctx.fill();
-//       ctx.strokeStyle = "rgba(255,107,53,0.95)"; ctx.lineWidth = 2; ctx.stroke();
+//       ctx.strokeStyle = "rgba(139,92,246,0.95)"; ctx.lineWidth = 2; ctx.stroke();
 
 //       animRef.current = requestAnimationFrame(draw);
 //     };
@@ -1856,14 +1856,14 @@
 //     <div style={{
 //       position:"absolute", zIndex:10,
 //       background:"rgba(10,4,2,0.85)",
-//       border:"1px solid rgba(255,107,53,0.35)",
+//       border:"1px solid rgba(139,92,246,0.35)",
 //       backdropFilter:"blur(16px)",
 //       borderRadius:14, padding:"9px 14px",
 //       display:"flex", alignItems:"center", gap:10,
-//       boxShadow:"0 8px 28px rgba(0,0,0,0.45), 0 0 18px rgba(255,107,53,0.12)",
+//       boxShadow:"0 8px 28px rgba(0,0,0,0.45), 0 0 18px rgba(139,92,246,0.12)",
 //       ...style,
 //     }}>
-//       <div style={{ width:30, height:30, borderRadius:9, background:"rgba(255,107,53,0.14)", display:"flex", alignItems:"center", justifyContent:"center", fontSize:14, flexShrink:0 }}>{icon}</div>
+//       <div style={{ width:30, height:30, borderRadius:9, background:"rgba(139,92,246,0.14)", display:"flex", alignItems:"center", justifyContent:"center", fontSize:14, flexShrink:0 }}>{icon}</div>
 //       <div>
 //         <div style={{ fontSize:11, fontWeight:700, color:"#fff", fontFamily:"Sora,sans-serif" }}>{title}</div>
 //         <div style={{ fontSize:10, color:subColor, marginTop:1 }}>{sub}</div>
@@ -1957,7 +1957,7 @@
 //             const lineAlpha = (1 - dist / (hexSize * 2.2)) * 0.08;
 //             ctx.beginPath();
 //             ctx.moveTo(n.x, n.y); ctx.lineTo(m.x, m.y);
-//             ctx.strokeStyle = `rgba(255,107,53,${lineAlpha})`;
+//             ctx.strokeStyle = `rgba(139,92,246,${lineAlpha})`;
 //             ctx.lineWidth = 0.8;
 //             ctx.stroke();
 //           }
@@ -1965,7 +1965,7 @@
 
 //         ctx.beginPath();
 //         ctx.arc(n.x, n.y, radius, 0, Math.PI * 2);
-//         ctx.fillStyle = `rgba(255,107,53,${alpha})`;
+//         ctx.fillStyle = `rgba(139,92,246,${alpha})`;
 //         ctx.fill();
 //       });
 //       ctx.restore();
@@ -1983,7 +1983,7 @@
 //                            + Math.sin((x / W) * Math.PI * 6 + phase * 1.3) * (amp * 0.4);
 //           x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
 //         }
-//         ctx.strokeStyle = `rgba(255,107,53,${alpha})`;
+//         ctx.strokeStyle = `rgba(139,92,246,${alpha})`;
 //         ctx.lineWidth = 1.5;
 //         ctx.stroke();
 //       }
@@ -2003,7 +2003,7 @@
 
 //         const grad = ctx.createRadialGradient(o.x, o.y, 0, o.x, o.y, r);
 //         grad.addColorStop(0, `rgba(255,${100 + i * 12},${30 + i * 8},${alpha})`);
-//         grad.addColorStop(0.5, `rgba(255,107,53,${alpha * 0.4})`);
+//         grad.addColorStop(0.5, `rgba(139,92,246,${alpha * 0.4})`);
 //         grad.addColorStop(1, "transparent");
 //         ctx.beginPath();
 //         ctx.arc(o.x, o.y, r, 0, Math.PI * 2);
@@ -2023,7 +2023,7 @@
 //         ctx.rotate(rot);
 //         ctx.beginPath();
 //         ctx.arc(0, 0, rr, 0, Math.PI * 2);
-//         ctx.strokeStyle = `rgba(255,107,53,${ringAlpha})`;
+//         ctx.strokeStyle = `rgba(139,92,246,${ringAlpha})`;
 //         ctx.lineWidth = 1.5;
 //         ctx.setLineDash([6, 10]);
 //         ctx.stroke();
@@ -2038,9 +2038,9 @@
 //           const glow = (Math.sin(t * 2 + d + ring) + 1) / 2;
 //           ctx.beginPath();
 //           ctx.arc(dx, dy, 3 + glow * 2, 0, Math.PI * 2);
-//           ctx.fillStyle = `rgba(255,107,53,${0.5 + glow * 0.5})`;
+//           ctx.fillStyle = `rgba(139,92,246,${0.5 + glow * 0.5})`;
 //           ctx.shadowBlur = 8 + glow * 8;
-//           ctx.shadowColor = "#FF6B35";
+//           ctx.shadowColor = "#8B5CF6";
 //           ctx.fill();
 //           ctx.shadowBlur = 0;
 //         }
@@ -2049,16 +2049,16 @@
 
 //       // Center core glow
 //       const coreGlow = ctx.createRadialGradient(cx, cy, 0, cx, cy, 24);
-//       coreGlow.addColorStop(0, `rgba(255,107,53,${0.5 + Math.sin(t * 1.2) * 0.2})`);
-//       coreGlow.addColorStop(0.5, "rgba(255,107,53,0.15)");
+//       coreGlow.addColorStop(0, `rgba(139,92,246,${0.5 + Math.sin(t * 1.2) * 0.2})`);
+//       coreGlow.addColorStop(0.5, "rgba(139,92,246,0.15)");
 //       coreGlow.addColorStop(1, "transparent");
 //       ctx.beginPath(); ctx.arc(cx, cy, 24, 0, Math.PI * 2);
 //       ctx.fillStyle = coreGlow; ctx.fill();
 
 //       // Center solid dot
 //       ctx.beginPath(); ctx.arc(cx, cy, 7, 0, Math.PI * 2);
-//       ctx.fillStyle = "#FF6B35";
-//       ctx.shadowBlur = 16; ctx.shadowColor = "#FF6B35";
+//       ctx.fillStyle = "#8B5CF6";
+//       ctx.shadowBlur = 16; ctx.shadowColor = "#8B5CF6";
 //       ctx.fill(); ctx.shadowBlur = 0;
 
 //       // Sparkle stars twinkling
@@ -2067,8 +2067,8 @@
 //         const a = (Math.sin(s.phase) + 1) / 2;
 //         ctx.beginPath();
 //         ctx.arc(s.x, s.y, s.r * a, 0, Math.PI * 2);
-//         ctx.fillStyle = `rgba(255,107,53,${a * 0.7})`;
-//         ctx.shadowBlur = a * 6; ctx.shadowColor = "#FF6B35";
+//         ctx.fillStyle = `rgba(139,92,246,${a * 0.7})`;
+//         ctx.shadowBlur = a * 6; ctx.shadowColor = "#8B5CF6";
 //         ctx.fill(); ctx.shadowBlur = 0;
 //       });
 
@@ -2084,8 +2084,8 @@
 //       borderRadius: 16,
 //       overflow: "hidden",
 //       marginBottom: 18,
-//       border: "1.5px solid rgba(255,107,53,0.18)",
-//       boxShadow: "0 4px 24px rgba(255,107,53,0.1)",
+//       border: "1.5px solid rgba(139,92,246,0.18)",
+//       boxShadow: "0 4px 24px rgba(139,92,246,0.1)",
 //       position: "relative",
 //       height: 180,
 //     }}>
@@ -2095,13 +2095,13 @@
 //         position:"absolute", bottom:12, left:"50%", transform:"translateX(-50%)",
 //         display:"flex", alignItems:"center", gap:6,
 //         background:"rgba(255,255,255,0.85)", backdropFilter:"blur(8px)",
-//         border:"1px solid rgba(255,107,53,0.25)",
+//         border:"1px solid rgba(139,92,246,0.25)",
 //         borderRadius:999, padding:"4px 14px",
-//         boxShadow:"0 2px 12px rgba(255,107,53,0.15)",
+//         boxShadow:"0 2px 12px rgba(139,92,246,0.15)",
 //         whiteSpace:"nowrap",
 //       }}>
-//         <div style={{ width:6, height:6, borderRadius:"50%", background:"#FF6B35", animation:"ping-dot 1.6s ease-in-out infinite" }} />
-//         <span style={{ fontSize:11, fontWeight:700, color:"#FF6B35" }}>SamayaHR · Live Platform</span>
+//         <div style={{ width:6, height:6, borderRadius:"50%", background:"#8B5CF6", animation:"ping-dot 1.6s ease-in-out infinite" }} />
+//         <span style={{ fontSize:11, fontWeight:700, color:"#8B5CF6" }}>CrewSync · Live Platform</span>
 //       </div>
 //     </div>
 //   );
@@ -2174,7 +2174,7 @@
 //   };
 
 //   return (
-//     <div style={{ minHeight:"100vh", background:"#F7F8FA" }}>
+//     <div style={{ minHeight:"100vh", background:"#F6F8FB" }}>
 //       <style>{`
 //         @import url('https://fonts.googleapis.com/css2?family=Sora:wght@700;800;900&family=DM+Sans:wght@400;500;600&display=swap');
 //         *, *::before, *::after { font-family:'DM Sans',sans-serif; box-sizing:border-box; }
@@ -2197,25 +2197,25 @@
 //         .lg-input {
 //           width:100%; border:1.5px solid #e5e7eb; border-radius:12px;
 //           background:#fff; padding:11px 14px 11px 42px;
-//           font-size:14px; color:#0D1F2D; outline:none;
+//           font-size:14px; color:#0B1020; outline:none;
 //           transition:border-color .2s, box-shadow .2s;
 //           font-family:'DM Sans',sans-serif;
 //         }
 //         .lg-input::placeholder { color:#9ca3af; }
-//         .lg-input:focus { border-color:#FF6B35; box-shadow:0 0 0 3px rgba(255,107,53,.1); }
+//         .lg-input:focus { border-color:#8B5CF6; box-shadow:0 0 0 3px rgba(139,92,246,.1); }
 
 //         .coral-btn {
 //           width:100%;
-//           background:linear-gradient(135deg,#FF6B35 0%,#FF5722 50%,#ff7043 100%);
+//           background:linear-gradient(135deg,#8B5CF6 0%,#06B6D4 50%,#38BDF8 100%);
 //           background-size:200% auto;
 //           color:#fff; font-weight:800; font-size:15px; padding:13px;
 //           border-radius:14px; border:none; cursor:pointer;
-//           box-shadow:0 4px 24px rgba(255,107,53,.38);
+//           box-shadow:0 4px 24px rgba(139,92,246,.38);
 //           transition:transform .22s, box-shadow .22s, background-position .4s;
 //           display:flex; align-items:center; justify-content:center; gap:8px;
 //           letter-spacing:.02em;
 //         }
-//         .coral-btn:hover    { transform:translateY(-2px); box-shadow:0 10px 32px rgba(255,107,53,.5); background-position:right center; }
+//         .coral-btn:hover    { transform:translateY(-2px); box-shadow:0 10px 32px rgba(139,92,246,.5); background-position:right center; }
 //         .coral-btn:disabled { opacity:.65; cursor:not-allowed; transform:none; }
 
 //         .tab-btn {
@@ -2228,12 +2228,12 @@
 //       <header style={{ background:"#fff", borderBottom:"1px solid #f0f0f0", position:"sticky", top:0, zIndex:100, boxShadow:"0 1px 10px rgba(0,0,0,.05)" }}>
 //         <nav style={{ maxWidth:1120, margin:"0 auto", padding:"0 24px", height:64, display:"flex", alignItems:"center", justifyContent:"space-between" }}>
 //           <div style={{ display:"flex", alignItems:"center", gap:9 }}>
-//             <div className="sora" style={{ width:32, height:32, borderRadius:10, background:"linear-gradient(135deg,#FF6B35,#FF5722)", display:"flex", alignItems:"center", justifyContent:"center", color:"#fff", fontWeight:900, fontSize:15 }}>S</div>
-//             <span className="sora" style={{ fontWeight:900, fontSize:20, color:"#0D1F2D" }}>Samaya<span style={{ color:"#FF6B35" }}>HR</span></span>
+//             <div className="sora" style={{ width:32, height:32, borderRadius:10, background:"linear-gradient(135deg,#8B5CF6,#06B6D4)", display:"flex", alignItems:"center", justifyContent:"center", color:"#fff", fontWeight:900, fontSize:15 }}>S</div>
+//             <span className="sora" style={{ fontWeight:900, fontSize:20, color:"#0B1020" }}>CrewSync<span style={{ color:"#8B5CF6" }}>PeopleOps</span></span>
 //           </div>
 //           <button onClick={() => navigate("/")}
 //             style={{ display:"flex", alignItems:"center", gap:6, fontSize:13, fontWeight:600, color:"#6b7280", background:"none", border:"1.5px solid #e5e7eb", borderRadius:10, padding:"7px 16px", cursor:"pointer", transition:"all .2s" }}
-//             onMouseEnter={e => { e.currentTarget.style.borderColor="#FF6B35"; e.currentTarget.style.color="#FF6B35"; }}
+//             onMouseEnter={e => { e.currentTarget.style.borderColor="#8B5CF6"; e.currentTarget.style.color="#8B5CF6"; }}
 //             onMouseLeave={e => { e.currentTarget.style.borderColor="#e5e7eb"; e.currentTarget.style.color="#6b7280"; }}>
 //             <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5"><path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
 //             Back to Home
@@ -2255,23 +2255,23 @@
 //             minHeight:560,
 //           }}>
 //             {/* Warm ambient orbs */}
-//             <div style={{ position:"absolute", top:-80, left:-60, width:360, height:360, borderRadius:"50%", filter:"blur(90px)", background:"rgba(255,107,53,0.28)", pointerEvents:"none", zIndex:1, animation:"gp 4s ease-in-out infinite" }} />
+//             <div style={{ position:"absolute", top:-80, left:-60, width:360, height:360, borderRadius:"50%", filter:"blur(90px)", background:"rgba(139,92,246,0.28)", pointerEvents:"none", zIndex:1, animation:"gp 4s ease-in-out infinite" }} />
 //             <div style={{ position:"absolute", bottom:-60, right:-40, width:300, height:300, borderRadius:"50%", filter:"blur(80px)", background:"rgba(255,60,10,0.22)", pointerEvents:"none", zIndex:1, animation:"gp 4s ease-in-out infinite 1s" }} />
 //             <div style={{ position:"absolute", top:"40%", right:0, width:240, height:240, borderRadius:"50%", filter:"blur(70px)", background:"rgba(255,140,50,0.16)", pointerEvents:"none", zIndex:1, animation:"gp 4s ease-in-out infinite 2s" }} />
 
 //             {/* Divider line */}
-//             <div style={{ position:"absolute", top:0, right:0, width:1, height:"100%", background:"linear-gradient(to bottom, transparent, rgba(255,107,53,0.45) 30%, rgba(255,107,53,0.45) 70%, transparent)", zIndex:20, pointerEvents:"none" }} />
+//             <div style={{ position:"absolute", top:0, right:0, width:1, height:"100%", background:"linear-gradient(to bottom, transparent, rgba(139,92,246,0.45) 30%, rgba(139,92,246,0.45) 70%, transparent)", zIndex:20, pointerEvents:"none" }} />
 
 //             {/* Canvas orbit animation */}
-//             <HROrbitScene />
+//             <PeopleOpsOrbitScene />
 
 //             {/* Floating metric cards */}
 //             <MCard style={{ top:26, left:18, animation:"floatA 4.5s ease-in-out infinite" }}
-//               icon="💸" title="Payroll Done" sub="✓ 248 employees" subColor="#4ade80" />
+//               icon="💸" title="Payout Complete" sub="✓ 248 employees" subColor="#4ade80" />
 //             <MCard style={{ bottom:52, right:14, animation:"floatB 5.5s ease-in-out infinite" }}
 //               icon="⏰" title="Team Check-In" sub="48 / 50 present" subColor="#fbbf24" />
 //             <MCard style={{ top:"43%", right:12, animation:"floatC 6s ease-in-out infinite" }}
-//               icon="🏖️" title="Leave Approved" sub="3 requests · instant" subColor="#fb923c" />
+//               icon="🏖️" title="TimeAway Cleared" sub="3 requests · instant" subColor="#fb923c" />
 
 //             {/* Center logo badge */}
 //             <div style={{
@@ -2280,25 +2280,25 @@
 //               zIndex:5, pointerEvents:"none",
 //               width:36, height:36, borderRadius:11,
 //               background:"rgba(8,3,1,0.96)",
-//               border:"1.5px solid rgba(255,107,53,0.9)",
+//               border:"1.5px solid rgba(139,92,246,0.9)",
 //               display:"flex", alignItems:"center", justifyContent:"center",
-//               boxShadow:"0 0 22px rgba(255,107,53,0.7), 0 0 50px rgba(255,80,20,0.3)",
+//               boxShadow:"0 0 22px rgba(139,92,246,0.7), 0 0 50px rgba(255,80,20,0.3)",
 //             }}>
-//               <img src={logo} alt="SamayaHR" style={{ width:22, height:22, objectFit:"contain" }} />
+//               <img src={logo} alt="CrewSync" style={{ width:22, height:22, objectFit:"contain" }} />
 //             </div>
 
 //             {/* Live badge */}
 //             <div style={{ position:"absolute", top:20, left:"50%", transform:"translateX(-50%)", zIndex:10 }}>
-//               <div style={{ display:"inline-flex", alignItems:"center", gap:7, background:"rgba(255,107,53,.14)", border:"1px solid rgba(255,107,53,.3)", borderRadius:999, padding:"5px 14px" }}>
-//                 <span style={{ width:6, height:6, borderRadius:"50%", background:"#FF6B35", display:"inline-block", animation:"ping-dot 1.8s ease-in-out infinite" }} />
-//                 <span style={{ fontSize:10, fontWeight:700, letterSpacing:".1em", color:"#FF6B35", textTransform:"uppercase", whiteSpace:"nowrap" }}>Live · Secure Access</span>
+//               <div style={{ display:"inline-flex", alignItems:"center", gap:7, background:"rgba(139,92,246,.14)", border:"1px solid rgba(139,92,246,.3)", borderRadius:999, padding:"5px 14px" }}>
+//                 <span style={{ width:6, height:6, borderRadius:"50%", background:"#8B5CF6", display:"inline-block", animation:"ping-dot 1.8s ease-in-out infinite" }} />
+//                 <span style={{ fontSize:10, fontWeight:700, letterSpacing:".1em", color:"#8B5CF6", textTransform:"uppercase", whiteSpace:"nowrap" }}>Live · Secure Access</span>
 //               </div>
 //             </div>
 
 //             {/* Watermark */}
 //             <div style={{ position:"absolute", bottom:16, left:0, right:0, textAlign:"center", zIndex:10, pointerEvents:"none" }}>
 //               <p style={{ fontSize:10, fontWeight:700, color:"rgba(255,255,255,0.1)", letterSpacing:"0.18em", textTransform:"uppercase", fontFamily:"Sora,sans-serif", margin:0 }}>
-//                 Samaya<span style={{ color:"rgba(255,107,53,0.3)" }}>HR</span> · Workplace OS
+//                 CrewSync<span style={{ color:"rgba(139,92,246,0.3)" }}>PeopleOps</span> · Workplace OS
 //               </p>
 //             </div>
 //           </div>
@@ -2310,12 +2310,12 @@
 //               {/* Header */}
 //               <div className="fu1" style={{ marginBottom:24 }}>
 //                 <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:12 }}>
-//                   <div style={{ width:44, height:44, borderRadius:13, background:"linear-gradient(135deg,#FF6B35,#FF5722)", display:"flex", alignItems:"center", justifyContent:"center", boxShadow:"0 4px 16px rgba(255,107,53,.3)", flexShrink:0, position:"relative" }}>
-//                     <img src="/assets/Zlabs-Logo.png" alt="SamayaHR" style={{ width:28, height:28, objectFit:"contain" }} />
+//                   <div style={{ width:44, height:44, borderRadius:13, background:"linear-gradient(135deg,#8B5CF6,#06B6D4)", display:"flex", alignItems:"center", justifyContent:"center", boxShadow:"0 4px 16px rgba(139,92,246,.3)", flexShrink:0, position:"relative" }}>
+//                     <img src="/assets/crewsync-mark.svg" alt="CrewSync" style={{ width:28, height:28, objectFit:"contain" }} />
 //                     <div style={{ position:"absolute", top:-2, right:-2, width:11, height:11, borderRadius:"50%", background:"#22c55e", border:"2px solid #fff" }} />
 //                   </div>
 //                   <div>
-//                     <h3 className="sora" style={{ fontSize:22, fontWeight:900, color:"#0D1F2D", margin:0 }}>
+//                     <h3 className="sora" style={{ fontSize:22, fontWeight:900, color:"#0B1020", margin:0 }}>
 //                       {showForm ? "Sign in to workspace" : "Welcome back 👋"}
 //                     </h3>
 //                     <p style={{ fontSize:12, color:"#9ca3af", margin:"3px 0 0" }}>
@@ -2338,11 +2338,11 @@
 
 //                   <p className="fu5" style={{ textAlign:"center", marginTop:14, fontSize:12, color:"#9ca3af" }}>
 //                     New here?{" "}
-//                     <a href="/solutions/bookdemo" style={{ color:"#FF6B35", fontWeight:700, textDecoration:"none" }}>Get a free personalised demo →</a>
+//                     <a href="/solutions/bookdemo" style={{ color:"#8B5CF6", fontWeight:700, textDecoration:"none" }}>Get a free personalised demo →</a>
 //                   </p>
 
 //                   {/* Trust row — same as BookDemo */}
-//                   <div style={{ display:"flex", flexWrap:"wrap", gap:14, background:"#F7F8FA", borderRadius:12, padding:"11px 14px", marginTop:16 }}>
+//                   <div style={{ display:"flex", flexWrap:"wrap", gap:14, background:"#F6F8FB", borderRadius:12, padding:"11px 14px", marginTop:16 }}>
 //                     {[["🔒","Secure & Private"],["⚡","Instant Login"]].map(([ic,tx]) => (
 //                       <div key={tx} style={{ display:"flex", alignItems:"center", gap:6, fontSize:12, color:"#6b7280", fontWeight:500 }}>
 //                         <span>{ic}</span>{tx}
@@ -2354,11 +2354,11 @@
 //                 <>
 //                   {/* Tab toggle */}
 //                   <div className="fu1" style={{ display:"flex", gap:4, borderRadius:12, padding:4, background:"#f3f4f6", marginBottom:20, border:"1px solid #e5e7eb" }}>
-//                     {[["employee","👤 Employee"],["company","🏢 Company"]].map(([tab, label]) => (
+//                     {[["employee","👤 Person"],["company","🏢 Workspace"]].map(([tab, label]) => (
 //                       <button key={tab} className="tab-btn" onClick={() => setActiveTab(tab)} style={{
-//                         background: activeTab === tab ? "linear-gradient(135deg,#FF6B35,#FF5722)" : "transparent",
+//                         background: activeTab === tab ? "linear-gradient(135deg,#8B5CF6,#06B6D4)" : "transparent",
 //                         color:      activeTab === tab ? "#fff" : "#6b7280",
-//                         boxShadow:  activeTab === tab ? "0 2px 10px rgba(255,107,53,.3)" : "none",
+//                         boxShadow:  activeTab === tab ? "0 2px 10px rgba(139,92,246,.3)" : "none",
 //                       }}>{label}</button>
 //                     ))}
 //                   </div>
@@ -2368,7 +2368,7 @@
 //                     {/* Email */}
 //                     <div className="fu2">
 //                       <label style={{ display:"block", fontSize:12, fontWeight:700, color:"#374151", textTransform:"uppercase", letterSpacing:".06em", marginBottom:5 }}>
-//                         Email address <span style={{ color:"#FF6B35" }}>*</span>
+//                         Email address <span style={{ color:"#8B5CF6" }}>*</span>
 //                       </label>
 //                       <div style={{ position:"relative" }}>
 //                         <div style={{ position:"absolute", left:13, top:"50%", transform:"translateY(-50%)", color:"#9ca3af" }}>
@@ -2383,7 +2383,7 @@
 //                     {activeTab === "company" ? (
 //                       <div className="fu3">
 //                         <label style={{ display:"block", fontSize:12, fontWeight:700, color:"#374151", textTransform:"uppercase", letterSpacing:".06em", marginBottom:5 }}>
-//                           Pass Code <span style={{ color:"#FF6B35" }}>*</span>
+//                           Pass Code <span style={{ color:"#8B5CF6" }}>*</span>
 //                         </label>
 //                         <div style={{ position:"relative" }}>
 //                           <div style={{ position:"absolute", left:13, top:"50%", transform:"translateY(-50%)", color:"#9ca3af" }}>
@@ -2397,9 +2397,9 @@
 //                       <div className="fu3">
 //                         <div style={{ display:"flex", justifyContent:"space-between", marginBottom:5 }}>
 //                           <label style={{ fontSize:12, fontWeight:700, color:"#374151", textTransform:"uppercase", letterSpacing:".06em" }}>
-//                             Password <span style={{ color:"#FF6B35" }}>*</span>
+//                             Password <span style={{ color:"#8B5CF6" }}>*</span>
 //                           </label>
-//                           <a href="/forgot-password" style={{ fontSize:11, fontWeight:700, color:"#FF6B35", textDecoration:"none" }}>Forgot password?</a>
+//                           <a href="/forgot-password" style={{ fontSize:11, fontWeight:700, color:"#8B5CF6", textDecoration:"none" }}>Forgot password?</a>
 //                         </div>
 //                         <div style={{ position:"relative" }}>
 //                           <div style={{ position:"absolute", left:13, top:"50%", transform:"translateY(-50%)", color:"#9ca3af" }}>
@@ -2436,8 +2436,8 @@
 
 //               <p className="fu5" style={{ marginTop:16, textAlign:"center", fontSize:11, color:"#9ca3af", lineHeight:1.7 }}>
 //                 By signing in, you agree to our{" "}
-//                 <a href="/terms"   style={{ color:"#FF6B35", textDecoration:"none" }}>Terms of Service</a>{" "}&{" "}
-//                 <a href="/privacy" style={{ color:"#FF6B35", textDecoration:"none" }}>Privacy Policy</a>.
+//                 <a href="/terms"   style={{ color:"#8B5CF6", textDecoration:"none" }}>Terms of Service</a>{" "}&{" "}
+//                 <a href="/privacy" style={{ color:"#8B5CF6", textDecoration:"none" }}>Privacy Playbook</a>.
 //               </p>
 //             </div>
 //           </div>
@@ -2452,7 +2452,7 @@
 //new role naviagtion added and no Protected Route 
 // import React, { useState, useEffect, useRef } from "react";
 // import { useNavigate } from "react-router-dom";
-// import logo from "/assets/Zlabs-Logo.png?url";
+// import logo from "/assets/crewsync-mark.svg?url";
 
 // const getApiBaseUrl = () => {
 //   const fromEnv =
@@ -2485,7 +2485,7 @@
 // /* ══════════════════════════════════════════
 //    LEFT PANEL — Original orbit canvas animation
 // ══════════════════════════════════════════ */
-// function HROrbitScene() {
+// function PeopleOpsOrbitScene() {
 //   const canvasRef = useRef(null);
 //   const animRef = useRef(null);
 
@@ -2512,13 +2512,13 @@
 //       { r: 138, speed: -0.006, nodes: 5, offset: Math.PI / 5 },
 //       { r: 198, speed: 0.004, nodes: 6, offset: Math.PI / 9 },
 //     ];
-//     const COLS = ["rgba(255,107,53,", "rgba(255,160,80,", "rgba(255,70,30,"];
+//     const COLS = ["rgba(139,92,246,", "rgba(255,160,80,", "rgba(255,70,30,"];
 
 //     const PCOLS = [
-//       "rgba(255,107,53,",
+//       "rgba(139,92,246,",
 //       "rgba(255,160,80,",
 //       "rgba(255,200,100,",
-//       "rgba(0,194,168,",
+//       "rgba(6,182,212,",
 //     ];
 //     const particles = Array.from({ length: 65 }, () => ({
 //       x: Math.random() * W,
@@ -2541,7 +2541,7 @@
 
 //       // grid
 //       ctx.save();
-//       ctx.strokeStyle = "rgba(255,107,53,0.05)";
+//       ctx.strokeStyle = "rgba(139,92,246,0.05)";
 //       ctx.lineWidth = 1;
 //       for (let x = 0; x < W; x += 44) {
 //         ctx.beginPath();
@@ -2581,7 +2581,7 @@
 //         const a = (1 - p.r / p.max) * 0.22;
 //         ctx.beginPath();
 //         ctx.arc(cx, cy, p.r, 0, Math.PI * 2);
-//         ctx.strokeStyle = `rgba(255,107,53,${a})`;
+//         ctx.strokeStyle = `rgba(139,92,246,${a})`;
 //         ctx.lineWidth = 1.5;
 //         ctx.stroke();
 //       });
@@ -2636,7 +2636,7 @@
 
 //       // core glow
 //       const cg = ctx.createRadialGradient(cx, cy, 0, cx, cy, 55);
-//       cg.addColorStop(0, "rgba(255,107,53,0.42)");
+//       cg.addColorStop(0, "rgba(139,92,246,0.42)");
 //       cg.addColorStop(0.5, "rgba(255,80,20,0.14)");
 //       cg.addColorStop(1, "transparent");
 //       ctx.beginPath();
@@ -2649,7 +2649,7 @@
 //       ctx.rotate(t * 0.4);
 //       ctx.beginPath();
 //       ctx.arc(0, 0, 32, 0, Math.PI * 2);
-//       ctx.strokeStyle = "rgba(255,107,53,0.55)";
+//       ctx.strokeStyle = "rgba(139,92,246,0.55)";
 //       ctx.lineWidth = 1.5;
 //       ctx.setLineDash([6, 6]);
 //       ctx.stroke();
@@ -2672,7 +2672,7 @@
 //       ctx.arc(cx, cy, 17, 0, Math.PI * 2);
 //       ctx.fillStyle = "rgba(8,4,2,0.96)";
 //       ctx.fill();
-//       ctx.strokeStyle = "rgba(255,107,53,0.95)";
+//       ctx.strokeStyle = "rgba(139,92,246,0.95)";
 //       ctx.lineWidth = 2;
 //       ctx.stroke();
 
@@ -2697,14 +2697,14 @@
 //         position: "absolute",
 //         zIndex: 10,
 //         background: "rgba(10,4,2,0.85)",
-//         border: "1px solid rgba(255,107,53,0.35)",
+//         border: "1px solid rgba(139,92,246,0.35)",
 //         backdropFilter: "blur(16px)",
 //         borderRadius: 14,
 //         padding: "9px 14px",
 //         display: "flex",
 //         alignItems: "center",
 //         gap: 10,
-//         boxShadow: "0 8px 28px rgba(0,0,0,0.45), 0 0 18px rgba(255,107,53,0.12)",
+//         boxShadow: "0 8px 28px rgba(0,0,0,0.45), 0 0 18px rgba(139,92,246,0.12)",
 //         ...style,
 //       }}
 //     >
@@ -2713,7 +2713,7 @@
 //           width: 30,
 //           height: 30,
 //           borderRadius: 9,
-//           background: "rgba(255,107,53,0.14)",
+//           background: "rgba(139,92,246,0.14)",
 //           display: "flex",
 //           alignItems: "center",
 //           justifyContent: "center",
@@ -2821,7 +2821,7 @@
 //             ctx.beginPath();
 //             ctx.moveTo(n.x, n.y);
 //             ctx.lineTo(m.x, m.y);
-//             ctx.strokeStyle = `rgba(255,107,53,${lineAlpha})`;
+//             ctx.strokeStyle = `rgba(139,92,246,${lineAlpha})`;
 //             ctx.lineWidth = 0.8;
 //             ctx.stroke();
 //           }
@@ -2829,7 +2829,7 @@
 
 //         ctx.beginPath();
 //         ctx.arc(n.x, n.y, radius, 0, Math.PI * 2);
-//         ctx.fillStyle = `rgba(255,107,53,${alpha})`;
+//         ctx.fillStyle = `rgba(139,92,246,${alpha})`;
 //         ctx.fill();
 //       });
 //       ctx.restore();
@@ -2848,7 +2848,7 @@
 //             Math.sin((x / W) * Math.PI * 6 + phase * 1.3) * (amp * 0.4);
 //           x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
 //         }
-//         ctx.strokeStyle = `rgba(255,107,53,${alpha})`;
+//         ctx.strokeStyle = `rgba(139,92,246,${alpha})`;
 //         ctx.lineWidth = 1.5;
 //         ctx.stroke();
 //       }
@@ -2867,7 +2867,7 @@
 
 //         const grad = ctx.createRadialGradient(o.x, o.y, 0, o.x, o.y, r);
 //         grad.addColorStop(0, `rgba(255,${100 + i * 12},${30 + i * 8},${alpha})`);
-//         grad.addColorStop(0.5, `rgba(255,107,53,${alpha * 0.4})`);
+//         grad.addColorStop(0.5, `rgba(139,92,246,${alpha * 0.4})`);
 //         grad.addColorStop(1, "transparent");
 //         ctx.beginPath();
 //         ctx.arc(o.x, o.y, r, 0, Math.PI * 2);
@@ -2887,7 +2887,7 @@
 //         ctx.rotate(rot);
 //         ctx.beginPath();
 //         ctx.arc(0, 0, rr, 0, Math.PI * 2);
-//         ctx.strokeStyle = `rgba(255,107,53,${ringAlpha})`;
+//         ctx.strokeStyle = `rgba(139,92,246,${ringAlpha})`;
 //         ctx.lineWidth = 1.5;
 //         ctx.setLineDash([6, 10]);
 //         ctx.stroke();
@@ -2901,9 +2901,9 @@
 //           const glow = (Math.sin(t * 2 + d + ring) + 1) / 2;
 //           ctx.beginPath();
 //           ctx.arc(dx, dy, 3 + glow * 2, 0, Math.PI * 2);
-//           ctx.fillStyle = `rgba(255,107,53,${0.5 + glow * 0.5})`;
+//           ctx.fillStyle = `rgba(139,92,246,${0.5 + glow * 0.5})`;
 //           ctx.shadowBlur = 8 + glow * 8;
-//           ctx.shadowColor = "#FF6B35";
+//           ctx.shadowColor = "#8B5CF6";
 //           ctx.fill();
 //           ctx.shadowBlur = 0;
 //         }
@@ -2911,8 +2911,8 @@
 //       }
 
 //       const coreGlow = ctx.createRadialGradient(cx, cy, 0, cx, cy, 24);
-//       coreGlow.addColorStop(0, `rgba(255,107,53,${0.5 + Math.sin(t * 1.2) * 0.2})`);
-//       coreGlow.addColorStop(0.5, "rgba(255,107,53,0.15)");
+//       coreGlow.addColorStop(0, `rgba(139,92,246,${0.5 + Math.sin(t * 1.2) * 0.2})`);
+//       coreGlow.addColorStop(0.5, "rgba(139,92,246,0.15)");
 //       coreGlow.addColorStop(1, "transparent");
 //       ctx.beginPath();
 //       ctx.arc(cx, cy, 24, 0, Math.PI * 2);
@@ -2921,9 +2921,9 @@
 
 //       ctx.beginPath();
 //       ctx.arc(cx, cy, 7, 0, Math.PI * 2);
-//       ctx.fillStyle = "#FF6B35";
+//       ctx.fillStyle = "#8B5CF6";
 //       ctx.shadowBlur = 16;
-//       ctx.shadowColor = "#FF6B35";
+//       ctx.shadowColor = "#8B5CF6";
 //       ctx.fill();
 //       ctx.shadowBlur = 0;
 
@@ -2932,9 +2932,9 @@
 //         const a = (Math.sin(s.phase) + 1) / 2;
 //         ctx.beginPath();
 //         ctx.arc(s.x, s.y, s.r * a, 0, Math.PI * 2);
-//         ctx.fillStyle = `rgba(255,107,53,${a * 0.7})`;
+//         ctx.fillStyle = `rgba(139,92,246,${a * 0.7})`;
 //         ctx.shadowBlur = a * 6;
-//         ctx.shadowColor = "#FF6B35";
+//         ctx.shadowColor = "#8B5CF6";
 //         ctx.fill();
 //         ctx.shadowBlur = 0;
 //       });
@@ -2956,8 +2956,8 @@
 //         borderRadius: 16,
 //         overflow: "hidden",
 //         marginBottom: 18,
-//         border: "1.5px solid rgba(255,107,53,0.18)",
-//         boxShadow: "0 4px 24px rgba(255,107,53,0.1)",
+//         border: "1.5px solid rgba(139,92,246,0.18)",
+//         boxShadow: "0 4px 24px rgba(139,92,246,0.1)",
 //         position: "relative",
 //         height: 180,
 //       }}
@@ -2974,10 +2974,10 @@
 //           gap: 6,
 //           background: "rgba(255,255,255,0.85)",
 //           backdropFilter: "blur(8px)",
-//           border: "1px solid rgba(255,107,53,0.25)",
+//           border: "1px solid rgba(139,92,246,0.25)",
 //           borderRadius: 999,
 //           padding: "4px 14px",
-//           boxShadow: "0 2px 12px rgba(255,107,53,0.15)",
+//           boxShadow: "0 2px 12px rgba(139,92,246,0.15)",
 //           whiteSpace: "nowrap",
 //         }}
 //       >
@@ -2986,12 +2986,12 @@
 //             width: 6,
 //             height: 6,
 //             borderRadius: "50%",
-//             background: "#FF6B35",
+//             background: "#8B5CF6",
 //             animation: "ping-dot 1.6s ease-in-out infinite",
 //           }}
 //         />
-//         <span style={{ fontSize: 11, fontWeight: 700, color: "#FF6B35" }}>
-//           SamayaHR · Live Platform
+//         <span style={{ fontSize: 11, fontWeight: 700, color: "#8B5CF6" }}>
+//           CrewSync · Live Platform
 //         </span>
 //       </div>
 //     </div>
@@ -3057,7 +3057,7 @@
 //         const data = await res.json();
 
 //         if (!res.ok || !data.success) {
-//           throw new Error(data?.message || "Company login failed");
+//           throw new Error(data?.message || "Workspace login failed");
 //         }
 
 //         const token = data?.data?.token;
@@ -3119,7 +3119,7 @@
 //   };
 
 //   return (
-//     <div style={{ minHeight: "100vh", background: "#F7F8FA" }}>
+//     <div style={{ minHeight: "100vh", background: "#F6F8FB" }}>
 //       <style>{`
 //         @import url('https://fonts.googleapis.com/css2?family=Sora:wght@700;800;900&family=DM+Sans:wght@400;500;600&display=swap');
 //         *, *::before, *::after { font-family:'DM Sans',sans-serif; box-sizing:border-box; }
@@ -3142,25 +3142,25 @@
 //         .lg-input {
 //           width:100%; border:1.5px solid #e5e7eb; border-radius:12px;
 //           background:#fff; padding:11px 14px 11px 42px;
-//           font-size:14px; color:#0D1F2D; outline:none;
+//           font-size:14px; color:#0B1020; outline:none;
 //           transition:border-color .2s, box-shadow .2s;
 //           font-family:'DM Sans',sans-serif;
 //         }
 //         .lg-input::placeholder { color:#9ca3af; }
-//         .lg-input:focus { border-color:#FF6B35; box-shadow:0 0 0 3px rgba(255,107,53,.1); }
+//         .lg-input:focus { border-color:#8B5CF6; box-shadow:0 0 0 3px rgba(139,92,246,.1); }
 
 //         .coral-btn {
 //           width:100%;
-//           background:linear-gradient(135deg,#FF6B35 0%,#FF5722 50%,#ff7043 100%);
+//           background:linear-gradient(135deg,#8B5CF6 0%,#06B6D4 50%,#38BDF8 100%);
 //           background-size:200% auto;
 //           color:#fff; font-weight:800; font-size:15px; padding:13px;
 //           border-radius:14px; border:none; cursor:pointer;
-//           box-shadow:0 4px 24px rgba(255,107,53,.38);
+//           box-shadow:0 4px 24px rgba(139,92,246,.38);
 //           transition:transform .22s, box-shadow .22s, background-position .4s;
 //           display:flex; align-items:center; justify-content:center; gap:8px;
 //           letter-spacing:.02em;
 //         }
-//         .coral-btn:hover    { transform:translateY(-2px); box-shadow:0 10px 32px rgba(255,107,53,.5); background-position:right center; }
+//         .coral-btn:hover    { transform:translateY(-2px); box-shadow:0 10px 32px rgba(139,92,246,.5); background-position:right center; }
 //         .coral-btn:disabled { opacity:.65; cursor:not-allowed; transform:none; }
 
 //         .tab-btn {
@@ -3172,12 +3172,12 @@
 //       <header style={{ background:"#fff", borderBottom:"1px solid #f0f0f0", position:"sticky", top:0, zIndex:100, boxShadow:"0 1px 10px rgba(0,0,0,.05)" }}>
 //         <nav style={{ maxWidth:1120, margin:"0 auto", padding:"0 24px", height:64, display:"flex", alignItems:"center", justifyContent:"space-between" }}>
 //           <div style={{ display:"flex", alignItems:"center", gap:9 }}>
-//             <div className="sora" style={{ width:32, height:32, borderRadius:10, background:"linear-gradient(135deg,#FF6B35,#FF5722)", display:"flex", alignItems:"center", justifyContent:"center", color:"#fff", fontWeight:900, fontSize:15 }}>S</div>
-//             <span className="sora" style={{ fontWeight:900, fontSize:20, color:"#0D1F2D" }}>Samaya<span style={{ color:"#FF6B35" }}>HR</span></span>
+//             <div className="sora" style={{ width:32, height:32, borderRadius:10, background:"linear-gradient(135deg,#8B5CF6,#06B6D4)", display:"flex", alignItems:"center", justifyContent:"center", color:"#fff", fontWeight:900, fontSize:15 }}>S</div>
+//             <span className="sora" style={{ fontWeight:900, fontSize:20, color:"#0B1020" }}>CrewSync<span style={{ color:"#8B5CF6" }}>PeopleOps</span></span>
 //           </div>
 //           <button onClick={() => navigate("/")}
 //             style={{ display:"flex", alignItems:"center", gap:6, fontSize:13, fontWeight:600, color:"#6b7280", background:"none", border:"1.5px solid #e5e7eb", borderRadius:10, padding:"7px 16px", cursor:"pointer", transition:"all .2s" }}
-//             onMouseEnter={e => { e.currentTarget.style.borderColor="#FF6B35"; e.currentTarget.style.color="#FF6B35"; }}
+//             onMouseEnter={e => { e.currentTarget.style.borderColor="#8B5CF6"; e.currentTarget.style.color="#8B5CF6"; }}
 //             onMouseLeave={e => { e.currentTarget.style.borderColor="#e5e7eb"; e.currentTarget.style.color="#6b7280"; }}>
 //             <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5"><path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
 //             Back to Home
@@ -3196,20 +3196,20 @@
 //             alignItems:"center", justifyContent:"center",
 //             minHeight:560,
 //           }}>
-//             <div style={{ position:"absolute", top:-80, left:-60, width:360, height:360, borderRadius:"50%", filter:"blur(90px)", background:"rgba(255,107,53,0.28)", pointerEvents:"none", zIndex:1, animation:"gp 4s ease-in-out infinite" }} />
+//             <div style={{ position:"absolute", top:-80, left:-60, width:360, height:360, borderRadius:"50%", filter:"blur(90px)", background:"rgba(139,92,246,0.28)", pointerEvents:"none", zIndex:1, animation:"gp 4s ease-in-out infinite" }} />
 //             <div style={{ position:"absolute", bottom:-60, right:-40, width:300, height:300, borderRadius:"50%", filter:"blur(80px)", background:"rgba(255,60,10,0.22)", pointerEvents:"none", zIndex:1, animation:"gp 4s ease-in-out infinite 1s" }} />
 //             <div style={{ position:"absolute", top:"40%", right:0, width:240, height:240, borderRadius:"50%", filter:"blur(70px)", background:"rgba(255,140,50,0.16)", pointerEvents:"none", zIndex:1, animation:"gp 4s ease-in-out infinite 2s" }} />
 
-//             <div style={{ position:"absolute", top:0, right:0, width:1, height:"100%", background:"linear-gradient(to bottom, transparent, rgba(255,107,53,0.45) 30%, rgba(255,107,53,0.45) 70%, transparent)", zIndex:20, pointerEvents:"none" }} />
+//             <div style={{ position:"absolute", top:0, right:0, width:1, height:"100%", background:"linear-gradient(to bottom, transparent, rgba(139,92,246,0.45) 30%, rgba(139,92,246,0.45) 70%, transparent)", zIndex:20, pointerEvents:"none" }} />
 
-//             <HROrbitScene />
+//             <PeopleOpsOrbitScene />
 
 //             <MCard style={{ top:26, left:18, animation:"floatA 4.5s ease-in-out infinite" }}
-//               icon="💸" title="Payroll Done" sub="✓ 248 employees" subColor="#4ade80" />
+//               icon="💸" title="Payout Complete" sub="✓ 248 employees" subColor="#4ade80" />
 //             <MCard style={{ bottom:52, right:14, animation:"floatB 5.5s ease-in-out infinite" }}
 //               icon="⏰" title="Team Check-In" sub="48 / 50 present" subColor="#fbbf24" />
 //             <MCard style={{ top:"43%", right:12, animation:"floatC 6s ease-in-out infinite" }}
-//               icon="🏖️" title="Leave Approved" sub="3 requests · instant" subColor="#fb923c" />
+//               icon="🏖️" title="TimeAway Cleared" sub="3 requests · instant" subColor="#fb923c" />
 
 //             <div style={{
 //               position:"absolute", top:"50%", left:"50%",
@@ -3217,23 +3217,23 @@
 //               zIndex:5, pointerEvents:"none",
 //               width:36, height:36, borderRadius:11,
 //               background:"rgba(8,3,1,0.96)",
-//               border:"1.5px solid rgba(255,107,53,0.9)",
+//               border:"1.5px solid rgba(139,92,246,0.9)",
 //               display:"flex", alignItems:"center", justifyContent:"center",
-//               boxShadow:"0 0 22px rgba(255,107,53,0.7), 0 0 50px rgba(255,80,20,0.3)",
+//               boxShadow:"0 0 22px rgba(139,92,246,0.7), 0 0 50px rgba(255,80,20,0.3)",
 //             }}>
-//               <img src={logo} alt="SamayaHR" style={{ width:22, height:22, objectFit:"contain" }} />
+//               <img src={logo} alt="CrewSync" style={{ width:22, height:22, objectFit:"contain" }} />
 //             </div>
 
 //             <div style={{ position:"absolute", top:20, left:"50%", transform:"translateX(-50%)", zIndex:10 }}>
-//               <div style={{ display:"inline-flex", alignItems:"center", gap:7, background:"rgba(255,107,53,.14)", border:"1px solid rgba(255,107,53,.3)", borderRadius:999, padding:"5px 14px" }}>
-//                 <span style={{ width:6, height:6, borderRadius:"50%", background:"#FF6B35", display:"inline-block", animation:"ping-dot 1.8s ease-in-out infinite" }} />
-//                 <span style={{ fontSize:10, fontWeight:700, letterSpacing:".1em", color:"#FF6B35", textTransform:"uppercase", whiteSpace:"nowrap" }}>Live · Secure Access</span>
+//               <div style={{ display:"inline-flex", alignItems:"center", gap:7, background:"rgba(139,92,246,.14)", border:"1px solid rgba(139,92,246,.3)", borderRadius:999, padding:"5px 14px" }}>
+//                 <span style={{ width:6, height:6, borderRadius:"50%", background:"#8B5CF6", display:"inline-block", animation:"ping-dot 1.8s ease-in-out infinite" }} />
+//                 <span style={{ fontSize:10, fontWeight:700, letterSpacing:".1em", color:"#8B5CF6", textTransform:"uppercase", whiteSpace:"nowrap" }}>Live · Secure Access</span>
 //               </div>
 //             </div>
 
 //             <div style={{ position:"absolute", bottom:16, left:0, right:0, textAlign:"center", zIndex:10, pointerEvents:"none" }}>
 //               <p style={{ fontSize:10, fontWeight:700, color:"rgba(255,255,255,0.1)", letterSpacing:"0.18em", textTransform:"uppercase", fontFamily:"Sora,sans-serif", margin:0 }}>
-//                 Samaya<span style={{ color:"rgba(255,107,53,0.3)" }}>HR</span> · Workplace OS
+//                 CrewSync<span style={{ color:"rgba(139,92,246,0.3)" }}>PeopleOps</span> · Workplace OS
 //               </p>
 //             </div>
 //           </div>
@@ -3243,12 +3243,12 @@
 
 //               <div className="fu1" style={{ marginBottom:24 }}>
 //                 <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:12 }}>
-//                   <div style={{ width:44, height:44, borderRadius:13, background:"linear-gradient(135deg,#FF6B35,#FF5722)", display:"flex", alignItems:"center", justifyContent:"center", boxShadow:"0 4px 16px rgba(255,107,53,.3)", flexShrink:0, position:"relative" }}>
-//                     <img src="/assets/Zlabs-Logo.png" alt="SamayaHR" style={{ width:28, height:28, objectFit:"contain" }} />
+//                   <div style={{ width:44, height:44, borderRadius:13, background:"linear-gradient(135deg,#8B5CF6,#06B6D4)", display:"flex", alignItems:"center", justifyContent:"center", boxShadow:"0 4px 16px rgba(139,92,246,.3)", flexShrink:0, position:"relative" }}>
+//                     <img src="/assets/crewsync-mark.svg" alt="CrewSync" style={{ width:28, height:28, objectFit:"contain" }} />
 //                     <div style={{ position:"absolute", top:-2, right:-2, width:11, height:11, borderRadius:"50%", background:"#22c55e", border:"2px solid #fff" }} />
 //                   </div>
 //                   <div>
-//                     <h3 className="sora" style={{ fontSize:22, fontWeight:900, color:"#0D1F2D", margin:0 }}>
+//                     <h3 className="sora" style={{ fontSize:22, fontWeight:900, color:"#0B1020", margin:0 }}>
 //                       {showForm ? "Sign in to workspace" : "Welcome back 👋"}
 //                     </h3>
 //                     <p style={{ fontSize:12, color:"#9ca3af", margin:"3px 0 0" }}>
@@ -3269,10 +3269,10 @@
 
 //                   <p className="fu5" style={{ textAlign:"center", marginTop:14, fontSize:12, color:"#9ca3af" }}>
 //                     New here?{" "}
-//                     <a href="/solutions/bookdemo" style={{ color:"#FF6B35", fontWeight:700, textDecoration:"none" }}>Get a free personalised demo →</a>
+//                     <a href="/solutions/bookdemo" style={{ color:"#8B5CF6", fontWeight:700, textDecoration:"none" }}>Get a free personalised demo →</a>
 //                   </p>
 
-//                   <div style={{ display:"flex", flexWrap:"wrap", gap:14, background:"#F7F8FA", borderRadius:12, padding:"11px 14px", marginTop:16 }}>
+//                   <div style={{ display:"flex", flexWrap:"wrap", gap:14, background:"#F6F8FB", borderRadius:12, padding:"11px 14px", marginTop:16 }}>
 //                     {[["🔒","Secure & Private"],["⚡","Instant Login"]].map(([ic,tx]) => (
 //                       <div key={tx} style={{ display:"flex", alignItems:"center", gap:6, fontSize:12, color:"#6b7280", fontWeight:500 }}>
 //                         <span>{ic}</span>{tx}
@@ -3283,11 +3283,11 @@
 //               ) : (
 //                 <>
 //                   <div className="fu1" style={{ display:"flex", gap:4, borderRadius:12, padding:4, background:"#f3f4f6", marginBottom:20, border:"1px solid #e5e7eb" }}>
-//                     {[["employee","👤 Employee"],["company","🏢 Company"]].map(([tab, label]) => (
+//                     {[["employee","👤 Person"],["company","🏢 Workspace"]].map(([tab, label]) => (
 //                       <button key={tab} className="tab-btn" onClick={() => { setActiveTab(tab); setError(""); }} style={{
-//                         background: activeTab === tab ? "linear-gradient(135deg,#FF6B35,#FF5722)" : "transparent",
+//                         background: activeTab === tab ? "linear-gradient(135deg,#8B5CF6,#06B6D4)" : "transparent",
 //                         color:      activeTab === tab ? "#fff" : "#6b7280",
-//                         boxShadow:  activeTab === tab ? "0 2px 10px rgba(255,107,53,.3)" : "none",
+//                         boxShadow:  activeTab === tab ? "0 2px 10px rgba(139,92,246,.3)" : "none",
 //                       }}>{label}</button>
 //                     ))}
 //                   </div>
@@ -3311,7 +3311,7 @@
 
 //                     <div className="fu2">
 //                       <label style={{ display:"block", fontSize:12, fontWeight:700, color:"#374151", textTransform:"uppercase", letterSpacing:".06em", marginBottom:5 }}>
-//                         Email address <span style={{ color:"#FF6B35" }}>*</span>
+//                         Email address <span style={{ color:"#8B5CF6" }}>*</span>
 //                       </label>
 //                       <div style={{ position:"relative" }}>
 //                         <div style={{ position:"absolute", left:13, top:"50%", transform:"translateY(-50%)", color:"#9ca3af" }}>
@@ -3326,7 +3326,7 @@
 //                     {activeTab === "company" ? (
 //                       <div className="fu3">
 //                         <label style={{ display:"block", fontSize:12, fontWeight:700, color:"#374151", textTransform:"uppercase", letterSpacing:".06em", marginBottom:5 }}>
-//                           Pass Code <span style={{ color:"#FF6B35" }}>*</span>
+//                           Pass Code <span style={{ color:"#8B5CF6" }}>*</span>
 //                         </label>
 //                         <div style={{ position:"relative" }}>
 //                           <div style={{ position:"absolute", left:13, top:"50%", transform:"translateY(-50%)", color:"#9ca3af" }}>
@@ -3340,9 +3340,9 @@
 //                       <div className="fu3">
 //                         <div style={{ display:"flex", justifyContent:"space-between", marginBottom:5 }}>
 //                           <label style={{ fontSize:12, fontWeight:700, color:"#374151", textTransform:"uppercase", letterSpacing:".06em" }}>
-//                             Password <span style={{ color:"#FF6B35" }}>*</span>
+//                             Password <span style={{ color:"#8B5CF6" }}>*</span>
 //                           </label>
-//                           <a href="/forgot-password" style={{ fontSize:11, fontWeight:700, color:"#FF6B35", textDecoration:"none" }}>Forgot password?</a>
+//                           <a href="/forgot-password" style={{ fontSize:11, fontWeight:700, color:"#8B5CF6", textDecoration:"none" }}>Forgot password?</a>
 //                         </div>
 //                         <div style={{ position:"relative" }}>
 //                           <div style={{ position:"absolute", left:13, top:"50%", transform:"translateY(-50%)", color:"#9ca3af" }}>
@@ -3379,8 +3379,8 @@
 
 //               <p className="fu5" style={{ marginTop:16, textAlign:"center", fontSize:11, color:"#9ca3af", lineHeight:1.7 }}>
 //                 By signing in, you agree to our{" "}
-//                 <a href="/terms"   style={{ color:"#FF6B35", textDecoration:"none" }}>Terms of Service</a>{" "}&{" "}
-//                 <a href="/privacy" style={{ color:"#FF6B35", textDecoration:"none" }}>Privacy Policy</a>.
+//                 <a href="/terms"   style={{ color:"#8B5CF6", textDecoration:"none" }}>Terms of Service</a>{" "}&{" "}
+//                 <a href="/privacy" style={{ color:"#8B5CF6", textDecoration:"none" }}>Privacy Playbook</a>.
 //               </p>
 //             </div>
 //           </div>
@@ -3395,7 +3395,7 @@
 
 // import React, { useState, useEffect, useRef } from "react";
 // import { useNavigate, useLocation } from "react-router-dom";
-// import logo from "/assets/Zlabs-Logo.png?url";
+// import logo from "/assets/crewsync-mark.svg?url";
 // import { isTokenValid, getRoleHome, clearSession } from "./app/authGuard";
 
 // const getApiBaseUrl = () => {
@@ -3427,7 +3427,7 @@
 // /* ══════════════════════════════════════════════════════════════════════════════
 //    LEFT PANEL — orbit canvas
 // ══════════════════════════════════════════════════════════════════════════════ */
-// function HROrbitScene() {
+// function PeopleOpsOrbitScene() {
 //   const canvasRef = useRef(null);
 //   const animRef   = useRef(null);
 
@@ -3447,8 +3447,8 @@
 //       { r:138, speed:-0.006, nodes:5, offset:Math.PI/5 },
 //       { r:198, speed:0.004,  nodes:6, offset:Math.PI/9 },
 //     ];
-//     const COLS  = ["rgba(255,107,53,","rgba(255,160,80,","rgba(255,70,30,"];
-//     const PCOLS = ["rgba(255,107,53,","rgba(255,160,80,","rgba(255,200,100,","rgba(0,194,168,"];
+//     const COLS  = ["rgba(139,92,246,","rgba(255,160,80,","rgba(255,70,30,"];
+//     const PCOLS = ["rgba(139,92,246,","rgba(255,160,80,","rgba(255,200,100,","rgba(6,182,212,"];
 //     const particles = Array.from({length:65},()=>({
 //       x:Math.random()*W, y:Math.random()*H,
 //       r:Math.random()*1.8+0.4,
@@ -3462,7 +3462,7 @@
 //     const draw = () => {
 //       ctx.clearRect(0,0,W,H);
 //       const cx=W/2, cy=H/2; t+=0.016;
-//       ctx.save(); ctx.strokeStyle="rgba(255,107,53,0.05)"; ctx.lineWidth=1;
+//       ctx.save(); ctx.strokeStyle="rgba(139,92,246,0.05)"; ctx.lineWidth=1;
 //       for(let x=0;x<W;x+=44){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
 //       for(let y=0;y<H;y+=44){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
 //       ctx.restore();
@@ -3475,7 +3475,7 @@
 //       pulses.forEach(p=>{
 //         p.r+=p.speed; if(p.r>p.max)p.r=0;
 //         const a=(1-p.r/p.max)*0.22;
-//         ctx.beginPath(); ctx.arc(cx,cy,p.r,0,Math.PI*2); ctx.strokeStyle=`rgba(255,107,53,${a})`; ctx.lineWidth=1.5; ctx.stroke();
+//         ctx.beginPath(); ctx.arc(cx,cy,p.r,0,Math.PI*2); ctx.strokeStyle=`rgba(139,92,246,${a})`; ctx.lineWidth=1.5; ctx.stroke();
 //       });
 //       orbits.forEach((orb,oi)=>{
 //         ctx.beginPath(); ctx.arc(cx,cy,orb.r,0,Math.PI*2); ctx.strokeStyle=COLS[oi]+"0.15)"; ctx.lineWidth=1; ctx.setLineDash([5,10]); ctx.stroke(); ctx.setLineDash([]);
@@ -3491,11 +3491,11 @@
 //           ctx.font="11px serif"; ctx.textAlign="center"; ctx.textBaseline="middle"; ctx.fillText(ICONS[(oi*4+n)%ICONS.length],nx,ny);
 //         }
 //       });
-//       const cg=ctx.createRadialGradient(cx,cy,0,cx,cy,55); cg.addColorStop(0,"rgba(255,107,53,0.42)"); cg.addColorStop(0.5,"rgba(255,80,20,0.14)"); cg.addColorStop(1,"transparent");
+//       const cg=ctx.createRadialGradient(cx,cy,0,cx,cy,55); cg.addColorStop(0,"rgba(139,92,246,0.42)"); cg.addColorStop(0.5,"rgba(255,80,20,0.14)"); cg.addColorStop(1,"transparent");
 //       ctx.beginPath(); ctx.arc(cx,cy,55,0,Math.PI*2); ctx.fillStyle=cg; ctx.fill();
-//       ctx.save(); ctx.translate(cx,cy); ctx.rotate(t*0.4); ctx.beginPath(); ctx.arc(0,0,32,0,Math.PI*2); ctx.strokeStyle="rgba(255,107,53,0.55)"; ctx.lineWidth=1.5; ctx.setLineDash([6,6]); ctx.stroke(); ctx.setLineDash([]); ctx.restore();
+//       ctx.save(); ctx.translate(cx,cy); ctx.rotate(t*0.4); ctx.beginPath(); ctx.arc(0,0,32,0,Math.PI*2); ctx.strokeStyle="rgba(139,92,246,0.55)"; ctx.lineWidth=1.5; ctx.setLineDash([6,6]); ctx.stroke(); ctx.setLineDash([]); ctx.restore();
 //       ctx.save(); ctx.translate(cx,cy); ctx.rotate(-t*0.25); ctx.beginPath(); ctx.arc(0,0,23,0,Math.PI*2); ctx.strokeStyle="rgba(255,160,80,0.4)"; ctx.lineWidth=1; ctx.setLineDash([3,8]); ctx.stroke(); ctx.setLineDash([]); ctx.restore();
-//       ctx.beginPath(); ctx.arc(cx,cy,17,0,Math.PI*2); ctx.fillStyle="rgba(8,4,2,0.96)"; ctx.fill(); ctx.strokeStyle="rgba(255,107,53,0.95)"; ctx.lineWidth=2; ctx.stroke();
+//       ctx.beginPath(); ctx.arc(cx,cy,17,0,Math.PI*2); ctx.fillStyle="rgba(8,4,2,0.96)"; ctx.fill(); ctx.strokeStyle="rgba(139,92,246,0.95)"; ctx.lineWidth=2; ctx.stroke();
 //       animRef.current = requestAnimationFrame(draw);
 //     };
 //     draw();
@@ -3507,8 +3507,8 @@
 
 // function MCard({ style, icon, title, sub, subColor }) {
 //   return (
-//     <div style={{ position:"absolute", zIndex:10, background:"rgba(10,4,2,0.85)", border:"1px solid rgba(255,107,53,0.35)", backdropFilter:"blur(16px)", borderRadius:14, padding:"9px 14px", display:"flex", alignItems:"center", gap:10, boxShadow:"0 8px 28px rgba(0,0,0,0.45), 0 0 18px rgba(255,107,53,0.12)", ...style }}>
-//       <div style={{ width:30, height:30, borderRadius:9, background:"rgba(255,107,53,0.14)", display:"flex", alignItems:"center", justifyContent:"center", fontSize:14, flexShrink:0 }}>{icon}</div>
+//     <div style={{ position:"absolute", zIndex:10, background:"rgba(10,4,2,0.85)", border:"1px solid rgba(139,92,246,0.35)", backdropFilter:"blur(16px)", borderRadius:14, padding:"9px 14px", display:"flex", alignItems:"center", gap:10, boxShadow:"0 8px 28px rgba(0,0,0,0.45), 0 0 18px rgba(139,92,246,0.12)", ...style }}>
+//       <div style={{ width:30, height:30, borderRadius:9, background:"rgba(139,92,246,0.14)", display:"flex", alignItems:"center", justifyContent:"center", fontSize:14, flexShrink:0 }}>{icon}</div>
 //       <div>
 //         <div style={{ fontSize:11, fontWeight:700, color:"#fff", fontFamily:"Sora,sans-serif" }}>{title}</div>
 //         <div style={{ fontSize:10, color:subColor, marginTop:1 }}>{sub}</div>
@@ -3541,34 +3541,34 @@
 //       ctx.save();
 //       hexNodes.forEach((n,i)=>{
 //         n.pulse+=n.speed; const glow=(Math.sin(n.pulse)+1)/2; const alpha=0.06+glow*0.18; const radius=2+glow*3;
-//         hexNodes.forEach((m,j)=>{ if(j<=i)return; const dx=n.x-m.x,dy=n.y-m.y,dist=Math.sqrt(dx*dx+dy*dy); if(dist<hexSize*2.2){ ctx.beginPath(); ctx.moveTo(n.x,n.y); ctx.lineTo(m.x,m.y); ctx.strokeStyle=`rgba(255,107,53,${(1-dist/(hexSize*2.2))*0.08})`; ctx.lineWidth=0.8; ctx.stroke(); }});
-//         ctx.beginPath(); ctx.arc(n.x,n.y,radius,0,Math.PI*2); ctx.fillStyle=`rgba(255,107,53,${alpha})`; ctx.fill();
+//         hexNodes.forEach((m,j)=>{ if(j<=i)return; const dx=n.x-m.x,dy=n.y-m.y,dist=Math.sqrt(dx*dx+dy*dy); if(dist<hexSize*2.2){ ctx.beginPath(); ctx.moveTo(n.x,n.y); ctx.lineTo(m.x,m.y); ctx.strokeStyle=`rgba(139,92,246,${(1-dist/(hexSize*2.2))*0.08})`; ctx.lineWidth=0.8; ctx.stroke(); }});
+//         ctx.beginPath(); ctx.arc(n.x,n.y,radius,0,Math.PI*2); ctx.fillStyle=`rgba(139,92,246,${alpha})`; ctx.fill();
 //       });
 //       ctx.restore();
 //       for(let w=0;w<WAVE_COUNT;w++){
 //         const phase=t*0.7+(w*Math.PI*2)/WAVE_COUNT, yBase=H*(0.2+w*0.15), amp=12+w*5, alpha=0.08+w*0.025;
 //         ctx.beginPath();
 //         for(let x=0;x<=W;x+=3){ const y=yBase+Math.sin((x/W)*Math.PI*3+phase)*amp+Math.sin((x/W)*Math.PI*6+phase*1.3)*(amp*0.4); x===0?ctx.moveTo(x,y):ctx.lineTo(x,y); }
-//         ctx.strokeStyle=`rgba(255,107,53,${alpha})`; ctx.lineWidth=1.5; ctx.stroke();
+//         ctx.strokeStyle=`rgba(139,92,246,${alpha})`; ctx.lineWidth=1.5; ctx.stroke();
 //       }
 //       orbs.forEach((o,i)=>{
 //         o.x+=o.speedX+Math.sin(t*0.4+o.phase)*0.3; o.y+=o.speedY+Math.cos(t*0.35+o.phase)*0.3;
 //         if(o.x<-o.r)o.x=W+o.r; if(o.x>W+o.r)o.x=-o.r; if(o.y<-o.r)o.y=H+o.r; if(o.y>H+o.r)o.y=-o.r;
 //         const pulse=(Math.sin(t*0.9+o.phase)+1)/2, r=o.r*(0.85+pulse*0.3), alpha=0.55+pulse*0.3;
-//         const grad=ctx.createRadialGradient(o.x,o.y,0,o.x,o.y,r); grad.addColorStop(0,`rgba(255,${100+i*12},${30+i*8},${alpha})`); grad.addColorStop(0.5,`rgba(255,107,53,${alpha*0.4})`); grad.addColorStop(1,"transparent");
+//         const grad=ctx.createRadialGradient(o.x,o.y,0,o.x,o.y,r); grad.addColorStop(0,`rgba(255,${100+i*12},${30+i*8},${alpha})`); grad.addColorStop(0.5,`rgba(139,92,246,${alpha*0.4})`); grad.addColorStop(1,"transparent");
 //         ctx.beginPath(); ctx.arc(o.x,o.y,r,0,Math.PI*2); ctx.fillStyle=grad; ctx.fill();
 //       });
 //       const cx=W/2,cy=H/2;
 //       for(let ring=0;ring<3;ring++){
 //         const rr=30+ring*22,rot=t*(ring%2===0?0.5:-0.35)+ring,ringAlpha=0.15+ring*0.05;
-//         ctx.save(); ctx.translate(cx,cy); ctx.rotate(rot); ctx.beginPath(); ctx.arc(0,0,rr,0,Math.PI*2); ctx.strokeStyle=`rgba(255,107,53,${ringAlpha})`; ctx.lineWidth=1.5; ctx.setLineDash([6,10]); ctx.stroke(); ctx.setLineDash([]);
+//         ctx.save(); ctx.translate(cx,cy); ctx.rotate(rot); ctx.beginPath(); ctx.arc(0,0,rr,0,Math.PI*2); ctx.strokeStyle=`rgba(139,92,246,${ringAlpha})`; ctx.lineWidth=1.5; ctx.setLineDash([6,10]); ctx.stroke(); ctx.setLineDash([]);
 //         const dotCount=3+ring;
-//         for(let d=0;d<dotCount;d++){ const angle=(d/dotCount)*Math.PI*2,dx=Math.cos(angle)*rr,dy=Math.sin(angle)*rr,glow=(Math.sin(t*2+d+ring)+1)/2; ctx.beginPath(); ctx.arc(dx,dy,3+glow*2,0,Math.PI*2); ctx.fillStyle=`rgba(255,107,53,${0.5+glow*0.5})`; ctx.shadowBlur=8+glow*8; ctx.shadowColor="#FF6B35"; ctx.fill(); ctx.shadowBlur=0; }
+//         for(let d=0;d<dotCount;d++){ const angle=(d/dotCount)*Math.PI*2,dx=Math.cos(angle)*rr,dy=Math.sin(angle)*rr,glow=(Math.sin(t*2+d+ring)+1)/2; ctx.beginPath(); ctx.arc(dx,dy,3+glow*2,0,Math.PI*2); ctx.fillStyle=`rgba(139,92,246,${0.5+glow*0.5})`; ctx.shadowBlur=8+glow*8; ctx.shadowColor="#8B5CF6"; ctx.fill(); ctx.shadowBlur=0; }
 //         ctx.restore();
 //       }
-//       const coreGlow=ctx.createRadialGradient(cx,cy,0,cx,cy,24); coreGlow.addColorStop(0,`rgba(255,107,53,${0.5+Math.sin(t*1.2)*0.2})`); coreGlow.addColorStop(0.5,"rgba(255,107,53,0.15)"); coreGlow.addColorStop(1,"transparent"); ctx.beginPath(); ctx.arc(cx,cy,24,0,Math.PI*2); ctx.fillStyle=coreGlow; ctx.fill();
-//       ctx.beginPath(); ctx.arc(cx,cy,7,0,Math.PI*2); ctx.fillStyle="#FF6B35"; ctx.shadowBlur=16; ctx.shadowColor="#FF6B35"; ctx.fill(); ctx.shadowBlur=0;
-//       sparks.forEach(s=>{ s.phase+=s.speed; const a=(Math.sin(s.phase)+1)/2; ctx.beginPath(); ctx.arc(s.x,s.y,s.r*a,0,Math.PI*2); ctx.fillStyle=`rgba(255,107,53,${a*0.7})`; ctx.shadowBlur=a*6; ctx.shadowColor="#FF6B35"; ctx.fill(); ctx.shadowBlur=0; });
+//       const coreGlow=ctx.createRadialGradient(cx,cy,0,cx,cy,24); coreGlow.addColorStop(0,`rgba(139,92,246,${0.5+Math.sin(t*1.2)*0.2})`); coreGlow.addColorStop(0.5,"rgba(139,92,246,0.15)"); coreGlow.addColorStop(1,"transparent"); ctx.beginPath(); ctx.arc(cx,cy,24,0,Math.PI*2); ctx.fillStyle=coreGlow; ctx.fill();
+//       ctx.beginPath(); ctx.arc(cx,cy,7,0,Math.PI*2); ctx.fillStyle="#8B5CF6"; ctx.shadowBlur=16; ctx.shadowColor="#8B5CF6"; ctx.fill(); ctx.shadowBlur=0;
+//       sparks.forEach(s=>{ s.phase+=s.speed; const a=(Math.sin(s.phase)+1)/2; ctx.beginPath(); ctx.arc(s.x,s.y,s.r*a,0,Math.PI*2); ctx.fillStyle=`rgba(139,92,246,${a*0.7})`; ctx.shadowBlur=a*6; ctx.shadowColor="#8B5CF6"; ctx.fill(); ctx.shadowBlur=0; });
 //       animRef.current=requestAnimationFrame(draw);
 //     };
 //     draw();
@@ -3576,11 +3576,11 @@
 //   }, []);
 
 //   return (
-//     <div className="fu2" style={{ borderRadius:16, overflow:"hidden", marginBottom:18, border:"1.5px solid rgba(255,107,53,0.18)", boxShadow:"0 4px 24px rgba(255,107,53,0.1)", position:"relative", height:180 }}>
+//     <div className="fu2" style={{ borderRadius:16, overflow:"hidden", marginBottom:18, border:"1.5px solid rgba(139,92,246,0.18)", boxShadow:"0 4px 24px rgba(139,92,246,0.1)", position:"relative", height:180 }}>
 //       <canvas ref={canvasRef} style={{ width:"100%", height:"100%", display:"block" }} />
-//       <div style={{ position:"absolute", bottom:12, left:"50%", transform:"translateX(-50%)", display:"flex", alignItems:"center", gap:6, background:"rgba(255,255,255,0.85)", backdropFilter:"blur(8px)", border:"1px solid rgba(255,107,53,0.25)", borderRadius:999, padding:"4px 14px", boxShadow:"0 2px 12px rgba(255,107,53,0.15)", whiteSpace:"nowrap" }}>
-//         <div style={{ width:6, height:6, borderRadius:"50%", background:"#FF6B35", animation:"ping-dot 1.6s ease-in-out infinite" }} />
-//         <span style={{ fontSize:11, fontWeight:700, color:"#FF6B35" }}>SamayaHR · Live Platform</span>
+//       <div style={{ position:"absolute", bottom:12, left:"50%", transform:"translateX(-50%)", display:"flex", alignItems:"center", gap:6, background:"rgba(255,255,255,0.85)", backdropFilter:"blur(8px)", border:"1px solid rgba(139,92,246,0.25)", borderRadius:999, padding:"4px 14px", boxShadow:"0 2px 12px rgba(139,92,246,0.15)", whiteSpace:"nowrap" }}>
+//         <div style={{ width:6, height:6, borderRadius:"50%", background:"#8B5CF6", animation:"ping-dot 1.6s ease-in-out infinite" }} />
+//         <span style={{ fontSize:11, fontWeight:700, color:"#8B5CF6" }}>CrewSync · Live Platform</span>
 //       </div>
 //     </div>
 //   );
@@ -3638,7 +3638,7 @@
 //         const res  = await fetch(getLoginApi(), { method:"POST", headers:{ "Content-Type":"application/json" }, body:JSON.stringify(payload) });
 //         const data = await res.json();
 
-//         if (!res.ok || !data.success) throw new Error(data?.message || "Company login failed");
+//         if (!res.ok || !data.success) throw new Error(data?.message || "Workspace login failed");
 //         const token = data?.data?.token;
 //         if (!token) throw new Error("Token missing");
 
@@ -3689,7 +3689,7 @@
 //   };
 
 //   return (
-//     <div style={{ minHeight:"100vh", background:"#F7F8FA" }}>
+//     <div style={{ minHeight:"100vh", background:"#F6F8FB" }}>
 //       <style>{`
 //         @import url('https://fonts.googleapis.com/css2?family=Sora:wght@700;800;900&family=DM+Sans:wght@400;500;600&display=swap');
 //         *, *::before, *::after { font-family:'DM Sans',sans-serif; box-sizing:border-box; }
@@ -3704,11 +3704,11 @@
 //         .fu1{animation:fadeUp .45s ease both .05s} .fu2{animation:fadeUp .45s ease both .15s}
 //         .fu3{animation:fadeUp .45s ease both .25s} .fu4{animation:fadeUp .45s ease both .35s}
 //         .fu5{animation:fadeUp .45s ease both .45s}
-//         .lg-input { width:100%; border:1.5px solid #e5e7eb; border-radius:12px; background:#fff; padding:11px 14px 11px 42px; font-size:14px; color:#0D1F2D; outline:none; transition:border-color .2s, box-shadow .2s; font-family:'DM Sans',sans-serif; }
+//         .lg-input { width:100%; border:1.5px solid #e5e7eb; border-radius:12px; background:#fff; padding:11px 14px 11px 42px; font-size:14px; color:#0B1020; outline:none; transition:border-color .2s, box-shadow .2s; font-family:'DM Sans',sans-serif; }
 //         .lg-input::placeholder { color:#9ca3af; }
-//         .lg-input:focus { border-color:#FF6B35; box-shadow:0 0 0 3px rgba(255,107,53,.1); }
-//         .coral-btn { width:100%; background:linear-gradient(135deg,#FF6B35 0%,#FF5722 50%,#ff7043 100%); background-size:200% auto; color:#fff; font-weight:800; font-size:15px; padding:13px; border-radius:14px; border:none; cursor:pointer; box-shadow:0 4px 24px rgba(255,107,53,.38); transition:transform .22s, box-shadow .22s, background-position .4s; display:flex; align-items:center; justify-content:center; gap:8px; letter-spacing:.02em; }
-//         .coral-btn:hover    { transform:translateY(-2px); box-shadow:0 10px 32px rgba(255,107,53,.5); background-position:right center; }
+//         .lg-input:focus { border-color:#8B5CF6; box-shadow:0 0 0 3px rgba(139,92,246,.1); }
+//         .coral-btn { width:100%; background:linear-gradient(135deg,#8B5CF6 0%,#06B6D4 50%,#38BDF8 100%); background-size:200% auto; color:#fff; font-weight:800; font-size:15px; padding:13px; border-radius:14px; border:none; cursor:pointer; box-shadow:0 4px 24px rgba(139,92,246,.38); transition:transform .22s, box-shadow .22s, background-position .4s; display:flex; align-items:center; justify-content:center; gap:8px; letter-spacing:.02em; }
+//         .coral-btn:hover    { transform:translateY(-2px); box-shadow:0 10px 32px rgba(139,92,246,.5); background-position:right center; }
 //         .coral-btn:disabled { opacity:.65; cursor:not-allowed; transform:none; }
 //         .tab-btn { flex:1; padding:9px; border-radius:10px; font-size:12px; font-weight:700; cursor:pointer; border:none; transition:all .2s; font-family:'DM Sans',sans-serif; }
 //       `}</style>
@@ -3716,12 +3716,12 @@
 //       <header style={{ background:"#fff", borderBottom:"1px solid #f0f0f0", position:"sticky", top:0, zIndex:100, boxShadow:"0 1px 10px rgba(0,0,0,.05)" }}>
 //         <nav style={{ maxWidth:1120, margin:"0 auto", padding:"0 24px", height:64, display:"flex", alignItems:"center", justifyContent:"space-between" }}>
 //           <div style={{ display:"flex", alignItems:"center", gap:9 }}>
-//             <div className="sora" style={{ width:32, height:32, borderRadius:10, background:"linear-gradient(135deg,#FF6B35,#FF5722)", display:"flex", alignItems:"center", justifyContent:"center", color:"#fff", fontWeight:900, fontSize:15 }}>S</div>
-//             <span className="sora" style={{ fontWeight:900, fontSize:20, color:"#0D1F2D" }}>Samaya<span style={{ color:"#FF6B35" }}>HR</span></span>
+//             <div className="sora" style={{ width:32, height:32, borderRadius:10, background:"linear-gradient(135deg,#8B5CF6,#06B6D4)", display:"flex", alignItems:"center", justifyContent:"center", color:"#fff", fontWeight:900, fontSize:15 }}>S</div>
+//             <span className="sora" style={{ fontWeight:900, fontSize:20, color:"#0B1020" }}>CrewSync<span style={{ color:"#8B5CF6" }}>PeopleOps</span></span>
 //           </div>
 //           <button onClick={() => navigate("/")}
 //             style={{ display:"flex", alignItems:"center", gap:6, fontSize:13, fontWeight:600, color:"#6b7280", background:"none", border:"1.5px solid #e5e7eb", borderRadius:10, padding:"7px 16px", cursor:"pointer", transition:"all .2s" }}
-//             onMouseEnter={e => { e.currentTarget.style.borderColor="#FF6B35"; e.currentTarget.style.color="#FF6B35"; }}
+//             onMouseEnter={e => { e.currentTarget.style.borderColor="#8B5CF6"; e.currentTarget.style.color="#8B5CF6"; }}
 //             onMouseLeave={e => { e.currentTarget.style.borderColor="#e5e7eb"; e.currentTarget.style.color="#6b7280"; }}>
 //             <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5"><path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
 //             Back to Home
@@ -3734,21 +3734,21 @@
 
 //           {/* ── LEFT PANEL ── */}
 //           <div style={{ width:"42%", flexShrink:0, background:"linear-gradient(148deg, #0d0400 0%, #180800 30%, #1a0600 60%, #0d0300 100%)", position:"relative", overflow:"hidden", display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", minHeight:560 }}>
-//             <div style={{ position:"absolute", top:-80, left:-60, width:360, height:360, borderRadius:"50%", filter:"blur(90px)", background:"rgba(255,107,53,0.28)", pointerEvents:"none", zIndex:1, animation:"gp 4s ease-in-out infinite" }} />
+//             <div style={{ position:"absolute", top:-80, left:-60, width:360, height:360, borderRadius:"50%", filter:"blur(90px)", background:"rgba(139,92,246,0.28)", pointerEvents:"none", zIndex:1, animation:"gp 4s ease-in-out infinite" }} />
 //             <div style={{ position:"absolute", bottom:-60, right:-40, width:300, height:300, borderRadius:"50%", filter:"blur(80px)", background:"rgba(255,60,10,0.22)", pointerEvents:"none", zIndex:1, animation:"gp 4s ease-in-out infinite 1s" }} />
 //             <div style={{ position:"absolute", top:"40%", right:0, width:240, height:240, borderRadius:"50%", filter:"blur(70px)", background:"rgba(255,140,50,0.16)", pointerEvents:"none", zIndex:1, animation:"gp 4s ease-in-out infinite 2s" }} />
-//             <div style={{ position:"absolute", top:0, right:0, width:1, height:"100%", background:"linear-gradient(to bottom, transparent, rgba(255,107,53,0.45) 30%, rgba(255,107,53,0.45) 70%, transparent)", zIndex:20, pointerEvents:"none" }} />
-//             <HROrbitScene />
-//             <MCard style={{ top:26, left:18, animation:"floatA 4.5s ease-in-out infinite" }} icon="💸" title="Payroll Done" sub="✓ 248 employees" subColor="#4ade80" />
+//             <div style={{ position:"absolute", top:0, right:0, width:1, height:"100%", background:"linear-gradient(to bottom, transparent, rgba(139,92,246,0.45) 30%, rgba(139,92,246,0.45) 70%, transparent)", zIndex:20, pointerEvents:"none" }} />
+//             <PeopleOpsOrbitScene />
+//             <MCard style={{ top:26, left:18, animation:"floatA 4.5s ease-in-out infinite" }} icon="💸" title="Payout Complete" sub="✓ 248 employees" subColor="#4ade80" />
 //             <MCard style={{ bottom:52, right:14, animation:"floatB 5.5s ease-in-out infinite" }} icon="⏰" title="Team Check-In" sub="48 / 50 present" subColor="#fbbf24" />
-//             <MCard style={{ top:"43%", right:12, animation:"floatC 6s ease-in-out infinite" }} icon="🏖️" title="Leave Approved" sub="3 requests · instant" subColor="#fb923c" />
-//             <div style={{ position:"absolute", top:"50%", left:"50%", transform:"translate(-50%,-50%)", zIndex:5, pointerEvents:"none", width:36, height:36, borderRadius:11, background:"rgba(8,3,1,0.96)", border:"1.5px solid rgba(255,107,53,0.9)", display:"flex", alignItems:"center", justifyContent:"center", boxShadow:"0 0 22px rgba(255,107,53,0.7), 0 0 50px rgba(255,80,20,0.3)" }}>
-//               <img src={logo} alt="SamayaHR" style={{ width:22, height:22, objectFit:"contain" }} />
+//             <MCard style={{ top:"43%", right:12, animation:"floatC 6s ease-in-out infinite" }} icon="🏖️" title="TimeAway Cleared" sub="3 requests · instant" subColor="#fb923c" />
+//             <div style={{ position:"absolute", top:"50%", left:"50%", transform:"translate(-50%,-50%)", zIndex:5, pointerEvents:"none", width:36, height:36, borderRadius:11, background:"rgba(8,3,1,0.96)", border:"1.5px solid rgba(139,92,246,0.9)", display:"flex", alignItems:"center", justifyContent:"center", boxShadow:"0 0 22px rgba(139,92,246,0.7), 0 0 50px rgba(255,80,20,0.3)" }}>
+//               <img src={logo} alt="CrewSync" style={{ width:22, height:22, objectFit:"contain" }} />
 //             </div>
 //             <div style={{ position:"absolute", top:20, left:"50%", transform:"translateX(-50%)", zIndex:10 }}>
-//               <div style={{ display:"inline-flex", alignItems:"center", gap:7, background:"rgba(255,107,53,.14)", border:"1px solid rgba(255,107,53,.3)", borderRadius:999, padding:"5px 14px" }}>
-//                 <span style={{ width:6, height:6, borderRadius:"50%", background:"#FF6B35", display:"inline-block", animation:"ping-dot 1.8s ease-in-out infinite" }} />
-//                 <span style={{ fontSize:10, fontWeight:700, letterSpacing:".1em", color:"#FF6B35", textTransform:"uppercase", whiteSpace:"nowrap" }}>Live · Secure Access</span>
+//               <div style={{ display:"inline-flex", alignItems:"center", gap:7, background:"rgba(139,92,246,.14)", border:"1px solid rgba(139,92,246,.3)", borderRadius:999, padding:"5px 14px" }}>
+//                 <span style={{ width:6, height:6, borderRadius:"50%", background:"#8B5CF6", display:"inline-block", animation:"ping-dot 1.8s ease-in-out infinite" }} />
+//                 <span style={{ fontSize:10, fontWeight:700, letterSpacing:".1em", color:"#8B5CF6", textTransform:"uppercase", whiteSpace:"nowrap" }}>Live · Secure Access</span>
 //               </div>
 //             </div>
 //           </div>
@@ -3759,12 +3759,12 @@
 
 //               <div className="fu1" style={{ marginBottom:24 }}>
 //                 <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:12 }}>
-//                   <div style={{ width:44, height:44, borderRadius:13, background:"linear-gradient(135deg,#FF6B35,#FF5722)", display:"flex", alignItems:"center", justifyContent:"center", boxShadow:"0 4px 16px rgba(255,107,53,.3)", flexShrink:0, position:"relative" }}>
-//                     <img src="/assets/Zlabs-Logo.png" alt="SamayaHR" style={{ width:28, height:28, objectFit:"contain" }} />
+//                   <div style={{ width:44, height:44, borderRadius:13, background:"linear-gradient(135deg,#8B5CF6,#06B6D4)", display:"flex", alignItems:"center", justifyContent:"center", boxShadow:"0 4px 16px rgba(139,92,246,.3)", flexShrink:0, position:"relative" }}>
+//                     <img src="/assets/crewsync-mark.svg" alt="CrewSync" style={{ width:28, height:28, objectFit:"contain" }} />
 //                     <div style={{ position:"absolute", top:-2, right:-2, width:11, height:11, borderRadius:"50%", background:"#22c55e", border:"2px solid #fff" }} />
 //                   </div>
 //                   <div>
-//                     <h3 className="sora" style={{ fontSize:22, fontWeight:900, color:"#0D1F2D", margin:0 }}>
+//                     <h3 className="sora" style={{ fontSize:22, fontWeight:900, color:"#0B1020", margin:0 }}>
 //                       {showForm ? "Sign in to workspace" : "Welcome back 👋"}
 //                     </h3>
 //                     <p style={{ fontSize:12, color:"#9ca3af", margin:"3px 0 0" }}>
@@ -3783,9 +3783,9 @@
 //                   </button>
 //                   <p className="fu5" style={{ textAlign:"center", marginTop:14, fontSize:12, color:"#9ca3af" }}>
 //                     New here?{" "}
-//                     <a href="/solutions/bookdemo" style={{ color:"#FF6B35", fontWeight:700, textDecoration:"none" }}>Get a free personalised demo →</a>
+//                     <a href="/solutions/bookdemo" style={{ color:"#8B5CF6", fontWeight:700, textDecoration:"none" }}>Get a free personalised demo →</a>
 //                   </p>
-//                   <div style={{ display:"flex", flexWrap:"wrap", gap:14, background:"#F7F8FA", borderRadius:12, padding:"11px 14px", marginTop:16 }}>
+//                   <div style={{ display:"flex", flexWrap:"wrap", gap:14, background:"#F6F8FB", borderRadius:12, padding:"11px 14px", marginTop:16 }}>
 //                     {[["🔒","Secure & Private"],["⚡","Instant Login"]].map(([ic,tx]) => (
 //                       <div key={tx} style={{ display:"flex", alignItems:"center", gap:6, fontSize:12, color:"#6b7280", fontWeight:500 }}>
 //                         <span>{ic}</span>{tx}
@@ -3796,11 +3796,11 @@
 //               ) : (
 //                 <>
 //                   <div className="fu1" style={{ display:"flex", gap:4, borderRadius:12, padding:4, background:"#f3f4f6", marginBottom:20, border:"1px solid #e5e7eb" }}>
-//                     {[["employee","👤 Employee"],["company","🏢 Company"]].map(([tab, label]) => (
+//                     {[["employee","👤 Person"],["company","🏢 Workspace"]].map(([tab, label]) => (
 //                       <button key={tab} className="tab-btn" onClick={() => { setActiveTab(tab); setError(""); }} style={{
-//                         background: activeTab===tab ? "linear-gradient(135deg,#FF6B35,#FF5722)" : "transparent",
+//                         background: activeTab===tab ? "linear-gradient(135deg,#8B5CF6,#06B6D4)" : "transparent",
 //                         color:      activeTab===tab ? "#fff" : "#6b7280",
-//                         boxShadow:  activeTab===tab ? "0 2px 10px rgba(255,107,53,.3)" : "none",
+//                         boxShadow:  activeTab===tab ? "0 2px 10px rgba(139,92,246,.3)" : "none",
 //                       }}>{label}</button>
 //                     ))}
 //                   </div>
@@ -3814,7 +3814,7 @@
 //                   <form onSubmit={handleSubmit} style={{ display:"flex", flexDirection:"column", gap:14 }}>
 //                     <div className="fu2">
 //                       <label style={{ display:"block", fontSize:12, fontWeight:700, color:"#374151", textTransform:"uppercase", letterSpacing:".06em", marginBottom:5 }}>
-//                         Email address <span style={{ color:"#FF6B35" }}>*</span>
+//                         Email address <span style={{ color:"#8B5CF6" }}>*</span>
 //                       </label>
 //                       <div style={{ position:"relative" }}>
 //                         <div style={{ position:"absolute", left:13, top:"50%", transform:"translateY(-50%)", color:"#9ca3af" }}>
@@ -3829,7 +3829,7 @@
 //                     {activeTab === "company" ? (
 //                       <div className="fu3">
 //                         <label style={{ display:"block", fontSize:12, fontWeight:700, color:"#374151", textTransform:"uppercase", letterSpacing:".06em", marginBottom:5 }}>
-//                           Pass Code <span style={{ color:"#FF6B35" }}>*</span>
+//                           Pass Code <span style={{ color:"#8B5CF6" }}>*</span>
 //                         </label>
 //                         <div style={{ position:"relative" }}>
 //                           <div style={{ position:"absolute", left:13, top:"50%", transform:"translateY(-50%)", color:"#9ca3af" }}>
@@ -3843,9 +3843,9 @@
 //                       <div className="fu3">
 //                         <div style={{ display:"flex", justifyContent:"space-between", marginBottom:5 }}>
 //                           <label style={{ fontSize:12, fontWeight:700, color:"#374151", textTransform:"uppercase", letterSpacing:".06em" }}>
-//                             Password <span style={{ color:"#FF6B35" }}>*</span>
+//                             Password <span style={{ color:"#8B5CF6" }}>*</span>
 //                           </label>
-//                           <a href="/forgot-password" style={{ fontSize:11, fontWeight:700, color:"#FF6B35", textDecoration:"none" }}>Forgot password?</a>
+//                           <a href="/forgot-password" style={{ fontSize:11, fontWeight:700, color:"#8B5CF6", textDecoration:"none" }}>Forgot password?</a>
 //                         </div>
 //                         <div style={{ position:"relative" }}>
 //                           <div style={{ position:"absolute", left:13, top:"50%", transform:"translateY(-50%)", color:"#9ca3af" }}>
@@ -3882,8 +3882,8 @@
 
 //               <p className="fu5" style={{ marginTop:16, textAlign:"center", fontSize:11, color:"#9ca3af", lineHeight:1.7 }}>
 //                 By signing in, you agree to our{" "}
-//                 <a href="/terms"   style={{ color:"#FF6B35", textDecoration:"none" }}>Terms of Service</a>{" "}&{" "}
-//                 <a href="/privacy" style={{ color:"#FF6B35", textDecoration:"none" }}>Privacy Policy</a>.
+//                 <a href="/terms"   style={{ color:"#8B5CF6", textDecoration:"none" }}>Terms of Service</a>{" "}&{" "}
+//                 <a href="/privacy" style={{ color:"#8B5CF6", textDecoration:"none" }}>Privacy Playbook</a>.
 //               </p>
 //             </div>
 //           </div>
@@ -3897,7 +3897,7 @@
 //with Domain Name in URL Path 9/3/2026
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import logo from "/SamayaHRSidebar.png?url";
+import logo from "/crewsync-mark.svg?url";
 import { isTokenValid, clearSession } from "./app/authGuard";
 import { API_BASE_URL } from "@/lib/apiClient";
 
@@ -3930,7 +3930,7 @@ const getSecureErrorMessage = (rawMessage = "", tab = "employee") => {
 
   // Network / server issues
   if (msg.includes("failed to fetch") || msg.includes("networkerror") || msg.includes("network"))
-    return { text: "Unable to connect. Please check your internet and try again.", color: "#7C3AED", bg: "#F5F3FF", border: "#DDD6FE", icon: "🌐" };
+    return { text: "Unable to connect. Please check your internet and try again.", color: "#A855F7", bg: "#F5F3FF", border: "#DDD6FE", icon: "🌐" };
 
   if (msg.includes("token missing"))
     return { text: "Session could not be established. Please try again.", color: "#B45309", bg: "#FFFBEB", border: "#FDE68A", icon: "⚠️" };
@@ -3974,7 +3974,7 @@ const getSecureErrorMessage = (rawMessage = "", tab = "employee") => {
 // ─────────────────────────────────────────────────────────────────────────────
 //  LEFT PANEL — animated orbit canvas
 // ─────────────────────────────────────────────────────────────────────────────
-function HROrbitScene() {
+function PeopleOpsOrbitScene() {
   const canvasRef = useRef(null);
   const animRef   = useRef(null);
 
@@ -3997,8 +3997,8 @@ function HROrbitScene() {
       { r: 138, speed: -0.006,  nodes: 5, offset: Math.PI / 5 },
       { r: 198, speed:  0.004,  nodes: 6, offset: Math.PI / 9 },
     ];
-    const COLS  = ["rgba(255,107,53,", "rgba(255,160,80,", "rgba(255,70,30,"];
-    const PCOLS = ["rgba(255,107,53,", "rgba(255,160,80,", "rgba(255,200,100,", "rgba(0,194,168,"];
+    const COLS  = ["rgba(139,92,246,", "rgba(255,160,80,", "rgba(255,70,30,"];
+    const PCOLS = ["rgba(139,92,246,", "rgba(255,160,80,", "rgba(255,200,100,", "rgba(6,182,212,"];
 
     const particles = Array.from({ length: 65 }, () => ({
       x: Math.random() * W, y: Math.random() * H,
@@ -4015,7 +4015,7 @@ function HROrbitScene() {
       const cx = W / 2, cy = H / 2;
       t += 0.016;
 
-      ctx.save(); ctx.strokeStyle = "rgba(255,107,53,0.05)"; ctx.lineWidth = 1;
+      ctx.save(); ctx.strokeStyle = "rgba(139,92,246,0.05)"; ctx.lineWidth = 1;
       for (let x = 0; x < W; x += 44) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke(); }
       for (let y = 0; y < H; y += 44) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); }
       ctx.restore();
@@ -4033,7 +4033,7 @@ function HROrbitScene() {
         p.r += p.speed; if (p.r > p.max) p.r = 0;
         const a = (1 - p.r / p.max) * 0.22;
         ctx.beginPath(); ctx.arc(cx, cy, p.r, 0, Math.PI * 2);
-        ctx.strokeStyle = `rgba(255,107,53,${a})`; ctx.lineWidth = 1.5; ctx.stroke();
+        ctx.strokeStyle = `rgba(139,92,246,${a})`; ctx.lineWidth = 1.5; ctx.stroke();
       });
 
       orbits.forEach((orb, oi) => {
@@ -4063,14 +4063,14 @@ function HROrbitScene() {
       });
 
       const cg = ctx.createRadialGradient(cx, cy, 0, cx, cy, 55);
-      cg.addColorStop(0, "rgba(255,107,53,0.42)");
+      cg.addColorStop(0, "rgba(139,92,246,0.42)");
       cg.addColorStop(0.5, "rgba(255,80,20,0.14)");
       cg.addColorStop(1, "transparent");
       ctx.beginPath(); ctx.arc(cx, cy, 55, 0, Math.PI * 2); ctx.fillStyle = cg; ctx.fill();
 
       ctx.save(); ctx.translate(cx, cy); ctx.rotate(t * 0.4);
       ctx.beginPath(); ctx.arc(0, 0, 32, 0, Math.PI * 2);
-      ctx.strokeStyle = "rgba(255,107,53,0.55)"; ctx.lineWidth = 1.5;
+      ctx.strokeStyle = "rgba(139,92,246,0.55)"; ctx.lineWidth = 1.5;
       ctx.setLineDash([6, 6]); ctx.stroke(); ctx.setLineDash([]); ctx.restore();
 
       ctx.save(); ctx.translate(cx, cy); ctx.rotate(-t * 0.25);
@@ -4080,7 +4080,7 @@ function HROrbitScene() {
 
       ctx.beginPath(); ctx.arc(cx, cy, 17, 0, Math.PI * 2);
       ctx.fillStyle = "rgba(8,4,2,0.96)"; ctx.fill();
-      ctx.strokeStyle = "rgba(255,107,53,0.95)"; ctx.lineWidth = 2; ctx.stroke();
+      ctx.strokeStyle = "rgba(139,92,246,0.95)"; ctx.lineWidth = 2; ctx.stroke();
 
       animRef.current = requestAnimationFrame(draw);
     };
@@ -4095,12 +4095,12 @@ function MCard({ style, icon, title, sub, subColor }) {
   return (
     <div style={{
       position: "absolute", zIndex: 10,
-      background: "rgba(10,4,2,0.85)", border: "1px solid rgba(255,107,53,0.35)",
+      background: "rgba(10,4,2,0.85)", border: "1px solid rgba(139,92,246,0.35)",
       backdropFilter: "blur(16px)", borderRadius: 14, padding: "9px 14px",
       display: "flex", alignItems: "center", gap: 10,
-      boxShadow: "0 8px 28px rgba(0,0,0,0.45), 0 0 18px rgba(255,107,53,0.12)", ...style
+      boxShadow: "0 8px 28px rgba(0,0,0,0.45), 0 0 18px rgba(139,92,246,0.12)", ...style
     }}>
-      <div style={{ width: 30, height: 30, borderRadius: 9, background: "rgba(255,107,53,0.14)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 14, flexShrink: 0 }}>{icon}</div>
+      <div style={{ width: 30, height: 30, borderRadius: 9, background: "rgba(139,92,246,0.14)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 14, flexShrink: 0 }}>{icon}</div>
       <div>
         <div style={{ fontSize: 11, fontWeight: 700, color: "#fff", fontFamily: "Sora,sans-serif" }}>{title}</div>
         <div style={{ fontSize: 10, color: subColor, marginTop: 1 }}>{sub}</div>
@@ -4156,11 +4156,11 @@ function VisualAnimation() {
           const dx = n.x - m.x, dy = n.y - m.y, dist = Math.sqrt(dx * dx + dy * dy);
           if (dist < hexSize * 2.2) {
             ctx.beginPath(); ctx.moveTo(n.x, n.y); ctx.lineTo(m.x, m.y);
-            ctx.strokeStyle = `rgba(255,107,53,${(1 - dist / (hexSize * 2.2)) * 0.08})`; ctx.lineWidth = 0.8; ctx.stroke();
+            ctx.strokeStyle = `rgba(139,92,246,${(1 - dist / (hexSize * 2.2)) * 0.08})`; ctx.lineWidth = 0.8; ctx.stroke();
           }
         });
         ctx.beginPath(); ctx.arc(n.x, n.y, radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255,107,53,${alpha})`; ctx.fill();
+        ctx.fillStyle = `rgba(139,92,246,${alpha})`; ctx.fill();
       });
       ctx.restore();
 
@@ -4171,7 +4171,7 @@ function VisualAnimation() {
           const y = yBase + Math.sin((x / W) * Math.PI * 3 + phase) * amp + Math.sin((x / W) * Math.PI * 6 + phase * 1.3) * (amp * 0.4);
           x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
         }
-        ctx.strokeStyle = `rgba(255,107,53,${alpha})`; ctx.lineWidth = 1.5; ctx.stroke();
+        ctx.strokeStyle = `rgba(139,92,246,${alpha})`; ctx.lineWidth = 1.5; ctx.stroke();
       }
 
       orbs.forEach((o, i) => {
@@ -4182,7 +4182,7 @@ function VisualAnimation() {
         const pulse = (Math.sin(t * 0.9 + o.phase) + 1) / 2, r = o.r * (0.85 + pulse * 0.3), alpha = 0.55 + pulse * 0.3;
         const grad = ctx.createRadialGradient(o.x, o.y, 0, o.x, o.y, r);
         grad.addColorStop(0, `rgba(255,${100 + i * 12},${30 + i * 8},${alpha})`);
-        grad.addColorStop(0.5, `rgba(255,107,53,${alpha * 0.4})`); grad.addColorStop(1, "transparent");
+        grad.addColorStop(0.5, `rgba(139,92,246,${alpha * 0.4})`); grad.addColorStop(1, "transparent");
         ctx.beginPath(); ctx.arc(o.x, o.y, r, 0, Math.PI * 2); ctx.fillStyle = grad; ctx.fill();
       });
 
@@ -4191,32 +4191,32 @@ function VisualAnimation() {
         const rr = 30 + ring * 22, rot = t * (ring % 2 === 0 ? 0.5 : -0.35) + ring, ringAlpha = 0.15 + ring * 0.05;
         ctx.save(); ctx.translate(cx, cy); ctx.rotate(rot);
         ctx.beginPath(); ctx.arc(0, 0, rr, 0, Math.PI * 2);
-        ctx.strokeStyle = `rgba(255,107,53,${ringAlpha})`; ctx.lineWidth = 1.5;
+        ctx.strokeStyle = `rgba(139,92,246,${ringAlpha})`; ctx.lineWidth = 1.5;
         ctx.setLineDash([6, 10]); ctx.stroke(); ctx.setLineDash([]);
         const dotCount = 3 + ring;
         for (let d = 0; d < dotCount; d++) {
           const angle = (d / dotCount) * Math.PI * 2, dx = Math.cos(angle) * rr, dy = Math.sin(angle) * rr;
           const glow = (Math.sin(t * 2 + d + ring) + 1) / 2;
           ctx.beginPath(); ctx.arc(dx, dy, 3 + glow * 2, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(255,107,53,${0.5 + glow * 0.5})`;
-          ctx.shadowBlur = 8 + glow * 8; ctx.shadowColor = "#FF6B35"; ctx.fill(); ctx.shadowBlur = 0;
+          ctx.fillStyle = `rgba(139,92,246,${0.5 + glow * 0.5})`;
+          ctx.shadowBlur = 8 + glow * 8; ctx.shadowColor = "#8B5CF6"; ctx.fill(); ctx.shadowBlur = 0;
         }
         ctx.restore();
       }
 
       const coreGlow = ctx.createRadialGradient(cx, cy, 0, cx, cy, 24);
-      coreGlow.addColorStop(0, `rgba(255,107,53,${0.5 + Math.sin(t * 1.2) * 0.2})`);
-      coreGlow.addColorStop(0.5, "rgba(255,107,53,0.15)"); coreGlow.addColorStop(1, "transparent");
+      coreGlow.addColorStop(0, `rgba(139,92,246,${0.5 + Math.sin(t * 1.2) * 0.2})`);
+      coreGlow.addColorStop(0.5, "rgba(139,92,246,0.15)"); coreGlow.addColorStop(1, "transparent");
       ctx.beginPath(); ctx.arc(cx, cy, 24, 0, Math.PI * 2); ctx.fillStyle = coreGlow; ctx.fill();
       ctx.beginPath(); ctx.arc(cx, cy, 7, 0, Math.PI * 2);
-      ctx.fillStyle = "#FF6B35"; ctx.shadowBlur = 16; ctx.shadowColor = "#FF6B35"; ctx.fill(); ctx.shadowBlur = 0;
+      ctx.fillStyle = "#8B5CF6"; ctx.shadowBlur = 16; ctx.shadowColor = "#8B5CF6"; ctx.fill(); ctx.shadowBlur = 0;
 
       sparks.forEach(s => {
         s.phase += s.speed;
         const a = (Math.sin(s.phase) + 1) / 2;
         ctx.beginPath(); ctx.arc(s.x, s.y, s.r * a, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255,107,53,${a * 0.7})`;
-        ctx.shadowBlur = a * 6; ctx.shadowColor = "#FF6B35"; ctx.fill(); ctx.shadowBlur = 0;
+        ctx.fillStyle = `rgba(139,92,246,${a * 0.7})`;
+        ctx.shadowBlur = a * 6; ctx.shadowColor = "#8B5CF6"; ctx.fill(); ctx.shadowBlur = 0;
       });
 
       animRef.current = requestAnimationFrame(draw);
@@ -4226,11 +4226,11 @@ function VisualAnimation() {
   }, []);
 
   return (
-    <div className="fu2" style={{ borderRadius: 16, overflow: "hidden", marginBottom: 18, border: "1.5px solid rgba(255,107,53,0.18)", boxShadow: "0 4px 24px rgba(255,107,53,0.1)", position: "relative", height: 180 }}>
+    <div className="fu2" style={{ borderRadius: 16, overflow: "hidden", marginBottom: 18, border: "1.5px solid rgba(139,92,246,0.18)", boxShadow: "0 4px 24px rgba(139,92,246,0.1)", position: "relative", height: 180 }}>
       <canvas ref={canvasRef} style={{ width: "100%", height: "100%", display: "block" }} />
-      <div style={{ position: "absolute", bottom: 12, left: "50%", transform: "translateX(-50%)", display: "flex", alignItems: "center", gap: 6, background: "rgba(255,255,255,0.85)", backdropFilter: "blur(8px)", border: "1px solid rgba(255,107,53,0.25)", borderRadius: 999, padding: "4px 14px", boxShadow: "0 2px 12px rgba(255,107,53,0.15)", whiteSpace: "nowrap" }}>
-        <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#FF6B35", animation: "ping-dot 1.6s ease-in-out infinite" }} />
-        <span style={{ fontSize: 11, fontWeight: 700, color: "#FF6B35" }}>SamayaHR · Live Platform</span>
+      <div style={{ position: "absolute", bottom: 12, left: "50%", transform: "translateX(-50%)", display: "flex", alignItems: "center", gap: 6, background: "rgba(255,255,255,0.85)", backdropFilter: "blur(8px)", border: "1px solid rgba(139,92,246,0.25)", borderRadius: 999, padding: "4px 14px", boxShadow: "0 2px 12px rgba(139,92,246,0.15)", whiteSpace: "nowrap" }}>
+        <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#8B5CF6", animation: "ping-dot 1.6s ease-in-out infinite" }} />
+        <span style={{ fontSize: 11, fontWeight: 700, color: "#8B5CF6" }}>CrewSync · Live Platform</span>
       </div>
     </div>
   );
@@ -4302,7 +4302,7 @@ export default function LoginPage() {
           throw new Error(data?.message || "company login failed");
         }
 
-        // Support multiple token locations in response
+        // CareDesk multiple token locations in response
         const token =
           data?.data?.token ||
           data?.token       ||
@@ -4390,7 +4390,7 @@ export default function LoginPage() {
   //  RENDER
   // ─────────────────────────────────────────────────────────────────────────
   return (
-    <div style={{ minHeight: "100vh", background: "#F7F8FA" }}>
+    <div style={{ minHeight: "100vh", background: "#F6F8FB" }}>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Sora:wght@700;800;900&family=DM+Sans:wght@400;500;600&display=swap');
         *, *::before, *::after { font-family: 'DM Sans', sans-serif; box-sizing: border-box; }
@@ -4411,20 +4411,20 @@ export default function LoginPage() {
         .lg-input {
           width: 100%; border: 1.5px solid #e5e7eb; border-radius: 12px;
           background: #fff; padding: 11px 14px 11px 42px; font-size: 14px;
-          color: #0D1F2D; outline: none; transition: border-color .2s, box-shadow .2s;
+          color: #0B1020; outline: none; transition: border-color .2s, box-shadow .2s;
         }
         .lg-input::placeholder { color: #9ca3af; }
-        .lg-input:focus { border-color: #FF6B35; box-shadow: 0 0 0 3px rgba(255,107,53,.1); }
+        .lg-input:focus { border-color: #8B5CF6; box-shadow: 0 0 0 3px rgba(139,92,246,.1); }
         .coral-btn {
           width: 100%;
-          background: linear-gradient(135deg,#FF6B35 0%,#FF5722 50%,#ff7043 100%);
+          background: linear-gradient(135deg,#8B5CF6 0%,#06B6D4 50%,#38BDF8 100%);
           background-size: 200% auto; color: #fff; font-weight: 800; font-size: 15px;
           padding: 13px; border-radius: 14px; border: none; cursor: pointer;
-          box-shadow: 0 4px 24px rgba(255,107,53,.38);
+          box-shadow: 0 4px 24px rgba(139,92,246,.38);
           transition: transform .22s, box-shadow .22s, background-position .4s;
           display: flex; align-items: center; justify-content: center; gap: 8px;
         }
-        .coral-btn:hover    { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(255,107,53,.5); background-position: right center; }
+        .coral-btn:hover    { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(139,92,246,.5); background-position: right center; }
         .coral-btn:disabled { opacity: .65; cursor: not-allowed; transform: none; }
         .tab-btn { flex: 1; padding: 9px; border-radius: 10px; font-size: 12px; font-weight: 700; cursor: pointer; border: none; transition: all .2s; }
         .error-banner { animation: slideInError .3s ease both; }
@@ -4434,13 +4434,13 @@ export default function LoginPage() {
       <header style={{ background: "#fff", borderBottom: "1px solid #f0f0f0", position: "sticky", top: 0, zIndex: 100, boxShadow: "0 1px 10px rgba(0,0,0,.05)" }}>
         <nav style={{ maxWidth: 1120, margin: "0 auto", padding: "0 24px", height: 64, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 9 }}>
-            <img src="/SamayaHRSidebar.png" alt="SamayaHR" style={{ width: 32, height: 32, borderRadius: 10, objectFit: "contain" }} onError={e=>{e.target.style.display="none";}} />
-            <span className="sora" style={{ fontWeight: 900, fontSize: 20, color: "#0D1F2D" }}>Samaya<span style={{ color: "#FF6B35" }}>HR</span></span>
+            <img src="/crewsync-mark.svg" alt="CrewSync" style={{ width: 32, height: 32, borderRadius: 10, objectFit: "contain" }} onError={e=>{e.target.style.display="none";}} />
+            <span className="sora" style={{ fontWeight: 900, fontSize: 20, color: "#0B1020" }}>CrewSync<span style={{ color: "#8B5CF6" }}>PeopleOps</span></span>
           </div>
           <button
             onClick={() => navigate("/")}
             style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 13, fontWeight: 600, color: "#6b7280", background: "none", border: "1.5px solid #e5e7eb", borderRadius: 10, padding: "7px 16px", cursor: "pointer", transition: "all .2s" }}
-            onMouseEnter={e => { e.currentTarget.style.borderColor = "#FF6B35"; e.currentTarget.style.color = "#FF6B35"; }}
+            onMouseEnter={e => { e.currentTarget.style.borderColor = "#8B5CF6"; e.currentTarget.style.color = "#8B5CF6"; }}
             onMouseLeave={e => { e.currentTarget.style.borderColor = "#e5e7eb"; e.currentTarget.style.color = "#6b7280"; }}>
             <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5"><path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
             Back to Home
@@ -4454,23 +4454,23 @@ export default function LoginPage() {
 
           {/* ── LEFT PANEL ─────────────────────────────────────────────── */}
           <div style={{ width: "42%", flexShrink: 0, background: "linear-gradient(148deg,#0d0400 0%,#180800 30%,#1a0600 60%,#0d0300 100%)", position: "relative", overflow: "hidden", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", minHeight: 560 }}>
-            <div style={{ position: "absolute", top: -80, left: -60, width: 360, height: 360, borderRadius: "50%", filter: "blur(90px)", background: "rgba(255,107,53,0.28)", pointerEvents: "none", zIndex: 1, animation: "gp 4s ease-in-out infinite" }} />
+            <div style={{ position: "absolute", top: -80, left: -60, width: 360, height: 360, borderRadius: "50%", filter: "blur(90px)", background: "rgba(139,92,246,0.28)", pointerEvents: "none", zIndex: 1, animation: "gp 4s ease-in-out infinite" }} />
             <div style={{ position: "absolute", bottom: -60, right: -40, width: 300, height: 300, borderRadius: "50%", filter: "blur(80px)", background: "rgba(255,60,10,0.22)", pointerEvents: "none", zIndex: 1, animation: "gp 4s ease-in-out infinite 1s" }} />
-            <div style={{ position: "absolute", top: 0, right: 0, width: 1, height: "100%", background: "linear-gradient(to bottom,transparent,rgba(255,107,53,0.45) 30%,rgba(255,107,53,0.45) 70%,transparent)", zIndex: 20, pointerEvents: "none" }} />
+            <div style={{ position: "absolute", top: 0, right: 0, width: 1, height: "100%", background: "linear-gradient(to bottom,transparent,rgba(139,92,246,0.45) 30%,rgba(139,92,246,0.45) 70%,transparent)", zIndex: 20, pointerEvents: "none" }} />
 
-            <HROrbitScene />
+            <PeopleOpsOrbitScene />
 
-            <MCard style={{ top: 26, left: 18, animation: "floatA 4.5s ease-in-out infinite" }}   icon="💸" title="Payroll Done"   sub="✓ 248 employees"     subColor="#4ade80" />
+            <MCard style={{ top: 26, left: 18, animation: "floatA 4.5s ease-in-out infinite" }}   icon="💸" title="Payout Complete"   sub="✓ 248 employees"     subColor="#4ade80" />
             <MCard style={{ bottom: 52, right: 14, animation: "floatB 5.5s ease-in-out infinite" }} icon="⏰" title="Team Check-In" sub="48 / 50 present"     subColor="#fbbf24" />
-            <MCard style={{ top: "43%", right: 12, animation: "floatC 6s ease-in-out infinite" }}  icon="🏖️" title="Leave Approved" sub="3 requests · instant" subColor="#fb923c" />
+            <MCard style={{ top: "43%", right: 12, animation: "floatC 6s ease-in-out infinite" }}  icon="🏖️" title="TimeAway Cleared" sub="3 requests · instant" subColor="#fb923c" />
 
-            <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", zIndex: 5, pointerEvents: "none", width: 36, height: 36, borderRadius: 11, background: "rgba(8,3,1,0.96)", border: "1.5px solid rgba(255,107,53,0.9)", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 0 22px rgba(255,107,53,0.7)" }}>
-              <img src={logo} alt="SamayaHR" style={{ width: 22, height: 22, objectFit: "contain" }} />
+            <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", zIndex: 5, pointerEvents: "none", width: 36, height: 36, borderRadius: 11, background: "rgba(8,3,1,0.96)", border: "1.5px solid rgba(139,92,246,0.9)", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 0 22px rgba(139,92,246,0.7)" }}>
+              <img src={logo} alt="CrewSync" style={{ width: 22, height: 22, objectFit: "contain" }} />
             </div>
             <div style={{ position: "absolute", top: 20, left: "50%", transform: "translateX(-50%)", zIndex: 10 }}>
-              <div style={{ display: "inline-flex", alignItems: "center", gap: 7, background: "rgba(255,107,53,.14)", border: "1px solid rgba(255,107,53,.3)", borderRadius: 999, padding: "5px 14px" }}>
-                <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#FF6B35", display: "inline-block", animation: "ping-dot 1.8s ease-in-out infinite" }} />
-                <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: ".1em", color: "#FF6B35", textTransform: "uppercase", whiteSpace: "nowrap" }}>Live · Secure Access</span>
+              <div style={{ display: "inline-flex", alignItems: "center", gap: 7, background: "rgba(139,92,246,.14)", border: "1px solid rgba(139,92,246,.3)", borderRadius: 999, padding: "5px 14px" }}>
+                <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#8B5CF6", display: "inline-block", animation: "ping-dot 1.8s ease-in-out infinite" }} />
+                <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: ".1em", color: "#8B5CF6", textTransform: "uppercase", whiteSpace: "nowrap" }}>Live · Secure Access</span>
               </div>
             </div>
           </div>
@@ -4482,12 +4482,12 @@ export default function LoginPage() {
               {/* Header */}
               <div className="fu1" style={{ marginBottom: 24 }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 12 }}>
-                  <div style={{ width: 44, height: 44, borderRadius: 13, background: "linear-gradient(135deg,#FF6B35,#FF5722)", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 4px 16px rgba(255,107,53,.3)", flexShrink: 0, position: "relative" }}>
-                    <img src="/SamayaHRSidebar.png" alt="SamayaHR" style={{ width: 30, height: 30, objectFit: "contain" }} />
+                  <div style={{ width: 44, height: 44, borderRadius: 13, background: "linear-gradient(135deg,#8B5CF6,#06B6D4)", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 4px 16px rgba(139,92,246,.3)", flexShrink: 0, position: "relative" }}>
+                    <img src="/crewsync-mark.svg" alt="CrewSync" style={{ width: 30, height: 30, objectFit: "contain" }} />
                     <div style={{ position: "absolute", top: -2, right: -2, width: 11, height: 11, borderRadius: "50%", background: "#22c55e", border: "2px solid #fff" }} />
                   </div>
                   <div>
-                    <h3 className="sora" style={{ fontSize: 22, fontWeight: 900, color: "#0D1F2D", margin: 0 }}>
+                    <h3 className="sora" style={{ fontSize: 22, fontWeight: 900, color: "#0B1020", margin: 0 }}>
                       {showForm ? "Sign in to workspace" : "Welcome back 👋"}
                     </h3>
                     <p style={{ fontSize: 12, color: "#9ca3af", margin: "3px 0 0" }}>
@@ -4507,9 +4507,9 @@ export default function LoginPage() {
                   </button>
                   <p className="fu5" style={{ textAlign: "center", marginTop: 14, fontSize: 12, color: "#9ca3af" }}>
                     New here?{" "}
-                    <a href="/solutions/bookdemo" style={{ color: "#FF6B35", fontWeight: 700, textDecoration: "none" }}>Get a free personalised demo →</a>
+                    <a href="/solutions/bookdemo" style={{ color: "#8B5CF6", fontWeight: 700, textDecoration: "none" }}>Get a free personalised demo →</a>
                   </p>
-                  <div style={{ display: "flex", flexWrap: "wrap", gap: 14, background: "#F7F8FA", borderRadius: 12, padding: "11px 14px", marginTop: 16 }}>
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: 14, background: "#F6F8FB", borderRadius: 12, padding: "11px 14px", marginTop: 16 }}>
                     {[["🔒", "Secure & Private"], ["⚡", "Instant Login"]].map(([ic, tx]) => (
                       <div key={tx} style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12, color: "#6b7280", fontWeight: 500 }}><span>{ic}</span>{tx}</div>
                     ))}
@@ -4519,13 +4519,13 @@ export default function LoginPage() {
                 <>
                   {/* Tab switcher */}
                   <div className="fu1" style={{ display: "flex", gap: 4, borderRadius: 12, padding: 4, background: "#f3f4f6", marginBottom: 20, border: "1px solid #e5e7eb" }}>
-                    {[["employee", "👤 Employee"], ["company", "🏢 Company"]].map(([tab, label]) => (
+                    {[["employee", "👤 Person"], ["company", "🏢 Workspace"]].map(([tab, label]) => (
                       <button key={tab} className="tab-btn"
                         onClick={() => { setActiveTab(tab); setError(null); }}
                         style={{
-                          background:  activeTab === tab ? "linear-gradient(135deg,#FF6B35,#FF5722)" : "transparent",
+                          background:  activeTab === tab ? "linear-gradient(135deg,#8B5CF6,#06B6D4)" : "transparent",
                           color:       activeTab === tab ? "#fff" : "#6b7280",
-                          boxShadow:   activeTab === tab ? "0 2px 10px rgba(255,107,53,.3)" : "none",
+                          boxShadow:   activeTab === tab ? "0 2px 10px rgba(139,92,246,.3)" : "none",
                         }}>
                         {label}
                       </button>
@@ -4569,7 +4569,7 @@ export default function LoginPage() {
                     {/* Email */}
                     <div className="fu2">
                       <label style={{ display: "block", fontSize: 12, fontWeight: 700, color: "#374151", textTransform: "uppercase", letterSpacing: ".06em", marginBottom: 5 }}>
-                        Email address <span style={{ color: "#FF6B35" }}>*</span>
+                        Email address <span style={{ color: "#8B5CF6" }}>*</span>
                       </label>
                       <div style={{ position: "relative" }}>
                         <div style={{ position: "absolute", left: 13, top: "50%", transform: "translateY(-50%)", color: "#9ca3af" }}>
@@ -4586,29 +4586,29 @@ export default function LoginPage() {
                       <div className="fu3">
                         <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 5 }}>
                           <label style={{ fontSize: 12, fontWeight: 700, color: "#374151", textTransform: "uppercase", letterSpacing: ".06em" }}>
-                            Tenant Code <span style={{ color: "#FF6B35" }}>*</span>
+                            Tenant Code <span style={{ color: "#8B5CF6" }}>*</span>
                           </label>
-                          <a href="mailto:support@samayahr.com" style={{ fontSize: 11, fontWeight: 700, color: "#FF6B35", textDecoration: "none" }}>Request Access →</a>
+                          <a href="mailto:support@crewsync.app" style={{ fontSize: 11, fontWeight: 700, color: "#8B5CF6", textDecoration: "none" }}>Request Access →</a>
                         </div>
                         <div style={{ position: "relative" }}>
                           <div style={{ position: "absolute", left: 13, top: "50%", transform: "translateY(-50%)", color: "#9ca3af" }}>
                             <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.8"><path strokeLinecap="round" strokeLinejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
                           </div>
                           <input type="text" name="companyKey" className="lg-input"
-                            placeholder="e.g. SamayaClient0001"
+                            placeholder="e.g. CrewSyncClient0001"
                             value={formData.companyKey} onChange={handleChange} required />
                         </div>
                         <p style={{ fontSize: 11, color: "#9ca3af", margin: "6px 0 0", lineHeight: 1.5 }}>
-                          Your tenant code was provided when your company account was set up. Contact <a href="mailto:support@samayahr.com" style={{ color: "#FF6B35", textDecoration: "none", fontWeight: 600 }}>support@samayahr.com</a> to request access.
+                          Your tenant code was provided when your company account was set up. Contact <a href="mailto:support@crewsync.app" style={{ color: "#8B5CF6", textDecoration: "none", fontWeight: 600 }}>support@crewsync.app</a> to request access.
                         </p>
                       </div>
                     ) : (
                       <div className="fu3">
                         <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 5 }}>
                           <label style={{ fontSize: 12, fontWeight: 700, color: "#374151", textTransform: "uppercase", letterSpacing: ".06em" }}>
-                            Password <span style={{ color: "#FF6B35" }}>*</span>
+                            Password <span style={{ color: "#8B5CF6" }}>*</span>
                           </label>
-                          <a href="/forgot-password" style={{ fontSize: 11, fontWeight: 700, color: "#FF6B35", textDecoration: "none" }}>Forgot password?</a>
+                          <a href="/forgot-password" style={{ fontSize: 11, fontWeight: 700, color: "#8B5CF6", textDecoration: "none" }}>Forgot password?</a>
                         </div>
                         <div style={{ position: "relative" }}>
                           <div style={{ position: "absolute", left: 13, top: "50%", transform: "translateY(-50%)", color: "#9ca3af" }}>
@@ -4645,8 +4645,8 @@ export default function LoginPage() {
 
               <p className="fu5" style={{ marginTop: 16, textAlign: "center", fontSize: 11, color: "#9ca3af", lineHeight: 1.7 }}>
                 By signing in, you agree to our{" "}
-                <a href="/terms" style={{ color: "#FF6B35", textDecoration: "none" }}>Terms of Service</a>{" "}&{" "}
-                <a href="/privacy" style={{ color: "#FF6B35", textDecoration: "none" }}>Privacy Policy</a>.
+                <a href="/terms" style={{ color: "#8B5CF6", textDecoration: "none" }}>Terms of Service</a>{" "}&{" "}
+                <a href="/privacy" style={{ color: "#8B5CF6", textDecoration: "none" }}>Privacy Playbook</a>.
               </p>
 
             </div>

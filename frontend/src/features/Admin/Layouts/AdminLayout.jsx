@@ -3,7 +3,7 @@
 // import Sidebar from "../components/Sidebar.jsx";   
 // import TopNav from "../components/Navbar.jsx";     
 
-// const AdminLayout = () => {
+// const OperatorLayout = () => {
 //   const navigate = useNavigate();
 
 //   const handleLogout = () => {
@@ -29,16 +29,16 @@
 //   );
 // };
 
-// export default AdminLayout;
+// export default OperatorLayout;
 
 
 //updtaed styling 7/3/2026
 // import React from "react";
 // import { Outlet, useNavigate } from "react-router-dom";
-// import Sidebar from "../components/Sidebar.jsx";   // exports AdminSidebar
+// import Sidebar from "../components/Sidebar.jsx";   // exports OperatorSidebar
 // import TopNav from "../components/Navbar.jsx";
 
-// const AdminLayout = () => {
+// const OperatorLayout = () => {
 //   const navigate = useNavigate();
 
 //   const handleLogout = () => {
@@ -55,7 +55,7 @@
 //     <div style={{
 //       display: "flex",
 //       minHeight: "100vh",
-//       background: "#F7F8FA",
+//       background: "#F6F8FB",
 //       fontFamily: "'DM Sans', sans-serif",
 //     }}>
 //       <Sidebar />
@@ -76,12 +76,12 @@
 //   );
 // };
 
-// export default AdminLayout;
+// export default OperatorLayout;
 
 //layout navigation isued solved now it will not redirect without authetication and no Domain Name in URL Path 9/3/2026
 
 // ─────────────────────────────────────────────────────────────────────────────
-//  src/features/Admin/Layouts/AdminLayout.jsx
+//  src/features/Operator/Layouts/OperatorLayout.jsx
 //
 //  KEY CHANGES vs all previous versions:
 //  1. Uses <Outlet> — no children / setActivePage props
@@ -97,31 +97,31 @@
 // import { clearSession } from "../../../app/authGuard";
 
 // const PAGE_TITLES = {
-//   home:    "Dashboard",
-//   mgmt:    "Management",
-//   company: "Company",
-//   onboard: "Add Employee",
-//   team:    "Manage Employees",
-//   finance: "Finance Hub",
-//   finview: "Finance Overview",
-//   leave:   "Leave Management",
-//   manual:  "Manual Entry",
-//   payroll: "Payroll Management",
-//   time:    "Attendance",
-//   docs:    "Documents",
-//   support: "Support",
-//   alerts:  "Notifications",
-//   perf:    "Performance",
-//   gear:    "Assets",
-//   org:     "Hierarchy",
+//   home:    "ControlRoom",
+//   mgmt:    "Operations",
+//   company: "Workspace",
+//   onboard: "Add Person",
+//   team:    "People Grid",
+//   finance: "MoneyOps",
+//   finview: "MoneyOps Overview",
+//   leave:   "TimeAway Flow",
+//   manual:  "Direct Entry",
+//   payroll: "Payout Control",
+//   time:    "Presence",
+//   docs:    "Vault",
+//   support: "CareDesk",
+//   alerts:  "Signals",
+//   perf:    "Momentum",
+//   gear:    "Equipment",
+//   org:     "PeopleMap",
 // };
 
 // const resolveTitle = (pathname) => {
 //   const seg = pathname.split("/").filter(Boolean).pop() || "";
-//   return PAGE_TITLES[seg.toLowerCase()] || "Admin Portal";
+//   return PAGE_TITLES[seg.toLowerCase()] || "Ops Portal";
 // };
 
-// const AdminLayout = () => {
+// const OperatorLayout = () => {
 //   const navigate = useNavigate();
 //   const location = useLocation();
 
@@ -136,7 +136,7 @@
 //     <div style={{
 //       display: "flex",
 //       minHeight: "100vh",
-//       background: "#F7F8FA",
+//       background: "#F6F8FB",
 //       fontFamily: "'DM Sans', sans-serif",
 //     }}>
 //       <Sidebar />
@@ -152,11 +152,11 @@
 //   );
 // };
 
-// export default AdminLayout;
+// export default OperatorLayout;
 
 //with Domain Name in URL Path
 
-// src/features/Admin/Layouts/AdminLayout.jsx
+// src/features/Operator/Layouts/OperatorLayout.jsx
 //
 // Props received from AppShell:
 //   currentPage  : string  — active page key e.g. "ad_home"
@@ -169,12 +169,12 @@ import React from "react";
 import Sidebar from "../components/Sidebar.jsx";
 import TopNav  from "../components/Navbar.jsx";
 
-const AdminLayout = ({ children, currentPage, navigateTo, onLogout, pageTitle }) => {
+const OperatorLayout = ({ children, currentPage, navigateTo, onLogout, pageTitle }) => {
   return (
-    <div style={{
+    <div className="cs-app-layout cs-operator-layout" style={{
       display: "flex",
       minHeight: "100vh",
-      background: "#F7F8FA",
+      background: "var(--bg-page)",
       fontFamily: "'DM Sans', sans-serif",
     }}>
       {/* Sidebar — receives navigateTo instead of React Router links */}
@@ -198,7 +198,7 @@ const AdminLayout = ({ children, currentPage, navigateTo, onLogout, pageTitle })
           navigateTo={navigateTo}
         />
 
-        <main style={{
+        <main className="cs-main-stage" style={{
           flex: 1,
           padding: "28px 32px",
           overflowY: "auto",
@@ -211,4 +211,4 @@ const AdminLayout = ({ children, currentPage, navigateTo, onLogout, pageTitle })
   );
 };
 
-export default AdminLayout;
+export default OperatorLayout;

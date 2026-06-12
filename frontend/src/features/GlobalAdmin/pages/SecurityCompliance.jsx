@@ -23,7 +23,7 @@ function buildChecks(companies, logs, stats) {
 
   return [
     {
-      label: "Company Status Monitoring",
+      label: "Workspace Status Monitoring",
       desc:  `${active} active, ${suspended} suspended companies`,
       status: suspended === 0 ? "pass" : suspended > 2 ? "fail" : "warn",
       detail: suspended > 0 ? `${suspended} company/ies are suspended — review billing` : "All companies are in good standing",
@@ -41,8 +41,8 @@ function buildChecks(companies, logs, stats) {
       detail: recent24h > 0 ? "Normal activity levels detected" : "No activity in last 24h — check if backend is running",
     },
     {
-      label: "Employee Capacity Check",
-      desc:  `Companies using employee slot limits`,
+      label: "Person Capacity Check",
+      desc:  `Workspaces using employee slot limits`,
       status: (() => {
         const overloaded = companies.filter(c => c.employeeLimit && c.employees >= c.employeeLimit * 0.9);
         if (overloaded.length === 0) return "pass";
@@ -58,7 +58,7 @@ function buildChecks(companies, logs, stats) {
     },
     {
       label: "Data Integrity",
-      desc:  "Companies with complete profile information",
+      desc:  "Workspaces with complete profile information",
       status: (() => {
         const incomplete = companies.filter(c => !c.adminEmail || !c.tenantCode || !c.plan);
         return incomplete.length === 0 ? "pass" : "warn";
@@ -90,7 +90,7 @@ function buildChecks(companies, logs, stats) {
 // Map logs to login activity feed
 function buildLoginFeed(logs) {
   return logs
-    .filter(l => l.tag === "Auth" || l.tag === "Company" || (l.eventType || "").toLowerCase().includes("login"))
+    .filter(l => l.tag === "Auth" || l.tag === "Workspace" || (l.eventType || "").toLowerCase().includes("login"))
     .slice(0, 10)
     .map(l => ({
       user: l.actorName || "System",
@@ -108,14 +108,14 @@ const CHECK_STYLE = {
 };
 
 const SEV_STYLE = {
-  info:    { bg: "#dbeafe", color: "#2563eb" },
+  info:    { bg: "#dbeafe", color: "#8B5CF6" },
   success: { bg: "#dcfce7", color: "#16a34a" },
   warning: { bg: "#fef9c3", color: "#ca8a04" },
   error:   { bg: "#fee2e2", color: "#dc2626" },
 };
 
-export default function SecurityCompliance() {
-  const [companies, setCompanies] = useState([]);
+export default function TrustAssurance() {
+  const [companies, setWorkspaces] = useState([]);
   const [stats,     setStats]     = useState({});
   const [logs,      setLogs]      = useState([]);
   const [loading,   setLoading]   = useState(false);
@@ -129,7 +129,7 @@ export default function SecurityCompliance() {
         api.get("/api/global-admin/companies/statistics"),
         api.get("/api/global-admin/activity?limit=100"),
       ]);
-      setCompanies(cRes.data?.data || []);
+      setWorkspaces(cRes.data?.data || []);
       setStats(sRes.data?.data || {});
       const arr = Array.isArray(aRes.data) ? aRes.data : (aRes.data?.data || []);
       setLogs(arr);
@@ -157,10 +157,10 @@ export default function SecurityCompliance() {
         <div style={{ position: "absolute", top: -30, right: 60, width: 130, height: 130, borderRadius: "50%", background: "rgba(239,68,68,0.08)", pointerEvents: "none" }} />
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", position: "relative" }}>
           <div>
-            <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 11, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 6px" }}>SamayaHR · Global Admin</p>
-            <h1 style={{ color: "#fff", fontSize: 24, fontWeight: 800, margin: 0, letterSpacing: "-0.02em" }}>Security & Compliance</h1>
+            <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 11, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 6px" }}>CrewSync · Global Operator</p>
+            <h1 style={{ color: "#fff", fontSize: 24, fontWeight: 800, margin: 0, letterSpacing: "-0.02em" }}>Trust Center</h1>
             <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 13, margin: "6px 0 0" }}>
-              {loading ? "Loading…" : `Security score: ${score}% · ${checks.length} checks · ${logs.length} events monitored`}
+              {loading ? "Loading…" : `Trust score: ${score}% · ${checks.length} checks · ${logs.length} events monitored`}
             </p>
           </div>
           <button onClick={fetchData} disabled={loading}
@@ -199,7 +199,7 @@ export default function SecurityCompliance() {
                 </div>
               </div>
               <div>
-                <p style={{ fontSize: 11, fontWeight: 700, color: "#94a3b8", textTransform: "uppercase", letterSpacing: "0.08em", margin: 0 }}>Security Score</p>
+                <p style={{ fontSize: 11, fontWeight: 700, color: "#94a3b8", textTransform: "uppercase", letterSpacing: "0.08em", margin: 0 }}>Trust Score</p>
                 <p style={{ fontSize: 15, fontWeight: 800, color: "#1e293b", margin: "4px 0 0" }}>
                   {score >= 80 ? "Good" : score >= 60 ? "Needs Attention" : "Critical"}
                 </p>
@@ -224,9 +224,9 @@ export default function SecurityCompliance() {
           </div>
 
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
-            {/* Security Checks */}
+            {/* Trust Checks */}
             <div style={{ ...S.card, padding: "20px 24px" }}>
-              <p style={{ fontSize: 15, fontWeight: 800, color: "#0f172a", margin: "0 0 16px" }}>Security Checks</p>
+              <p style={{ fontSize: 15, fontWeight: 800, color: "#0f172a", margin: "0 0 16px" }}>Trust Checks</p>
               <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
                 {checks.map((check, i) => {
                   const cs = CHECK_STYLE[check.status];

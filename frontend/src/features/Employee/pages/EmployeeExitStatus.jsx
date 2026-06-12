@@ -7,9 +7,9 @@ import {
 } from "lucide-react";
 import api from "@/lib/apiClient";
 
-/* ── SamayaHR design tokens ── */
+/* ── CrewSync design tokens ── */
 const T = {
-  navy:"#0D1F2D", navyMid:"#1E3448", coral:"#FF6B35", teal:"#00C2A8",
+  navy:"#0B1020", navyMid:"#374151", coral:"#8B5CF6", teal:"#06B6D4",
   bg:"#F5F7FB", border:"#E8ECF2",
 };
 
@@ -36,7 +36,7 @@ const CSS = `
 .es-fields-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
 @media(max-width:600px){ .es-fields-grid{ grid-template-columns:1fr!important; } }
 
-.es-btn-primary { display:inline-flex; align-items:center; gap:7px; padding:10px 22px; border-radius:11px; border:none; background:linear-gradient(135deg,${T.coral},#ff8c5a); color:#fff; font-size:12px; font-weight:700; font-family:'DM Sans',sans-serif; cursor:pointer; box-shadow:0 4px 14px rgba(255,107,53,.3); transition:all .15s; }
+.es-btn-primary { display:inline-flex; align-items:center; gap:7px; padding:10px 22px; border-radius:11px; border:none; background:linear-gradient(135deg,${T.coral},#FBBF24); color:#fff; font-size:12px; font-weight:700; font-family:'DM Sans',sans-serif; cursor:pointer; box-shadow:0 4px 14px rgba(139,92,246,.3); transition:all .15s; }
 .es-btn-primary:hover { transform:translateY(-1px); }
 .es-btn-ghost { display:inline-flex; align-items:center; gap:7px; padding:8px 16px; border-radius:10px; border:1.5px solid ${T.border}; background:#fff; color:#64748b; font-size:12px; font-weight:700; font-family:'DM Sans',sans-serif; cursor:pointer; transition:all .15s; }
 .es-btn-ghost:hover { border-color:${T.coral}; color:${T.coral}; }
@@ -44,12 +44,12 @@ const CSS = `
 
 const STATUS_CFG = {
   PENDING:               { icon:Clock,        bg:"#FFFBEB", color:"#B45309", border:"#FDE68A", dot:"#F59E0B",  msg:"Your request is being reviewed by your Team Leader." },
-  TEAM_LEADER_APPROVED:  { icon:CheckCircle,  bg:"rgba(255,107,53,.07)", color:T.coral,  border:"rgba(255,107,53,.25)", dot:T.coral,   msg:"Team Leader approved. Awaiting HR approval." },
+  TEAM_LEADER_APPROVED:  { icon:CheckCircle,  bg:"rgba(139,92,246,.07)", color:T.coral,  border:"rgba(139,92,246,.25)", dot:T.coral,   msg:"Team Leader approved. Awaiting PeopleOps approval." },
   TEAM_LEADER_REJECTED:  { icon:XCircle,      bg:"#FEF2F2", color:"#991B1B", border:"#FECACA", dot:"#EF4444", msg:"Your request was rejected by Team Leader." },
-  HR_APPROVED:           { icon:CheckCircle,  bg:"rgba(0,194,168,.07)", color:T.teal,   border:"rgba(0,194,168,.25)", dot:T.teal,    msg:"Your exit request has been approved by HR." },
-  HR_REJECTED:           { icon:XCircle,      bg:"#FEF2F2", color:"#991B1B", border:"#FECACA", dot:"#EF4444", msg:"Your request was rejected by HR." },
+  PeopleOps_APPROVED:           { icon:CheckCircle,  bg:"rgba(6,182,212,.07)", color:T.teal,   border:"rgba(6,182,212,.25)", dot:T.teal,    msg:"Your exit request has been approved by PeopleOps." },
+  PeopleOps_REJECTED:           { icon:XCircle,      bg:"#FEF2F2", color:"#991B1B", border:"#FECACA", dot:"#EF4444", msg:"Your request was rejected by PeopleOps." },
   IN_PROGRESS:           { icon:AlertCircle,  bg:"rgba(99,102,241,.07)", color:"#4F46E5", border:"rgba(99,102,241,.2)", dot:"#6366F1", msg:"Your exit clearance is in progress." },
-  COMPLETED:             { icon:CheckCircle,  bg:"rgba(0,194,168,.08)", color:T.teal,   border:"rgba(0,194,168,.3)", dot:T.teal,    msg:"Exit process completed successfully." },
+  COMPLETED:             { icon:CheckCircle,  bg:"rgba(6,182,212,.08)", color:T.teal,   border:"rgba(6,182,212,.3)", dot:T.teal,    msg:"Exit process completed successfully." },
 };
 
 const fmtDate = d => new Date(d).toLocaleDateString('en-US',{weekday:'short',year:'numeric',month:'short',day:'numeric'});
@@ -57,7 +57,7 @@ const fmtDate = d => new Date(d).toLocaleDateString('en-US',{weekday:'short',yea
 const formatExitType = t => ({RESIGNATION:"Resignation",TERMINATION:"Termination",RETIREMENT:"Retirement"}[t]||t);
 const formatReason   = r => ({BETTER_OPPORTUNITY:"Better opportunity",PERSONAL_REASONS:"Personal reasons",HEALTH_ISSUES:"Health issues",RELOCATION:"Relocation",CAREER_CHANGE:"Career change",HIGHER_EDUCATION:"Higher education",OTHER:"Other"}[r]||r);
 
-export default function EmployeeExitStatus() {
+export default function PersonExitStatus() {
   const navigate = useNavigate();
   const [exitStatus, setExitStatus] = useState(null);
   const [loading,    setLoading]    = useState(true);
@@ -108,8 +108,8 @@ export default function EmployeeExitStatus() {
 
   const TIMELINE = [
     { title:"Request Submitted",   date:fmtDate(exitStatus.appliedOn), done:true },
-    { title:"Team Leader Review",  date:exitStatus.teamLeaderApprovedAt?fmtDate(exitStatus.teamLeaderApprovedAt):"In Progress", done:["TEAM_LEADER_APPROVED","HR_APPROVED","IN_PROGRESS","COMPLETED"].includes(exitStatus.status) },
-    { title:"HR Approval",         date:exitStatus.hrApprovedAt?fmtDate(exitStatus.hrApprovedAt):"Awaiting",                   done:["HR_APPROVED","IN_PROGRESS","COMPLETED"].includes(exitStatus.status) },
+    { title:"Team Leader Review",  date:exitStatus.teamLeaderApprovedAt?fmtDate(exitStatus.teamLeaderApprovedAt):"In Progress", done:["TEAM_LEADER_APPROVED","PeopleOps_APPROVED","IN_PROGRESS","COMPLETED"].includes(exitStatus.status) },
+    { title:"PeopleOps Approval",         date:exitStatus.hrApprovedAt?fmtDate(exitStatus.hrApprovedAt):"Awaiting",                   done:["PeopleOps_APPROVED","IN_PROGRESS","COMPLETED"].includes(exitStatus.status) },
     { title:"Exit Clearance",      date:"Pending",                                                                              done:["IN_PROGRESS","COMPLETED"].includes(exitStatus.status) },
     { title:"Final Settlement",    date:exitStatus.status==="COMPLETED"?fmtDate(exitStatus.lastWorkingDay):"Pending",          done:exitStatus.status==="COMPLETED" },
   ];
@@ -120,15 +120,15 @@ export default function EmployeeExitStatus() {
 
       {/* ── HERO ── */}
       <div style={{background:`linear-gradient(135deg,${T.navy},${T.navyMid})`,padding:"22px 26px",position:"relative",overflow:"hidden"}}>
-        <div style={{position:"absolute",top:-50,right:60,width:180,height:180,borderRadius:"50%",background:"rgba(255,107,53,.07)",pointerEvents:"none"}}/>
-        <div style={{position:"absolute",bottom:-30,right:260,width:100,height:100,borderRadius:"50%",background:"rgba(0,194,168,.07)",pointerEvents:"none"}}/>
+        <div style={{position:"absolute",top:-50,right:60,width:180,height:180,borderRadius:"50%",background:"rgba(139,92,246,.07)",pointerEvents:"none"}}/>
+        <div style={{position:"absolute",bottom:-30,right:260,width:100,height:100,borderRadius:"50%",background:"rgba(6,182,212,.07)",pointerEvents:"none"}}/>
         <div style={{position:"relative",display:"flex",alignItems:"center",justifyContent:"space-between",gap:12,flexWrap:"wrap"}}>
           <div style={{display:"flex",alignItems:"center",gap:14}}>
             <div style={{width:44,height:44,borderRadius:13,background:cfg.bg,display:"flex",alignItems:"center",justifyContent:"center",border:`1.5px solid ${cfg.border}`}}>
               <StatusIcon size={20} color={cfg.color}/>
             </div>
             <div>
-              <p style={{fontSize:11,fontWeight:700,color:T.coral,textTransform:"uppercase",letterSpacing:".12em",marginBottom:3}}>SamayaHR · HR</p>
+              <p style={{fontSize:11,fontWeight:700,color:T.coral,textTransform:"uppercase",letterSpacing:".12em",marginBottom:3}}>CrewSync · PeopleOps</p>
               <h1 className="fd" style={{fontSize:23,fontWeight:900,color:"#fff",margin:0}}>Exit Request Status</h1>
               <p style={{fontSize:13,color:"rgba(255,255,255,.5)",marginTop:3}}>Track your exit request and clearance process.</p>
             </div>
@@ -205,7 +205,7 @@ export default function EmployeeExitStatus() {
               )}
 
               {/* rejection */}
-              {(exitStatus.status==='TEAM_LEADER_REJECTED'||exitStatus.status==='HR_REJECTED')&&exitStatus.rejectionReason&&(
+              {(exitStatus.status==='TEAM_LEADER_REJECTED'||exitStatus.status==='PeopleOps_REJECTED')&&exitStatus.rejectionReason&&(
                 <div style={{marginTop:16,paddingTop:14,borderTop:`1px solid ${T.border}`}}>
                   <p className="es-field-label" style={{color:"#EF4444"}}><XCircle size={10}/>Rejection Reason</p>
                   <div style={{padding:"12px 14px",borderRadius:10,background:"#FEF2F2",border:"1.5px solid #FECACA"}}>
@@ -227,7 +227,7 @@ export default function EmployeeExitStatus() {
 
             {/* timeline */}
             <div className="es-card es-in" style={{animationDelay:".06s"}}>
-              <div style={{background:"linear-gradient(135deg,#6366F1,#7C3AED)",padding:"14px 20px"}}>
+              <div style={{background:"linear-gradient(135deg,#6366F1,#A855F7)",padding:"14px 20px"}}>
                 <p className="fd" style={{fontSize:14,fontWeight:800,color:"#fff"}}>Exit Timeline</p>
               </div>
               <div style={{padding:"18px 20px",position:"relative"}}>
@@ -238,7 +238,7 @@ export default function EmployeeExitStatus() {
                       <div className="es-tl-dot" style={{
                         background:item.done?T.teal:"#fff",
                         borderColor:item.done?T.teal:T.border,
-                        boxShadow:item.done?`0 0 0 3px rgba(0,194,168,.15)`:"none",
+                        boxShadow:item.done?`0 0 0 3px rgba(6,182,212,.15)`:"none",
                       }}>
                         {item.done&&<CheckCircle size={14} color="#fff"/>}
                       </div>
@@ -254,17 +254,17 @@ export default function EmployeeExitStatus() {
 
             {/* help */}
             <div className="es-card es-in" style={{animationDelay:".1s"}}>
-              <div style={{background:`linear-gradient(135deg,${T.coral},#ff8c5a)`,padding:"14px 20px"}}>
+              <div style={{background:`linear-gradient(135deg,${T.coral},#FBBF24)`,padding:"14px 20px"}}>
                 <p className="fd" style={{fontSize:14,fontWeight:800,color:"#fff"}}>Need Assistance?</p>
               </div>
               <div style={{padding:"16px 18px",display:"flex",flexDirection:"column",gap:12}}>
                 {[
-                  {Icon:Mail,    label:"Email Support", val:"hr@company.com",       href:"mailto:hr@company.com"},
-                  {Icon:Phone,   label:"Phone Support",  val:"+1 (234) 567-8900",   href:"tel:+1234567890"},
+                  {Icon:Mail,    label:"Email CareDesk", val:"hr@company.com",       href:"mailto:hr@company.com"},
+                  {Icon:Phone,   label:"Phone CareDesk",  val:"+1 (234) 567-8900",   href:"tel:+1234567890"},
                   {Icon:Building,label:"Office Hours",   val:"Mon–Fri, 9 AM–6 PM",  href:null},
                 ].map(row=>(
                   <div key={row.label} style={{display:"flex",alignItems:"flex-start",gap:10}}>
-                    <div style={{width:32,height:32,borderRadius:9,background:"rgba(255,107,53,.1)",display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}}>
+                    <div style={{width:32,height:32,borderRadius:9,background:"rgba(139,92,246,.1)",display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}}>
                       <row.Icon size={14} color={T.coral}/>
                     </div>
                     <div>

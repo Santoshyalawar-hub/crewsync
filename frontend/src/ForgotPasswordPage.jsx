@@ -5,18 +5,18 @@ import { API_BASE_URL } from "@/lib/apiClient";
 /*
   ForgotPasswordPage
   ──────────────────────────────────────────────────────────────────────────────
-  Step 1 (default):  Employee enters email → POST /api/auth/forgot-password
+  Step 1 (default):  Person enters email → POST /api/auth/forgot-password
                      → "Check your inbox" success screen shown
 
   Step 2 (when ?token=xxx in URL):
-                     Employee enters new password → POST /api/auth/reset-password
+                     Person enters new password → POST /api/auth/reset-password
                      → "Password updated" success screen → redirect to /login
   ──────────────────────────────────────────────────────────────────────────────
 */
 
 const C = {
-  coral: "#FF6B35",
-  navy:  "#0D1F2D",
+  coral: "#8B5CF6",
+  navy:  "#0B1020",
 };
 
 const API = API_BASE_URL.replace(/\/+$/, "");
@@ -50,7 +50,7 @@ export default function ForgotPasswordPage() {
   const [error,    setError]    = useState("");
 
   useEffect(() => {
-    document.title = step === "reset" ? "Reset Password · SamayaHR" : "Forgot Password · SamayaHR";
+    document.title = step === "reset" ? "Reset Password · CrewSync" : "Forgot Password · CrewSync";
   }, [step]);
 
   /* ── STEP 1: request reset email ── */
@@ -88,7 +88,7 @@ export default function ForgotPasswordPage() {
   };
 
   return (
-    <div style={{ minHeight: "100vh", background: "#F7F8FA", display: "flex", flexDirection: "column" }}>
+    <div style={{ minHeight: "100vh", background: "#F6F8FB", display: "flex", flexDirection: "column" }}>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Sora:wght@700;800;900&family=DM+Sans:wght@400;500;600&display=swap');
         *, *::before, *::after { font-family: 'DM Sans', sans-serif; box-sizing: border-box; }
@@ -98,18 +98,18 @@ export default function ForgotPasswordPage() {
         .fp-input {
           width:100%; border:1.5px solid #e5e7eb; border-radius:12px;
           background:#fff; padding:11px 14px 11px 42px; font-size:14px;
-          color:#0D1F2D; outline:none; transition:border-color .2s, box-shadow .2s;
+          color:#0B1020; outline:none; transition:border-color .2s, box-shadow .2s;
         }
         .fp-input::placeholder { color:#9ca3af; }
-        .fp-input:focus { border-color:${C.coral}; box-shadow:0 0 0 3px rgba(255,107,53,.1); }
+        .fp-input:focus { border-color:${C.coral}; box-shadow:0 0 0 3px rgba(139,92,246,.1); }
         .fp-btn {
-          width:100%; background:linear-gradient(135deg,#FF6B35,#FF5722); color:#fff;
+          width:100%; background:linear-gradient(135deg,#8B5CF6,#06B6D4); color:#fff;
           font-weight:800; font-size:15px; padding:13px; border-radius:14px; border:none;
-          cursor:pointer; box-shadow:0 4px 24px rgba(255,107,53,.38);
+          cursor:pointer; box-shadow:0 4px 24px rgba(139,92,246,.38);
           transition:transform .22s, box-shadow .22s; display:flex;
           align-items:center; justify-content:center; gap:8px;
         }
-        .fp-btn:hover    { transform:translateY(-2px); box-shadow:0 10px 32px rgba(255,107,53,.5); }
+        .fp-btn:hover    { transform:translateY(-2px); box-shadow:0 10px 32px rgba(139,92,246,.5); }
         .fp-btn:disabled { opacity:.65; cursor:not-allowed; transform:none; }
         @keyframes fp-spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
       `}</style>
@@ -118,8 +118,8 @@ export default function ForgotPasswordPage() {
       <header style={{ background:"#fff", borderBottom:"1px solid #f0f0f0", height:64, display:"flex", alignItems:"center", padding:"0 24px", boxShadow:"0 1px 10px rgba(0,0,0,.05)" }}>
         <div style={{ maxWidth:1120, margin:"0 auto", width:"100%", display:"flex", alignItems:"center", justifyContent:"space-between" }}>
           <button onClick={()=>navigate("/login")} style={{ display:"flex", alignItems:"center", gap:9, background:"none", border:"none", cursor:"pointer" }}>
-            <img src="/SamayaHRSidebar.png" alt="SamayaHR" style={{ width:32, height:32, borderRadius:10, objectFit:"contain" }} onError={e=>e.target.style.display="none"} />
-            <span className="fp-sora" style={{ fontWeight:900, fontSize:20, color:C.navy }}>Samaya<span style={{ color:C.coral }}>HR</span></span>
+            <img src="/crewsync-mark.svg" alt="CrewSync" style={{ width:32, height:32, borderRadius:10, objectFit:"contain" }} onError={e=>e.target.style.display="none"} />
+            <span className="fp-sora" style={{ fontWeight:900, fontSize:20, color:C.navy }}>CrewSync<span style={{ color:C.coral }}>PeopleOps</span></span>
           </button>
           <button
             onClick={() => navigate("/login")}
@@ -176,7 +176,7 @@ export default function ForgotPasswordPage() {
             <>
               {/* Icon + title */}
               <div style={{ textAlign:"center", marginBottom:28 }}>
-                <div style={{ width:64, height:64, borderRadius:18, background:"linear-gradient(135deg,#FF6B35,#FF5722)", display:"flex", alignItems:"center", justifyContent:"center", margin:"0 auto 16px", boxShadow:"0 6px 20px rgba(255,107,53,.35)" }}>
+                <div style={{ width:64, height:64, borderRadius:18, background:"linear-gradient(135deg,#8B5CF6,#06B6D4)", display:"flex", alignItems:"center", justifyContent:"center", margin:"0 auto 16px", boxShadow:"0 6px 20px rgba(139,92,246,.35)" }}>
                   <svg width="30" height="30" fill="none" stroke="#fff" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"/></svg>
                 </div>
                 <h2 className="fp-sora" style={{ fontSize:24, fontWeight:900, color:C.navy, margin:"0 0 8px" }}>Forgot your password?</h2>
@@ -222,7 +222,7 @@ export default function ForgotPasswordPage() {
           {!done && step === "reset" && (
             <>
               <div style={{ textAlign:"center", marginBottom:28 }}>
-                <div style={{ width:64, height:64, borderRadius:18, background:"linear-gradient(135deg,#FF6B35,#FF5722)", display:"flex", alignItems:"center", justifyContent:"center", margin:"0 auto 16px", boxShadow:"0 6px 20px rgba(255,107,53,.35)" }}>
+                <div style={{ width:64, height:64, borderRadius:18, background:"linear-gradient(135deg,#8B5CF6,#06B6D4)", display:"flex", alignItems:"center", justifyContent:"center", margin:"0 auto 16px", boxShadow:"0 6px 20px rgba(139,92,246,.35)" }}>
                   <svg width="30" height="30" fill="none" stroke="#fff" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
                 </div>
                 <h2 className="fp-sora" style={{ fontSize:24, fontWeight:900, color:C.navy, margin:"0 0 8px" }}>Set new password</h2>
@@ -303,7 +303,7 @@ export default function ForgotPasswordPage() {
       </div>
 
       <footer style={{ textAlign:"center", padding:"20px", fontSize:12, color:"#9ca3af" }}>
-        © {new Date().getFullYear()} SamayaHR · <a href="/privacy" style={{ color:"#FF6B35", textDecoration:"none" }}>Privacy Policy</a>
+        © {new Date().getFullYear()} CrewSync · <a href="/privacy" style={{ color:"#8B5CF6", textDecoration:"none" }}>Privacy Playbook</a>
       </footer>
     </div>
   );

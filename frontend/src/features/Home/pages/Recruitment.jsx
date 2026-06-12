@@ -7,14 +7,14 @@ export default function RecruitmentPage() {
       {/* ======================= NAVBAR======================= */}
       <header className="bg-white border-b border-slate-200 py-4 px-6 flex items-center justify-between sticky top-0 z-50">
          <div className="flex items-center gap-3 cursor-pointer hover:opacity-90 transition-opacity">
-            <img src="/assets/Zlabs-Logo.png" alt="Truerize Logo" className="h-20 w-auto object-contain" />
+            <img src="/assets/crewsync-mark.svg" alt="Truerize Logo" className="h-20 w-auto object-contain" />
             <div className="flex flex-col leading-none">
-               <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Zlabs</span>
-              <span className="font-extrabold text-xl tracking-tight" style={{ color: '#000080' }}>SamayaHR</span>
+               <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">CrewSync</span>
+              <span className="font-extrabold text-xl tracking-tight" style={{ color: '#8B5CF6' }}>CrewSync</span>
             </div>
           </div>
         
-        <a href="/" className="text-sm font-bold text-slate-500 hover:text-[#000080] flex items-center gap-1">
+        <a href="/" className="text-sm font-bold text-slate-500 hover:text-[#8B5CF6] flex items-center gap-1">
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
           Back to Home
         </a>
@@ -29,7 +29,7 @@ export default function RecruitmentPage() {
             🚀
           </div>
           <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 mb-4">
-            Smart Recruitment & Onboarding
+            Smart Recruitment & Joiner Flow
           </h1>
           <p className="text-lg text-slate-600 max-w-2xl mx-auto">
             Automate your hiring pipeline from job posting to offer letter generation. 
@@ -40,25 +40,25 @@ export default function RecruitmentPage() {
         {/* Key Features Grid */}
         <div className="grid md:grid-cols-2 gap-8 mb-16">
           <div className="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm hover:border-blue-200 transition-colors">
-            <h3 className="text-xl font-bold text-[#000080] mb-3">Applicant Tracking System (ATS)</h3>
+            <h3 className="text-xl font-bold text-[#8B5CF6] mb-3">Applicant Tracking System (ATS)</h3>
             <p className="text-slate-600 text-sm leading-relaxed">
               Track candidates through custom hiring stages. Schedule interviews, collect feedback, and collaborate with your hiring team in one place.
             </p>
           </div>
           <div className="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm hover:border-blue-200 transition-colors">
-            <h3 className="text-xl font-bold text-[#000080] mb-3">Offer Letter Generation</h3>
+            <h3 className="text-xl font-bold text-[#8B5CF6] mb-3">Offer Letter Generation</h3>
             <p className="text-slate-600 text-sm leading-relaxed">
               Create beautiful offer letters using pre-made templates. Send them digitally and collect e-signatures instantly.
             </p>
           </div>
           <div className="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm hover:border-blue-200 transition-colors">
-            <h3 className="text-xl font-bold text-[#000080] mb-3">Digital Onboarding</h3>
+            <h3 className="text-xl font-bold text-[#8B5CF6] mb-3">Digital Joiner Flow</h3>
             <p className="text-slate-600 text-sm leading-relaxed">
               Paperless onboarding for new joiners. Upload documents, fill bank details, and read policies before day one.
             </p>
           </div>
           <div className="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm hover:border-blue-200 transition-colors">
-            <h3 className="text-xl font-bold text-[#000080] mb-3">Career Page Integration</h3>
+            <h3 className="text-xl font-bold text-[#8B5CF6] mb-3">Career Page Integration</h3>
             <p className="text-slate-600 text-sm leading-relaxed">
               Host a branded career page and integrate with job boards like LinkedIn and Indeed automatically.
             </p>
@@ -66,10 +66,10 @@ export default function RecruitmentPage() {
         </div>
 
         {/* Bottom CTA */}
-        <div className="bg-[#000080] rounded-3xl p-10 text-center text-white">
+        <div className="bg-[#8B5CF6] rounded-3xl p-10 text-center text-white">
           <h2 className="text-2xl font-bold mb-4">Ready to hire better?</h2>
           <p className="text-blue-100 mb-8 max-w-xl mx-auto">Start your 14-day free trial today. No credit card required.</p>
-          <button className="bg-white text-[#000080] px-8 py-3 rounded-full font-bold text-sm hover:bg-blue-50 transition-colors">
+          <button className="bg-white text-[#8B5CF6] px-8 py-3 rounded-full font-bold text-sm hover:bg-violet-50 transition-colors">
             Get Started Now
           </button>
         </div>
@@ -78,7 +78,7 @@ export default function RecruitmentPage() {
 
       {/* Simple Footer */}
       <footer className="bg-white border-t border-slate-200 py-8 text-center text-xs text-slate-400">
-        &copy; {new Date().getFullYear()} Zlabs Inc. All rights reserved.
+        &copy; {new Date().getFullYear()} CrewSync Technologies All rights reserved.
       </footer>
     </div>
   );

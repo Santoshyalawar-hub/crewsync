@@ -35,7 +35,7 @@
 // };
 
 // const T = {
-//   navy:'#0D1F2D', navyMid:'#1E3448', coral:'#FF6B35', teal:'#00C2A8',
+//   navy:'#0B1020', navyMid:'#374151', coral:'#8B5CF6', teal:'#06B6D4',
 //   bg:'#F5F7FB', border:'#E8ECF2',
 // };
 
@@ -51,7 +51,7 @@
 //   padding:13px 16px;border-radius:12px;border:1.5px solid ${T.border};
 //   background:#fff;transition:all .18s;margin-bottom:8px;
 // }
-// .doc-row:hover{border-color:rgba(255,107,53,.3);box-shadow:0 3px 12px rgba(255,107,53,.08);}
+// .doc-row:hover{border-color:rgba(139,92,246,.3);box-shadow:0 3px 12px rgba(139,92,246,.08);}
 // .doc-row:last-child{margin-bottom:0;}
 
 // .doc-icon-wrap{width:36px;height:36px;border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
@@ -69,7 +69,7 @@
 //   cursor:pointer;transition:all .18s;font-family:'DM Sans',sans-serif;
 //   border:1.5px solid transparent;
 // }
-// .doc-upload-label:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(255,107,53,.25);}
+// .doc-upload-label:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(139,92,246,.25);}
 
 // .doc-toast{display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:12px;border:1.5px solid;background:#fff;box-shadow:0 4px 18px rgba(0,0,0,.08);}
 
@@ -122,12 +122,12 @@
 //   fileSize:     doc.fileSize || 0,
 // });
 
-// export default function Documents() {
-//   const [documents, setDocuments] = useState([]);
+// export default function Vault() {
+//   const [documents, setVault] = useState([]);
 //   const [uploading, setUploading] = useState({});
 //   const [message,   setMessage]   = useState({ type: "", text: "" });
 
-//   useEffect(() => { fetchDocuments(); }, []);
+//   useEffect(() => { fetchVault(); }, []);
 
 //   const showMessage = (type, text) => {
 //     setMessage({ type, text });
@@ -135,13 +135,13 @@
 //   };
 
 //   /* ── Fetch my documents ── */
-//   const fetchDocuments = async () => {
+//   const fetchVault = async () => {
 //     try {
 //       const res    = await fetch(`${API_BASE_URL}/api/documents/my-documents`, { headers: getHeaders() });
 //       const parsed = await res.json();
 //       if (!res.ok) { showMessage("error", parsed?.message || "Failed to fetch documents"); return; }
 //       const docs = parsed?.data || [];
-//       setDocuments(docs.map(normaliseDoc));
+//       setVault(docs.map(normaliseDoc));
 //     } catch {
 //       showMessage("error", "Failed to fetch documents");
 //     }
@@ -180,7 +180,7 @@
 //       // Override documentType with the frontend key we used
 //       newDoc.documentType = BACKEND_TO_FRONTEND_MAP[dp.documentType] || documentType;
 
-//       setDocuments(prev => [...prev.filter(d => d.documentType !== newDoc.documentType), newDoc]);
+//       setVault(prev => [...prev.filter(d => d.documentType !== newDoc.documentType), newDoc]);
 
 //       const fieldLabel = DOCUMENT_CATEGORIES.flatMap(c => c.fields).find(f => f.key === documentType)?.label || documentType;
 //       showMessage("success", `${fieldLabel} uploaded successfully`);
@@ -215,7 +215,7 @@
 //       });
 //       const parsed = await res.json();
 //       if (!res.ok) { showMessage("error", parsed?.message || "Delete failed"); return; }
-//       setDocuments(prev => prev.filter(d => d.documentType !== documentType));
+//       setVault(prev => prev.filter(d => d.documentType !== documentType));
 //       showMessage("success", "Document removed");
 //     } catch {
 //       showMessage("error", "Delete failed.");
@@ -232,12 +232,12 @@
 
 //       {/* HERO */}
 //       <div style={{ background:`linear-gradient(135deg,${T.navy} 0%,${T.navyMid} 100%)`, padding:'20px 24px', position:'relative', overflow:'hidden' }}>
-//         <div style={{ position:'absolute', top:-40, right:40, width:160, height:160, borderRadius:'50%', background:'rgba(255,107,53,.08)', pointerEvents:'none' }} />
-//         <div style={{ position:'absolute', bottom:-20, right:200, width:90, height:90, borderRadius:'50%', background:'rgba(0,194,168,.06)', pointerEvents:'none' }} />
+//         <div style={{ position:'absolute', top:-40, right:40, width:160, height:160, borderRadius:'50%', background:'rgba(139,92,246,.08)', pointerEvents:'none' }} />
+//         <div style={{ position:'absolute', bottom:-20, right:200, width:90, height:90, borderRadius:'50%', background:'rgba(6,182,212,.06)', pointerEvents:'none' }} />
 //         <div style={{ position:'relative' }}>
-//           <p style={{ fontSize:11, fontWeight:700, color:T.coral, textTransform:'uppercase', letterSpacing:'.12em', marginBottom:4 }}>SamayaHR · Document Vault</p>
-//           <h1 className="fd" style={{ fontSize:22, fontWeight:900, color:'#fff', margin:0 }}>My Documents</h1>
-//           <p style={{ fontSize:13, color:'rgba(255,255,255,.55)', marginTop:4 }}>Upload, manage and track all your HR documents securely.</p>
+//           <p style={{ fontSize:11, fontWeight:700, color:T.coral, textTransform:'uppercase', letterSpacing:'.12em', marginBottom:4 }}>CrewSync · Vault</p>
+//           <h1 className="fd" style={{ fontSize:22, fontWeight:900, color:'#fff', margin:0 }}>My Vault</h1>
+//           <p style={{ fontSize:13, color:'rgba(255,255,255,.55)', marginTop:4 }}>Upload, manage and track all your PeopleOps documents securely.</p>
 //         </div>
 //       </div>
 
@@ -258,8 +258,8 @@
 //           <style>{`@media(max-width:640px){.doc-stats-grid{grid-template-columns:1fr!important}}`}</style>
 
 //           {[
-//             { icon:<FiFile size={16}/>,   iconBg:'rgba(255,107,53,.1)', iconColor:T.coral, label:'Uploaded',  value:uploadedCount },
-//             { icon:<FiCheck size={16}/>,  iconBg:'rgba(0,194,168,.1)',  iconColor:T.teal,  label:'Required',  value:totalRequired },
+//             { icon:<FiFile size={16}/>,   iconBg:'rgba(139,92,246,.1)', iconColor:T.coral, label:'Uploaded',  value:uploadedCount },
+//             { icon:<FiCheck size={16}/>,  iconBg:'rgba(6,182,212,.1)',  iconColor:T.teal,  label:'Required',  value:totalRequired },
 //           ].map(s => (
 //             <div key={s.label} className="doc-card" style={{ padding:'16px 18px' }}>
 //               <div style={{ display:'flex', alignItems:'center', gap:12 }}>
@@ -275,7 +275,7 @@
 //           {/* Completion */}
 //           <div className="doc-card" style={{ padding:'16px 18px' }}>
 //             <div style={{ display:'flex', alignItems:'center', gap:12 }}>
-//               <div style={{ width:36, height:36, borderRadius:10, background:'rgba(255,107,53,.08)', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
+//               <div style={{ width:36, height:36, borderRadius:10, background:'rgba(139,92,246,.08)', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
 //                 <FiUpload size={16} color={T.coral}/>
 //               </div>
 //               <div style={{ flex:1, minWidth:0 }}>
@@ -300,7 +300,7 @@
 //                 <p className="fd" style={{ fontSize:13, fontWeight:800, color:T.navy, marginBottom:1 }}>{cat.label}</p>
 //                 <p style={{ fontSize:11, color:'#94a3b8' }}>{cat.description}</p>
 //               </div>
-//               <div style={{ marginLeft:'auto', padding:'4px 10px', borderRadius:999, background:`rgba(255,107,53,.08)`, border:`1px solid rgba(255,107,53,.15)`, fontSize:11, fontWeight:700, color:T.coral }}>
+//               <div style={{ marginLeft:'auto', padding:'4px 10px', borderRadius:999, background:`rgba(139,92,246,.08)`, border:`1px solid rgba(139,92,246,.15)`, fontSize:11, fontWeight:700, color:T.coral }}>
 //                 {cat.fields.filter(f => getDocumentByType(f.key)).length}/{cat.fields.length}
 //               </div>
 //             </div>
@@ -312,7 +312,7 @@
 //                 return (
 //                   <div key={field.key} className="doc-row">
 //                     {/* Status icon */}
-//                     <div className="doc-icon-wrap" style={{ background: doc ? "rgba(0,194,168,.1)" : "#F1F5F9", color: doc ? T.teal : '#94a3b8', flexShrink:0 }}>
+//                     <div className="doc-icon-wrap" style={{ background: doc ? "rgba(6,182,212,.1)" : "#F1F5F9", color: doc ? T.teal : '#94a3b8', flexShrink:0 }}>
 //                       {doc ? <FiCheck size={16}/> : <FiFile size={16}/>}
 //                     </div>
 
@@ -324,7 +324,7 @@
 //                           <span style={{ fontSize:9, fontWeight:800, padding:'2px 7px', borderRadius:999, background:'#FEF2F2', color:'#DC2626', border:'1px solid #FECACA', textTransform:'uppercase', letterSpacing:'.05em' }}>Required</span>
 //                         )}
 //                         {doc && (
-//                           <span style={{ fontSize:9, fontWeight:800, padding:'2px 7px', borderRadius:999, background:'rgba(0,194,168,.1)', color:T.teal, border:`1px solid rgba(0,194,168,.2)`, textTransform:'uppercase', letterSpacing:'.05em' }}>✓ Uploaded</span>
+//                           <span style={{ fontSize:9, fontWeight:800, padding:'2px 7px', borderRadius:999, background:'rgba(6,182,212,.1)', color:T.teal, border:`1px solid rgba(6,182,212,.2)`, textTransform:'uppercase', letterSpacing:'.05em' }}>✓ Uploaded</span>
 //                         )}
 //                       </div>
 //                       {doc
@@ -346,9 +346,9 @@
 //                             <FiEye size={14}/>
 //                           </button>
 //                           <button className="doc-action-btn" onClick={() => handleDownload(doc)} title="Download"
-//                             style={{ borderColor:'rgba(0,194,168,.3)', color:T.teal, background:'rgba(0,194,168,.06)' }}
-//                             onMouseEnter={e => { e.currentTarget.style.background = 'rgba(0,194,168,.12)'; }}
-//                             onMouseLeave={e => { e.currentTarget.style.background = 'rgba(0,194,168,.06)'; }}>
+//                             style={{ borderColor:'rgba(6,182,212,.3)', color:T.teal, background:'rgba(6,182,212,.06)' }}
+//                             onMouseEnter={e => { e.currentTarget.style.background = 'rgba(6,182,212,.12)'; }}
+//                             onMouseLeave={e => { e.currentTarget.style.background = 'rgba(6,182,212,.06)'; }}>
 //                             <FiDownload size={14}/>
 //                           </button>
 //                           <button className="doc-action-btn" onClick={() => handleDelete(field.key)} title="Remove"
@@ -360,10 +360,10 @@
 //                         </>
 //                       ) : (
 //                         <label className="doc-upload-label" style={{
-//                           background: isUploading ? T.border : `linear-gradient(135deg,${T.coral},#ff8c5a)`,
+//                           background: isUploading ? T.border : `linear-gradient(135deg,${T.coral},#FBBF24)`,
 //                           color: '#fff', cursor: isUploading ? 'not-allowed' : 'pointer',
 //                           opacity: isUploading ? 0.7 : 1,
-//                           boxShadow: isUploading ? 'none' : '0 3px 10px rgba(255,107,53,.25)',
+//                           boxShadow: isUploading ? 'none' : '0 3px 10px rgba(139,92,246,.25)',
 //                         }}>
 //                           {isUploading
 //                             ? <><span className="doc-spin-icon" style={{ display:'inline-block' }}>⟳</span> Uploading…</>
@@ -384,7 +384,7 @@
 //         {/* GUIDELINES */}
 //         <div className="doc-card doc-animate" style={{ padding:'18px 20px', animationDelay:'.2s' }}>
 //           <div style={{ display:'flex', alignItems:'center', gap:10, marginBottom:12 }}>
-//             <div style={{ width:34, height:34, borderRadius:10, background:'rgba(0,194,168,.1)', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
+//             <div style={{ width:34, height:34, borderRadius:10, background:'rgba(6,182,212,.1)', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
 //               <FiShield size={16} color={T.teal}/>
 //             </div>
 //             <p className="fd" style={{ fontSize:13, fontWeight:800, color:T.navy }}>Upload Guidelines</p>
@@ -422,7 +422,7 @@ import api from "@/lib/apiClient";
 const getTenant = () => localStorage.getItem("tenantCode") || "";
 
 const T = {
-  navy:"#0D1F2D", navyMid:"#1E3448", coral:"#FF6B35", teal:"#00C2A8",
+  navy:"#0B1020", navyMid:"#374151", coral:"#8B5CF6", teal:"#06B6D4",
   bg:"#F5F7FB", border:"#E8ECF2",
 };
 
@@ -459,13 +459,13 @@ const formatSize = (bytes) => {
   return `${Math.round((bytes/Math.pow(1024,i))*100)/100} ${s[i]}`;
 };
 
-const HR_DOC_LABELS = {
+const PeopleOps_DOC_LABELS = {
   OFFER_LETTER:"Offer Letter", JOINING_LETTER:"Joining Letter",
-  SALARY_REVISION_LETTER:"Salary Revision Letter", APPOINTMENT_LETTER:"Appointment Letter",
+  SALARY_REVISION_LETTER:"Compensation Revision Letter", APPOINTMENT_LETTER:"Appointment Letter",
   CONFIRMATION_LETTER:"Confirmation Letter", WARNING_LETTER:"Warning Letter",
   RELIEVING_LETTER:"Relieving Letter", EXPERIENCE_CERTIFICATE:"Experience Certificate",
   NON_DISCLOSURE_AGREEMENT:"Non-Disclosure Agreement", EMPLOYMENT_CONTRACT:"Employment Contract",
-  POLICY_DOCUMENT:"Policy Document", ONBOARDING_CHECKLIST:"Onboarding Checklist",
+  POLICY_DOCUMENT:"Playbook Document", ONBOARDING_CHECKLIST:"JoinerFlow Checklist",
   OTHER:"Other Document",
 };
 
@@ -596,7 +596,7 @@ async function createSignedPdf(pdfUrl, sigDataUrl, signerName) {
         ctx.strokeStyle="#374151"; ctx.lineWidth=0.8*(W/800);
         ctx.beginPath(); ctx.moveTo(bx,by+sh+4); ctx.lineTo(bx+blockW,by+sh+4); ctx.stroke();
         const fs=Math.max(9,Math.round(W*0.012));
-        ctx.fillStyle="#111827"; ctx.font=`bold ${fs}px Arial,sans-serif`; ctx.textBaseline="top";
+        ctx.fillStyle="#0B1020"; ctx.font=`bold ${fs}px Arial,sans-serif`; ctx.textBaseline="top";
         ctx.fillText(signerName,bx,by+sh+8);
         ctx.fillStyle="#6b7280"; ctx.font=`${fs-1}px Arial,sans-serif`;
         ctx.fillText(new Date().toLocaleString("en-IN",{day:"2-digit",month:"short",year:"numeric",hour:"2-digit",minute:"2-digit",hour12:true}),bx,by+sh+8+lineH);
@@ -616,7 +616,7 @@ async function createSignedPdf(pdfUrl, sigDataUrl, signerName) {
 }
 
 // ── Upload signed blob to Cloudinary via backend ──────────────────────────────
-// Works for BOTH HR docs and My Uploads using the SAME endpoint pattern
+// Works for BOTH PeopleOps docs and My Uploads using the SAME endpoint pattern
 // signerName is passed so the backend saves ALL metadata in one atomic call.
 // This means signature survives page refresh even if the subsequent PATCH fails.
 async function uploadSignedBlob(blob, docId, isHrDoc, tenantCode, originalFileName, signerName) {
@@ -645,13 +645,13 @@ async function uploadSignedBlob(blob, docId, isHrDoc, tenantCode, originalFileNa
 }
 
 // ── Save signature metadata to backend ───────────────────────────────────────
-// HR DOCS:    POST  /api/hr-documents/{id}/sign
+// PeopleOps DOCS:    POST  /api/hr-documents/{id}/sign
 // MY UPLOADS: PATCH /api/documents/{id}/sign-status
 //             (also aliased as PATCH /api/documents/{id}/sign on the backend)
 async function saveSignatureToBackend(docId, isHrDoc, sigDataUrl, signerName, tenantCode, signedCloudUrl) {
   try {
     if (isHrDoc) {
-      // ── HR document: POST to hr-documents sign endpoint ──────────────────
+      // ── PeopleOps document: POST to hr-documents sign endpoint ──────────────────
       const res = await api.post(`/api/hr-documents/${docId}/sign`, {
           signerName,
           signatureData:  sigDataUrl,
@@ -726,7 +726,7 @@ function ReSignModal({ onVerified, onCancel }) {
         boxShadow:"0 20px 60px rgba(0,0,0,0.3)"}}>
         <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:18}}>
           <div style={{width:40,height:40,borderRadius:10,
-            background:"rgba(255,107,53,0.1)",display:"flex",
+            background:"rgba(139,92,246,0.1)",display:"flex",
             alignItems:"center",justifyContent:"center"}}>
             <FiLock size={18} color={T.coral}/>
           </div>
@@ -771,7 +771,7 @@ function ReSignModal({ onVerified, onCancel }) {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-//  DOCUMENT SIGNER MODAL  — works identically for HR docs AND My Uploads
+//  DOCUMENT SIGNER MODAL  — works identically for PeopleOps docs AND My Uploads
 // ─────────────────────────────────────────────────────────────────────────────
 function DocumentSignerModal({ doc, onClose, onSigned }) {
   const canvasRef = useRef(null);
@@ -788,7 +788,7 @@ function DocumentSignerModal({ doc, onClose, onSigned }) {
   const [signedImgUrl,  setSignedImgUrl]  = useState(null);
   const lastPos = useRef(null);
 
-  // Determine if this is an HR doc or a My Uploads doc
+  // Determine if this is an PeopleOps doc or a My Uploads doc
   const isHrDoc    = !!(doc.docType || doc.originalFileUrl);
   const isPdf      = isPdfFile(doc);
   const viewUrl    = getOriginalUrl(doc); // always use original for signing source
@@ -800,7 +800,7 @@ function DocumentSignerModal({ doc, onClose, onSigned }) {
     c.width=c.offsetWidth||460; c.height=c.offsetHeight||130;
     const ctx=c.getContext("2d");
     ctx.clearRect(0,0,c.width,c.height);
-    ctx.strokeStyle="#0D1F2D"; ctx.lineWidth=2.5;
+    ctx.strokeStyle="#0B1020"; ctx.lineWidth=2.5;
     ctx.lineCap="round"; ctx.lineJoin="round";
   },[signMode]);
 
@@ -824,7 +824,7 @@ function DocumentSignerModal({ doc, onClose, onSigned }) {
     if(signMode==="type"){
       const off=document.createElement("canvas"); off.width=500; off.height=120;
       const ctx=off.getContext("2d");
-      ctx.fillStyle="#0D1F2D"; ctx.font="italic 52px Georgia,serif";
+      ctx.fillStyle="#0B1020"; ctx.font="italic 52px Georgia,serif";
       ctx.textBaseline="middle"; ctx.fillText(typedSig,24,62);
       return off.toDataURL("image/png");
     }
@@ -849,7 +849,7 @@ function DocumentSignerModal({ doc, onClose, onSigned }) {
           ctx.strokeStyle="#374151"; ctx.lineWidth=0.8;
           ctx.beginPath(); ctx.moveTo(bx,by+sh+4); ctx.lineTo(bx+blockW,by+sh+4); ctx.stroke();
           const fs=Math.max(10,Math.round(W*0.013));
-          ctx.fillStyle="#111827"; ctx.font=`bold ${fs}px Arial,sans-serif`; ctx.textBaseline="top";
+          ctx.fillStyle="#0B1020"; ctx.font=`bold ${fs}px Arial,sans-serif`; ctx.textBaseline="top";
           ctx.fillText(name,bx,by+sh+8);
           ctx.fillStyle="#6b7280"; ctx.font=`${fs-1}px Arial,sans-serif`;
           ctx.fillText(new Date().toLocaleString("en-IN",{day:"2-digit",month:"short",year:"numeric",hour:"2-digit",minute:"2-digit",hour12:true}),bx,by+sh+8+lineH);
@@ -887,7 +887,7 @@ function DocumentSignerModal({ doc, onClose, onSigned }) {
         );
 
         setProcessMsg("💾 Saving signature metadata…");
-        // Save metadata — works for BOTH HR docs and My Uploads
+        // Save metadata — works for BOTH PeopleOps docs and My Uploads
         await saveSignatureToBackend(doc.id, isHrDoc, sigDataUrl, signerName.trim(), tenantCode, cloudUrl);
 
         setProcessMsg("✅ Signed and saved!");
@@ -979,8 +979,8 @@ function DocumentSignerModal({ doc, onClose, onSigned }) {
 
       <div style={{flex:1,display:"flex",overflow:"hidden"}}>
         {/* Left: document preview */}
-        <div style={{flex:1,background:"#111827",display:"flex",flexDirection:"column",overflow:"hidden",minWidth:0}}>
-          <div style={{background:"#1f2937",padding:"6px 16px",fontSize:10,color:"#9ca3af",fontWeight:600,textTransform:"uppercase",letterSpacing:"0.08em",flexShrink:0,display:"flex",alignItems:"center",justifyContent:"space-between"}}>
+        <div style={{flex:1,background:"#0B1020",display:"flex",flexDirection:"column",overflow:"hidden",minWidth:0}}>
+          <div style={{background:"#182033",padding:"6px 16px",fontSize:10,color:"#9ca3af",fontWeight:600,textTransform:"uppercase",letterSpacing:"0.08em",flexShrink:0,display:"flex",alignItems:"center",justifyContent:"space-between"}}>
             <span>{signedPdfBlob?"✅ All pages signed — download ready":signedImgUrl?"✅ Signature stamped":processing?processMsg:isPdf?"📄 PDF — all pages will be signed":"🖼 Document image"}</span>
             {processing&&<span style={{color:T.coral,fontSize:11}}>⏳ {processMsg}</span>}
           </div>
@@ -992,7 +992,7 @@ function DocumentSignerModal({ doc, onClose, onSigned }) {
                   <p style={{color:"#fff",fontWeight:800,fontSize:16,margin:0}}>All Pages Signed!</p>
                   <p style={{color:"rgba(255,255,255,0.8)",fontSize:12,margin:"4px 0 0"}}>Signature stamped on every page · Saved to server</p>
                 </div>
-                <button onClick={downloadSignedFile} style={{display:"flex",alignItems:"center",gap:8,padding:"12px 24px",borderRadius:10,border:"none",background:`linear-gradient(135deg,${T.coral},#f97316)`,color:"#fff",fontSize:14,fontWeight:700,cursor:"pointer",boxShadow:"0 4px 16px rgba(255,107,53,0.4)"}}>
+                <button onClick={downloadSignedFile} style={{display:"flex",alignItems:"center",gap:8,padding:"12px 24px",borderRadius:10,border:"none",background:`linear-gradient(135deg,${T.coral},#f97316)`,color:"#fff",fontSize:14,fontWeight:700,cursor:"pointer",boxShadow:"0 4px 16px rgba(139,92,246,0.4)"}}>
                   <FiDownload size={16}/> Download Signed PDF
                 </button>
               </div>
@@ -1006,7 +1006,7 @@ function DocumentSignerModal({ doc, onClose, onSigned }) {
               </div>
             ):processing?(
               <div style={{textAlign:"center",padding:40}}>
-                <div style={{width:60,height:60,borderRadius:"50%",border:"4px solid rgba(255,107,53,0.2)",borderTop:`4px solid ${T.coral}`,margin:"0 auto 16px",animation:"spin 0.8s linear infinite"}}/>
+                <div style={{width:60,height:60,borderRadius:"50%",border:"4px solid rgba(139,92,246,0.2)",borderTop:`4px solid ${T.coral}`,margin:"0 auto 16px",animation:"spin 0.8s linear infinite"}}/>
                 <p style={{color:"#9ca3af",fontSize:13}}>{processMsg}</p>
                 <style>{`@keyframes spin{to{transform:rotate(360deg)}}`}</style>
               </div>
@@ -1029,7 +1029,7 @@ function DocumentSignerModal({ doc, onClose, onSigned }) {
                 <p style={{fontSize:11,color:"#4f46e5",fontWeight:700,margin:0,lineHeight:1.7}}>📄 Your signature will be stamped on <strong>every page</strong>. Signed PDF is saved to server — persists after refresh.</p>
               </div>
             ):(
-              <div style={{background:"rgba(0,194,168,0.08)",border:"1px solid rgba(0,194,168,0.2)",borderRadius:10,padding:"8px 12px"}}>
+              <div style={{background:"rgba(6,182,212,0.08)",border:"1px solid rgba(6,182,212,0.2)",borderRadius:10,padding:"8px 12px"}}>
                 <p style={{fontSize:11,color:"#0d7377",fontWeight:600,margin:0}}>🖼 Signature will be stamped at bottom-right of this document.</p>
               </div>
             )}
@@ -1083,7 +1083,7 @@ function DocumentSignerModal({ doc, onClose, onSigned }) {
   );
 }
 
-// ── HR Document Card ──────────────────────────────────────────────────────────
+// ── PeopleOps Document Card ──────────────────────────────────────────────────────────
 function HrDocCard({ doc, onSign, onResign, onAcknowledge }) {
   const isSigned  = doc.status==="SIGNED"||doc.status==="ACKNOWLEDGED";
   const isPending = doc.status==="PENDING_SIGNATURE";
@@ -1092,14 +1092,14 @@ function HrDocCard({ doc, onSign, onResign, onAcknowledge }) {
   const sc = {
     PENDING_SIGNATURE:{fg:"#d97706",bg:"#fffbeb",label:"Pending Signature"},
     SIGNED:           {fg:"#16a34a",bg:"#f0fdf4",label:"Signed"},
-    ACKNOWLEDGED:     {fg:T.teal,   bg:"rgba(0,194,168,0.1)",label:"Acknowledged"},
+    ACKNOWLEDGED:     {fg:T.teal,   bg:"rgba(6,182,212,0.1)",label:"Acknowledged"},
     REJECTED:         {fg:"#dc2626",bg:"#fef2f2",label:"Rejected"},
   }[doc.status]||{fg:"#64748b",bg:"#f8fafc",label:doc.status};
 
   return (
     <div style={{background:"#fff",borderRadius:14,marginBottom:10,
       border:isPending?`1.5px solid ${isOverdue?"#fca5a5":"#fed7aa"}`:`1.5px solid ${T.border}`,
-      padding:"16px 18px",boxShadow:isPending?"0 2px 12px rgba(255,107,53,0.08)":"none"}}>
+      padding:"16px 18px",boxShadow:isPending?"0 2px 12px rgba(139,92,246,0.08)":"none"}}>
       <div style={{display:"flex",alignItems:"flex-start",justifyContent:"space-between",gap:12,flexWrap:"wrap"}}>
         <div style={{flex:1,minWidth:0}}>
           <div style={{display:"flex",alignItems:"center",gap:8,flexWrap:"wrap",marginBottom:4}}>
@@ -1107,7 +1107,7 @@ function HrDocCard({ doc, onSign, onResign, onAcknowledge }) {
             <span style={{fontSize:10,fontWeight:800,padding:"2px 8px",borderRadius:999,background:sc.bg,color:sc.fg,border:`1px solid ${sc.fg}22`,textTransform:"uppercase"}}>{sc.label}</span>
             {isOverdue&&<span style={{fontSize:10,fontWeight:800,padding:"2px 8px",borderRadius:999,background:"#fef2f2",color:"#dc2626",border:"1px solid #fca5a5",textTransform:"uppercase"}}>⚠ Overdue</span>}
           </div>
-          <div style={{fontSize:11,color:"#94a3b8"}}>{HR_DOC_LABELS[doc.docType]||doc.docType} · {doc.originalFileName} · Sent {doc.createdAt}</div>
+          <div style={{fontSize:11,color:"#94a3b8"}}>{PeopleOps_DOC_LABELS[doc.docType]||doc.docType} · {doc.originalFileName} · Sent {doc.createdAt}</div>
           {doc.notes&&<div style={{fontSize:12,color:"#475569",background:"#f8fafc",borderRadius:8,padding:"6px 10px",marginTop:4,borderLeft:"3px solid #e2e8f0"}}>📝 {doc.notes}</div>}
           {isPending&&doc.signByDate&&<div style={{fontSize:11,color:isOverdue?"#dc2626":"#d97706",fontWeight:600,marginTop:5,display:"flex",alignItems:"center",gap:5}}><FiClock size={12}/> Sign by: {doc.signByDate}</div>}
           {isSigned&&doc.signerName&&<div style={{fontSize:11,color:"#16a34a",marginTop:4,fontWeight:600}}>✅ Signed by {doc.signerName} on {doc.signedAt}</div>}
@@ -1122,19 +1122,19 @@ function HrDocCard({ doc, onSign, onResign, onAcknowledge }) {
           </button>
           <button onClick={()=>downloadDocument(doc)}
             style={{display:"flex",alignItems:"center",gap:4,padding:"6px 11px",borderRadius:8,
-              border:"1.5px solid rgba(0,194,168,.3)",background:"rgba(0,194,168,.06)",
+              border:"1.5px solid rgba(6,182,212,.3)",background:"rgba(6,182,212,.06)",
               color:T.teal,cursor:"pointer",fontSize:11,fontWeight:600}}>
             <FiDownload size={13}/> {hasSignedFile?"Signed":"Download"}
           </button>
           {isPending&&(
             doc.requiresSignature!==false?(
               <button onClick={()=>onSign(doc)}
-                style={{display:"flex",alignItems:"center",gap:5,padding:"8px 14px",borderRadius:9,border:"none",background:`linear-gradient(135deg,${T.coral},#f97316)`,color:"#fff",fontSize:12,fontWeight:700,cursor:"pointer",boxShadow:"0 3px 10px rgba(255,107,53,0.3)"}}>
+                style={{display:"flex",alignItems:"center",gap:5,padding:"8px 14px",borderRadius:9,border:"none",background:`linear-gradient(135deg,${T.coral},#f97316)`,color:"#fff",fontSize:12,fontWeight:700,cursor:"pointer",boxShadow:"0 3px 10px rgba(139,92,246,0.3)"}}>
                 <FiPenTool size={13}/> Sign Now
               </button>
             ):(
               <button onClick={()=>onAcknowledge(doc.id)}
-                style={{display:"flex",alignItems:"center",gap:5,padding:"8px 14px",borderRadius:9,border:"none",background:`linear-gradient(135deg,${T.teal},#00a896)`,color:"#fff",fontSize:12,fontWeight:700,cursor:"pointer"}}>
+                style={{display:"flex",alignItems:"center",gap:5,padding:"8px 14px",borderRadius:9,border:"none",background:`linear-gradient(135deg,${T.teal},#0D9488)`,color:"#fff",fontSize:12,fontWeight:700,cursor:"pointer"}}>
                 <FiCheckCircle size={13}/> Acknowledge
               </button>
             )
@@ -1159,24 +1159,24 @@ const CSS = `
 .doc .fd{font-family:'Sora',sans-serif;}
 .doc-card{background:#fff;border:1.5px solid #E8ECF2;border-radius:18px;box-shadow:0 2px 14px rgba(13,31,45,.05);}
 .doc-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 16px;border-radius:12px;border:1.5px solid #E8ECF2;background:#fff;transition:all .18s;margin-bottom:8px;}
-.doc-row:hover{border-color:rgba(255,107,53,.3);box-shadow:0 3px 12px rgba(255,107,53,.08);}
+.doc-row:hover{border-color:rgba(139,92,246,.3);box-shadow:0 3px 12px rgba(139,92,246,.08);}
 .doc-row:last-child{margin-bottom:0;}
 .doc-icon-wrap{width:36px;height:36px;border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
 .doc-action-btn{display:inline-flex;align-items:center;gap:4px;padding:6px 10px;border-radius:8px;border:1.5px solid;cursor:pointer;background:none;transition:all .15s;font-size:11px;font-weight:600;font-family:'DM Sans',sans-serif;}
 .doc-upload-label{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:9px;font-size:12px;font-weight:700;cursor:pointer;transition:all .18s;font-family:'DM Sans',sans-serif;border:none;}
-.doc-upload-label:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(255,107,53,.25);}
+.doc-upload-label:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(139,92,246,.25);}
 .doc-toast{display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:12px;border:1.5px solid;background:#fff;box-shadow:0 4px 18px rgba(0,0,0,.08);}
 @keyframes docUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 .doc-animate{animation:docUp .35s ease both;}
 @keyframes docSpin{to{transform:rotate(360deg)}}
 .doc-spin-icon{animation:docSpin .7s linear infinite;}
 .tab-btn{padding:10px 20px;border:none;border-bottom:2px solid transparent;background:none;font-size:13px;font-weight:700;cursor:pointer;color:#94a3b8;transition:all .15s;font-family:'DM Sans',sans-serif;}
-.tab-btn.active{color:#FF6B35;border-bottom-color:#FF6B35;}
+.tab-btn.active{color:#8B5CF6;border-bottom-color:#8B5CF6;}
 `;
 
-export default function Documents() {
+export default function Vault() {
   const [activeTab,    setActiveTab]    = useState("hr");
-  const [documents,    setDocuments]    = useState([]);
+  const [documents,    setVault]    = useState([]);
   const [hrDocs,       setHrDocs]       = useState([]);
   const [uploading,    setUploading]    = useState({});
   const [message,      setMessage]      = useState({type:"",text:""});
@@ -1185,20 +1185,20 @@ export default function Documents() {
   const [modal, setModal] = useState({ mode: null, doc: null });
   const tenantCode = getTenant();
 
-  useEffect(()=>{ fetchDocuments(); fetchHrDocuments(); },[]);
+  useEffect(()=>{ fetchVault(); fetchHrVault(); },[]);
 
   const showMsg=(type,text)=>{ setMessage({type,text}); setTimeout(()=>setMessage({type:"",text:""}),5000); };
 
   // ── Fetch My Uploads — normaliseDoc now restores signed fields ──
-  const fetchDocuments=async()=>{
+  const fetchVault=async()=>{
     try {
       const res=await api.get(`/api/documents/my-documents`);
       const p=res.data;
-      setDocuments((p?.data||[]).map(normaliseDoc));
+      setVault((p?.data||[]).map(normaliseDoc));
     } catch {showMsg("error","Failed to fetch documents");}
   };
 
-  const fetchHrDocuments=async()=>{
+  const fetchHrVault=async()=>{
     try {
       const res=await api.get(`/api/hr-documents/my`, { headers: { "X-Tenant-Code": tenantCode } });
       const p=res.data;
@@ -1218,7 +1218,7 @@ export default function Documents() {
       const res=await api.post(`/api/documents/upload`, fd);
       const p=res.data;
       const newDoc=normaliseDoc(p?.data||p?.document||p); newDoc.documentType=docType;
-      setDocuments(prev=>[...prev.filter(d=>d.documentType!==newDoc.documentType),newDoc]);
+      setVault(prev=>[...prev.filter(d=>d.documentType!==newDoc.documentType),newDoc]);
       showMsg("success",`${DOCUMENT_CATEGORIES.flatMap(c=>c.fields).find(f=>f.key===docType)?.label||docType} uploaded`);
     } catch {showMsg("error","Upload failed.");}
     finally {setUploading(p=>({...p,[docType]:false})); e.target.value="";}
@@ -1229,7 +1229,7 @@ export default function Documents() {
     const doc=getDocByType(documentType); if(!doc) return;
     try {
       await api.delete(`/api/documents/${doc.id}`);
-      setDocuments(prev=>prev.filter(d=>d.documentType!==documentType));
+      setVault(prev=>prev.filter(d=>d.documentType!==documentType));
       showMsg("success","Document removed");
     } catch {showMsg("error","Delete failed.");}
   };
@@ -1246,10 +1246,10 @@ export default function Documents() {
           signedFileUrl: signedData.signedFileUrl||signedData._signedCloudUrl||d.signedFileUrl,
           _signedCloudUrl:signedData._signedCloudUrl||null,
         }:d));
-      setTimeout(fetchHrDocuments, 800);
+      setTimeout(fetchHrVault, 800);
     } else {
       // MY UPLOADS — update with full signed info
-      setDocuments(prev=>prev.map(d=>d.id===signedData.id
+      setVault(prev=>prev.map(d=>d.id===signedData.id
         ?{...d,
           signed:        true,
           signerName:    signedData.signerName,
@@ -1260,7 +1260,7 @@ export default function Documents() {
           _signedImgUrl:  signedData._signedImgUrl||null,
         }:d));
       // Re-fetch to pick up persisted signedFileUrl from backend
-      setTimeout(fetchDocuments, 1000);
+      setTimeout(fetchVault, 1000);
     }
     setModal({ mode: null, doc: null });
     showMsg("success","✅ Document signed and saved — signature persists after refresh.");
@@ -1269,7 +1269,7 @@ export default function Documents() {
   const handleAcknowledge=async(docId)=>{
     try {
       await api.post(`/api/hr-documents/${docId}/acknowledge`, {}, { headers: { "X-Tenant-Code": tenantCode } });
-      await fetchHrDocuments();
+      await fetchHrVault();
       showMsg("success","Document acknowledged");
     } catch {showMsg("error","Failed to acknowledge");}
   };
@@ -1293,10 +1293,10 @@ export default function Documents() {
       <style>{CSS}</style>
 
       <div style={{background:`linear-gradient(135deg,${T.navy} 0%,${T.navyMid} 100%)`,padding:"20px 24px",position:"relative",overflow:"hidden"}}>
-        <div style={{position:"absolute",top:-40,right:40,width:160,height:160,borderRadius:"50%",background:"rgba(255,107,53,.08)",pointerEvents:"none"}}/>
+        <div style={{position:"absolute",top:-40,right:40,width:160,height:160,borderRadius:"50%",background:"rgba(139,92,246,.08)",pointerEvents:"none"}}/>
         <div style={{position:"relative"}}>
-          <p style={{fontSize:11,fontWeight:700,color:T.coral,textTransform:"uppercase",letterSpacing:".12em",marginBottom:4}}>SamayaHR · Document Vault</p>
-          <h1 className="fd" style={{fontSize:22,fontWeight:900,color:"#fff",margin:0}}>My Documents</h1>
+          <p style={{fontSize:11,fontWeight:700,color:T.coral,textTransform:"uppercase",letterSpacing:".12em",marginBottom:4}}>CrewSync · Vault</p>
+          <h1 className="fd" style={{fontSize:22,fontWeight:900,color:"#fff",margin:0}}>My Vault</h1>
           <p style={{fontSize:13,color:"rgba(255,255,255,.55)",marginTop:4}}>Upload, view, download and sign your documents.</p>
         </div>
       </div>
@@ -1314,9 +1314,9 @@ export default function Documents() {
         {/* Stats */}
         <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr 1fr",gap:12}}>
           {[
-            {label:"HR Docs",val:hrDocs.length,color:T.coral,bg:"rgba(255,107,53,.08)",icon:<FiFile size={16}/>},
+            {label:"PeopleOps Docs",val:hrDocs.length,color:T.coral,bg:"rgba(139,92,246,.08)",icon:<FiFile size={16}/>},
             {label:"Pending Signature",val:pendingHr,color:"#f59e0b",bg:"rgba(245,158,11,.08)",icon:<FiPenTool size={16}/>},
-            {label:"My Uploads",val:uploadedCount,color:T.teal,bg:"rgba(0,194,168,.08)",icon:<FiUpload size={16}/>},
+            {label:"My Uploads",val:uploadedCount,color:T.teal,bg:"rgba(6,182,212,.08)",icon:<FiUpload size={16}/>},
             {label:"Completion",val:`${completionPct}%`,color:"#6366f1",bg:"rgba(99,102,241,.08)",icon:<FiCheckCircle size={16}/>},
           ].map(s=>(
             <div key={s.label} className="doc-card" style={{padding:"14px 16px"}}>
@@ -1334,7 +1334,7 @@ export default function Documents() {
         {/* Tabs */}
         <div style={{borderBottom:"2px solid #f1f5f9",display:"flex"}}>
           <button className={`tab-btn ${activeTab==="hr"?"active":""}`} onClick={()=>setActiveTab("hr")}>
-            📋 HR Documents
+            📋 PeopleOps Vault
             {pendingHr>0&&<span style={{marginLeft:7,background:T.coral,color:"#fff",fontSize:10,fontWeight:800,padding:"2px 7px",borderRadius:999}}>{pendingHr}</span>}
           </button>
           <button className={`tab-btn ${activeTab==="my"?"active":""}`} onClick={()=>setActiveTab("my")}>
@@ -1342,14 +1342,14 @@ export default function Documents() {
           </button>
         </div>
 
-        {/* HR Documents Tab */}
+        {/* PeopleOps Vault Tab */}
         {activeTab==="hr"&&(
           <div className="doc-animate">
             {hrDocs.length===0?(
               <div className="doc-card" style={{padding:"48px 24px",textAlign:"center"}}>
                 <FiFile size={40} color="#d1d5db" style={{marginBottom:12}}/>
-                <p style={{fontSize:14,fontWeight:600,color:"#6b7280",margin:"0 0 6px"}}>No HR documents yet</p>
-                <p style={{fontSize:12,color:"#9ca3af",margin:0}}>Your HR team will send documents here.</p>
+                <p style={{fontSize:14,fontWeight:600,color:"#6b7280",margin:"0 0 6px"}}>No PeopleOps documents yet</p>
+                <p style={{fontSize:12,color:"#9ca3af",margin:0}}>Your People team will send documents here.</p>
               </div>
             ):(
               <>
@@ -1391,7 +1391,7 @@ export default function Documents() {
                     <p className="fd" style={{fontSize:13,fontWeight:800,color:T.navy,marginBottom:1}}>{cat.label}</p>
                     <p style={{fontSize:11,color:"#94a3b8"}}>{cat.description}</p>
                   </div>
-                  <div style={{padding:"4px 10px",borderRadius:999,background:"rgba(255,107,53,.08)",border:"1px solid rgba(255,107,53,.15)",fontSize:11,fontWeight:700,color:T.coral}}>
+                  <div style={{padding:"4px 10px",borderRadius:999,background:"rgba(139,92,246,.08)",border:"1px solid rgba(139,92,246,.15)",fontSize:11,fontWeight:700,color:T.coral}}>
                     {cat.fields.filter(f=>getDocByType(f.key)).length}/{cat.fields.length}
                   </div>
                 </div>
@@ -1401,14 +1401,14 @@ export default function Documents() {
                     const hasSignedVersion=!!(doc?._signedCloudUrl||doc?.signedFileUrl);
                     return (
                       <div key={field.key} className="doc-row">
-                        <div className="doc-icon-wrap" style={{background:doc?"rgba(0,194,168,.1)":"#F1F5F9",color:doc?T.teal:"#94a3b8"}}>
+                        <div className="doc-icon-wrap" style={{background:doc?"rgba(6,182,212,.1)":"#F1F5F9",color:doc?T.teal:"#94a3b8"}}>
                           {doc?<FiCheck size={16}/>:<FiFile size={16}/>}
                         </div>
                         <div style={{flex:1,minWidth:0}}>
                           <div style={{display:"flex",alignItems:"center",gap:6,flexWrap:"wrap"}}>
                             <span style={{fontSize:13,fontWeight:600,color:T.navy}}>{field.label}</span>
                             {field.required&&<span style={{fontSize:9,fontWeight:800,padding:"2px 6px",borderRadius:999,background:"#FEF2F2",color:"#DC2626",border:"1px solid #FECACA",textTransform:"uppercase"}}>Required</span>}
-                            {doc&&<span style={{fontSize:9,fontWeight:800,padding:"2px 6px",borderRadius:999,background:"rgba(0,194,168,.1)",color:T.teal,border:`1px solid rgba(0,194,168,.2)`,textTransform:"uppercase"}}>✓ Uploaded</span>}
+                            {doc&&<span style={{fontSize:9,fontWeight:800,padding:"2px 6px",borderRadius:999,background:"rgba(6,182,212,.1)",color:T.teal,border:`1px solid rgba(6,182,212,.2)`,textTransform:"uppercase"}}>✓ Uploaded</span>}
                             {doc?.signed&&<span style={{fontSize:9,fontWeight:800,padding:"2px 6px",borderRadius:999,background:"#f0fdf4",color:"#16a34a",border:"1px solid #bbf7d0",textTransform:"uppercase"}}>✍ Signed</span>}
                           </div>
                           {doc
@@ -1431,20 +1431,20 @@ export default function Documents() {
                               {/* Download — downloads signed version if available */}
                               <button className="doc-action-btn"
                                 onClick={()=>downloadDocument(doc, true)}
-                                style={{borderColor:"rgba(0,194,168,.3)",color:T.teal,background:"rgba(0,194,168,.05)"}}>
+                                style={{borderColor:"rgba(6,182,212,.3)",color:T.teal,background:"rgba(6,182,212,.05)"}}>
                                 <FiDownload size={13}/> {hasSignedVersion?"Signed":"Download"}
                               </button>
                               {/* Sign / Re-sign */}
                               {doc.signed?(
                                 <button className="doc-action-btn"
                                   onClick={()=>handleResignRequest(doc)}
-                                  style={{borderColor:"rgba(255,107,53,.3)",color:T.coral,background:"rgba(255,107,53,.05)"}}>
+                                  style={{borderColor:"rgba(139,92,246,.3)",color:T.coral,background:"rgba(139,92,246,.05)"}}>
                                   <FiRefreshCw size={13}/> Re-sign
                                 </button>
                               ):(
                                 <button className="doc-action-btn"
                                   onClick={()=>openSigning(doc)}
-                                  style={{borderColor:"rgba(255,107,53,.3)",color:T.coral,background:"rgba(255,107,53,.05)"}}>
+                                  style={{borderColor:"rgba(139,92,246,.3)",color:T.coral,background:"rgba(139,92,246,.05)"}}>
                                   <FiPenTool size={13}/> Sign
                                 </button>
                               )}
@@ -1456,7 +1456,7 @@ export default function Documents() {
                             </>
                           ):(
                             <label className="doc-upload-label"
-                              style={{background:isUpl?"#94a3b8":`linear-gradient(135deg,${T.coral},#ff8c5a)`,color:"#fff",cursor:isUpl?"not-allowed":"pointer",opacity:isUpl?0.7:1}}>
+                              style={{background:isUpl?"#94a3b8":`linear-gradient(135deg,${T.coral},#FBBF24)`,color:"#fff",cursor:isUpl?"not-allowed":"pointer",opacity:isUpl?0.7:1}}>
                               {isUpl?<><span className="doc-spin-icon" style={{display:"inline-block"}}>⟳</span> Uploading…</>:<><FiUpload size={13}/> Upload</>}
                               <input type="file" accept=".pdf,.jpg,.jpeg,.png" disabled={isUpl} onChange={e=>handleFileChange(e,field.key)} style={{display:"none"}}/>
                             </label>

@@ -1,9 +1,9 @@
 import React from "react";
 import { API_BASE_URL } from "@/lib/apiClient";
 
-/* ── SamayaHR design tokens ── */
+/* ── CrewSync design tokens ── */
 const T = {
-  navy:"#0D1F2D", navyMid:"#1E3448", coral:"#FF6B35", teal:"#00C2A8",
+  navy:"#0B1020", navyMid:"#374151", coral:"#8B5CF6", teal:"#06B6D4",
   bg:"#F5F7FB", border:"#E8ECF2",
 };
 
@@ -25,12 +25,12 @@ export default function TaxDeclaration() {
 
       {/* ── HERO ── */}
       <div style={{background:`linear-gradient(135deg,${T.navy},${T.navyMid})`,padding:"22px 26px",position:"relative",overflow:"hidden"}}>
-        <div style={{position:"absolute",top:-50,right:60,width:180,height:180,borderRadius:"50%",background:"rgba(255,107,53,.07)",pointerEvents:"none"}}/>
-        <div style={{position:"absolute",bottom:-30,right:260,width:100,height:100,borderRadius:"50%",background:"rgba(0,194,168,.07)",pointerEvents:"none"}}/>
+        <div style={{position:"absolute",top:-50,right:60,width:180,height:180,borderRadius:"50%",background:"rgba(139,92,246,.07)",pointerEvents:"none"}}/>
+        <div style={{position:"absolute",bottom:-30,right:260,width:100,height:100,borderRadius:"50%",background:"rgba(6,182,212,.07)",pointerEvents:"none"}}/>
         <div style={{position:"relative",display:"flex",alignItems:"center",justifyContent:"space-between",flexWrap:"wrap",gap:12}}>
           <div>
-            <p style={{fontSize:11,fontWeight:700,color:T.coral,textTransform:"uppercase",letterSpacing:".12em",marginBottom:4}}>SamayaHR · Compliance</p>
-            <h1 className="fd" style={{fontSize:23,fontWeight:900,color:"#fff",margin:0}}>Tax Declarations</h1>
+            <p style={{fontSize:11,fontWeight:700,color:T.coral,textTransform:"uppercase",letterSpacing:".12em",marginBottom:4}}>CrewSync · Assurance</p>
+            <h1 className="fd" style={{fontSize:23,fontWeight:900,color:"#fff",margin:0}}>Tax Desks</h1>
             <p style={{fontSize:13,color:"rgba(255,255,255,.5)",marginTop:4}}>View and manage your annual income tax filings.</p>
           </div>
           {/* quick stats */}
@@ -51,9 +51,9 @@ export default function TaxDeclaration() {
         <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:14}} className="td-kpi td-in">
           <style>{`@media(max-width:580px){.td-kpi{grid-template-columns:1fr!important}}`}</style>
           {[
-            {icon:"📋",cap:"Declarations Filed",  val:"0",   accent:T.coral,  bg:"rgba(255,107,53,.08)"},
+            {icon:"📋",cap:"Declarations Filed",  val:"0",   accent:T.coral,  bg:"rgba(139,92,246,.08)"},
             {icon:"⏳",cap:"Pending Review",       val:"1",   accent:"#F59E0B",bg:"rgba(245,158,11,.08)"},
-            {icon:"✅",cap:"Verified & Approved",  val:"0",   accent:T.teal,   bg:"rgba(0,194,168,.08)"},
+            {icon:"✅",cap:"Verified & Approved",  val:"0",   accent:T.teal,   bg:"rgba(6,182,212,.08)"},
           ].map(k=>(
             <div key={k.cap} className="td-card" style={{padding:"16px 18px",display:"flex",alignItems:"center",gap:14}}>
               <div style={{width:42,height:42,borderRadius:12,background:k.bg,display:"flex",alignItems:"center",justifyContent:"center",fontSize:18,flexShrink:0}}>{k.icon}</div>
@@ -116,10 +116,10 @@ export default function TaxDeclaration() {
         </div>
 
         {/* ── INFO NOTICE ── */}
-        <div className="td-in" style={{padding:"14px 18px",borderRadius:14,background:"rgba(0,194,168,.06)",border:"1.5px solid rgba(0,194,168,.2)",display:"flex",alignItems:"center",gap:12,animationDelay:".12s"}}>
+        <div className="td-in" style={{padding:"14px 18px",borderRadius:14,background:"rgba(6,182,212,.06)",border:"1.5px solid rgba(6,182,212,.2)",display:"flex",alignItems:"center",gap:12,animationDelay:".12s"}}>
           <span style={{fontSize:18,flexShrink:0}}>ℹ️</span>
           <p style={{fontSize:12,color:"#475569",lineHeight:1.65}}>
-            Your tax declaration for <strong style={{color:T.navy}}>FY 2025–26</strong> is pending. Contact HR or your finance team to complete your submission before the deadline.
+            Your tax declaration for <strong style={{color:T.navy}}>FY 2025–26</strong> is pending. Contact PeopleOps or your finance team to complete your submission before the deadline.
           </p>
         </div>
 

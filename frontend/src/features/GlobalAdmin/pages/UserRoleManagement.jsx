@@ -15,11 +15,11 @@ const S = {
 };
 
 const ROLE_STYLE = {
-  ADMIN:          { bg: "#fff4ef", color: "#ff6b35" },
-  SUPER_ADMIN:    { bg: "#f5f3ff", color: "#7c3aed" },
+  ADMIN:          { bg: "#fff4ef", color: "#8B5CF6" },
+  SUPER_ADMIN:    { bg: "#f5f3ff", color: "#A855F7" },
   EMPLOYEE:       { bg: "#f0f9ff", color: "#0ea5e9" },
   GLOBAL_ADMIN:   { bg: "#fef9c3", color: "#ca8a04" },
-  COMPANY_ADMIN:  { bg: "#fff4ef", color: "#ff6b35" },
+  COMPANY_ADMIN:  { bg: "#fff4ef", color: "#8B5CF6" },
 };
 
 const STATUS_STYLE = {
@@ -39,7 +39,7 @@ function AddUserModal({ companies, onClose, onSaved }) {
 
   const set = (k, v) => setForm(p => ({ ...p, [k]: v }));
 
-  const handleCompanyChange = (id) => {
+  const handleWorkspaceChange = (id) => {
     const company = companies.find(c => String(c.id) === id);
     set("companyId", id);
     if (company) set("tenantCode", company.tenantCode || "");
@@ -52,7 +52,7 @@ function AddUserModal({ companies, onClose, onSaved }) {
     try {
       await api.post("/api/users/tenant/admins",
         { name: form.name, email: form.email, role: form.role },
-        { headers: { "X-Tenant-Code": form.tenantCode, "X-Company-Id": form.companyId } }
+        { headers: { "X-Tenant-Code": form.tenantCode, "X-Workspace-Id": form.companyId } }
       );
       onSaved();
       onClose();
@@ -87,16 +87,16 @@ function AddUserModal({ companies, onClose, onSaved }) {
               <label style={S.label}>Role</label>
               <div style={{ position: "relative" }}>
                 <select style={{ ...S.input, appearance: "none", paddingRight: 28 }} value={form.role} onChange={e => set("role", e.target.value)}>
-                  <option value="EMPLOYEE">Employee</option>
-                  <option value="ADMIN">Admin</option>
+                  <option value="EMPLOYEE">Person</option>
+                  <option value="ADMIN">Operator</option>
                 </select>
                 <ChevronDown size={13} style={{ position: "absolute", right: 10, top: "50%", transform: "translateY(-50%)", color: "#94a3b8", pointerEvents: "none" }} />
               </div>
             </div>
             <div>
-              <label style={S.label}>Company</label>
+              <label style={S.label}>Workspace</label>
               <div style={{ position: "relative" }}>
-                <select style={{ ...S.input, appearance: "none", paddingRight: 28 }} value={form.companyId} onChange={e => handleCompanyChange(e.target.value)}>
+                <select style={{ ...S.input, appearance: "none", paddingRight: 28 }} value={form.companyId} onChange={e => handleWorkspaceChange(e.target.value)}>
                   <option value="">Select company…</option>
                   {companies.map(c => <option key={c.id} value={c.id}>{c.displayName}</option>)}
                 </select>
@@ -106,7 +106,7 @@ function AddUserModal({ companies, onClose, onSaved }) {
           </div>
           <div style={{ display: "flex", gap: 10, justifyContent: "flex-end" }}>
             <button onClick={onClose} style={S.btn("#f1f5f9", "#64748b")}>Cancel</button>
-            <button onClick={handleSave} disabled={saving} style={{ ...S.btn("#ff6b35"), opacity: saving ? 0.6 : 1 }}>
+            <button onClick={handleSave} disabled={saving} style={{ ...S.btn("#8B5CF6"), opacity: saving ? 0.6 : 1 }}>
               {saving ? <Loader2 size={14} style={{ animation: "spin 1s linear infinite" }} /> : <Plus size={14} />}
               {saving ? "Creating…" : "Create User"}
             </button>
@@ -117,9 +117,9 @@ function AddUserModal({ companies, onClose, onSaved }) {
   );
 }
 
-export default function UserRoleManagement() {
+export default function UserRoleOperations() {
   const [users,      setUsers]      = useState([]);
-  const [companies,  setCompanies]  = useState([]);
+  const [companies,  setWorkspaces]  = useState([]);
   const [loading,    setLoading]    = useState(false);
   const [error,      setError]      = useState("");
   const [search,     setSearch]     = useState("");
@@ -137,7 +137,7 @@ export default function UserRoleManagement() {
         api.get("/api/global-admin/companies"),
       ]);
       setUsers(uRes.data?.data || (Array.isArray(uRes.data) ? uRes.data : []));
-      setCompanies(cRes.data?.data || []);
+      setWorkspaces(cRes.data?.data || []);
     } catch {
       setError("Failed to load users. Check backend connection.");
     } finally { setLoading(false); }
@@ -193,8 +193,8 @@ export default function UserRoleManagement() {
         <div style={{ position: "absolute", top: -30, right: 60, width: 130, height: 130, borderRadius: "50%", background: "rgba(124,58,237,0.1)", pointerEvents: "none" }} />
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", position: "relative" }}>
           <div>
-            <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 11, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 6px" }}>SamayaHR · Global Admin</p>
-            <h1 style={{ color: "#fff", fontSize: 24, fontWeight: 800, margin: 0, letterSpacing: "-0.02em" }}>User & Role Management</h1>
+            <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 11, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 6px" }}>CrewSync · Global Operator</p>
+            <h1 style={{ color: "#fff", fontSize: 24, fontWeight: 800, margin: 0, letterSpacing: "-0.02em" }}>Access Matrix</h1>
             <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 13, margin: "6px 0 0" }}>
               {loading ? "Loading…" : `${stats.total} users across ${stats.companies} companies`}
             </p>
@@ -205,7 +205,7 @@ export default function UserRoleManagement() {
               {loading ? <Loader2 size={14} style={{ animation: "spin 1s linear infinite" }} /> : <RefreshCw size={14} />} Refresh
             </button>
             <button onClick={() => setShowAdd(true)}
-              style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "10px 18px", borderRadius: 10, background: "#ff6b35", color: "#fff", border: "none", cursor: "pointer", fontSize: 13, fontWeight: 700, boxShadow: "0 4px 14px rgba(255,107,53,0.35)" }}>
+              style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "10px 18px", borderRadius: 10, background: "#8B5CF6", color: "#fff", border: "none", cursor: "pointer", fontSize: 13, fontWeight: 700, boxShadow: "0 4px 14px rgba(139,92,246,0.35)" }}>
               <Plus size={15} /> Add User
             </button>
           </div>
@@ -221,10 +221,10 @@ export default function UserRoleManagement() {
       {/* Stats */}
       <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 14, marginBottom: 20 }}>
         {[
-          { label: "Total Users",  value: stats.total,     icon: Users,       accent: "#ff6b35", bg: "#fff4ef" },
+          { label: "Total Users",  value: stats.total,     icon: Users,       accent: "#8B5CF6", bg: "#fff4ef" },
           { label: "Active",       value: stats.active,    icon: CheckCircle, accent: "#22c55e", bg: "#f0fdf4" },
-          { label: "Admins",       value: stats.admins,    icon: ShieldCheck, accent: "#7c3aed", bg: "#f5f3ff" },
-          { label: "Companies",    value: stats.companies, icon: Building2,   accent: "#0ea5e9", bg: "#f0f9ff" },
+          { label: "Operators",       value: stats.admins,    icon: ShieldCheck, accent: "#A855F7", bg: "#f5f3ff" },
+          { label: "Workspaces",    value: stats.companies, icon: Building2,   accent: "#0ea5e9", bg: "#f0f9ff" },
         ].map(({ label, value, icon: Icon, accent, bg }) => (
           <div key={label} style={{ ...S.card, padding: "16px 18px", display: "flex", alignItems: "center", gap: 14 }}>
             <div style={{ width: 42, height: 42, borderRadius: 12, background: bg, display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -270,7 +270,7 @@ export default function UserRoleManagement() {
           <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
             <thead>
               <tr style={{ background: "#0f172a" }}>
-                {["User", "Email", "Role", "Company / Tenant", "Status", "Actions"].map(h => <Th key={h} ch={h} />)}
+                {["User", "Email", "Role", "Workspace / Tenant", "Status", "Actions"].map(h => <Th key={h} ch={h} />)}
               </tr>
             </thead>
             <tbody>
@@ -289,7 +289,7 @@ export default function UserRoleManagement() {
                     onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
                     <td style={{ padding: "12px 16px" }}>
                       <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                        <div style={{ width: 34, height: 34, borderRadius: 10, background: "linear-gradient(135deg, #ff6b35, #8b5cf6)", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: 800, fontSize: 13, flexShrink: 0 }}>
+                        <div style={{ width: 34, height: 34, borderRadius: 10, background: "linear-gradient(135deg, #8B5CF6, #8b5cf6)", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: 800, fontSize: 13, flexShrink: 0 }}>
                           {(name !== "—" ? name : u.email || "?").charAt(0).toUpperCase()}
                         </div>
                         <div>

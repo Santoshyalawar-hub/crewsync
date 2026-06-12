@@ -4,23 +4,23 @@ import {
   Lock, Headphones, FileText, Settings, ChevronLeft, ChevronRight, Receipt,
 } from "lucide-react";
 
-/* SamayaHR sidebar icon (square mark) */
-function SamayaIcon({ size = 44 }) {
+/* CrewSync sidebar icon (square mark) */
+function CrewSyncIcon({ size = 44 }) {
   const [err, setErr] = useState(false);
   if (err) {
     return (
       <div style={{
         width: size, height: size, borderRadius: 12,
-        background: "linear-gradient(135deg,#FF6B35,#FF8C5A)",
+        background: "linear-gradient(135deg,#8B5CF6,#FBBF24)",
         display: "flex", alignItems: "center", justifyContent: "center",
         color: "#fff", fontSize: Math.round(size * 0.38), fontWeight: 900,
         flexShrink: 0, fontFamily: "'Sora',sans-serif",
-        boxShadow: "0 6px 16px rgba(255,107,53,.3)",
+        boxShadow: "0 6px 16px rgba(139,92,246,.3)",
       }}>S</div>
     );
   }
   return (
-    <img src="/SamayaHRSidebar.png" alt="SamayaHR"
+    <img src="/crewsync-mark.svg" alt="CrewSync"
       onError={() => setErr(true)}
       style={{ width: size, height: size, borderRadius: 12, objectFit: "contain", flexShrink: 0,
         boxShadow: "0 4px 14px rgba(0,0,0,.12)" }}
@@ -29,9 +29,9 @@ function SamayaIcon({ size = 44 }) {
 }
 
 const T = {
-  coral:  "#FF6B35",
-  navy:   "#0D1F2D",
-  purple: "#7C3AED",
+  coral:  "#8B5CF6",
+  navy:   "#0B1020",
+  purple: "#A855F7",
   border: "#E8ECF2",
   soft:   "#64748B",
 };
@@ -40,25 +40,25 @@ const NAV_SECTIONS = [
   {
     label: "Platform",
     items: [
-      { key: "ga_home",     label: "Dashboard",            Icon: LayoutDashboard },
-      { key: "ga_org",      label: "Companies",            Icon: Building2       },
-      { key: "ga_billing",  label: "Subscriptions",        Icon: CreditCard      },
-      { key: "ga_users",    label: "User Management",      Icon: UserCog         },
+      { key: "ga_home",     label: "Control Room",            Icon: LayoutDashboard },
+      { key: "ga_org",      label: "Workspaces",            Icon: Building2       },
+      { key: "ga_billing",  label: "Plans",        Icon: CreditCard      },
+      { key: "ga_users",    label: "Access Matrix",      Icon: UserCog         },
     ],
   },
   {
     label: "Insights",
     items: [
-      { key: "ga_reports",  label: "Analytics",            Icon: BarChart3       },
-      { key: "ga_paysetup", label: "Salary Slip Settings", Icon: Receipt         },
-      { key: "ga_audit",    label: "System Logs",          Icon: FileText        },
+      { key: "ga_reports",  label: "Signals",            Icon: BarChart3       },
+      { key: "ga_paysetup", label: "PayStatement Setup", Icon: Receipt         },
+      { key: "ga_audit",    label: "System Trail",          Icon: FileText        },
     ],
   },
   {
-    label: "Security & Config",
+    label: "Trust & Config",
     items: [
-      { key: "ga_security", label: "Security",             Icon: Lock            },
-      { key: "ga_tickets",  label: "Support",              Icon: Headphones      },
+      { key: "ga_security", label: "Trust",             Icon: Lock            },
+      { key: "ga_tickets",  label: "Care Desk",              Icon: Headphones      },
       { key: "ga_config",   label: "Settings",             Icon: Settings        },
     ],
   },
@@ -77,17 +77,17 @@ const CSS = `
   width:100%; text-align:left;
 }
 .gasb-link:hover {
-  background:linear-gradient(135deg,rgba(255,107,53,.08),rgba(124,58,237,.04));
-  color:${T.coral}; border-color:rgba(255,107,53,.10); transform:translateX(2px);
+  background:linear-gradient(135deg,rgba(139,92,246,.08),rgba(124,58,237,.04));
+  color:${T.coral}; border-color:rgba(139,92,246,.10); transform:translateX(2px);
 }
 .gasb-link.active {
-  background:linear-gradient(135deg,rgba(255,107,53,.14),rgba(124,58,237,.06));
-  color:${T.navy}; font-weight:800; border-color:rgba(255,107,53,.14);
-  box-shadow:inset 3px 0 0 ${T.coral},0 8px 18px rgba(255,107,53,.08);
+  background:linear-gradient(135deg,rgba(139,92,246,.14),rgba(124,58,237,.06));
+  color:${T.navy}; font-weight:800; border-color:rgba(139,92,246,.14);
+  box-shadow:inset 3px 0 0 ${T.coral},0 8px 18px rgba(139,92,246,.08);
 }
 .gasb-link.active .gasb-icon-wrap {
-  background:linear-gradient(135deg,${T.coral},#FF8C5A);
-  color:#fff; box-shadow:0 6px 14px rgba(255,107,53,.25);
+  background:linear-gradient(135deg,${T.coral},#FBBF24);
+  color:#fff; box-shadow:0 6px 14px rgba(139,92,246,.25);
 }
 .gasb-link.collapsed-link { justify-content:center; padding:11px 0; gap:0; }
 
@@ -96,7 +96,7 @@ const CSS = `
   display:flex; align-items:center; justify-content:center;
   transition:all .18s ease; background:rgba(100,116,139,.10); color:inherit;
 }
-.gasb-link:hover .gasb-icon-wrap { background:rgba(255,107,53,.10); color:${T.coral}; }
+.gasb-link:hover .gasb-icon-wrap { background:rgba(139,92,246,.10); color:${T.coral}; }
 
 .gasb-section-label {
   font-size:9px; font-weight:800; letter-spacing:.14em; text-transform:uppercase;
@@ -106,10 +106,10 @@ const CSS = `
 .gasb-collapse-btn {
   position:absolute; top:50%; transform:translateY(-50%); right:-11px; z-index:10;
   width:24px; height:24px; border-radius:999px;
-  background:linear-gradient(135deg,${T.coral},#FF8C5A);
+  background:linear-gradient(135deg,${T.coral},#FBBF24);
   color:#fff; border:2.5px solid #fff;
   display:flex; align-items:center; justify-content:center;
-  cursor:pointer; box-shadow:0 4px 12px rgba(255,107,53,.30); transition:all .18s ease;
+  cursor:pointer; box-shadow:0 4px 12px rgba(139,92,246,.30); transition:all .18s ease;
 }
 .gasb-collapse-btn:hover { transform:translateY(-50%) scale(1.05); }
 `;
@@ -141,9 +141,9 @@ export default function Sidebar({ currentPage, navigateTo }) {
         background:"linear-gradient(180deg,rgba(255,255,255,1) 0%,rgba(250,251,253,1) 100%)",
       }}>
         {collapsed ? (
-          <SamayaIcon size={40} />
+          <CrewSyncIcon size={40} />
         ) : (
-          <img src="/SamayaHR.png" alt="SamayaHR"
+          <img src="/crewsync-logo.svg" alt="CrewSync"
             style={{ height: 44, maxWidth: 180, objectFit: "contain", objectPosition: "left", flexShrink: 0 }} />
         )}
       </div>
@@ -169,7 +169,7 @@ export default function Sidebar({ currentPage, navigateTo }) {
                   <span className="gasb-icon-wrap"><Icon size={15} strokeWidth={active ? 2.2 : 1.8} /></span>
                   {!collapsed && <span style={{ flex:1 }}>{label}</span>}
                   {!collapsed && active && (
-                    <span style={{ width:6, height:6, borderRadius:"50%", background:T.coral, flexShrink:0, boxShadow:"0 0 0 4px rgba(255,107,53,.10)" }} />
+                    <span style={{ width:6, height:6, borderRadius:"50%", background:T.coral, flexShrink:0, boxShadow:"0 0 0 4px rgba(139,92,246,.10)" }} />
                   )}
                 </button>
               );
@@ -211,7 +211,7 @@ export default function Sidebar({ currentPage, navigateTo }) {
         {/* Version */}
         {!collapsed && (
           <p style={{ fontSize: 10, color: "#94A3B8", fontWeight: 600, margin: 0, textAlign: "center", letterSpacing: ".04em" }}>
-            v2.0.1 · © {new Date().getFullYear()} ZlabsHR
+            v2.0.1 · © {new Date().getFullYear()} CrewSync
           </p>
         )}
 

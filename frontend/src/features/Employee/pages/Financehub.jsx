@@ -11,12 +11,12 @@ import {
 import api from "@/lib/apiClient";
 
 /*
-  FinanceHub — Fixed & Complete
+  MoneyOpsHub — Fixed & Complete
   ─────────────────────────────────────────────────────────────────────────────
   FIXES in this version:
   1. tenantCode, companyName, employeeId now read from localStorage
      (Login.jsx must store them for EMPLOYEE role — see comment below)
-  2. Company name + logo used from API; falls back to localStorage companyName
+  2. Workspace name + logo used from API; falls back to localStorage companyName
   3. Year parsing handles all formats: "2025-03", "March 2025", "Mar-2025" etc.
   4. Uses original payroll API: GET /api/payroll/user/{userId}
   5. PDF uses real company logo (base64) + real company name from settings/company API
@@ -32,7 +32,7 @@ import api from "@/lib/apiClient";
 const fmt      = (n) => "₹" + Number(n || 0).toLocaleString("en-IN", { minimumFractionDigits: 2 });
 const rupeeFmt = (n) => "Rs." + Number(n || 0).toFixed(2);
 const bool     = (v) => v === true || v === "true";
-const normalizePayrollRows = (rows, fallback) => {
+const normalizePayoutsRows = (rows, fallback) => {
   if (Array.isArray(rows) && rows.length > 0) {
     return rows
       .filter((row) => Number(row?.amount || 0) > 0)
@@ -102,7 +102,7 @@ const getYear = (str) => {
   return m ? parseInt(m[0], 10) : null;
 };
 
-const getName = (p) => p?.employeeName || p?.employee?.name || p?.userName || "Employee";
+const getName = (p) => p?.employeeName || p?.employee?.name || p?.userName || "Person";
 const getId   = (p) => String(p?.employeeId || p?.employee?.id || p?.userId || "—");
 
 const numberToWords = (n) => {
@@ -134,23 +134,23 @@ const cardStyle = {
 };
 
 /* ═══════════════════════════════════════════════════════════════════════════ */
-export default function FinanceHub() {
+export default function MoneyOpsHub() {
 
   // ── Read all keys from localStorage (set by Login.jsx on login) ──────────
   const userId        = (() => { try { return JSON.parse(localStorage.getItem("userId")) || localStorage.getItem("userId") || ""; } catch { return localStorage.getItem("userId") || ""; } })();
   const tenantCode    = localStorage.getItem("tenantCode")  || "";
-  const lsCompanyName = localStorage.getItem("companyName") || "";
+  const lsWorkspaceName = localStorage.getItem("companyName") || "";
 
-  const [allPayrolls,  setAllPayrolls]  = useState([]);
+  const [allPayoutss,  setAllPayoutss]  = useState([]);
   const [loading,      setLoading]      = useState(true);
   const [error,        setError]        = useState(null);
-  const [company,      setCompany]      = useState(null);
-  const [settings,     setSettings]     = useState(null);
+  const [company,      setWorkspace]      = useState(null);
+  const [settings,     setConfiguration]     = useState(null);
 
   // ✅ FIX: null means "wait for data" — never default to current year
   const [selectedYear, setSelectedYear] = useState(null);
 
-  const [viewPayroll,  setViewPayroll]  = useState(null);
+  const [viewPayouts,  setViewPayouts]  = useState(null);
   const [dlLoading,    setDlLoading]    = useState(null);
 
   /* ── 1. Fetch payrolls — original working API ────────────────────────── */
@@ -165,7 +165,7 @@ export default function FinanceHub() {
         .then(r => {
           const d = r.data;
           const list = Array.isArray(d.data) ? d.data : (d.data ? [d.data] : []);
-          setAllPayrolls(list);
+          setAllPayoutss(list);
           const dataYears = [...new Set(list.map(p => getYear(p.payrollMonth)).filter(Boolean))].sort((a,b)=>b-a);
           if (dataYears.length > 0) setSelectedYear(dataYears[0]);
           else setSelectedYear(new Date().getFullYear());
@@ -181,38 +181,38 @@ export default function FinanceHub() {
       api.get(`/api/global-admin/companies/by-tenant/${tenantCode}`).then(r => r.data).catch(() => ({})),
       api.get(`/api/salary-slip-settings/${tenantCode}`).then(r => r.data).catch(() => ({})),
     ]).then(([cData, sData]) => {
-      if (cData?.success && cData?.data) setCompany(cData.data);
-      if (sData?.success && sData?.data) setSettings(sData.data);
+      if (cData?.success && cData?.data) setWorkspace(cData.data);
+      if (sData?.success && sData?.data) setConfiguration(sData.data);
     });
   }, [tenantCode]);
 
   /* ── Derived ─────────────────────────────────────────────────────────── */
   // ✅ Years = current year always included + all years from actual data, sorted descending
   const currentYear = new Date().getFullYear();
-  const years = [...new Set([currentYear, ...allPayrolls.map(p => getYear(p.payrollMonth)).filter(Boolean)])].sort((a,b)=>b-a);
+  const years = [...new Set([currentYear, ...allPayoutss.map(p => getYear(p.payrollMonth)).filter(Boolean)])].sort((a,b)=>b-a);
 
   // ✅ FIX: effectiveYear always resolves to a real year with data
   const effectiveYear = selectedYear ?? years[0] ?? new Date().getFullYear();
 
   const payrollByMonth = {};
-  allPayrolls
+  allPayoutss
     .filter(p => getYear(p.payrollMonth) === effectiveYear)
     .forEach(p => {
       const mi = getMonthIndex(p.payrollMonth);
       if (mi >= 0) payrollByMonth[mi] = p;
     });
 
-  const yearPayrolls = Object.values(payrollByMonth);
-  const totalNet = yearPayrolls.reduce((s, p) => s + ((p.totalEarnings||0) - (p.totalDeductions||0)), 0);
+  const yearPayoutss = Object.values(payrollByMonth);
+  const totalNet = yearPayoutss.reduce((s, p) => s + ((p.totalEarnings||0) - (p.totalDeductions||0)), 0);
 
   // Resolved company name: API > localStorage > fallback
-  const resolvedCompanyName = company?.displayName || company?.legalName || lsCompanyName || "Company";
+  const resolvedWorkspaceName = company?.displayName || company?.legalName || lsWorkspaceName || "Workspace";
 
   /* ── PDF Download ────────────────────────────────────────────────────── */
   const downloadPDF = (p) => {
     const key = p.id || p.payrollMonth;
     setDlLoading(key);
-    const doGen = () => { generatePDF(p, company, settings, lsCompanyName); setDlLoading(null); };
+    const doGen = () => { generatePDF(p, company, settings, lsWorkspaceName); setDlLoading(null); };
     if (typeof window.jspdf === "undefined") {
       const s1 = document.createElement("script");
       s1.src = "https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js";
@@ -235,11 +235,11 @@ export default function FinanceHub() {
 
       {/* ── Page Header ─────────────────────────────────────────────────── */}
       <div style={{ background:"linear-gradient(135deg,#0f172a 0%,#1e293b 60%,#0f172a 100%)", borderRadius:18, padding:"22px 28px", marginBottom:20, position:"relative", overflow:"hidden" }}>
-        <div style={{ position:"absolute", top:-30, right:60, width:140, height:140, borderRadius:"50%", background:"rgba(255,107,53,0.08)", pointerEvents:"none" }}/>
+        <div style={{ position:"absolute", top:-30, right:60, width:140, height:140, borderRadius:"50%", background:"rgba(139,92,246,0.08)", pointerEvents:"none" }}/>
         <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", position:"relative", flexWrap:"wrap", gap:16 }}>
           <div>
-            <p style={{ color:"rgba(255,255,255,0.4)", fontSize:11, fontWeight:600, textTransform:"uppercase", letterSpacing:"0.1em", margin:"0 0 5px" }}>Finance Hub</p>
-            <h1 style={{ color:"#fff", fontSize:22, fontWeight:800, margin:0 }}>My Payslips</h1>
+            <p style={{ color:"rgba(255,255,255,0.4)", fontSize:11, fontWeight:600, textTransform:"uppercase", letterSpacing:"0.1em", margin:"0 0 5px" }}>MoneyOps</p>
+            <h1 style={{ color:"#fff", fontSize:22, fontWeight:800, margin:0 }}>My PayStatements</h1>
             <p style={{ color:"rgba(255,255,255,0.4)", fontSize:13, margin:"5px 0 0" }}>View and download your monthly salary statements</p>
           </div>
 
@@ -247,7 +247,7 @@ export default function FinanceHub() {
             {/* ✅ Year dropdown — only renders after data loads, only shows years that have actual data */}
             {!loading && years.length > 0 && (
               <div style={{ display:"flex", alignItems:"center", gap:8, background:"rgba(255,255,255,0.08)", border:"1px solid rgba(255,255,255,0.15)", borderRadius:10, padding:"8px 14px" }}>
-                <Calendar style={{ width:14, height:14, color:"#ff6b35" }}/>
+                <Calendar style={{ width:14, height:14, color:"#8B5CF6" }}/>
                 <label style={{ color:"rgba(255,255,255,0.6)", fontSize:12, fontWeight:600 }}>Year</label>
                 <select
                   value={effectiveYear}
@@ -262,9 +262,9 @@ export default function FinanceHub() {
             )}
 
             {/* Stats */}
-            {yearPayrolls.length > 0 && (
+            {yearPayoutss.length > 0 && (
               <>
-                <Chip label="Payslips" value={yearPayrolls.length} color="#ff6b35"/>
+                <Chip label="PayStatements" value={yearPayoutss.length} color="#8B5CF6"/>
                 <Chip label="Total Net" value={fmt(totalNet)} color="#22c55e"/>
               </>
             )}
@@ -275,7 +275,7 @@ export default function FinanceHub() {
       {/* ── Loading ──────────────────────────────────────────────────────── */}
       {loading && (
         <div style={{ ...cardStyle, padding:"52px 0", textAlign:"center", color:"#94a3b8", display:"flex", alignItems:"center", justifyContent:"center", gap:10 }}>
-          <Loader2 style={{ width:20, height:20, animation:"spin 1s linear infinite" }}/> Loading payslips…
+          <Loader2 style={{ width:20, height:20, animation:"spin 1s linear infinite" }}/> Loading pay statements…
         </div>
       )}
 
@@ -297,20 +297,20 @@ export default function FinanceHub() {
           {/* Table header bar */}
           <div style={{ padding:"14px 22px", borderBottom:"1px solid #eef0f4", display:"flex", alignItems:"center", justifyContent:"space-between" }}>
             <p style={{ margin:0, fontSize:14, fontWeight:700, color:"#0f172a" }}>
-              Payslip History — {effectiveYear}
+              PayStatement History — {effectiveYear}
             </p>
             <span style={{ fontSize:11, fontWeight:600, color:"#94a3b8" }}>
-              {yearPayrolls.length} / 12 months processed
+              {yearPayoutss.length} / 12 months processed
             </span>
           </div>
 
           {/* No payrolls */}
-          {yearPayrolls.length === 0 ? (
+          {yearPayoutss.length === 0 ? (
             <div style={{ padding:"70px 0", textAlign:"center" }}>
               <FileText style={{ width:38, height:38, color:"#e2e8f0", margin:"0 auto 14px" }}/>
               <p style={{ fontSize:15, fontWeight:700, color:"#94a3b8", margin:0 }}>No payroll for {effectiveYear}</p>
               <p style={{ fontSize:12, color:"#cbd5e1", margin:"6px 0 0" }}>
-                Payroll has not been processed for any month in {effectiveYear}.
+                Payouts has not been processed for any month in {effectiveYear}.
                 {years.length > 0 && ` Try selecting ${years[0]}.`}
               </p>
             </div>
@@ -319,7 +319,7 @@ export default function FinanceHub() {
               <table style={{ width:"100%", borderCollapse:"collapse", fontSize:13 }}>
                 <thead>
                   <tr style={{ background:"#0f172a" }}>
-                    {["Month","Employee","Pay Period","Gross Salary","Deductions","Net Pay","Status","Actions"].map(h => (
+                    {["Month","Person","Pay Period","Gross Compensation","Deductions","Net Pay","Status","Actions"].map(h => (
                       <th key={h} style={{ padding:"11px 18px", textAlign:"left", fontSize:10, fontWeight:700, color:"rgba(255,255,255,0.55)", textTransform:"uppercase", letterSpacing:"0.08em", whiteSpace:"nowrap" }}>{h}</th>
                     ))}
                   </tr>
@@ -330,8 +330,8 @@ export default function FinanceHub() {
                     .sort(([a],[b]) => Number(a) - Number(b))
                     .map(([mi, p]) => {
                     const monthName = MONTH_NAMES[Number(mi)];
-                    const gross  = p.totalEarnings  ?? ((p.basicSalary||0)+(p.hra||0)+(p.conveyanceAllowance||0)+(p.medicalAllowance||0)+(p.otherAllowances||0));
-                    const deduct = p.totalDeductions ?? ((p.taxDeductions||0)+(p.pfEmployee||0)+(p.professionalTax||0)+(p.medicalInsurance||0)+(p.lossOfPay||0));
+                    const gross  = p.totalEarnings  ?? ((p.basicCompensation||0)+(p.hra||0)+(p.conveyanceAllowance||0)+(p.medicalAllowance||0)+(p.otherAllowances||0));
+                    const deduct = p.totalDeductions ?? ((p.taxDeductions||0)+(p.pfPerson||0)+(p.professionalTax||0)+(p.medicalInsurance||0)+(p.lossOfPay||0));
                     const net    = p.netPay ?? (gross - deduct);
                     const isDownloading = dlLoading === (p.id || p.payrollMonth);
 
@@ -349,10 +349,10 @@ export default function FinanceHub() {
                           </span>
                         </td>
 
-                        {/* Employee */}
+                        {/* Person */}
                         <td style={{ padding:"13px 18px" }}>
                           <div style={{ display:"flex", alignItems:"center", gap:9 }}>
-                            <div style={{ width:30, height:30, borderRadius:8, background:"linear-gradient(135deg,#ff6b35,#8b5cf6)", display:"flex", alignItems:"center", justifyContent:"center", color:"#fff", fontWeight:900, fontSize:12, flexShrink:0 }}>
+                            <div style={{ width:30, height:30, borderRadius:8, background:"linear-gradient(135deg,#8B5CF6,#8b5cf6)", display:"flex", alignItems:"center", justifyContent:"center", color:"#fff", fontWeight:900, fontSize:12, flexShrink:0 }}>
                               {getName(p).charAt(0).toUpperCase()}
                             </div>
                             <div>
@@ -392,10 +392,10 @@ export default function FinanceHub() {
                         {/* Actions */}
                         <td style={{ padding:"13px 18px" }}>
                           <div style={{ display:"flex", gap:6 }}>
-                            <IconBtn title="View Payslip"  bg="#eef2ff" color="#6366f1" hoverBg="#6366f1" onClick={() => setViewPayroll(p)}>
+                            <IconBtn title="View PayStatement"  bg="#eef2ff" color="#6366f1" hoverBg="#6366f1" onClick={() => setViewPayouts(p)}>
                               <Eye style={{ width:14, height:14 }}/>
                             </IconBtn>
-                            <IconBtn title="Download PDF" bg="#fff4ef" color="#ff6b35" hoverBg="#ff6b35" disabled={isDownloading} onClick={() => downloadPDF(p)}>
+                            <IconBtn title="Download PDF" bg="#fff4ef" color="#8B5CF6" hoverBg="#8B5CF6" disabled={isDownloading} onClick={() => downloadPDF(p)}>
                               {isDownloading
                                 ? <Loader2 style={{ width:13, height:13, animation:"spin 1s linear infinite" }}/>
                                 : <Download style={{ width:14, height:14 }}/>
@@ -413,14 +413,14 @@ export default function FinanceHub() {
         </div>
       )}
 
-      {/* ── Analytics Charts (shown when there are payrolls for the year) ── */}
-      {!loading && yearPayrolls.length > 0 && (
+      {/* ── Signals Charts (shown when there are payrolls for the year) ── */}
+      {!loading && yearPayoutss.length > 0 && (
         <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:16, marginTop:16 }}>
 
           {/* Bar chart: monthly net salary trend */}
           <div style={{ ...cardStyle, padding:"20px 24px" }}>
             <p style={{ margin:"0 0 14px", fontSize:13, fontWeight:700, color:"#0f172a" }}>
-              Monthly Net Salary — {effectiveYear}
+              Monthly Net Compensation — {effectiveYear}
             </p>
             <ResponsiveContainer width="100%" height={220}>
               <BarChart data={(() => {
@@ -428,7 +428,7 @@ export default function FinanceHub() {
                   const p = payrollByMonth[i];
                   return {
                     month: MONTH_NAMES[i].slice(0, 3),
-                    net:   p ? Number(p.netSalary || 0) : 0,
+                    net:   p ? Number(p.netCompensation || 0) : 0,
                   };
                 });
               })()} barSize={22}>
@@ -438,7 +438,7 @@ export default function FinanceHub() {
                   tickFormatter={v => v >= 1000 ? `₹${(v/1000).toFixed(0)}k` : `₹${v}`} />
                 <Tooltip formatter={(v) => [`₹${Number(v).toLocaleString("en-IN")}`, "Net Pay"]}
                   contentStyle={{ fontSize: 12, borderRadius: 8, border: "1px solid #eef0f4" }} />
-                <Bar dataKey="net" fill="#FF6B35" radius={[5, 5, 0, 0]} />
+                <Bar dataKey="net" fill="#8B5CF6" radius={[5, 5, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -447,19 +447,19 @@ export default function FinanceHub() {
           <div style={{ ...cardStyle, padding:"20px 24px" }}>
             <p style={{ margin:"0 0 14px", fontSize:13, fontWeight:700, color:"#0f172a" }}>
               Earnings vs Deductions
-              {yearPayrolls.length > 0 && (
+              {yearPayoutss.length > 0 && (
                 <span style={{ fontSize:11, color:"#94a3b8", fontWeight:400, marginLeft:6 }}>
                   (latest month)
                 </span>
               )}
             </p>
             {(() => {
-              const latest = [...yearPayrolls].sort((a, b) =>
+              const latest = [...yearPayoutss].sort((a, b) =>
                 new Date(b.payrollMonth || 0) - new Date(a.payrollMonth || 0)
               )[0];
               if (!latest) return null;
 
-              // Build dynamic slices from PayrollItems if present, else fallback
+              // Build dynamic slices from PayoutsItems if present, else fallback
               const earningItems = Array.isArray(latest.earnings) && latest.earnings.length > 0
                 ? latest.earnings.map(e => ({ name: e.name || e.label || e.componentName || "Earning", value: Number(e.amount || 0) }))
                 : [{ name: "Gross Earnings", value: Number(latest.totalEarnings || 0) }];
@@ -468,8 +468,8 @@ export default function FinanceHub() {
                 : [{ name: "Total Deductions", value: Number(latest.totalDeductions || 0) }];
 
               const allSlices = [
-                ...earningItems.map((e, i) => ({ ...e, fill: ["#22c55e","#16a34a","#00C2A8","#34d399","#6ee7b7"][i % 5] })),
-                ...deductionItems.map((d, i) => ({ ...d, fill: ["#FF6B35","#ef4444","#f97316","#fb923c","#fca5a5"][i % 5] })),
+                ...earningItems.map((e, i) => ({ ...e, fill: ["#22c55e","#16a34a","#06B6D4","#34d399","#6ee7b7"][i % 5] })),
+                ...deductionItems.map((d, i) => ({ ...d, fill: ["#8B5CF6","#ef4444","#f97316","#fb923c","#fca5a5"][i % 5] })),
               ].filter(s => s.value > 0);
 
               return (
@@ -493,15 +493,15 @@ export default function FinanceHub() {
       )}
 
       {/* ── View Modal ───────────────────────────────────────────────────── */}
-      {viewPayroll && (
+      {viewPayouts && (
         <SlipModal
-          payroll={viewPayroll}
+          payroll={viewPayouts}
           company={c}
           settings={s}
-          resolvedCompanyName={resolvedCompanyName}
-          onClose={() => setViewPayroll(null)}
-          onDownload={() => downloadPDF(viewPayroll)}
-          isDownloading={dlLoading === (viewPayroll.id || viewPayroll.payrollMonth)}
+          resolvedWorkspaceName={resolvedWorkspaceName}
+          onClose={() => setViewPayouts(null)}
+          onDownload={() => downloadPDF(viewPayouts)}
+          isDownloading={dlLoading === (viewPayouts.id || viewPayouts.payrollMonth)}
         />
       )}
 
@@ -546,7 +546,7 @@ function Chip({ label, value, color }) {
 /*  PDF Generator                                                              */
 /*  Logo source: ONLY salary_slip_settings.companyLogoBase64 (by tenantCode)  */
 /* ══════════════════════════════════════════════════════════════════════════ */
-function generatePDF(p, company, settings, lsCompanyName) {
+function generatePDF(p, company, settings, lsWorkspaceName) {
   const { jsPDF } = window.jspdf;
   const doc  = new jsPDF("p", "pt", "a4");
   const pw   = doc.internal.pageSize.width;
@@ -554,8 +554,8 @@ function generatePDF(p, company, settings, lsCompanyName) {
   const s    = settings || {};
   const showAll = !settings || Object.keys(s).length === 0;
 
-  // ── Company info (from company API — display only, no logo from here) ──────
-  const companyName  = c.displayName || c.legalName || lsCompanyName || "Company";
+  // ── Workspace info (from company API — display only, no logo from here) ──────
+  const companyName  = c.displayName || c.legalName || lsWorkspaceName || "Workspace";
   const companyAddr  = [c.address, c.city, c.state, c.pincode].filter(Boolean).join(", ");
   const companyEmail = c.officialEmail || "";
   const companyPhone = c.phoneNumber   || "";
@@ -564,21 +564,21 @@ function generatePDF(p, company, settings, lsCompanyName) {
   const footerNote   = s.footerNote || "This is a computer-generated salary slip and does not require a signature.";
 
   // ── Logo: ONLY from salary_slip_settings table (matched by tenantCode) ──────
-  // s = salarySlipSettings fetched via GET /api/salary-slip-settings/{tenantCode}
-  // The admin uploads logo via SalarySlipSettingsPage which PUTs to the same endpoint
+  // s = salarySlipConfiguration fetched via GET /api/salary-slip-settings/{tenantCode}
+  // The admin uploads logo via CompensationSlipConfigurationPage which PUTs to the same endpoint
   const logoBase64 = s.companyLogoBase64 || null;   // null if admin hasn't uploaded yet
   const logoMime   = s.logoMediaType     || "image/png";
 
-  // ── Payroll values ────────────────────────────────────────────────────────
+  // ── Payouts values ────────────────────────────────────────────────────────
   const empName  = getName(p);
   const empId    = getId(p);
-  const basic    = p.basicSalary         || 0;
+  const basic    = p.basicCompensation         || 0;
   const hra      = p.hra                 || 0;
   const conv     = p.conveyanceAllowance || 0;
   const med      = p.medicalAllowance    || 0;
   const special  = p.otherAllowances     || 0;
   const d_it     = p.taxDeductions       || 0;
-  const d_pf     = p.pfEmployee          || 0;
+  const d_pf     = p.pfPerson          || 0;
   const d_pt     = p.professionalTax     || 0;
   const d_med    = p.medicalInsurance    || 0;
   const lop      = p.lossOfPay           || 0;
@@ -607,7 +607,7 @@ function generatePDF(p, company, settings, lsCompanyName) {
   };
 
   const earningsBody = [];
-  addEarning(s.showBasicSalary,        "Basic Salary",         basic);
+  addEarning(s.showBasicCompensation,        "Basic Compensation",         basic);
   addEarning(s.showHra,                "House Rent Allowance", hra);
   addEarning(s.showTransportAllowance, "Conveyance Allowance", conv);
   addEarning(s.showMedicalAllowance,   "Medical Allowance",    med);
@@ -637,7 +637,7 @@ function generatePDF(p, company, settings, lsCompanyName) {
       try { doc.addImage(logoDataUrl, "PNG", LOGO_X, LOGO_Y, LOGO_W, LOGO_H); } catch {}
     }
 
-    // ── 2. Company name & address (left) ─────────────────────────────────────
+    // ── 2. Workspace name & address (left) ─────────────────────────────────────
     doc.setFontSize(15); doc.setFont("helvetica", "bold"); doc.setTextColor(0, 26, 91);
     doc.text(companyName, TEXT_X, LOGO_Y + 16);
 
@@ -669,7 +669,7 @@ function generatePDF(p, company, settings, lsCompanyName) {
     doc.setDrawColor(210, 210, 210);
     doc.line(40, DIVIDER_Y, pw - 40, DIVIDER_Y);
 
-    // ── 5. Employee info (2-column) ───────────────────────────────────────────
+    // ── 5. Person info (2-column) ───────────────────────────────────────────
     let y = DIVIDER_Y + 18;
     doc.setFontSize(9); doc.setTextColor(0, 0, 0);
     const col2 = pw - 195;
@@ -682,14 +682,14 @@ function generatePDF(p, company, settings, lsCompanyName) {
       doc.text(String(val || "—"), x + 108, y);
     };
 
-    infoRow("Employee Name", empName, 40);
+    infoRow("Person Name", empName, 40);
     doc.setFont("helvetica", "normal"); doc.setTextColor(110, 110, 110);
     doc.text("Paid Days", col2, y);
     doc.setTextColor(0, 0, 0); doc.text(":", col2 + 75, y); doc.text(String(paidDays), col2 + 88, y);
     y += 16;
 
-    // Employee ID — shown only if salary_slip_settings.showEmployeeId = true
-    if (showAll || bool(s.showEmployeeId)) { infoRow("Employee ID", empId, 40); }
+    // Person ID — shown only if salary_slip_settings.showPersonId = true
+    if (showAll || bool(s.showPersonId)) { infoRow("Person ID", empId, 40); }
     else { doc.text("", 40, y); } // keep spacing consistent
     doc.setFont("helvetica", "normal"); doc.setTextColor(110, 110, 110);
     doc.text("LOP Days", col2, y);
@@ -784,7 +784,7 @@ function generatePDF(p, company, settings, lsCompanyName) {
     doc.setFontSize(7); doc.setFont("helvetica", "italic"); doc.setTextColor(160, 160, 160);
     doc.text(`— ${footerNote} —`, pw / 2, fy + 84, { align: "center" });
 
-    doc.save(`Payslip_${empName.replace(/\s+/g, "_")}_${payMonth}.pdf`);
+    doc.save(`PayStatement_${empName.replace(/\s+/g, "_")}_${payMonth}.pdf`);
   };
 
   // ── Logo async loading ────────────────────────────────────────────────────
@@ -804,15 +804,15 @@ function generatePDF(p, company, settings, lsCompanyName) {
 }
 
 /* ══════════════════════════════════════════════════════════════════════════ */
-/*  Salary Slip View Modal                                                     */
+/*  Compensation Slip View Modal                                                     */
 /*  ALL fields — info, earnings, deductions — driven 100% by                  */
 /*  salary_slip_settings toggles for this company's tenantCode                */
 /* ══════════════════════════════════════════════════════════════════════════ */
-function SlipModal({ payroll:p, company:c, settings:s, resolvedCompanyName, onClose, onDownload, isDownloading }) {
+function SlipModal({ payroll:p, company:c, settings:s, resolvedWorkspaceName, onClose, onDownload, isDownloading }) {
   // showAll = true only if settings haven't loaded yet (safety fallback)
   const showAll = !s || Object.keys(s).length === 0;
 
-  // ── Company logo: ONLY from salary_slip_settings (tenantCode matched) ───────
+  // ── Workspace logo: ONLY from salary_slip_settings (tenantCode matched) ───────
   const logoSrc = s?.companyLogoBase64
     ? `data:${s.logoMediaType || "image/png"};base64,${s.companyLogoBase64}`
     : null;
@@ -820,12 +820,12 @@ function SlipModal({ payroll:p, company:c, settings:s, resolvedCompanyName, onCl
   const companyAddr = [c.address, c.city, c.state, c.pincode].filter(Boolean).join(", ");
   const slipTitle   = s?.slipTitle  || "SALARY SLIP";
   const footerNote  = s?.footerNote || "This is a computer-generated salary slip and does not require a signature.";
-  // ── Employee info fields — shown only if toggle is ON in salary_slip_settings ─
+  // ── Person info fields — shown only if toggle is ON in salary_slip_settings ─
   // Always shown: Name, Pay Period, Pay Date, Paid Days, LOP Days
   // Conditionally shown: all others — only if their toggle = true AND data exists
   const infoFields = [
-    { label:"Employee Name",   value:getName(p),                             always:true  },
-    { label:"Employee ID",     value:getId(p),                               show:showAll || bool(s?.showEmployeeId)    },
+    { label:"Person Name",   value:getName(p),                             always:true  },
+    { label:"Person ID",     value:getId(p),                               show:showAll || bool(s?.showPersonId)    },
     { label:"Pay Period",      value:p.payrollMonth,                         always:true  },
     { label:"Pay Date",        value:formatDate(p.payDate || p.payrollMonth),always:true  },
     { label:"Paid Days",       value:String(p.paidDays ?? 30),               always:true  },
@@ -843,29 +843,29 @@ function SlipModal({ payroll:p, company:c, settings:s, resolvedCompanyName, onCl
   ].filter(r => (r.always || r.show) && (r.value !== null && r.value !== undefined && r.value !== "" && r.value !== "N/A"));
 
   // ── Earnings: show if toggle=true AND value > 0 ──────────────────────────────
-  // toggle=true  → company configured this field (set in SalarySlipSettingsPage)
+  // toggle=true  → company configured this field (set in CompensationSlipConfigurationPage)
   // value > 0    → employee actually has this component this month
   const fallbackEarningsRows = [
-    { show: showAll || bool(s?.showBasicSalary),        label:"Basic Salary",         value: p.basicSalary         },
+    { show: showAll || bool(s?.showBasicCompensation),        label:"Basic Compensation",         value: p.basicCompensation         },
     { show: showAll || bool(s?.showHra),                label:"House Rent Allowance", value: p.hra                 },
     { show: showAll || bool(s?.showSpecialAllowance),   label:"Special Allowance",    value: p.specialAllowance    },
     { show: showAll || bool(s?.showTransportAllowance), label:"Conveyance Allowance", value: p.conveyanceAllowance },
     { show: showAll || bool(s?.showMedicalAllowance),   label:"Medical Allowance",    value: p.medicalAllowance    },
-    { show: showAll || bool(s?.showOtherAllowances),    label:"Leave Travel Allowance", value: p.lta               },
+    { show: showAll || bool(s?.showOtherAllowances),    label:"TimeAway Travel Allowance", value: p.lta               },
     { show: showAll || bool(s?.showOtherAllowances),    label:"Other Allowances",     value: p.otherAllowances     },
   ].filter(r => r.show && Number(r.value ?? 0) > 0);
 
   // ── Deductions: show if toggle=true AND value > 0 ─────────────────────────────
   const fallbackDeductionRows = [
     { show: showAll || bool(s?.showTds),             label:"Income Tax (TDS)",  value: p.taxDeductions    },
-    { show: showAll || bool(s?.showPfDeduction),     label:"Provident Fund",    value: p.pfEmployee       },
-    { show: showAll || bool(s?.showEsiDeduction),    label:"ESI",               value: p.esiEmployee      },
+    { show: showAll || bool(s?.showPfDeduction),     label:"Provident Fund",    value: p.pfPerson       },
+    { show: showAll || bool(s?.showEsiDeduction),    label:"ESI",               value: p.esiPerson      },
     { show: showAll || bool(s?.showProfessionalTax), label:"Professional Tax",  value: p.professionalTax  },
     { show: showAll || bool(s?.showOtherDeductions), label:"Other Deductions",  value: p.otherDeductions  },
   ].filter(r => r.show && Number(r.value ?? 0) > 0);
 
-  const earningsRows = normalizePayrollRows(p.earnings, fallbackEarningsRows);
-  const deductionRows = normalizePayrollRows(p.deductions, fallbackDeductionRows);
+  const earningsRows = normalizePayoutsRows(p.earnings, fallbackEarningsRows);
+  const deductionRows = normalizePayoutsRows(p.deductions, fallbackDeductionRows);
 
   // Use API totals as primary — they include ALL components the server calculated
   // Visible row sum is only used as fallback if API totals are missing
@@ -885,12 +885,12 @@ function SlipModal({ payroll:p, company:c, settings:s, resolvedCompanyName, onCl
         {/* ── Sticky top toolbar ─────────────────────────────────────────────── */}
         <div style={{ background:"linear-gradient(135deg,#0f172a,#1e293b)", borderRadius:"18px 18px 0 0", padding:"14px 22px", display:"flex", alignItems:"center", justifyContent:"space-between", position:"sticky", top:0, zIndex:10 }}>
           <div>
-            <p style={{ color:"#ff6b35", fontSize:10, fontWeight:700, textTransform:"uppercase", letterSpacing:"0.1em", margin:0 }}>{slipTitle}</p>
+            <p style={{ color:"#8B5CF6", fontSize:10, fontWeight:700, textTransform:"uppercase", letterSpacing:"0.1em", margin:0 }}>{slipTitle}</p>
             <p style={{ color:"#fff", fontWeight:800, fontSize:15, margin:"3px 0 0" }}>{p.payrollMonth}</p>
           </div>
           <div style={{ display:"flex", gap:8, alignItems:"center" }}>
             <button onClick={onDownload} disabled={isDownloading}
-              style={{ display:"inline-flex", alignItems:"center", gap:6, padding:"8px 16px", borderRadius:9, background:"#ff6b35", color:"#fff", border:"none", cursor:isDownloading?"not-allowed":"pointer", fontSize:13, fontWeight:600, opacity:isDownloading?0.6:1 }}>
+              style={{ display:"inline-flex", alignItems:"center", gap:6, padding:"8px 16px", borderRadius:9, background:"#8B5CF6", color:"#fff", border:"none", cursor:isDownloading?"not-allowed":"pointer", fontSize:13, fontWeight:600, opacity:isDownloading?0.6:1 }}>
               {isDownloading ? <Loader2 style={{ width:13,height:13,animation:"spin 1s linear infinite" }}/> : <Download style={{ width:13,height:13 }}/>}
               Download PDF
             </button>
@@ -900,19 +900,19 @@ function SlipModal({ payroll:p, company:c, settings:s, resolvedCompanyName, onCl
           </div>
         </div>
 
-        {/* ── Company header ─────────────────────────────────────────────────── */}
+        {/* ── Workspace header ─────────────────────────────────────────────────── */}
         {/* Logo from salary_slip_settings.companyLogoBase64 (tenantCode matched) */}
         <div style={{ background:"linear-gradient(135deg,#0f172a,#253352)", padding:"20px 26px", display:"flex", alignItems:"center", justifyContent:"space-between" }}>
           <div style={{ display:"flex", alignItems:"center", gap:14 }}>
             {logoSrc
               ? <img src={logoSrc} alt="logo"
                   style={{ height:56, maxWidth:130, objectFit:"contain", borderRadius:8, background:"#fff", padding:4 }}/>
-              : <div style={{ width:52, height:52, borderRadius:12, background:"linear-gradient(135deg,#ff6b35,#8b5cf6)", display:"flex", alignItems:"center", justifyContent:"center", color:"#fff", fontWeight:900, fontSize:22 }}>
-                  {resolvedCompanyName.charAt(0).toUpperCase()}
+              : <div style={{ width:52, height:52, borderRadius:12, background:"linear-gradient(135deg,#8B5CF6,#8b5cf6)", display:"flex", alignItems:"center", justifyContent:"center", color:"#fff", fontWeight:900, fontSize:22 }}>
+                  {resolvedWorkspaceName.charAt(0).toUpperCase()}
                 </div>
             }
             <div>
-              <p style={{ color:"#fff", fontWeight:800, fontSize:17, margin:0 }}>{resolvedCompanyName}</p>
+              <p style={{ color:"#fff", fontWeight:800, fontSize:17, margin:0 }}>{resolvedWorkspaceName}</p>
               {companyAddr && <p style={{ color:"rgba(255,255,255,0.45)", fontSize:11, margin:"3px 0 0" }}>{companyAddr}</p>}
               {(c.officialEmail || c.phoneNumber) && (
                 <p style={{ color:"rgba(255,255,255,0.3)", fontSize:11, margin:"2px 0 0" }}>
@@ -922,13 +922,13 @@ function SlipModal({ payroll:p, company:c, settings:s, resolvedCompanyName, onCl
             </div>
           </div>
           <div style={{ textAlign:"right" }}>
-            <p style={{ color:"#ff6b35", fontWeight:800, fontSize:14, margin:0, letterSpacing:"0.08em" }}>{slipTitle}</p>
+            <p style={{ color:"#8B5CF6", fontWeight:800, fontSize:14, margin:0, letterSpacing:"0.08em" }}>{slipTitle}</p>
             <p style={{ color:"rgba(255,255,255,0.5)", fontSize:12, margin:"4px 0 0" }}>{p.payrollMonth}</p>
             {p.payDate && <p style={{ color:"rgba(255,255,255,0.3)", fontSize:11, margin:"3px 0 0" }}>Paid: {formatDate(p.payDate)}</p>}
           </div>
         </div>
 
-        {/* ── Employee info grid ─────────────────────────────────────────────── */}
+        {/* ── Person info grid ─────────────────────────────────────────────── */}
         {/* Only fields whose toggle = true in salary_slip_settings are shown     */}
         <div style={{ padding:"16px 26px", background:"#f8fafc", borderBottom:"1px solid #eef0f4" }}>
           <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill, minmax(160px, 1fr))", gap:"12px 18px" }}>

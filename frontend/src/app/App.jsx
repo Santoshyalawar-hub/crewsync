@@ -67,7 +67,7 @@ function AppRoutes() {
       <Route path="/features/payroll"                element={<PayrollFeaturePage />} />
       <Route path="/features/leave-management"       element={<LeaveManagementFeaturePage />} />
       <Route path="/features/employee-dashboard"     element={<EmployeeDirectoryPage />} />
-      <Route path="/features/analytics"             element={<AnalyticsPage />} />
+      <Route path="/features/analytics"              element={<AnalyticsPage />} />
       <Route path="/features/onboarding"             element={<OnboardingPage />} />
       <Route path="/features/mobile"                 element={<MobileAppPage />} />
       <Route path="/features/security"               element={<SecurityPage />} />

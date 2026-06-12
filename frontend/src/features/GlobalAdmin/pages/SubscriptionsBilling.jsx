@@ -13,8 +13,8 @@ const S = {
 };
 
 const PLAN_COLORS = {
-  Enterprise:   { bg: "#f5f3ff", color: "#7c3aed", border: "#c4b5fd" },
-  Professional: { bg: "#fff4ef", color: "#ff6b35", border: "#fed7aa" },
+  Enterprise:   { bg: "#f5f3ff", color: "#A855F7", border: "#c4b5fd" },
+  Professional: { bg: "#fff4ef", color: "#8B5CF6", border: "#fed7aa" },
   Basic:        { bg: "#f0fdf4", color: "#16a34a", border: "#bbf7d0" },
   Starter:      { bg: "#f0f9ff", color: "#0ea5e9", border: "#bae6fd" },
 };
@@ -26,7 +26,7 @@ const Th = ({ ch }) => (
 );
 
 function exportCSV(companies) {
-  const rows = [["Company", "Plan", "Employees", "Employee Limit", "Billing Cycle", "Status", "MRR (₹)", "Created"]];
+  const rows = [["Workspace", "Plan", "Persons", "Person Limit", "Billing Cycle", "Status", "MRR (₹)", "Created"]];
   companies.forEach(c => {
     const mrr = PLAN_PRICES[c.plan] || 0;
     rows.push([
@@ -48,8 +48,8 @@ function exportCSV(companies) {
   a.click(); URL.revokeObjectURL(url);
 }
 
-export default function SubscriptionsBilling() {
-  const [companies, setCompanies] = useState([]);
+export default function PlansBilling() {
+  const [companies, setWorkspaces] = useState([]);
   const [stats,     setStats]     = useState({});
   const [loading,   setLoading]   = useState(false);
   const [error,     setError]     = useState("");
@@ -65,7 +65,7 @@ export default function SubscriptionsBilling() {
         api.get("/api/global-admin/companies"),
         api.get("/api/global-admin/companies/statistics"),
       ]);
-      setCompanies(cRes.data?.data || []);
+      setWorkspaces(cRes.data?.data || []);
       setStats(sRes.data?.data || {});
     } catch {
       setError("Failed to load subscription data.");
@@ -78,7 +78,7 @@ export default function SubscriptionsBilling() {
     setUpgradingId(companyId);
     try {
       await api.put(`/api/global-admin/companies/${companyId}`, { plan: newPlan });
-      setCompanies(prev => prev.map(c => c.id === companyId ? { ...c, plan: newPlan } : c));
+      setWorkspaces(prev => prev.map(c => c.id === companyId ? { ...c, plan: newPlan } : c));
     } catch { /* ignore */ }
     finally { setUpgradingId(null); }
   };
@@ -86,7 +86,7 @@ export default function SubscriptionsBilling() {
   const active    = companies.filter(c => (c.status || "").toLowerCase() === "active");
   const suspended = companies.filter(c => (c.status || "").toLowerCase() !== "active");
   const mrr = active.reduce((sum, c) => sum + (PLAN_PRICES[c.plan] || 0), 0);
-  const totalEmployees = companies.reduce((s, c) => s + (c.employees || 0), 0);
+  const totalPersons = companies.reduce((s, c) => s + (c.employees || 0), 0);
 
   const filtered = companies.filter(c => {
     const q = search.toLowerCase();
@@ -104,15 +104,15 @@ export default function SubscriptionsBilling() {
   }, {});
 
   const PLANS = [
-    { name: "Starter",      price: 999,  emp: 10,  features: ["Core HR", "Attendance", "Leave"] },
-    { name: "Basic",        price: 1999, emp: 50,  features: ["All Starter", "Payroll", "Reports"] },
+    { name: "Starter",      price: 999,  emp: 10,  features: ["Core PeopleOps", "Presence", "TimeAway"] },
+    { name: "Basic",        price: 1999, emp: 50,  features: ["All Starter", "Payouts", "SignalReports"] },
     { name: "Professional", price: 4999, emp: 200, features: ["All Basic", "Custom Roles", "API Access"] },
-    { name: "Enterprise",   price: 9999, emp: "∞", features: ["All Pro", "Dedicated Support", "SLA"] },
+    { name: "Enterprise",   price: 9999, emp: "∞", features: ["All Pro", "Dedicated CareDesk", "SLA"] },
   ];
 
   const TABS = [
     { key: "overview",  label: "Overview" },
-    { key: "companies", label: `Companies (${companies.length})` },
+    { key: "companies", label: `Workspaces (${companies.length})` },
     { key: "plans",     label: "Plan Catalog" },
   ];
 
@@ -123,8 +123,8 @@ export default function SubscriptionsBilling() {
         <div style={{ position: "absolute", top: -30, right: 60, width: 130, height: 130, borderRadius: "50%", background: "rgba(34,197,94,0.08)", pointerEvents: "none" }} />
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", position: "relative" }}>
           <div>
-            <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 11, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 6px" }}>SamayaHR · Global Admin</p>
-            <h1 style={{ color: "#fff", fontSize: 24, fontWeight: 800, margin: 0, letterSpacing: "-0.02em" }}>Subscriptions & Billing</h1>
+            <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 11, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 6px" }}>CrewSync · Global Operator</p>
+            <h1 style={{ color: "#fff", fontSize: 24, fontWeight: 800, margin: 0, letterSpacing: "-0.02em" }}>Plans & Billing</h1>
             <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 13, margin: "6px 0 0" }}>
               {loading ? "Loading…" : `₹${mrr.toLocaleString("en-IN")} MRR · ${active.length} active subscriptions`}
             </p>
@@ -154,7 +154,7 @@ export default function SubscriptionsBilling() {
           { label: "Monthly Revenue",  value: `₹${mrr.toLocaleString("en-IN")}`, icon: TrendingUp,  accent: "#22c55e", bg: "#f0fdf4" },
           { label: "Active",           value: active.length,                      icon: CheckCircle, accent: "#22c55e", bg: "#f0fdf4" },
           { label: "Suspended",        value: suspended.length,                   icon: XCircle,     accent: "#ef4444", bg: "#fef2f2" },
-          { label: "Total Employees",  value: totalEmployees,                     icon: Users,       accent: "#8b5cf6", bg: "#f5f3ff" },
+          { label: "Total People",  value: totalPersons,                     icon: Users,       accent: "#8b5cf6", bg: "#f5f3ff" },
         ].map(({ label, value, icon: Icon, accent, bg }) => (
           <div key={label} style={{ ...S.card, padding: "16px 18px", display: "flex", alignItems: "center", gap: 14 }}>
             <div style={{ width: 42, height: 42, borderRadius: 12, background: bg, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
@@ -242,7 +242,7 @@ export default function SubscriptionsBilling() {
         </div>
       )}
 
-      {/* Companies Tab */}
+      {/* Workspaces Tab */}
       {tab === "companies" && (
         <>
           <div style={{ ...S.card, padding: "14px 18px", marginBottom: 16, display: "flex", gap: 12, alignItems: "center" }}>
@@ -266,7 +266,7 @@ export default function SubscriptionsBilling() {
             ) : (
               <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
                 <thead><tr style={{ background: "#0f172a" }}>
-                  {["Company", "Plan", "Employees", "MRR", "Status", "Billing", "Change Plan"].map(h => <Th key={h} ch={h} />)}
+                  {["Workspace", "Plan", "Persons", "MRR", "Status", "Billing", "Change Plan"].map(h => <Th key={h} ch={h} />)}
                 </tr></thead>
                 <tbody>
                   {filtered.map((c, i) => {

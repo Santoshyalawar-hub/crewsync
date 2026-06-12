@@ -6,10 +6,10 @@ import api from "@/lib/apiClient";
 
 // ─── Design Tokens ────────────────────────────────────────────────────────────
 const C = {
-  navy:    "#0D1F2D",
-  navy2:   "#162639",
-  coral:   "#FF6B35",
-  teal:    "#00C2A8",
+  navy:    "#0B1020",
+  navy2:   "#182033",
+  coral:   "#8B5CF6",
+  teal:    "#06B6D4",
   bg:      "#F4F6F9",
   border:  "#E8EDF3",
   muted:   "#64748b",
@@ -98,21 +98,21 @@ const CSS = `
   border-radius:12px;padding:11px 14px;font-size:13px;color:${C.navy};
   outline:none;transition:all .18s;font-family:'DM Sans',sans-serif;
 }
-.ap-input:focus, .ap-select:focus { border-color:${C.coral};background:#fff;box-shadow:0 0 0 4px rgba(255,107,53,.07); }
+.ap-input:focus, .ap-select:focus { border-color:${C.coral};background:#fff;box-shadow:0 0 0 4px rgba(139,92,246,.07); }
 .ap-select { appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23FF6B35'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:34px;cursor:pointer; }
 .ap-label { font-size:10px;font-weight:800;color:#94A3B8;text-transform:uppercase;letter-spacing:.1em;display:block;margin-bottom:6px; }
 
 .ap-run-btn {
   display:inline-flex;align-items:center;justify-content:center;gap:9px;
   padding:14px 28px;border:none;border-radius:14px;
-  background:linear-gradient(135deg,${C.coral},#FF8C5A);color:#fff;
+  background:linear-gradient(135deg,${C.coral},#FBBF24);color:#fff;
   font-size:14px;font-weight:800;cursor:pointer;transition:all .2s;
-  box-shadow:0 6px 20px rgba(255,107,53,.28);font-family:'Sora',sans-serif;
+  box-shadow:0 6px 20px rgba(139,92,246,.28);font-family:'Sora',sans-serif;
   width:100%;
 }
-.ap-run-btn:hover:not(:disabled) { transform:translateY(-1px);box-shadow:0 10px 28px rgba(255,107,53,.38); }
+.ap-run-btn:hover:not(:disabled) { transform:translateY(-1px);box-shadow:0 10px 28px rgba(139,92,246,.38); }
 .ap-run-btn:disabled { opacity:.55;cursor:not-allowed;transform:none; }
-.ap-run-btn.running { background:linear-gradient(135deg,#0D1F2D,#1E3448); }
+.ap-run-btn.running { background:linear-gradient(135deg,#0B1020,#374151); }
 
 .ap-prog-track { height:8px;border-radius:999px;background:${C.border};overflow:hidden;margin:12px 0; }
 .ap-prog-fill  { height:100%;border-radius:999px;transition:width .4s ease;background:linear-gradient(90deg,${C.coral},${C.teal}); }
@@ -131,9 +131,9 @@ const CSS = `
 .ap-badge.skipped { color:${C.amber};background:rgba(245,158,11,.1); }
 .ap-badge.failed  { color:${C.red};background:rgba(239,68,68,.1); }
 .ap-badge.pending { color:${C.indigo};background:rgba(99,102,241,.1); }
-.ap-badge.running { color:${C.coral};background:rgba(255,107,53,.1); }
+.ap-badge.running { color:${C.coral};background:rgba(139,92,246,.1); }
 
-.ap-spin { border:2.5px solid rgba(255,107,53,.25);border-top-color:${C.coral};border-radius:50%;animation:ap-spin .7s linear infinite;flex-shrink:0; }
+.ap-spin { border:2.5px solid rgba(139,92,246,.25);border-top-color:${C.coral};border-radius:50%;animation:ap-spin .7s linear infinite;flex-shrink:0; }
 
 .ap-toggle { display:flex;align-items:center;gap:10px;cursor:pointer; }
 .ap-toggle-track { width:42px;height:22px;border-radius:999px;transition:background .2s;position:relative; }
@@ -150,7 +150,7 @@ const CSS = `
 // ═════════════════════════════════════════════════════════════════════════════
 //  MAIN COMPONENT
 // ═════════════════════════════════════════════════════════════════════════════
-export default function AutoPayroll({ onBack, token, navigateTo }) {
+export default function AutoPayouts({ onBack, token, navigateTo }) {
   const navigate = useNavigate();
   const go = (key) => {
     const pageKey = KEYMAP[key];
@@ -162,12 +162,12 @@ export default function AutoPayroll({ onBack, token, navigateTo }) {
   const [mode, setMode] = useState("single");
 
   // ── Config ─────────────────────────────────────────────────────────────────
-  const [employees,     setEmployees]     = useState([]);
+  const [employees,     setPersons]     = useState([]);
   const [departments,   setDepartments]   = useState([]);
   const [empLoading,    setEmpLoading]    = useState(false);
   const [selectedEmpId, setSelectedEmpId] = useState("");
   const [selectedDept,  setSelectedDept]  = useState("");
-  const [payrollMonth,  setPayrollMonth]  = useState(() => {
+  const [payrollMonth,  setPayoutsMonth]  = useState(() => {
     const d = new Date();
     return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}`;
   });
@@ -184,7 +184,7 @@ export default function AutoPayroll({ onBack, token, navigateTo }) {
   const progressRef = useRef(null); // FIX: track interval so we can always clear it
 
   // ── Fetch employees ────────────────────────────────────────────────────────
-  const fetchEmployees = useCallback(async () => {
+  const fetchPersons = useCallback(async () => {
     setEmpLoading(true);
     try {
       const { tenantCode, companyId } = getTenantContext();
@@ -194,18 +194,18 @@ export default function AutoPayroll({ onBack, token, navigateTo }) {
       const list = Array.isArray(json.data)
         ? json.data.filter(u => Number(u.companyId) === Number(companyId))
         : [];
-      setEmployees(list);
+      setPersons(list);
       const depts = [...new Set(list.map(e => e.department).filter(Boolean))];
       setDepartments(depts);
     } catch (err) {
-      console.error("fetchEmployees error:", err);
+      console.error("fetchPersons error:", err);
       toast.error("Failed to load employees. Check your connection.");
     } finally {
       setEmpLoading(false);
     }
   }, [token]);
 
-  useEffect(() => { fetchEmployees(); }, [fetchEmployees]);
+  useEffect(() => { fetchPersons(); }, [fetchPersons]);
 
   // ── Reset on mode change ───────────────────────────────────────────────────
   useEffect(() => {
@@ -284,7 +284,7 @@ export default function AutoPayroll({ onBack, token, navigateTo }) {
 
         let res;
         try {
-          // FIX 2: single employee endpoint only needs X-Tenant-Code, NOT X-Company-Id
+          // FIX 2: single employee endpoint only needs X-Tenant-Code, NOT X-Workspace-Id
           res = await api.post(`/api/auto-payroll/employee/${selectedEmpId}`, JSON.parse(body));
         } finally {
           clearInterval(timer);
@@ -299,35 +299,35 @@ export default function AutoPayroll({ onBack, token, navigateTo }) {
           throw new Error(json.message || "Server error");
         }
 
-        // FIX 4: Backend wraps PayrollHistory in json.data
+        // FIX 4: Backend wraps PayoutsHistory in json.data
         const record = json.data;
         if (!record) throw new Error("No payroll data returned from server.");
 
-        // FIX 5: Map PayrollHistory fields correctly
+        // FIX 5: Map PayoutsHistory fields correctly
         // Backend entity fields: id, userId, userName, payrollMonth,
-        //   netSalary, lopDays, payslipPath, payslipGenerated, remarks, status
+        //   netCompensation, lopDays, payslipPath, payslipGenerated, remarks, status
         const empName = record.userName
           || employees.find(e => String(e.id) === String(selectedEmpId))?.fullName
-          || `Employee #${selectedEmpId}`;
+          || `Person #${selectedEmpId}`;
 
         setResults([{
           status:       "SUCCESS",
           employeeName: empName,
           employeeId:   selectedEmpId,
           payrollId:    record.id,
-          netSalary:    record.netSalary,
+          netCompensation:    record.netCompensation,
           lopDays:      record.lopDays ?? 0,
           payslipUrl:   record.payslipPath || null,  // field is payslipPath not payslipUrl
           remarks:      record.remarks || "",
         }]);
 
-        toast.success("Payroll generated successfully!", { autoClose: 3000, theme: "colored" });
+        toast.success("Payouts generated successfully!", { autoClose: 3000, theme: "colored" });
 
       // ── ALL EMPLOYEES ────────────────────────────────────────────────────
       } else if (mode === "all") {
         // Guard: companyId is required for batch
         if (!companyId) {
-          toast.error("Company ID missing. Please log in again.");
+          toast.error("Workspace ID missing. Please log in again.");
           setRunning(false);
           return;
         }
@@ -338,7 +338,7 @@ export default function AutoPayroll({ onBack, token, navigateTo }) {
 
         let res;
         try {
-          // FIX 6: Both X-Tenant-Code AND X-Company-Id required for batch
+          // FIX 6: Both X-Tenant-Code AND X-Workspace-Id required for batch
           res = await api.post("/api/auto-payroll/all", JSON.parse(body));
         } finally {
           stopProgressAnimation();
@@ -374,7 +374,7 @@ export default function AutoPayroll({ onBack, token, navigateTo }) {
           return;
         }
         if (!companyId) {
-          toast.error("Company ID missing. Please log in again.");
+          toast.error("Workspace ID missing. Please log in again.");
           setRunning(false);
           return;
         }
@@ -414,7 +414,7 @@ export default function AutoPayroll({ onBack, token, navigateTo }) {
       console.error("handleRun error:", err);
       // FIX 8: reset progress on error (don't leave it stuck at 92%)
       setProgress(0);
-      const msg = err.message || "Payroll generation failed. Please try again.";
+      const msg = err.message || "Payouts generation failed. Please try again.";
       setRunError(msg);
       toast.error(msg, { autoClose: 6000 });
     } finally {
@@ -426,7 +426,7 @@ export default function AutoPayroll({ onBack, token, navigateTo }) {
   };
 
   // ── Derived ────────────────────────────────────────────────────────────────
-  const selectedEmployee = employees.find(e => String(e.id) === String(selectedEmpId));
+  const selectedPerson = employees.find(e => String(e.id) === String(selectedEmpId));
 
   const canRun = !running && !!payrollMonth && (
     (mode === "single"     && !!selectedEmpId) ||
@@ -441,7 +441,7 @@ export default function AutoPayroll({ onBack, token, navigateTo }) {
     failed:   results.filter(r => r.status === "FAILED").length,
     totalNet: results
       .filter(r => r.status === "SUCCESS")
-      .reduce((s, r) => s + (Number(r.netSalary) || 0), 0),
+      .reduce((s, r) => s + (Number(r.netCompensation) || 0), 0),
   } : null;
 
   // ── Toggle component ───────────────────────────────────────────────────────
@@ -481,36 +481,36 @@ export default function AutoPayroll({ onBack, token, navigateTo }) {
 
         {/* ── Hero ── */}
         <div style={{ background:`linear-gradient(135deg,${C.navy} 0%,${C.navy2} 60%,#28445D 100%)`, padding:"24px 28px", marginBottom:24, position:"relative", overflow:"hidden" }}>
-          <div style={{ position:"absolute",top:-40,right:80,width:200,height:200,borderRadius:"50%",background:"rgba(255,107,53,.1)",filter:"blur(50px)",pointerEvents:"none" }}/>
-          <div style={{ position:"absolute",bottom:-30,left:100,width:160,height:160,borderRadius:"50%",background:"rgba(0,194,168,.08)",filter:"blur(40px)",pointerEvents:"none" }}/>
+          <div style={{ position:"absolute",top:-40,right:80,width:200,height:200,borderRadius:"50%",background:"rgba(139,92,246,.1)",filter:"blur(50px)",pointerEvents:"none" }}/>
+          <div style={{ position:"absolute",bottom:-30,left:100,width:160,height:160,borderRadius:"50%",background:"rgba(6,182,212,.08)",filter:"blur(40px)",pointerEvents:"none" }}/>
           <div style={{ position:"relative",zIndex:2 }}>
             <button onClick={() => go("finance")}
               style={{ display:"inline-flex",alignItems:"center",gap:7,padding:"8px 14px",border:"none",borderRadius:11,background:"rgba(255,255,255,.1)",color:"#fff",fontSize:12,fontWeight:700,cursor:"pointer",marginBottom:14 }}
               onMouseEnter={e=>e.currentTarget.style.background="rgba(255,255,255,.18)"}
               onMouseLeave={e=>e.currentTarget.style.background="rgba(255,255,255,.1)"}>
-              <Ic d={ICONS.arrowL} size={13} color="#fff" sw={2.5}/> Finance Hub
+              <Ic d={ICONS.arrowL} size={13} color="#fff" sw={2.5}/> MoneyOps
             </button>
 
             <div style={{ display:"flex",alignItems:"flex-start",justifyContent:"space-between",gap:16,flexWrap:"wrap" }}>
               <div>
                 <div style={{ display:"flex",alignItems:"center",gap:8,marginBottom:8 }}>
-                  <div style={{ width:38,height:38,borderRadius:12,background:"rgba(255,107,53,.2)",display:"flex",alignItems:"center",justifyContent:"center" }}>
+                  <div style={{ width:38,height:38,borderRadius:12,background:"rgba(139,92,246,.2)",display:"flex",alignItems:"center",justifyContent:"center" }}>
                     <Ic d={ICONS.zap} size={20} color={C.coral} sw={2}/>
                   </div>
                   <div>
-                    <div style={{ fontFamily:"Sora,sans-serif",fontSize:24,fontWeight:900,color:"#fff",lineHeight:1 }}>Auto Payroll</div>
-                    <div style={{ fontSize:12,color:"rgba(255,255,255,.5)",marginTop:2 }}>Attendance-driven payroll computation engine</div>
+                    <div style={{ fontFamily:"Sora,sans-serif",fontSize:24,fontWeight:900,color:"#fff",lineHeight:1 }}>Auto Payouts</div>
+                    <div style={{ fontSize:12,color:"rgba(255,255,255,.5)",marginTop:2 }}>Presence-driven payroll computation engine</div>
                   </div>
                 </div>
                 <p style={{ fontSize:12,color:"rgba(255,255,255,.4)",margin:0,maxWidth:520 }}>
-                  Automatically calculates salaries using attendance data, salary structures, PF, TDS and LOP deductions — exactly like a real-world HRMS.
+                  Automatically calculates salaries using attendance data, salary structures, PF, TDS and LOP deductions — exactly like a real-world workforce platform.
                 </p>
               </div>
               <button onClick={() => go("payroll")}
                 style={{ display:"inline-flex",alignItems:"center",gap:7,padding:"10px 16px",border:"1px solid rgba(255,255,255,.2)",borderRadius:11,background:"rgba(255,255,255,.08)",color:"#fff",fontSize:12,fontWeight:700,cursor:"pointer" }}
                 onMouseEnter={e=>e.currentTarget.style.background="rgba(255,255,255,.15)"}
                 onMouseLeave={e=>e.currentTarget.style.background="rgba(255,255,255,.08)"}>
-                <Ic d={ICONS.file} size={13} color="#fff"/> View Payrolls
+                <Ic d={ICONS.file} size={13} color="#fff"/> View Payoutss
               </button>
             </div>
 
@@ -534,8 +534,8 @@ export default function AutoPayroll({ onBack, token, navigateTo }) {
           {/* ── Mode selector ── */}
           <div style={{ display:"flex",gap:10,marginBottom:22 }}>
             {[
-              { id:"single",     label:"Single Employee",  icon:"user"     },
-              { id:"all",        label:"All Employees",    icon:"users"    },
+              { id:"single",     label:"Single Person",  icon:"user"     },
+              { id:"all",        label:"All Persons",    icon:"users"    },
               { id:"department", label:"By Department",    icon:"building" },
             ].map(m => (
               <button key={m.id} className={`ap-mode-btn ${mode===m.id?"active":""}`}
@@ -549,11 +549,11 @@ export default function AutoPayroll({ onBack, token, navigateTo }) {
           {/* ── Config card ── */}
           <div className="ap-card ap-in" style={{ marginBottom:20 }}>
             <div className="ap-card-head">
-              <div style={{ width:38,height:38,borderRadius:12,background:"rgba(255,107,53,.1)",display:"flex",alignItems:"center",justifyContent:"center" }}>
+              <div style={{ width:38,height:38,borderRadius:12,background:"rgba(139,92,246,.1)",display:"flex",alignItems:"center",justifyContent:"center" }}>
                 <Ic d={ICONS.calendar} size={17} color={C.coral} sw={2}/>
               </div>
               <div>
-                <div style={{ fontFamily:"Sora,sans-serif",fontSize:15,fontWeight:800,color:C.navy }}>Payroll Configuration</div>
+                <div style={{ fontFamily:"Sora,sans-serif",fontSize:15,fontWeight:800,color:C.navy }}>Payouts Configuration</div>
                 <div style={{ fontSize:12,color:"#8A98A9",marginTop:1 }}>Set the period and scope for this payroll run</div>
               </div>
             </div>
@@ -561,11 +561,11 @@ export default function AutoPayroll({ onBack, token, navigateTo }) {
 
               {/* Period */}
               <div>
-                <label className="ap-label">Payroll Month <span style={{color:C.coral}}>*</span></label>
+                <label className="ap-label">Payouts Month <span style={{color:C.coral}}>*</span></label>
                 <input
                   type="month"
                   value={payrollMonth}
-                  onChange={e => setPayrollMonth(e.target.value)}
+                  onChange={e => setPayoutsMonth(e.target.value)}
                   className="ap-input"
                 />
               </div>
@@ -573,7 +573,7 @@ export default function AutoPayroll({ onBack, token, navigateTo }) {
               {/* Single employee */}
               {mode === "single" && (
                 <div>
-                  <label className="ap-label">Employee <span style={{color:C.coral}}>*</span></label>
+                  <label className="ap-label">Person <span style={{color:C.coral}}>*</span></label>
                   <select
                     value={selectedEmpId}
                     onChange={e => setSelectedEmpId(e.target.value)}
@@ -590,17 +590,17 @@ export default function AutoPayroll({ onBack, token, navigateTo }) {
                       </option>
                     ))}
                   </select>
-                  {selectedEmployee && (
-                    <div style={{ marginTop:10,padding:"12px 14px",background:"rgba(0,194,168,.06)",borderRadius:12,border:"1.5px solid rgba(0,194,168,.2)",display:"flex",alignItems:"center",gap:10 }}>
-                      <div style={{ width:32,height:32,borderRadius:9,background:`linear-gradient(135deg,${C.coral},#FF5722)`,display:"flex",alignItems:"center",justifyContent:"center",color:"#fff",fontSize:13,fontWeight:900,flexShrink:0 }}>
-                        {String(selectedEmployee.fullName || "?")[0].toUpperCase()}
+                  {selectedPerson && (
+                    <div style={{ marginTop:10,padding:"12px 14px",background:"rgba(6,182,212,.06)",borderRadius:12,border:"1.5px solid rgba(6,182,212,.2)",display:"flex",alignItems:"center",gap:10 }}>
+                      <div style={{ width:32,height:32,borderRadius:9,background:`linear-gradient(135deg,${C.coral},#06B6D4)`,display:"flex",alignItems:"center",justifyContent:"center",color:"#fff",fontSize:13,fontWeight:900,flexShrink:0 }}>
+                        {String(selectedPerson.fullName || "?")[0].toUpperCase()}
                       </div>
                       <div>
                         <div style={{ fontFamily:"Sora,sans-serif",fontSize:13,fontWeight:800,color:C.navy }}>
-                          {selectedEmployee.fullName || selectedEmployee.email}
+                          {selectedPerson.fullName || selectedPerson.email}
                         </div>
                         <div style={{ fontSize:11,color:C.muted,marginTop:1 }}>
-                          {selectedEmployee.department || "—"} · {selectedEmployee.position || selectedEmployee.designation || "—"}
+                          {selectedPerson.department || "—"} · {selectedPerson.position || selectedPerson.designation || "—"}
                         </div>
                       </div>
                       <div style={{ marginLeft:"auto" }}>
@@ -621,14 +621,14 @@ export default function AutoPayroll({ onBack, token, navigateTo }) {
                         {empLoading ? "Loading…" : `${employees.length} employee(s) will be processed`}
                       </div>
                       <div style={{ fontSize:11,color:C.muted,marginTop:2 }}>
-                        Employees with no salary structure configured will be skipped automatically.
+                        Persons with no salary structure configured will be skipped automatically.
                       </div>
                     </div>
                   </div>
                   {departments.length > 0 && (
                     <div style={{ display:"flex",gap:6,marginTop:10,flexWrap:"wrap" }}>
                       {departments.map(d => (
-                        <div key={d} style={{ fontSize:10,fontWeight:700,color:C.teal,background:"rgba(0,194,168,.1)",border:"1px solid rgba(0,194,168,.2)",borderRadius:999,padding:"3px 10px" }}>
+                        <div key={d} style={{ fontSize:10,fontWeight:700,color:C.teal,background:"rgba(6,182,212,.1)",border:"1px solid rgba(6,182,212,.2)",borderRadius:999,padding:"3px 10px" }}>
                           {d}
                         </div>
                       ))}
@@ -687,8 +687,8 @@ export default function AutoPayroll({ onBack, token, navigateTo }) {
                 ) : (
                   <>
                     <Ic d={ICONS.play} size={16} color="#fff" sw={2}/>
-                    {mode === "single"     ? "Generate Payroll"
-                   : mode === "all"        ? `Run Batch for All ${employees.length} Employees`
+                    {mode === "single"     ? "Generate Payouts"
+                   : mode === "all"        ? `Run Batch for All ${employees.length} Persons`
                    :                         `Run for ${selectedDept || "Selected Department"}`}
                   </>
                 )}
@@ -729,7 +729,7 @@ export default function AutoPayroll({ onBack, token, navigateTo }) {
                     { label:"Success",       val:summary.success,             color:C.green, bg:"rgba(16,185,129,.06)"           },
                     { label:"Skipped",       val:summary.skipped,             color:C.amber, bg:"rgba(245,158,11,.06)"           },
                     { label:"Failed",        val:summary.failed,              color:C.red,   bg:"rgba(239,68,68,.06)"            },
-                    { label:"Total Payout",  val:`₹${fmt(summary.totalNet)}`, color:C.coral, bg:"rgba(255,107,53,.05)", wide:true },
+                    { label:"Total Payout",  val:`₹${fmt(summary.totalNet)}`, color:C.coral, bg:"rgba(139,92,246,.05)", wide:true },
                   ].map(s => (
                     <div key={s.label} style={{ background:s.bg,border:`1.5px solid ${C.border}`,borderRadius:16,padding:"14px 16px",gridColumn:s.wide?"span 2":undefined }}>
                       <div style={{ fontSize:9,fontWeight:800,color:C.muted,textTransform:"uppercase",letterSpacing:".08em",marginBottom:4 }}>{s.label}</div>
@@ -744,7 +744,7 @@ export default function AutoPayroll({ onBack, token, navigateTo }) {
                 <div className="ap-card-head">
                   <Ic d={ICONS.file} size={16} color={C.teal} sw={2}/>
                   <div style={{ fontFamily:"Sora,sans-serif",fontSize:14,fontWeight:800,color:C.navy }}>
-                    Payroll Results — {payrollMonth}
+                    Payouts Results — {payrollMonth}
                   </div>
                   <div style={{ marginLeft:"auto",fontSize:11,color:C.muted,fontWeight:600 }}>
                     {results.length} record(s)
@@ -764,11 +764,11 @@ export default function AutoPayroll({ onBack, token, navigateTo }) {
                         <StatusIcon status={status}/>
                         <div style={{ flex:1,minWidth:0 }}>
                           <div style={{ fontSize:13,fontWeight:700,color:C.navy,whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis" }}>
-                            {r.employeeName || `Employee #${r.employeeId}`}
+                            {r.employeeName || `Person #${r.employeeId}`}
                           </div>
                           {status === "SUCCESS" && (
                             <div style={{ fontSize:11,color:C.muted,marginTop:2 }}>
-                              Net: <b style={{color:C.green}}>₹{fmt(r.netSalary)}</b>
+                              Net: <b style={{color:C.green}}>₹{fmt(r.netCompensation)}</b>
                               {(r.lopDays > 0) && <> · LOP: <b style={{color:C.red}}>{r.lopDays} day(s)</b></>}
                             </div>
                           )}
@@ -790,7 +790,7 @@ export default function AutoPayroll({ onBack, token, navigateTo }) {
                               href={r.payslipUrl}
                               target="_blank"
                               rel="noreferrer"
-                              style={{ display:"inline-flex",alignItems:"center",gap:4,fontSize:10,fontWeight:700,color:C.teal,background:"rgba(0,194,168,.1)",padding:"3px 9px",borderRadius:999,border:"1px solid rgba(0,194,168,.2)",textDecoration:"none" }}
+                              style={{ display:"inline-flex",alignItems:"center",gap:4,fontSize:10,fontWeight:700,color:C.teal,background:"rgba(6,182,212,.1)",padding:"3px 9px",borderRadius:999,border:"1px solid rgba(6,182,212,.2)",textDecoration:"none" }}
                             >
                               <Ic d={ICONS.pdf} size={11} color={C.teal} sw={2}/> PDF
                             </a>
@@ -826,7 +826,7 @@ export default function AutoPayroll({ onBack, token, navigateTo }) {
                     ["Step 3", "Calculate attendance factor = effectiveDays / totalWorkingDays", C.amber],
                     ["Step 4", "Scale all earnings by attendance factor (LOP applied proportionally)", C.purple],
                     ["Step 5", "Apply statutory deductions (PF, ESI, PT, TDS) on full structure", C.indigo],
-                    ["Step 6", "Net = (Scaled Earnings) − (Deductions). Saved as PayrollHistory (PENDING)", C.green],
+                    ["Step 6", "Net = (Scaled Earnings) − (Deductions). Saved as PayoutsHistory (PENDING)", C.green],
                     ["Step 7", "If generatePdf=true → create salary slip PDF → upload to Cloudinary", C.teal],
                   ].map(([step, desc, color]) => (
                     <div key={step} style={{ display:"flex",gap:12,marginBottom:12 }}>
@@ -836,8 +836,8 @@ export default function AutoPayroll({ onBack, token, navigateTo }) {
                       <div style={{ fontSize:12,color:C.muted,fontWeight:500,lineHeight:1.6 }}>{desc}</div>
                     </div>
                   ))}
-                  <div style={{ marginTop:4,padding:"10px 14px",background:"rgba(255,107,53,.06)",borderRadius:10,fontSize:12,color:C.coral,fontWeight:600,border:"1px solid rgba(255,107,53,.15)" }}>
-                    ✓ All records are saved with status PENDING. Use Payroll Management to approve and mark as PAID.
+                  <div style={{ marginTop:4,padding:"10px 14px",background:"rgba(139,92,246,.06)",borderRadius:10,fontSize:12,color:C.coral,fontWeight:600,border:"1px solid rgba(139,92,246,.15)" }}>
+                    ✓ All records are saved with status PENDING. Use Payout Control to approve and mark as PAID.
                   </div>
                 </div>
               </div>
@@ -862,7 +862,7 @@ export default function AutoPayroll({ onBack, token, navigateTo }) {
                   onMouseEnter={e => e.currentTarget.style.background="#f8fafc"}
                   onMouseLeave={e => e.currentTarget.style.background="#fff"}
                 >
-                  <Ic d={ICONS.file} size={14} color={C.navy}/> View in Payroll Management
+                  <Ic d={ICONS.file} size={14} color={C.navy}/> View in Payout Control
                 </button>
               </div>
             </div>

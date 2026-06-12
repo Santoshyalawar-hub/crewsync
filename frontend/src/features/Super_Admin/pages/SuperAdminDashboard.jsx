@@ -3,7 +3,7 @@ import api from "@/lib/apiClient";
 
 /* ── design tokens (matches admin dashboard) ── */
 const C = {
-  navy:"#0D1F2D", mid:"#162639", teal:"#00C2A8", coral:"#FF6B35",
+  navy:"#0B1020", mid:"#182033", teal:"#06B6D4", coral:"#8B5CF6",
   purple:"#818cf8", amber:"#f59e0b", green:"#10b981", red:"#ef4444",
   bg:"#F4F6FB", border:"#EDF0F7",
 };
@@ -53,7 +53,7 @@ const timeAgo = dateStr => {
   return `${Math.floor(diff/86400)}d ago`;
 };
 
-const DEPT_COLORS = ["#6366f1","#0ea5e9","#10b981","#f59e0b","#ef4444","#8b5cf6","#ec4899","#14b8a6","#f97316","#64748b"];
+const DEPT_COLORS = ["#6366f1","#0ea5e9","#10b981","#f59e0b","#ef4444","#8b5cf6","#ec4899","#06B6D4","#f97316","#64748b"];
 
 const CSS = `
 @import url('https://fonts.googleapis.com/css2?family=Sora:wght@700;800;900&family=DM+Sans:wght@400;500;600;700&display=swap');
@@ -68,11 +68,11 @@ const CSS = `
 .sa-quick { transition:all .2s; cursor:pointer; }
 `;
 
-export default function SuperAdminDashboard({ navigateTo }) {
+export default function SuperOperatorControlRoom({ navigateTo }) {
   const [users,    setUsers]    = useState([]);
   const [loading,  setLoading]  = useState(true);
-  const companyName = localStorage.getItem("companyName") || "Company";
-  const userName    = localStorage.getItem("firstName")   || "Admin";
+  const companyName = localStorage.getItem("companyName") || "Workspace";
+  const userName    = localStorage.getItem("firstName")   || "Operator";
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -110,19 +110,19 @@ export default function SuperAdminDashboard({ navigateTo }) {
     .slice(0,5);
 
   const stats = [
-    { label:"Total Employees", value:employees.length, icon:"M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z", accent:"#6366f1", bg:"rgba(99,102,241,.10)" },
+    { label:"Total People", value:employees.length, icon:"M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z", accent:"#6366f1", bg:"rgba(99,102,241,.10)" },
     { label:"Active Staff",    value:active.length,    icon:"M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z", accent:C.green,  bg:"rgba(16,185,129,.10)" },
-    { label:"Admins",          value:admins.length,    icon:"M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z", accent:C.coral,  bg:"rgba(255,107,53,.10)" },
+    { label:"Operators",          value:admins.length,    icon:"M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z", accent:C.coral,  bg:"rgba(139,92,246,.10)" },
     { label:"Departments",     value:depts.length,     icon:"M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-2 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4", accent:C.amber,  bg:"rgba(245,158,11,.10)" },
   ];
 
   const quickActions = [
-    { label:"Add Employee",   icon:"M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z", color:"#6366f1", bg:"rgba(99,102,241,.10)", page:"sa_onboard" },
-    { label:"Manage Admins",  icon:"M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z", color:C.coral, bg:"rgba(255,107,53,.10)", page:"sa_admins" },
-    { label:"View Employees", icon:"M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z", color:C.green, bg:"rgba(16,185,129,.10)", page:"sa_team" },
-    { label:"Org Chart",      icon:"M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6", color:C.teal, bg:"rgba(0,194,168,.10)", page:"sa_org" },
-    { label:"HR Documents",   icon:"M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z", color:C.amber, bg:"rgba(245,158,11,.10)", page:"sa_docs" },
-    { label:"Policy Vault",   icon:"M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4", color:"#8b5cf6", bg:"rgba(139,92,246,.10)", page:"sa_policy" },
+    { label:"Add Person",   icon:"M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z", color:"#6366f1", bg:"rgba(99,102,241,.10)", page:"sa_onboard" },
+    { label:"Manage Operators",  icon:"M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z", color:C.coral, bg:"rgba(139,92,246,.10)", page:"sa_admins" },
+    { label:"View Persons", icon:"M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z", color:C.green, bg:"rgba(16,185,129,.10)", page:"sa_team" },
+    { label:"PeopleMap",      icon:"M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6", color:C.teal, bg:"rgba(6,182,212,.10)", page:"sa_org" },
+    { label:"PeopleOps Vault",   icon:"M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z", color:C.amber, bg:"rgba(245,158,11,.10)", page:"sa_docs" },
+    { label:"Playbook Vault",   icon:"M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4", color:"#8b5cf6", bg:"rgba(139,92,246,.10)", page:"sa_policy" },
   ];
 
   return (
@@ -136,12 +136,12 @@ export default function SuperAdminDashboard({ navigateTo }) {
         position:"relative", overflow:"hidden",
       }}>
         {/* decorative circles */}
-        <div style={{ position:"absolute", top:-40, right:80, width:180, height:180, borderRadius:"50%", background:"rgba(255,107,53,.08)", pointerEvents:"none" }}/>
-        <div style={{ position:"absolute", bottom:-30, right:-20, width:120, height:120, borderRadius:"50%", background:"rgba(0,194,168,.07)", pointerEvents:"none" }}/>
+        <div style={{ position:"absolute", top:-40, right:80, width:180, height:180, borderRadius:"50%", background:"rgba(139,92,246,.08)", pointerEvents:"none" }}/>
+        <div style={{ position:"absolute", bottom:-30, right:-20, width:120, height:120, borderRadius:"50%", background:"rgba(6,182,212,.07)", pointerEvents:"none" }}/>
         <div style={{ position:"relative", display:"flex", alignItems:"center", justifyContent:"space-between", flexWrap:"wrap", gap:16 }}>
           <div>
             <p style={{ color:"rgba(255,255,255,.45)", fontSize:11, fontWeight:700, textTransform:"uppercase", letterSpacing:".12em", margin:"0 0 6px" }}>
-              {companyName} · Super Admin Portal
+              {companyName} · Super Ops Portal
             </p>
             <h1 className="fd" style={{ color:"#fff", fontSize:26, fontWeight:900, margin:"0 0 6px", letterSpacing:"-.02em" }}>
               Welcome back, {userName} 👋
@@ -153,13 +153,13 @@ export default function SuperAdminDashboard({ navigateTo }) {
           <div style={{ display:"flex", gap:10 }}>
             <button onClick={()=>navigateTo?.("sa_onboard")} style={{
               padding:"10px 20px", borderRadius:12,
-              background:"linear-gradient(135deg,#FF6B35,#FF8C5A)",
+              background:"linear-gradient(135deg,#8B5CF6,#FBBF24)",
               color:"#fff", border:"none", cursor:"pointer",
               fontSize:13, fontWeight:700,
-              boxShadow:"0 4px 14px rgba(255,107,53,.35)",
+              boxShadow:"0 4px 14px rgba(139,92,246,.35)",
               display:"flex", alignItems:"center", gap:7,
             }}>
-              <Ic d="M12 4v16m8-8H4" size={14} sw={2.5}/> Add Employee
+              <Ic d="M12 4v16m8-8H4" size={14} sw={2.5}/> Add Person
             </button>
             <button onClick={()=>navigateTo?.("sa_admins")} style={{
               padding:"10px 20px", borderRadius:12,
@@ -168,7 +168,7 @@ export default function SuperAdminDashboard({ navigateTo }) {
               cursor:"pointer", fontSize:13, fontWeight:700,
               display:"flex", alignItems:"center", gap:7,
             }}>
-              <Ic d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" size={14} sw={2}/> Manage Admins
+              <Ic d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" size={14} sw={2}/> Manage Operators
             </button>
           </div>
         </div>
@@ -240,16 +240,16 @@ export default function SuperAdminDashboard({ navigateTo }) {
         </div>
       </div>
 
-      {/* ── Bottom Row: Recent Employees + Overview ── */}
+      {/* ── Bottom Row: Recent Persons + Overview ── */}
       <div style={{ display:"grid", gridTemplateColumns:"1fr 340px", gap:20 }}>
 
-        {/* Recent Employees */}
+        {/* Recent Persons */}
         <div className="sa-card" style={{ padding:"20px 22px" }}>
           <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:16 }}>
-            <p className="fd" style={{ fontSize:14, fontWeight:800, color:C.navy, margin:0 }}>Recent Employees</p>
+            <p className="fd" style={{ fontSize:14, fontWeight:800, color:C.navy, margin:0 }}>Recent Persons</p>
             <button onClick={()=>navigateTo?.("sa_team")} style={{
-              fontSize:11, fontWeight:700, color:C.coral, background:"rgba(255,107,53,.06)",
-              border:"1px solid rgba(255,107,53,.15)", borderRadius:8, padding:"5px 12px", cursor:"pointer",
+              fontSize:11, fontWeight:700, color:C.coral, background:"rgba(139,92,246,.06)",
+              border:"1px solid rgba(139,92,246,.15)", borderRadius:8, padding:"5px 12px", cursor:"pointer",
             }}>View All →</button>
           </div>
           {loading ? (
@@ -265,7 +265,7 @@ export default function SuperAdminDashboard({ navigateTo }) {
             <table style={{ width:"100%", borderCollapse:"collapse", fontSize:13 }}>
               <thead>
                 <tr style={{ borderBottom:`1px solid ${C.border}` }}>
-                  {["Employee","Department","Status","Joined"].map(h=>(
+                  {["Person","Department","Status","Joined"].map(h=>(
                     <th key={h} style={{ textAlign:"left", padding:"6px 10px", fontSize:10, fontWeight:700, color:"#94a3b8", textTransform:"uppercase", letterSpacing:".07em" }}>{h}</th>
                   ))}
                 </tr>
@@ -309,34 +309,34 @@ export default function SuperAdminDashboard({ navigateTo }) {
           <div className="sa-card" style={{ padding:"20px 22px" }}>
             <p className="fd" style={{ fontSize:14, fontWeight:800, color:C.navy, margin:"0 0 16px" }}>Workforce Overview</p>
             <div style={{ display:"flex", flexDirection:"column", gap:12 }}>
-              <OverviewRow label="Active Employees" value={active.length} total={employees.length} color={C.green}/>
+              <OverviewRow label="Active Persons" value={active.length} total={employees.length} color={C.green}/>
               <OverviewRow label="Inactive" value={inactive.length} total={employees.length} color={C.red}/>
-              <OverviewRow label="Admins" value={admins.length} total={users.length} color={C.coral}/>
+              <OverviewRow label="Operators" value={admins.length} total={users.length} color={C.coral}/>
             </div>
           </div>
 
-          {/* Admin Summary */}
+          {/* Operator Summary */}
           <div className="sa-card" style={{ padding:"20px 22px", flex:1 }}>
             <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:14 }}>
-              <p className="fd" style={{ fontSize:14, fontWeight:800, color:C.navy, margin:0 }}>Admin Team</p>
+              <p className="fd" style={{ fontSize:14, fontWeight:800, color:C.navy, margin:0 }}>Operator Team</p>
               <button onClick={()=>navigateTo?.("sa_admins")} style={{
-                fontSize:11, fontWeight:700, color:C.coral, background:"rgba(255,107,53,.06)",
-                border:"1px solid rgba(255,107,53,.15)", borderRadius:8, padding:"5px 12px", cursor:"pointer",
+                fontSize:11, fontWeight:700, color:C.coral, background:"rgba(139,92,246,.06)",
+                border:"1px solid rgba(139,92,246,.15)", borderRadius:8, padding:"5px 12px", cursor:"pointer",
               }}>Manage →</button>
             </div>
             {admins.length===0 ? (
               <p style={{ fontSize:12, color:"#94a3b8", textAlign:"center", padding:"12px 0" }}>No admins found</p>
             ) : admins.slice(0,4).map(a => (
               <div key={a.id} style={{ display:"flex", alignItems:"center", gap:10, padding:"8px 0", borderBottom:`1px solid ${C.border}` }}>
-                <div style={{ width:32, height:32, borderRadius:10, background:"linear-gradient(135deg,#FF6B35,#FF8C5A)", display:"flex", alignItems:"center", justifyContent:"center", color:"#fff", fontWeight:800, fontSize:11, flexShrink:0 }}>
+                <div style={{ width:32, height:32, borderRadius:10, background:"linear-gradient(135deg,#8B5CF6,#FBBF24)", display:"flex", alignItems:"center", justifyContent:"center", color:"#fff", fontWeight:800, fontSize:11, flexShrink:0 }}>
                   {initials(a)}
                 </div>
                 <div style={{ flex:1, minWidth:0 }}>
                   <p style={{ fontWeight:700, color:C.navy, margin:0, fontSize:12, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{displayName(a)}</p>
                   <p style={{ fontSize:10, color:"#94a3b8", margin:0, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{a.email||"—"}</p>
                 </div>
-                <span style={{ fontSize:9, fontWeight:700, background:"rgba(255,107,53,.08)", color:C.coral, padding:"2px 7px", borderRadius:20, flexShrink:0 }}>
-                  Admin
+                <span style={{ fontSize:9, fontWeight:700, background:"rgba(139,92,246,.08)", color:C.coral, padding:"2px 7px", borderRadius:20, flexShrink:0 }}>
+                  Operator
                 </span>
               </div>
             ))}

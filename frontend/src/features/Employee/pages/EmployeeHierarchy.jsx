@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import api from "@/lib/apiClient";
 
 const T = {
-  navy:"#0D1F2D", navyMid:"#1E3448", coral:"#FF6B35", teal:"#00C2A8",
+  navy:"#0B1020", navyMid:"#374151", coral:"#8B5CF6", teal:"#06B6D4",
   bg:"#F5F7FB", border:"#E8ECF2",
 };
 
@@ -17,7 +17,7 @@ const CSS = `
   box-shadow:0 2px 12px rgba(13,31,45,.06); flex-shrink:0;
   transition:box-shadow .2s, transform .2s;
 }
-.eh-node:hover { box-shadow:0 6px 22px rgba(13,31,45,.11); transform:translateY(-2px); border-color:rgba(255,107,53,.25); }
+.eh-node:hover { box-shadow:0 6px 22px rgba(13,31,45,.11); transform:translateY(-2px); border-color:rgba(139,92,246,.25); }
 
 .eh-avatar {
   width:60px; height:60px; border-radius:50%; margin:0 auto 10px;
@@ -39,8 +39,8 @@ const CSS = `
 `;
 
 const ROLE_STYLE = {
-  CEO:          { bg:"rgba(255,107,53,.12)",  color:T.coral,   border:"rgba(255,107,53,.3)"  },
-  Manager:      { bg:"rgba(0,194,168,.1)",    color:T.teal,    border:"rgba(0,194,168,.3)"   },
+  CEO:          { bg:"rgba(139,92,246,.12)",  color:T.coral,   border:"rgba(139,92,246,.3)"  },
+  Manager:      { bg:"rgba(6,182,212,.1)",    color:T.teal,    border:"rgba(6,182,212,.3)"   },
   "Team Lead":  { bg:"rgba(99,102,241,.1)",   color:"#6366F1", border:"rgba(99,102,241,.25)" },
   "Team Member":{ bg:"rgba(100,116,139,.1)",  color:"#64748b", border:"rgba(100,116,139,.25)"},
 };
@@ -95,7 +95,7 @@ const OrgNode = ({ node, level = 0 }) => {
   );
 };
 
-export default function EmployeeHierarchy() {
+export default function PersonPeopleMap() {
   const [tree,    setTree]    = useState(null);
   const [loading, setLoading] = useState(true);
   const [error,   setError]   = useState("");
@@ -133,19 +133,19 @@ export default function EmployeeHierarchy() {
 
       {/* HERO */}
       <div style={{background:`linear-gradient(135deg,${T.navy},${T.navyMid})`,padding:"22px 26px",position:"relative",overflow:"hidden",marginBottom:22}}>
-        <div style={{position:"absolute",top:-50,right:60,width:180,height:180,borderRadius:"50%",background:"rgba(255,107,53,.07)",pointerEvents:"none"}}/>
-        <div style={{position:"absolute",bottom:-30,right:260,width:100,height:100,borderRadius:"50%",background:"rgba(0,194,168,.07)",pointerEvents:"none"}}/>
+        <div style={{position:"absolute",top:-50,right:60,width:180,height:180,borderRadius:"50%",background:"rgba(139,92,246,.07)",pointerEvents:"none"}}/>
+        <div style={{position:"absolute",bottom:-30,right:260,width:100,height:100,borderRadius:"50%",background:"rgba(6,182,212,.07)",pointerEvents:"none"}}/>
         <div style={{position:"relative",display:"flex",alignItems:"center",justifyContent:"space-between",flexWrap:"wrap",gap:12}}>
           <div>
-            <p style={{fontSize:11,fontWeight:700,color:T.coral,textTransform:"uppercase",letterSpacing:".12em",marginBottom:4}}>SamayaHR · Organisation</p>
-            <h1 className="fd" style={{fontSize:23,fontWeight:900,color:"#fff",margin:0}}>Org Chart</h1>
+            <p style={{fontSize:11,fontWeight:700,color:T.coral,textTransform:"uppercase",letterSpacing:".12em",marginBottom:4}}>CrewSync · Organisation</p>
+            <h1 className="fd" style={{fontSize:23,fontWeight:900,color:"#fff",margin:0}}>PeopleMap</h1>
             <p style={{fontSize:13,color:"rgba(255,255,255,.5)",marginTop:4}}>{companyName}</p>
           </div>
           {tree && (
             <div style={{display:"flex",gap:10,flexWrap:"wrap"}}>
               {[
-                {label:"CEO",        val:roleCounts.CEO,           accent:T.coral,   bg:"rgba(255,107,53,.15)"},
-                {label:"Managers",   val:roleCounts.Manager,       accent:T.teal,    bg:"rgba(0,194,168,.15)"},
+                {label:"CEO",        val:roleCounts.CEO,           accent:T.coral,   bg:"rgba(139,92,246,.15)"},
+                {label:"Managers",   val:roleCounts.Manager,       accent:T.teal,    bg:"rgba(6,182,212,.15)"},
                 {label:"Team Leads", val:roleCounts["Team Lead"],  accent:"#6366F1", bg:"rgba(99,102,241,.15)"},
                 {label:"Members",    val:roleCounts["Team Member"], accent:"#94a3b8", bg:"rgba(148,163,184,.15)"},
               ].map(r => (
@@ -175,7 +175,7 @@ export default function EmployeeHierarchy() {
         {!loading && !error && !tree && (
           <div style={{display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",padding:"80px 20px",textAlign:"center"}}>
             <span style={{fontSize:52,marginBottom:16,display:"block"}}>🏢</span>
-            <p className="fd" style={{fontSize:16,fontWeight:900,color:T.navy,marginBottom:6}}>No Hierarchy Set Up Yet</p>
+            <p className="fd" style={{fontSize:16,fontWeight:900,color:T.navy,marginBottom:6}}>No PeopleMap Set Up Yet</p>
             <p style={{fontSize:13,color:"#64748b"}}>Your admin hasn't configured the organisation chart yet. Check back later.</p>
           </div>
         )}

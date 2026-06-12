@@ -3,7 +3,7 @@ import api from "@/lib/apiClient";
 
 /* ── design tokens ── */
 const C = {
-  navy:"#0D1F2D", mid:"#162639", coral:"#FF6B35",
+  navy:"#0B1020", mid:"#182033", coral:"#8B5CF6",
   green:"#10b981", red:"#ef4444", amber:"#f59e0b",
   bg:"#F4F6FB", border:"#EDF0F7",
 };
@@ -62,7 +62,7 @@ function ConfirmModal({ title, body, onConfirm, onCancel }) {
 }
 
 /* ── add / edit modal ── */
-function AdminModal({ mode, admin, onClose, onSubmit, saving }) {
+function OperatorModal({ mode, admin, onClose, onSubmit, saving }) {
   const isEdit = mode==="edit";
   const [form, setForm] = useState({
     firstName:   admin?.firstName   || (admin?.name||"").split(" ")[0] || "",
@@ -88,7 +88,7 @@ function AdminModal({ mode, admin, onClose, onSubmit, saving }) {
       <div style={{ background:"#fff", borderRadius:22, width:"100%", maxWidth:480, boxShadow:"0 32px 80px rgba(0,0,0,.28)", overflow:"hidden" }} onClick={e=>e.stopPropagation()}>
         <div style={{ background:isEdit?"linear-gradient(135deg,#0ea5e9,#0284c7)":`linear-gradient(135deg,${C.navy},${C.mid})`, padding:"20px 26px", display:"flex", alignItems:"flex-start", justifyContent:"space-between" }}>
           <div>
-            <p style={{ color:"#fff", fontSize:16, fontWeight:900, margin:0, fontFamily:"'Sora',sans-serif" }}>{isEdit?"Edit Admin":"Add New Admin"}</p>
+            <p style={{ color:"#fff", fontSize:16, fontWeight:900, margin:0, fontFamily:"'Sora',sans-serif" }}>{isEdit?"Edit Operator":"Add New Operator"}</p>
             <p style={{ color:"rgba(255,255,255,.45)", fontSize:11, margin:"3px 0 0" }}>{isEdit?"Update admin details":"Create a new admin for your team"}</p>
           </div>
           <button onClick={onClose} style={{ width:30, height:30, borderRadius:9, border:"none", background:"rgba(255,255,255,.12)", color:"#fff", cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center" }}>
@@ -132,13 +132,13 @@ function AdminModal({ mode, admin, onClose, onSubmit, saving }) {
             <button type="button" onClick={onClose} style={{ padding:"10px 22px", borderRadius:11, border:`1.5px solid ${C.border}`, background:"#fff", color:"#475569", fontSize:13, fontWeight:700, cursor:"pointer" }}>Cancel</button>
             <button type="submit" disabled={saving} style={{
               padding:"10px 22px", borderRadius:11, border:"none",
-              background:isEdit?"linear-gradient(135deg,#0ea5e9,#0284c7)":`linear-gradient(135deg,${C.coral},#FF8C5A)`,
+              background:isEdit?"linear-gradient(135deg,#0ea5e9,#0284c7)":`linear-gradient(135deg,${C.coral},#FBBF24)`,
               color:"#fff", fontSize:13, fontWeight:800, cursor:saving?"not-allowed":"pointer",
-              opacity:saving?.7:1, boxShadow:`0 4px 14px ${isEdit?"rgba(14,165,233,.3)":"rgba(255,107,53,.3)"}`,
+              opacity:saving?.7:1, boxShadow:`0 4px 14px ${isEdit?"rgba(14,165,233,.3)":"rgba(139,92,246,.3)"}`,
               display:"flex", alignItems:"center", gap:7,
             }}>
               {saving&&<SpinIcon/>}
-              {isEdit?"Save Changes":"Create Admin"}
+              {isEdit?"Save Changes":"Create Operator"}
             </button>
           </div>
         </form>
@@ -168,8 +168,8 @@ const CSS = `
 `;
 
 /* ════════════════════════════════ MAIN ════════════════════════════════ */
-export default function ManageAdmins() {
-  const [admins,  setAdmins]  = useState([]);
+export default function ManageOperators() {
+  const [admins,  setOperators]  = useState([]);
   const [loading,     setLoading]     = useState(true);
   const [saving,      setSaving]      = useState(false);
   const [toast,       setToast]       = useState(null);
@@ -180,7 +180,7 @@ export default function ManageAdmins() {
   const [sendingCred, setSendingCred] = useState(null); // userId being sent
   const [credSentMap, setCredSentMap] = useState({});   // userId → boolean
 
-  const companyName = localStorage.getItem("companyName") || "Company";
+  const companyName = localStorage.getItem("companyName") || "Workspace";
   const showToast = (message, type="success") => setToast({ message, type });
 
   /* ── fetch ── */
@@ -190,18 +190,18 @@ export default function ManageAdmins() {
       const r = await api.get("/api/users/tenant/admins");
       const list = Array.isArray(r.data) ? r.data
         : Array.isArray(r.data?.data) ? r.data.data : [];
-      setAdmins(list);
+      setOperators(list);
     } catch {
       // fallback: get all users and filter admins
       try {
         const r2 = await api.get("/api/users/tenant");
         const all = Array.isArray(r2.data) ? r2.data
           : Array.isArray(r2.data?.data) ? r2.data.data : [];
-        setAdmins(all.filter(u => {
+        setOperators(all.filter(u => {
           const role = (u.role||"").toUpperCase();
           return role==="ADMIN"||role==="COMPANY_ADMIN"||role==="SUPER_ADMIN";
         }));
-      } catch { setAdmins([]); }
+      } catch { setOperators([]); }
     }
     setLoading(false);
   }, []);
@@ -230,7 +230,7 @@ export default function ManageAdmins() {
       const r = await api.post("/api/users/register", body);
       const created = r.data?.data || r.data;
       if (r.data?.success !== false) {
-        showToast("Admin created! Sending credentials email…");
+        showToast("Operator created! Sending credentials email…");
         setModal(null);
         load();
         // auto-send credentials email after creation
@@ -250,7 +250,7 @@ export default function ManageAdmins() {
     try {
       const r = await api.put(`/api/users/${selected.id}`, form);
       if (r.data?.success !== false) {
-        showToast("Admin updated!");
+        showToast("Operator updated!");
         setModal(null); setSelected(null);
         load();
       } else showToast(r.data?.message||"Failed to update","error");
@@ -262,7 +262,7 @@ export default function ManageAdmins() {
     if (!delConf) return;
     try {
       await api.delete(`/api/users/${delConf.id}`);
-      showToast("Admin deleted");
+      showToast("Operator deleted");
       setDelConf(null);
       load();
     } catch(e) { showToast(e.response?.data?.message||"Error deleting admin","error"); }
@@ -293,20 +293,20 @@ export default function ManageAdmins() {
     const q = search.toLowerCase();
     return displayName(a).toLowerCase().includes(q) || (a.email||"").toLowerCase().includes(q);
   });
-  const totalAdmins    = admins.length;
-  const activeAdmins   = admins.filter(a=>statusOf(a)==="ACTIVE").length;
-  const inactiveAdmins = admins.filter(a=>statusOf(a)==="INACTIVE").length;
+  const totalOperators    = admins.length;
+  const activeOperators   = admins.filter(a=>statusOf(a)==="ACTIVE").length;
+  const inactiveOperators = admins.filter(a=>statusOf(a)==="INACTIVE").length;
 
   return (
     <div className="sadm" style={{ background:C.bg, minHeight:"100vh", padding:"24px 28px" }}>
       <style>{CSS}</style>
 
       {toast && <Toast message={toast.message} type={toast.type} onClose={()=>setToast(null)}/>}
-      {modal==="add"  && <AdminModal mode="add"  onClose={()=>setModal(null)} onSubmit={handleCreate} saving={saving}/>}
-      {modal==="edit" && selected && <AdminModal mode="edit" admin={selected} onClose={()=>{setModal(null);setSelected(null);}} onSubmit={handleUpdate} saving={saving}/>}
+      {modal==="add"  && <OperatorModal mode="add"  onClose={()=>setModal(null)} onSubmit={handleCreate} saving={saving}/>}
+      {modal==="edit" && selected && <OperatorModal mode="edit" admin={selected} onClose={()=>{setModal(null);setSelected(null);}} onSubmit={handleUpdate} saving={saving}/>}
       {delConf && (
         <ConfirmModal
-          title="Delete Admin"
+          title="Delete Operator"
           body={`Are you sure you want to delete "${displayName(delConf)}"? This action cannot be undone.`}
           onConfirm={handleDelete}
           onCancel={()=>setDelConf(null)}
@@ -322,19 +322,19 @@ export default function ManageAdmins() {
         <div style={{ position:"absolute", top:-30, right:60, width:140, height:140, borderRadius:"50%", background:"rgba(99,102,241,.10)", pointerEvents:"none" }}/>
         <div style={{ position:"relative", display:"flex", alignItems:"center", justifyContent:"space-between", gap:16, flexWrap:"wrap" }}>
           <div>
-            <p style={{ color:"rgba(255,255,255,.4)", fontSize:11, fontWeight:700, textTransform:"uppercase", letterSpacing:".12em", margin:"0 0 5px" }}>{companyName} · Super Admin</p>
-            <h1 className="fd" style={{ color:"#fff", fontSize:24, fontWeight:900, margin:0, letterSpacing:"-.02em" }}>Manage Admins</h1>
+            <p style={{ color:"rgba(255,255,255,.4)", fontSize:11, fontWeight:700, textTransform:"uppercase", letterSpacing:".12em", margin:"0 0 5px" }}>{companyName} · Owner</p>
+            <h1 className="fd" style={{ color:"#fff", fontSize:24, fontWeight:900, margin:0, letterSpacing:"-.02em" }}>Manage Operators</h1>
             <p style={{ color:"rgba(255,255,255,.45)", fontSize:12, margin:"5px 0 0" }}>Add, edit, and manage your admin users</p>
           </div>
           <button onClick={()=>setModal("add")} style={{
             padding:"11px 22px", borderRadius:13,
-            background:"linear-gradient(135deg,#FF6B35,#FF8C5A)",
+            background:"linear-gradient(135deg,#8B5CF6,#FBBF24)",
             color:"#fff", border:"none", cursor:"pointer",
             fontSize:13, fontWeight:800,
-            boxShadow:"0 4px 16px rgba(255,107,53,.35)",
+            boxShadow:"0 4px 16px rgba(139,92,246,.35)",
             display:"flex", alignItems:"center", gap:8,
           }}>
-            <Ic d="M12 4v16m8-8H4" size={14} sw={2.5}/> Add Admin
+            <Ic d="M12 4v16m8-8H4" size={14} sw={2.5}/> Add Operator
           </button>
         </div>
       </div>
@@ -342,9 +342,9 @@ export default function ManageAdmins() {
       {/* ── Stat Cards ── */}
       <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:16, marginBottom:22 }}>
         {[
-          { label:"Total Admins",   value:totalAdmins,    icon:"M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z", accent:"#6366f1", bg:"rgba(99,102,241,.08)" },
-          { label:"Active",         value:activeAdmins,   icon:"M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z", accent:C.green, bg:"rgba(16,185,129,.08)" },
-          { label:"Inactive",       value:inactiveAdmins, icon:"M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z", accent:C.red,   bg:"rgba(239,68,68,.08)" },
+          { label:"Total Operators",   value:totalOperators,    icon:"M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z", accent:"#6366f1", bg:"rgba(99,102,241,.08)" },
+          { label:"Active",         value:activeOperators,   icon:"M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z", accent:C.green, bg:"rgba(16,185,129,.08)" },
+          { label:"Inactive",       value:inactiveOperators, icon:"M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z", accent:C.red,   bg:"rgba(239,68,68,.08)" },
         ].map((s,i)=>(
           <div key={s.label} className="sadm-card sadm-stat" style={{ padding:"18px 20px", display:"flex", alignItems:"center", gap:14, animation:`fadeUp .35s ease ${i*80}ms both` }}>
             <div style={{ width:46, height:46, borderRadius:13, background:s.bg, display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>
@@ -385,7 +385,7 @@ export default function ManageAdmins() {
             </div>
             <p style={{ fontSize:14, fontWeight:700, color:"#94a3b8", margin:0 }}>No admins found</p>
             <p style={{ fontSize:12, color:"#cbd5e1", margin:"4px 0 0" }}>
-              {search?"Try a different search":"Click 'Add Admin' to create one"}
+              {search?"Try a different search":"Click 'Add Operator' to create one"}
             </p>
           </div>
         ) : (
@@ -393,7 +393,7 @@ export default function ManageAdmins() {
             <table style={{ width:"100%", borderCollapse:"collapse", fontSize:13 }}>
               <thead>
                 <tr style={{ background:C.navy }}>
-                  {["Admin","Email","Phone","Employee ID","Status","Actions"].map(h=>(
+                  {["Operator","Email","Phone","Person ID","Status","Actions"].map(h=>(
                     <th key={h} style={{ textAlign:"left", padding:"12px 16px", fontSize:10, fontWeight:700, color:"rgba(255,255,255,.6)", textTransform:"uppercase", letterSpacing:".08em", whiteSpace:"nowrap" }}>{h}</th>
                   ))}
                 </tr>
@@ -412,7 +412,7 @@ export default function ManageAdmins() {
                           <div>
                             <p style={{ fontWeight:700, color:C.navy, margin:0, fontSize:13 }}>{displayName(a)}</p>
                             <p style={{ fontSize:10, color:"#94a3b8", margin:0, fontFamily:"'DM Sans',sans-serif" }}>
-                              {(a.role||"Admin").replace(/_/g," ")}
+                              {(a.role||"Operator").replace(/_/g," ")}
                             </p>
                           </div>
                         </div>
@@ -421,7 +421,7 @@ export default function ManageAdmins() {
                       <td style={{ padding:"13px 16px", color:"#475569", fontSize:12 }}>{a.email||"—"}</td>
                       {/* Phone */}
                       <td style={{ padding:"13px 16px", color:"#475569", fontSize:12 }}>{a.phoneNumber||a.phone||"—"}</td>
-                      {/* Employee ID */}
+                      {/* Person ID */}
                       <td style={{ padding:"13px 16px", color:"#475569", fontSize:12 }}>{a.employeeId||"—"}</td>
                       {/* Status */}
                       <td style={{ padding:"13px 16px" }}>

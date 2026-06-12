@@ -26,10 +26,10 @@ import api from "@/lib/apiClient";
 
 /* -------------------- Theme -------------------- */
 const T = {
-  navy: "#0D1F2D",
-  navyMid: "#1E3448",
-  coral: "#FF6B35",
-  teal: "#00C2A8",
+  navy: "#0B1020",
+  navyMid: "#374151",
+  coral: "#8B5CF6",
+  teal: "#06B6D4",
   bg: "#F5F7FB",
   border: "#E8ECF2",
   textSoft: "#64748B",
@@ -44,8 +44,8 @@ const CSS = `
 .apd-shell{
   min-height:100vh;
   background:
-    radial-gradient(circle at top right, rgba(255,107,53,.08), transparent 20%),
-    radial-gradient(circle at left bottom, rgba(0,194,168,.08), transparent 18%),
+    radial-gradient(circle at top right, rgba(139,92,246,.08), transparent 20%),
+    radial-gradient(circle at left bottom, rgba(6,182,212,.08), transparent 18%),
     ${T.bg};
   padding-bottom:32px;
 }
@@ -63,8 +63,8 @@ const CSS = `
   position:absolute; border-radius:50%; pointer-events:none;
 }
 .apd-orb1{ width:220px;height:220px;right:-40px;top:-40px;background:rgba(255,255,255,.05); }
-.apd-orb2{ width:130px;height:130px;right:220px;bottom:-35px;background:rgba(255,107,53,.10); }
-.apd-orb3{ width:110px;height:110px;left:-15px;bottom:-20px;background:rgba(0,194,168,.08); }
+.apd-orb2{ width:130px;height:130px;right:220px;bottom:-35px;background:rgba(139,92,246,.10); }
+.apd-orb3{ width:110px;height:110px;left:-15px;bottom:-20px;background:rgba(6,182,212,.08); }
 
 .apd-hero-top{
   position:relative;
@@ -133,8 +133,8 @@ const CSS = `
 }
 
 .apd-banner{
-  background:linear-gradient(135deg, rgba(255,107,53,.10), rgba(0,194,168,.06));
-  border:1.5px solid rgba(255,107,53,.16);
+  background:linear-gradient(135deg, rgba(139,92,246,.10), rgba(6,182,212,.06));
+  border:1.5px solid rgba(139,92,246,.16);
   border-radius:22px;
   padding:18px 20px;
   margin-bottom:18px;
@@ -152,7 +152,7 @@ const CSS = `
 .apd-banner-icon{
   width:48px;height:48px;border-radius:15px;
   display:flex;align-items:center;justify-content:center;
-  background:linear-gradient(135deg, rgba(255,107,53,.16), rgba(0,194,168,.12));
+  background:linear-gradient(135deg, rgba(139,92,246,.16), rgba(6,182,212,.12));
   color:${T.navy};
 }
 .apd-banner-title{ font-size:18px; font-weight:800; color:${T.navy}; margin:0; }
@@ -166,17 +166,17 @@ const CSS = `
   padding:12px 16px;
   border:none;
   border-radius:14px;
-  background:linear-gradient(135deg, ${T.coral}, #FF8C5A);
+  background:linear-gradient(135deg, ${T.coral}, #FBBF24);
   color:#fff;
   font-size:13px;
   font-weight:800;
   cursor:pointer;
   transition:.18s ease;
-  box-shadow:0 10px 22px rgba(255,107,53,.22);
+  box-shadow:0 10px 22px rgba(139,92,246,.22);
 }
 .apd-btn-primary:hover{
   transform:translateY(-1px);
-  box-shadow:0 14px 26px rgba(255,107,53,.28);
+  box-shadow:0 14px 26px rgba(139,92,246,.28);
 }
 .apd-btn-soft{
   display:inline-flex;
@@ -233,7 +233,7 @@ const CSS = `
   width:48px;height:48px;border-radius:16px;
   display:flex;align-items:center;justify-content:center;
 }
-.apd-stat-icon.orange{ background:rgba(255,107,53,.10); color:${T.coral}; }
+.apd-stat-icon.orange{ background:rgba(139,92,246,.10); color:${T.coral}; }
 .apd-stat-icon.green{ background:rgba(16,185,129,.10); color:#10B981; }
 .apd-stat-icon.yellow{ background:rgba(245,158,11,.10); color:#F59E0B; }
 .apd-stat-icon.purple{ background:rgba(139,92,246,.10); color:#8B5CF6; }
@@ -268,7 +268,7 @@ const CSS = `
 .apd-card-icon{
   width:40px;height:40px;border-radius:14px;
   display:flex;align-items:center;justify-content:center;
-  background:linear-gradient(135deg, rgba(255,107,53,.14), rgba(0,194,168,.12));
+  background:linear-gradient(135deg, rgba(139,92,246,.14), rgba(6,182,212,.12));
   color:${T.navy};
 }
 .apd-card-title{ font-size:16px; font-weight:800; color:${T.navy}; margin:0; }
@@ -311,7 +311,7 @@ const CSS = `
 .apd-input:focus,.apd-select:focus{
   border-color:${T.coral};
   background:#fff;
-  box-shadow:0 0 0 4px rgba(255,107,53,.08);
+  box-shadow:0 0 0 4px rgba(139,92,246,.08);
 }
 .apd-select{
   appearance:none;
@@ -527,14 +527,14 @@ const CSS = `
 `;
 
 
-export default function AdminPerformanceDashboard() {
+export default function OperatorMomentumControlRoom() {
   const [tenantInfo, setTenantInfo] = useState({
     tenantCode: "",
     companyName: "",
     companyId: null,
   });
 
-  const [employees, setEmployees] = useState([]);
+  const [employees, setPersons] = useState([]);
   const [allUsers, setAllUsers] = useState([]);
 
   const [loading, setLoading] = useState(true);
@@ -548,10 +548,10 @@ export default function AdminPerformanceDashboard() {
   const [availableMonths, setAvailableMonths] = useState([]);
   const [selectedMonth, setSelectedMonth] = useState("");
 
-  const [selectedEmployee, setSelectedEmployee] = useState(null);
+  const [selectedPerson, setSelectedPerson] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
-  const [editingEmployee, setEditingEmployee] = useState(null);
+  const [editingPerson, setEditingPerson] = useState(null);
   const [editForm, setEditForm] = useState({});
 
   const [showCreateModal, setShowCreateModal] = useState(false);
@@ -583,7 +583,7 @@ export default function AdminPerformanceDashboard() {
 
       setTenantInfo({
         tenantCode: tenantCode || "",
-        companyName: companyName || "Unknown Company",
+        companyName: companyName || "Unknown Workspace",
         companyId: companyId ? parseInt(companyId) : null,
       });
     } catch (err) {
@@ -635,7 +635,7 @@ export default function AdminPerformanceDashboard() {
     }
   };
 
-  const fetchEmployees = async () => {
+  const fetchPersons = async () => {
     if (!tenantInfo.tenantCode) return;
 
     try {
@@ -650,7 +650,7 @@ export default function AdminPerformanceDashboard() {
       const result = response.data;
 
       if (result.success) {
-        setEmployees(result.data || []);
+        setPersons(result.data || []);
       } else {
         throw new Error(result.message || "Failed to load performance data");
       }
@@ -671,7 +671,7 @@ export default function AdminPerformanceDashboard() {
   }, [tenantInfo.tenantCode]);
 
   useEffect(() => {
-    if (tenantInfo.tenantCode) fetchEmployees();
+    if (tenantInfo.tenantCode) fetchPersons();
   }, [selectedMonth, tenantInfo.tenantCode]);
 
   const handleUserSelection = (userId) => {
@@ -706,8 +706,8 @@ export default function AdminPerformanceDashboard() {
 
       const result = response.data;
       if (result.success) {
-        await fetchEmployees();
-        alert("✅ Performance validated successfully!");
+        await fetchPersons();
+        alert("✅ Momentum validated successfully!");
       } else {
         alert("❌ Failed to validate: " + result.message);
       }
@@ -723,7 +723,7 @@ export default function AdminPerformanceDashboard() {
 
       const result = response.data;
       if (result.success) {
-        await fetchEmployees();
+        await fetchPersons();
         alert("✅ Validation revoked successfully!");
       } else {
         alert("❌ Failed to revoke: " + result.message);
@@ -735,20 +735,20 @@ export default function AdminPerformanceDashboard() {
   };
 
   const handleEdit = (employee) => {
-    setEditingEmployee(employee.id);
+    setEditingPerson(employee.id);
     setEditForm({ ...employee });
   };
 
   const handleSaveEdit = async () => {
     try {
-      const response = await api.put(`/api/performance/${editingEmployee}`, editForm);
+      const response = await api.put(`/api/performance/${editingPerson}`, editForm);
 
       const result = response.data;
       if (result.success) {
-        setEditingEmployee(null);
+        setEditingPerson(null);
         setEditForm({});
-        await fetchEmployees();
-        alert("✅ Performance updated successfully!");
+        await fetchPersons();
+        alert("✅ Momentum updated successfully!");
       } else {
         alert("❌ Failed to update: " + result.message);
       }
@@ -759,7 +759,7 @@ export default function AdminPerformanceDashboard() {
   };
 
   const handleCancelEdit = () => {
-    setEditingEmployee(null);
+    setEditingPerson(null);
     setEditForm({});
   };
 
@@ -771,23 +771,23 @@ export default function AdminPerformanceDashboard() {
     setCreateForm((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleCreatePerformance = async () => {
+  const handleCreateMomentum = async () => {
     if (!createForm.userId || !createForm.employeeId) {
       alert("❌ Please select an employee");
       return;
     }
 
     if (!createForm.name || createForm.name.trim() === "") {
-      alert("❌ Employee name is required");
+      alert("❌ Person name is required");
       return;
     }
 
-    const existingPerformance = employees.find(
+    const existingMomentum = employees.find(
       (emp) => emp.userId === createForm.userId && emp.performanceMonth === createForm.performanceMonth
     );
 
-    if (existingPerformance) {
-      alert("❌ Performance record already exists for this employee in the selected month. Please edit the existing record instead.");
+    if (existingMomentum) {
+      alert("❌ Momentum record already exists for this employee in the selected month. Please edit the existing record instead.");
       return;
     }
 
@@ -810,9 +810,9 @@ export default function AdminPerformanceDashboard() {
           performanceMonth: selectedMonth || new Date().toISOString().slice(0, 7),
         });
         setSelectedUserId("");
-        await fetchEmployees();
+        await fetchPersons();
         await fetchAvailableMonths();
-        alert("✅ Performance record created successfully!");
+        alert("✅ Momentum record created successfully!");
       } else {
         alert("❌ Failed to create: " + result.message);
       }
@@ -822,14 +822,14 @@ export default function AdminPerformanceDashboard() {
     }
   };
 
-  const availableUsersForPerformance = allUsers.filter((user) => {
+  const availableUsersForMomentum = allUsers.filter((user) => {
     if (user.role === "ADMIN" || user.userRole === "ADMIN") return false;
-    const hasPerformance = employees.some((emp) => emp.userId === user.id);
-    return !hasPerformance;
+    const hasMomentum = employees.some((emp) => emp.userId === user.id);
+    return !hasMomentum;
   });
 
   const stats = {
-    totalEmployees: employees.length,
+    totalPersons: employees.length,
     validated: employees.filter((e) => e.validated).length,
     pending: employees.filter((e) => !e.validated).length,
     avgScore:
@@ -843,7 +843,7 @@ export default function AdminPerformanceDashboard() {
   const departments = ["All", ...new Set(employees.map((e) => e.department).filter(Boolean))];
   const statuses = ["All", "Excellent", "Good", "Average", "Needs Improvement"];
 
-  const filteredEmployees = employees.filter((emp) => {
+  const filteredPersons = employees.filter((emp) => {
     const matchesSearch =
       emp.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       emp.employeeId?.toLowerCase().includes(searchTerm.toLowerCase());
@@ -854,7 +854,7 @@ export default function AdminPerformanceDashboard() {
     return matchesSearch && matchesDepartment && matchesStatus;
   });
 
-  const sortedEmployees = [...filteredEmployees].sort((a, b) => {
+  const sortedPersons = [...filteredPersons].sort((a, b) => {
     switch (sortBy) {
       case "score-desc":
         return (b.currentScore || 0) - (a.currentScore || 0);
@@ -889,14 +889,14 @@ export default function AdminPerformanceDashboard() {
   };
 
   const handleExport = () => {
-    if (sortedEmployees.length === 0) {
+    if (sortedPersons.length === 0) {
       alert("No data to export");
       return;
     }
 
     const csvContent = [
       [
-        "Employee ID",
+        "Person ID",
         "Name",
         "Department",
         "Position",
@@ -904,14 +904,14 @@ export default function AdminPerformanceDashboard() {
         "Status",
         "Tasks Completed",
         "Total Tasks",
-        "Attendance %",
+        "Presence %",
         "Productivity %",
         "Quality Score %",
         "Punctuality %",
         "Validated",
         "Month",
       ],
-      ...sortedEmployees.map((emp) => [
+      ...sortedPersons.map((emp) => [
         emp.employeeId,
         emp.name,
         emp.department,
@@ -957,7 +957,7 @@ export default function AdminPerformanceDashboard() {
           <div style={{ textAlign: "center" }}>
             <RefreshCw size={44} color={T.coral} className="spin" style={{ animation: "apdSpin 1s linear infinite" }} />
             <p style={{ color: T.navy, fontSize: 18, fontWeight: 800, marginTop: 14 }}>Loading performance data...</p>
-            <p style={{ color: T.textSoft, fontSize: 13, marginTop: 6 }}>Company: {tenantInfo.companyName}</p>
+            <p style={{ color: T.textSoft, fontSize: 13, marginTop: 6 }}>Workspace: {tenantInfo.companyName}</p>
           </div>
         </div>
         <style>{`@keyframes apdSpin{from{transform:rotate(0)}to{transform:rotate(360deg)}}`}</style>
@@ -979,7 +979,7 @@ export default function AdminPerformanceDashboard() {
                 onClick={async () => {
                   await fetchAvailableMonths();
                   await fetchAllUsers();
-                  await fetchEmployees();
+                  await fetchPersons();
                 }}
                 className="apd-btn-primary"
               >
@@ -1006,9 +1006,9 @@ export default function AdminPerformanceDashboard() {
           <div>
             <div className="apd-badge">
               <BarChart3 size={13} />
-              SamayaHR · Performance Workspace
+              CrewSync · Momentum Workspace
             </div>
-            <h1 className="apd-title fd">Performance Dashboard</h1>
+            <h1 className="apd-title fd">Momentum ControlRoom</h1>
             <p className="apd-sub">
               Manage and track employee performance metrics with the same modern styling and colors used in the manual entry page.
             </p>
@@ -1020,7 +1020,7 @@ export default function AdminPerformanceDashboard() {
               onClick={async () => {
                 await fetchAvailableMonths();
                 await fetchAllUsers();
-                await fetchEmployees();
+                await fetchPersons();
               }}
             >
               <RefreshCw size={15} />
@@ -1028,7 +1028,7 @@ export default function AdminPerformanceDashboard() {
             </button>
             <button onClick={() => setShowCreateModal(true)} className="apd-btn-outline">
               <Plus size={15} />
-              Add Performance
+              Add Momentum
             </button>
           </div>
         </div>
@@ -1097,7 +1097,7 @@ export default function AdminPerformanceDashboard() {
         )}
 
         <div className="apd-stats apd-in" style={{ animationDelay: ".06s" }}>
-          <StatCard icon={Users} label="Total Employees" value={stats.totalEmployees} color="orange" />
+          <StatCard icon={Users} label="Total People" value={stats.totalPersons} color="orange" />
           <StatCard icon={CheckCircle} label="Validated" value={stats.validated} color="green" />
           <StatCard icon={Clock} label="Pending Validation" value={stats.pending} color="yellow" />
           <StatCard icon={Target} label="Average Score" value={stats.avgScore} color="purple" />
@@ -1111,17 +1111,17 @@ export default function AdminPerformanceDashboard() {
                   <Award size={18} />
                 </div>
                 <div>
-                  <p className="apd-card-title">Performance Distribution</p>
-                  <p className="apd-card-sub">Employee performance breakdown</p>
+                  <p className="apd-card-title">Momentum Distribution</p>
+                  <p className="apd-card-sub">Person performance breakdown</p>
                 </div>
               </div>
             </div>
             <div className="apd-card-body">
               <div className="apd-progress-list">
-                <ProgressBar label="Excellent" value={stats.excellent} total={stats.totalEmployees || 1} color="green" />
-                <ProgressBar label="Good" value={employees.filter((e) => e.status === "Good").length} total={stats.totalEmployees || 1} color="orange" />
-                <ProgressBar label="Average" value={employees.filter((e) => e.status === "Average").length} total={stats.totalEmployees || 1} color="yellow" />
-                <ProgressBar label="Needs Improvement" value={stats.needsImprovement} total={stats.totalEmployees || 1} color="red" />
+                <ProgressBar label="Excellent" value={stats.excellent} total={stats.totalPersons || 1} color="green" />
+                <ProgressBar label="Good" value={employees.filter((e) => e.status === "Good").length} total={stats.totalPersons || 1} color="orange" />
+                <ProgressBar label="Average" value={employees.filter((e) => e.status === "Average").length} total={stats.totalPersons || 1} color="yellow" />
+                <ProgressBar label="Needs Improvement" value={stats.needsImprovement} total={stats.totalPersons || 1} color="red" />
               </div>
             </div>
           </div>
@@ -1143,7 +1143,7 @@ export default function AdminPerformanceDashboard() {
                 <div className="apd-quick-row">
                   <span className="apd-quick-key">Validation Rate</span>
                   <span className="apd-quick-val">
-                    {stats.totalEmployees > 0 ? ((stats.validated / stats.totalEmployees) * 100).toFixed(1) : "0.0"}%
+                    {stats.totalPersons > 0 ? ((stats.validated / stats.totalPersons) * 100).toFixed(1) : "0.0"}%
                   </span>
                 </div>
                 <div className="apd-quick-row">
@@ -1207,8 +1207,8 @@ export default function AdminPerformanceDashboard() {
                 <option value="score-asc">Score: Low to High</option>
                 <option value="name-asc">Name: A to Z</option>
                 <option value="name-desc">Name: Z to A</option>
-                <option value="attendance-desc">Attendance: High to Low</option>
-                <option value="attendance-asc">Attendance: Low to High</option>
+                <option value="attendance-desc">Presence: High to Low</option>
+                <option value="attendance-asc">Presence: Low to High</option>
               </select>
 
               <button onClick={handleExport} className="apd-btn-soft">
@@ -1226,8 +1226,8 @@ export default function AdminPerformanceDashboard() {
                 <Users size={18} />
               </div>
               <div>
-                <p className="apd-card-title">Performance Records</p>
-                <p className="apd-card-sub">Employee ranking, status, and actions</p>
+                <p className="apd-card-title">Momentum Records</p>
+                <p className="apd-card-sub">Person ranking, status, and actions</p>
               </div>
             </div>
           </div>
@@ -1237,30 +1237,30 @@ export default function AdminPerformanceDashboard() {
               <thead>
                 <tr>
                   <th>Rank</th>
-                  <th>Employee</th>
+                  <th>Person</th>
                   <th>Department</th>
                   <th>Score</th>
                   <th>Tasks</th>
-                  <th>Attendance</th>
+                  <th>Presence</th>
                   <th>Status</th>
                   <th>Actions</th>
                 </tr>
               </thead>
 
               <tbody>
-                {sortedEmployees.map((employee, index) => (
-                  <EmployeeRow
+                {sortedPersons.map((employee, index) => (
+                  <PersonRow
                     key={employee.id}
                     employee={employee}
                     rank={index + 1}
-                    editingEmployee={editingEmployee}
+                    editingPerson={editingPerson}
                     editForm={editForm}
                     onEdit={handleEdit}
                     onSave={handleSaveEdit}
                     onCancel={handleCancelEdit}
                     updateEditForm={updateEditForm}
                     onView={() => {
-                      setSelectedEmployee(employee);
+                      setSelectedPerson(employee);
                       setShowModal(true);
                     }}
                     onValidate={handleValidate}
@@ -1271,7 +1271,7 @@ export default function AdminPerformanceDashboard() {
               </tbody>
             </table>
 
-            {sortedEmployees.length === 0 && (
+            {sortedPersons.length === 0 && (
               <div className="apd-empty">
                 <Users size={60} color="#CBD5E1" />
                 <p>No performance records found</p>
@@ -1280,7 +1280,7 @@ export default function AdminPerformanceDashboard() {
                     ? "Try adjusting your filters"
                     : selectedMonth
                     ? `No records for ${formatMonthDisplay(selectedMonth)}`
-                    : "Click 'Add Performance' to create a new record"}
+                    : "Click 'Add Momentum' to create a new record"}
                 </p>
               </div>
             )}
@@ -1288,12 +1288,12 @@ export default function AdminPerformanceDashboard() {
         </div>
       </div>
 
-      {showModal && selectedEmployee && (
-        <EmployeeModal
-          employee={selectedEmployee}
+      {showModal && selectedPerson && (
+        <PersonModal
+          employee={selectedPerson}
           onClose={() => {
             setShowModal(false);
-            setSelectedEmployee(null);
+            setSelectedPerson(null);
           }}
           onValidate={handleValidate}
           onReject={handleReject}
@@ -1305,10 +1305,10 @@ export default function AdminPerformanceDashboard() {
         <CreateModal
           createForm={createForm}
           updateCreateForm={updateCreateForm}
-          allUsers={availableUsersForPerformance}
+          allUsers={availableUsersForMomentum}
           selectedUserId={selectedUserId}
           onUserSelect={handleUserSelection}
-          onSave={handleCreatePerformance}
+          onSave={handleCreateMomentum}
           onClose={() => {
             setShowCreateModal(false);
             setCreateForm({
@@ -1365,10 +1365,10 @@ function ProgressBar({ label, value, total, color }) {
   );
 }
 
-function EmployeeRow({
+function PersonRow({
   employee,
   rank,
-  editingEmployee,
+  editingPerson,
   editForm,
   onEdit,
   onSave,
@@ -1379,7 +1379,7 @@ function EmployeeRow({
   onReject,
   getStatusClass,
 }) {
-  if (editingEmployee === employee.id) {
+  if (editingPerson === employee.id) {
     return (
       <tr>
         <td><span className="apd-rank">#{rank}</span></td>
@@ -1570,7 +1570,7 @@ function MetricBar({ label, value }) {
   );
 }
 
-function EmployeeModal({ employee, onClose, onValidate, onReject, getStatusClass }) {
+function PersonModal({ employee, onClose, onValidate, onReject, getStatusClass }) {
   const taskCompletionRate =
     employee.totalTasks > 0 ? (employee.tasksCompleted / employee.totalTasks) * 100 : 0;
 
@@ -1598,7 +1598,7 @@ function EmployeeModal({ employee, onClose, onValidate, onReject, getStatusClass
               <div className="apd-info-value">{employee.position || "N/A"}</div>
             </div>
             <div className="apd-info-box">
-              <div className="apd-info-label">Performance Score</div>
+              <div className="apd-info-label">Momentum Score</div>
               <div className="apd-score-lg">{employee.currentScore || 0}/100</div>
             </div>
             <div className="apd-info-box">
@@ -1611,9 +1611,9 @@ function EmployeeModal({ employee, onClose, onValidate, onReject, getStatusClass
             </div>
           </div>
 
-          <div className="apd-section-title">Performance Metrics</div>
+          <div className="apd-section-title">Momentum Metrics</div>
           <MetricBar label="Task Completion" value={taskCompletionRate} />
-          <MetricBar label="Attendance" value={employee.attendance || 0} />
+          <MetricBar label="Presence" value={employee.attendance || 0} />
           <MetricBar label="Productivity" value={employee.productivity || 0} />
           <MetricBar label="Quality Score" value={employee.qualityScore || 0} />
           <MetricBar label="Punctuality" value={employee.punctuality || 0} />
@@ -1672,13 +1672,13 @@ function CreateModal({
     return user.email;
   };
 
-  const getUserEmployeeId = (user) => user.employeeId || user.username || `EMP${user.id}`;
+  const getUserPersonId = (user) => user.employeeId || user.username || `EMP${user.id}`;
 
   return (
     <div className="apd-modal-overlay">
       <div className="apd-modal">
         <div className="apd-modal-head">
-          <h2 className="apd-modal-title">Create Performance Record</h2>
+          <h2 className="apd-modal-title">Create Momentum Record</h2>
           <button onClick={onClose} className="apd-close">
             <XCircle size={20} />
           </button>
@@ -1687,17 +1687,17 @@ function CreateModal({
         <div className="apd-modal-body">
           <div className="apd-info-box" style={{ marginBottom: 18 }}>
             <div className="apd-field">
-              <label className="apd-label">Select Employee *</label>
+              <label className="apd-label">Select Person *</label>
               <div style={{ position: "relative" }}>
                 <select
                   value={selectedUserId}
                   onChange={(e) => onUserSelect(e.target.value)}
                   className="apd-select"
                 >
-                  <option value="">-- Select an Employee --</option>
+                  <option value="">-- Select an Person --</option>
                   {allUsers.map((user) => (
                     <option key={user.id} value={user.id}>
-                      {getUserEmployeeId(user)} - {getUserDisplayName(user)}
+                      {getUserPersonId(user)} - {getUserDisplayName(user)}
                       {user.department && ` (${user.department})`}
                     </option>
                   ))}
@@ -1716,7 +1716,7 @@ function CreateModal({
             <>
               <div className="apd-form-grid">
                 <div className="apd-field">
-                  <label className="apd-label">Performance Month *</label>
+                  <label className="apd-label">Momentum Month *</label>
                   <input
                     type="month"
                     value={createForm.performanceMonth || ""}
@@ -1726,7 +1726,7 @@ function CreateModal({
                 </div>
 
                 <div className="apd-field">
-                  <label className="apd-label">Employee ID</label>
+                  <label className="apd-label">Person ID</label>
                   <input type="text" value={createForm.employeeId || ""} disabled className="apd-input" style={{ background: "#F1F5F9" }} />
                 </div>
 
@@ -1764,7 +1764,7 @@ function CreateModal({
                 </div>
               </div>
 
-              <div className="apd-section-title">Performance Metrics</div>
+              <div className="apd-section-title">Momentum Metrics</div>
 
               <div className="apd-form-grid">
                 <div className="apd-field">
@@ -1780,7 +1780,7 @@ function CreateModal({
                 </div>
 
                 <div className="apd-field">
-                  <label className="apd-label">Attendance % *</label>
+                  <label className="apd-label">Presence % *</label>
                   <input
                     type="number"
                     value={createForm.attendance || 0}
@@ -1878,7 +1878,7 @@ function CreateModal({
               }}
             >
               <Save size={16} />
-              Create Performance
+              Create Momentum
             </button>
           </div>
         </div>

@@ -3,9 +3,9 @@ import api from "@/lib/apiClient";
 
 /* ── design tokens ── */
 const C = {
-  navy:"#0D1F2D", mid:"#162639", coral:"#FF6B35",
+  navy:"#0B1020", mid:"#182033", coral:"#8B5CF6",
   green:"#10b981", red:"#ef4444", amber:"#f59e0b",
-  purple:"#6366f1", teal:"#00C2A8",
+  purple:"#6366f1", teal:"#06B6D4",
   bg:"#F4F6FB", border:"#EDF0F7",
 };
 
@@ -68,7 +68,7 @@ function ConfirmModal({ title, body, onConfirm, onCancel }) {
 }
 
 /* ── View/Edit Modal ── */
-function EmployeeModal({ mode, emp, onClose, onSubmit, saving }) {
+function PersonModal({ mode, emp, onClose, onSubmit, saving }) {
   const isView = mode==="view";
   const [form, setForm] = useState({
     firstName:   emp?.firstName   || "",
@@ -101,7 +101,7 @@ function EmployeeModal({ mode, emp, onClose, onSubmit, saving }) {
               {initials(emp)}
             </div>
             <div>
-              <p style={{ color:"#fff", fontSize:15, fontWeight:900, margin:0, fontFamily:"'Sora',sans-serif" }}>{isView?"Employee Profile":"Edit Employee"}</p>
+              <p style={{ color:"#fff", fontSize:15, fontWeight:900, margin:0, fontFamily:"'Sora',sans-serif" }}>{isView?"Person Profile":"Edit Person"}</p>
               <p style={{ color:"rgba(255,255,255,.45)", fontSize:11, margin:"2px 0 0" }}>{displayName(emp)}</p>
             </div>
           </div>
@@ -120,7 +120,7 @@ function EmployeeModal({ mode, emp, onClose, onSubmit, saving }) {
                 ["Phone",        emp.phoneNumber||emp.phone||"—"],
                 ["Department",   emp.department||"—"],
                 ["Designation",  emp.designation||"—"],
-                ["Employee ID",  emp.employeeId||"—"],
+                ["Person ID",  emp.employeeId||"—"],
                 ["Status",       statusOf(emp)],
               ].map(([label,val])=>(
                 <div key={label}>
@@ -153,7 +153,7 @@ function EmployeeModal({ mode, emp, onClose, onSubmit, saving }) {
                 <input style={inp()} value={form.phoneNumber} onChange={e=>set("phoneNumber",e.target.value)} placeholder="+91 98765 43210"/>
               </div>
               <div>
-                <label style={lbl}>Employee ID</label>
+                <label style={lbl}>Person ID</label>
                 <input style={inp(true)} value={form.employeeId} disabled placeholder="Auto-assigned"/>
               </div>
               <div>
@@ -169,10 +169,10 @@ function EmployeeModal({ mode, emp, onClose, onSubmit, saving }) {
               <button type="button" onClick={onClose} style={{ padding:"10px 22px", borderRadius:11, border:`1.5px solid ${C.border}`, background:"#fff", color:"#475569", fontSize:13, fontWeight:700, cursor:"pointer" }}>Cancel</button>
               <button type="submit" disabled={saving} style={{
                 padding:"10px 22px", borderRadius:11, border:"none",
-                background:`linear-gradient(135deg,${C.coral},#FF8C5A)`,
+                background:`linear-gradient(135deg,${C.coral},#FBBF24)`,
                 color:"#fff", fontSize:13, fontWeight:800,
                 cursor:saving?"not-allowed":"pointer",
-                opacity:saving?.7:1, boxShadow:"0 4px 14px rgba(255,107,53,.3)",
+                opacity:saving?.7:1, boxShadow:"0 4px 14px rgba(139,92,246,.3)",
                 display:"flex", alignItems:"center", gap:7,
               }}>
                 {saving&&<SpinIcon/>} Save Changes
@@ -206,8 +206,8 @@ const AVATAR_GRADS = [
 ];
 
 /* ════════════════════════════════ MAIN ════════════════════════════════ */
-export default function EmployeeManagement({ navigateTo }) {
-  const [employees,   setEmployees]   = useState([]);
+export default function PersonOperations({ navigateTo }) {
+  const [employees,   setPersons]   = useState([]);
   const [loading,     setLoading]     = useState(true);
   const [saving,      setSaving]      = useState(false);
   const [toast,       setToast]       = useState(null);
@@ -219,7 +219,7 @@ export default function EmployeeManagement({ navigateTo }) {
   const [sendingCred, setSendingCred] = useState(null); // userId being sent
   const [credSentMap, setCredSentMap] = useState({});   // userId → boolean
 
-  const companyName = localStorage.getItem("companyName") || "Company";
+  const companyName = localStorage.getItem("companyName") || "Workspace";
   const showToast = (message, type="success") => setToast({ message, type });
 
   const load = useCallback(async () => {
@@ -228,14 +228,14 @@ export default function EmployeeManagement({ navigateTo }) {
       const r = await api.get("/api/users/tenant/employees");
       const list = Array.isArray(r.data) ? r.data
         : Array.isArray(r.data?.data) ? r.data.data : [];
-      setEmployees(list);
+      setPersons(list);
     } catch {
       try {
         const r2 = await api.get("/api/users/tenant");
         const all = Array.isArray(r2.data) ? r2.data
           : Array.isArray(r2.data?.data) ? r2.data.data : [];
-        setEmployees(all.filter(u => (u.role||"").toUpperCase()==="EMPLOYEE"));
-      } catch { setEmployees([]); }
+        setPersons(all.filter(u => (u.role||"").toUpperCase()==="EMPLOYEE"));
+      } catch { setPersons([]); }
     }
     setLoading(false);
   }, []);
@@ -262,7 +262,7 @@ export default function EmployeeManagement({ navigateTo }) {
     try {
       const r = await api.put(`/api/users/${modal.emp.id}`, form);
       if (r.data?.success !== false) {
-        showToast("Employee updated!");
+        showToast("Person updated!");
         setModal(null);
         load();
       } else showToast(r.data?.message||"Failed to update","error");
@@ -274,7 +274,7 @@ export default function EmployeeManagement({ navigateTo }) {
     if (!delConf) return;
     try {
       await api.delete(`/api/users/${delConf.id}`);
-      showToast("Employee removed");
+      showToast("Person removed");
       setDelConf(null);
       load();
     } catch(e) { showToast(e.response?.data?.message||"Error deleting","error"); }
@@ -323,10 +323,10 @@ export default function EmployeeManagement({ navigateTo }) {
       <style>{CSS}</style>
 
       {toast && <Toast message={toast.message} type={toast.type} onClose={()=>setToast(null)}/>}
-      {modal && <EmployeeModal mode={modal.mode} emp={modal.emp} onClose={()=>setModal(null)} onSubmit={handleUpdate} saving={saving}/>}
+      {modal && <PersonModal mode={modal.mode} emp={modal.emp} onClose={()=>setModal(null)} onSubmit={handleUpdate} saving={saving}/>}
       {delConf && (
         <ConfirmModal
-          title="Remove Employee"
+          title="Remove Person"
           body={`Remove "${displayName(delConf)}" from the system? This cannot be undone.`}
           onConfirm={handleDelete}
           onCancel={()=>setDelConf(null)}
@@ -342,19 +342,19 @@ export default function EmployeeManagement({ navigateTo }) {
         <div style={{ position:"absolute", top:-40, right:80, width:160, height:160, borderRadius:"50%", background:"rgba(99,102,241,.08)", pointerEvents:"none" }}/>
         <div style={{ position:"relative", display:"flex", alignItems:"center", justifyContent:"space-between", flexWrap:"wrap", gap:16 }}>
           <div>
-            <p style={{ color:"rgba(255,255,255,.4)", fontSize:11, fontWeight:700, textTransform:"uppercase", letterSpacing:".12em", margin:"0 0 5px" }}>{companyName} · Super Admin</p>
-            <h1 className="fd" style={{ color:"#fff", fontSize:24, fontWeight:900, margin:0, letterSpacing:"-.02em" }}>Manage Employees</h1>
+            <p style={{ color:"rgba(255,255,255,.4)", fontSize:11, fontWeight:700, textTransform:"uppercase", letterSpacing:".12em", margin:"0 0 5px" }}>{companyName} · Owner</p>
+            <h1 className="fd" style={{ color:"#fff", fontSize:24, fontWeight:900, margin:0, letterSpacing:"-.02em" }}>People Grid</h1>
             <p style={{ color:"rgba(255,255,255,.45)", fontSize:12, margin:"5px 0 0" }}>View, search, and manage your entire workforce</p>
           </div>
           <button onClick={()=>navigateTo?.("sa_onboard")} style={{
             padding:"11px 22px", borderRadius:13,
-            background:"linear-gradient(135deg,#FF6B35,#FF8C5A)",
+            background:"linear-gradient(135deg,#8B5CF6,#FBBF24)",
             color:"#fff", border:"none", cursor:"pointer",
             fontSize:13, fontWeight:800,
-            boxShadow:"0 4px 16px rgba(255,107,53,.35)",
+            boxShadow:"0 4px 16px rgba(139,92,246,.35)",
             display:"flex", alignItems:"center", gap:8,
           }}>
-            <Ic d="M12 4v16m8-8H4" size={14} sw={2.5}/> Add Employee
+            <Ic d="M12 4v16m8-8H4" size={14} sw={2.5}/> Add Person
           </button>
         </div>
       </div>
@@ -362,7 +362,7 @@ export default function EmployeeManagement({ navigateTo }) {
       {/* ── Stats ── */}
       <div style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:16, marginBottom:22 }}>
         {[
-          { label:"Total Employees", value:totalEmp,    icon:"M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z", accent:C.purple, bg:"rgba(99,102,241,.08)" },
+          { label:"Total People", value:totalEmp,    icon:"M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z", accent:C.purple, bg:"rgba(99,102,241,.08)" },
           { label:"Active",          value:activeEmp,   icon:"M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z",                                                                                                                                                                          accent:C.green,  bg:"rgba(16,185,129,.08)" },
           { label:"Inactive",        value:inactiveEmp, icon:"M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636",                                                                                                                        accent:C.red,    bg:"rgba(239,68,68,.08)" },
           { label:"Departments",     value:totalDepts,  icon:"M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-2 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4",                                                                          accent:C.amber,  bg:"rgba(245,158,11,.08)" },
@@ -432,7 +432,7 @@ export default function EmployeeManagement({ navigateTo }) {
             <table style={{ width:"100%", borderCollapse:"collapse", fontSize:13 }}>
               <thead>
                 <tr style={{ background:C.navy }}>
-                  {["Employee","Department / Role","Employee ID","Phone","Status","Actions (View · Edit · Send Creds · Del)"].map(h=>(
+                  {["Person","Department / Role","Person ID","Phone","Status","Actions (View · Edit · Send Creds · Del)"].map(h=>(
                     <th key={h} style={{ textAlign:"left", padding:"12px 16px", fontSize:10, fontWeight:700, color:"rgba(255,255,255,.6)", textTransform:"uppercase", letterSpacing:".08em", whiteSpace:"nowrap" }}>{h}</th>
                   ))}
                 </tr>

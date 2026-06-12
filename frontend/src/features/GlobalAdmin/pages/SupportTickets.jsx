@@ -18,7 +18,7 @@ const PRIORITY_STYLE = {
   URGENT:  { bg: "#fce7f3", color: "#be185d" },
 };
 const STATUS_STYLE = {
-  OPEN:        { bg: "#fff4ef", color: "#ff6b35" },
+  OPEN:        { bg: "#fff4ef", color: "#8B5CF6" },
   IN_PROGRESS: { bg: "#f0f9ff", color: "#0ea5e9" },
   RESOLVED:    { bg: "#f0fdf4", color: "#16a34a" },
   CLOSED:      { bg: "#f1f5f9", color: "#64748b" },
@@ -58,7 +58,7 @@ function TicketDetailModal({ ticket, onClose, onStatusChange }) {
         <div style={{ background: "linear-gradient(135deg, #0f172a, #1e293b)", borderRadius: "18px 18px 0 0", padding: "20px 24px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
           <div>
             <p style={{ color: "rgba(255,255,255,0.5)", fontSize: 11, fontWeight: 600, margin: "0 0 4px", fontFamily: "monospace" }}>#{ticket.id}</p>
-            <h2 style={{ color: "#fff", fontSize: 18, fontWeight: 800, margin: 0 }}>{ticket.title || ticket.subject || "Support Ticket"}</h2>
+            <h2 style={{ color: "#fff", fontSize: 18, fontWeight: 800, margin: 0 }}>{ticket.title || ticket.subject || "CareDesk Ticket"}</h2>
           </div>
           <button onClick={onClose} style={{ width: 32, height: 32, borderRadius: 9, border: "none", background: "rgba(255,255,255,0.1)", color: "#fff", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}>
             <X size={16} />
@@ -78,10 +78,10 @@ function TicketDetailModal({ ticket, onClose, onStatusChange }) {
 
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 20, fontSize: 12, color: "#64748b" }}>
             {[
-              ["Company", ticket.companyName || ticket.tenantCode || "—"],
+              ["Workspace", ticket.companyName || ticket.tenantCode || "—"],
               ["Created", ticket.createdAt ? new Date(ticket.createdAt).toLocaleDateString() : "—"],
               ["Assignee", ticket.assignedToName || "Unassigned"],
-              ["Employee", ticket.employeeName || "—"],
+              ["Person", ticket.employeeName || "—"],
             ].map(([label, val]) => (
               <div key={label}>
                 <p style={{ fontWeight: 700, color: "#94a3b8", fontSize: 10, textTransform: "uppercase", letterSpacing: "0.06em", margin: "0 0 3px" }}>{label}</p>
@@ -115,7 +115,7 @@ function TicketDetailModal({ ticket, onClose, onStatusChange }) {
           <div style={{ display: "flex", gap: 10, justifyContent: "flex-end" }}>
             <button onClick={onClose} style={{ ...S.btn("#f1f5f9", "#64748b") }}>Cancel</button>
             <button onClick={handleSave} disabled={saving}
-              style={{ ...S.btn("#ff6b35"), opacity: saving ? 0.6 : 1 }}>
+              style={{ ...S.btn("#8B5CF6"), opacity: saving ? 0.6 : 1 }}>
               {saving ? <Loader2 size={14} style={{ animation: "spin 1s linear infinite" }} /> : <Send size={14} />}
               {saving ? "Saving…" : "Save & Update"}
             </button>
@@ -126,7 +126,7 @@ function TicketDetailModal({ ticket, onClose, onStatusChange }) {
   );
 }
 
-export default function SupportTickets() {
+export default function CareDeskTickets() {
   const [tickets,  setTickets]  = useState([]);
   const [loading,  setLoading]  = useState(false);
   const [error,    setError]    = useState("");
@@ -190,8 +190,8 @@ export default function SupportTickets() {
         <div style={{ position: "absolute", top: -30, right: 60, width: 130, height: 130, borderRadius: "50%", background: "rgba(14,165,233,0.1)", pointerEvents: "none" }} />
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", position: "relative" }}>
           <div>
-            <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 11, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 6px" }}>SamayaHR · Global Admin</p>
-            <h1 style={{ color: "#fff", fontSize: 24, fontWeight: 800, margin: 0, letterSpacing: "-0.02em" }}>Support Tickets</h1>
+            <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 11, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 6px" }}>CrewSync · Global Operator</p>
+            <h1 style={{ color: "#fff", fontSize: 24, fontWeight: 800, margin: 0, letterSpacing: "-0.02em" }}>Care Requests</h1>
             <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 13, margin: "6px 0 0" }}>
               {loading ? "Loading…" : `${tickets.length} tickets across all companies`}
             </p>
@@ -212,7 +212,7 @@ export default function SupportTickets() {
       {/* Stats */}
       <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 14, marginBottom: 20 }}>
         {[
-          { label: "All Tickets",  value: counts.all,         icon: Headphones,  accent: "#ff6b35", bg: "#fff4ef" },
+          { label: "All Tickets",  value: counts.all,         icon: Headphones,  accent: "#8B5CF6", bg: "#fff4ef" },
           { label: "Open",         value: counts.OPEN,        icon: AlertCircle, accent: "#ef4444", bg: "#fef2f2" },
           { label: "In Progress",  value: counts.IN_PROGRESS, icon: Clock,       accent: "#0ea5e9", bg: "#f0f9ff" },
           { label: "Resolved",     value: counts.RESOLVED + counts.CLOSED, icon: CheckCircle, accent: "#22c55e", bg: "#f0fdf4" },
@@ -261,7 +261,7 @@ export default function SupportTickets() {
           <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
             <thead>
               <tr style={{ background: "#0f172a" }}>
-                {["#", "Company", "Subject", "Priority", "Status", "Date", "Actions"].map(h => <Th key={h} ch={h} />)}
+                {["#", "Workspace", "Subject", "Priority", "Status", "Date", "Actions"].map(h => <Th key={h} ch={h} />)}
               </tr>
             </thead>
             <tbody>

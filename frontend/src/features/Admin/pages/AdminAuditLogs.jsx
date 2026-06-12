@@ -3,7 +3,7 @@ import { ScrollText, Search, RefreshCw, User } from "lucide-react";
 import api from "@/lib/apiClient";
 
 const T = {
-  navy:"#0D1F2D", navyMid:"#1E3448", coral:"#FF6B35", teal:"#00C2A8",
+  navy:"#0B1020", navyMid:"#374151", coral:"#8B5CF6", teal:"#06B6D4",
   bg:"#F5F7FB", border:"#E8ECF2",
 };
 
@@ -29,16 +29,16 @@ const fmtDateTime = d => d ? new Date(d).toLocaleString("en-IN",{
 const actionColor = action => {
   if (!action) return { bg:"#F1F5F9", color:"#64748b" };
   const a = action.toUpperCase();
-  if (a.includes("CREATE") || a.includes("ADD"))    return { bg:"rgba(0,194,168,.1)",  color:"#0D7A6A" };
+  if (a.includes("CREATE") || a.includes("ADD"))    return { bg:"rgba(6,182,212,.1)",  color:"#0D7A6A" };
   if (a.includes("UPDATE") || a.includes("EDIT"))   return { bg:"rgba(99,102,241,.1)", color:"#4F46E5" };
   if (a.includes("DELETE") || a.includes("REMOVE")) return { bg:"rgba(239,68,68,.08)", color:"#991B1B" };
-  if (a.includes("APPROVE"))                        return { bg:"rgba(0,194,168,.1)",  color:"#0D7A6A" };
+  if (a.includes("APPROVE"))                        return { bg:"rgba(6,182,212,.1)",  color:"#0D7A6A" };
   if (a.includes("REJECT"))                         return { bg:"rgba(239,68,68,.08)", color:"#991B1B" };
-  if (a.includes("LOGIN"))                          return { bg:"rgba(255,107,53,.1)", color:T.coral   };
+  if (a.includes("LOGIN"))                          return { bg:"rgba(139,92,246,.1)", color:T.coral   };
   return { bg:"#F1F5F9", color:"#64748b" };
 };
 
-export default function AdminAuditLogs() {
+export default function OperatorAuditLogs() {
   const [logs,    setLogs]    = useState([]);
   const [loading, setLoading] = useState(true);
   const [userId,  setUserId]  = useState("");
@@ -86,10 +86,10 @@ export default function AdminAuditLogs() {
       <style>{CSS}</style>
 
       <div style={{background:`linear-gradient(135deg,${T.navy},${T.navyMid})`,padding:"22px 26px",position:"relative",overflow:"hidden"}}>
-        <div style={{position:"absolute",top:-50,right:60,width:180,height:180,borderRadius:"50%",background:"rgba(255,107,53,.07)",pointerEvents:"none"}}/>
+        <div style={{position:"absolute",top:-50,right:60,width:180,height:180,borderRadius:"50%",background:"rgba(139,92,246,.07)",pointerEvents:"none"}}/>
         <div style={{position:"relative"}}>
-          <p style={{fontSize:11,fontWeight:700,color:T.coral,textTransform:"uppercase",letterSpacing:".12em",marginBottom:4}}>SamayaHR · Finance</p>
-          <h1 className="fd" style={{fontSize:23,fontWeight:900,color:"#fff",margin:0}}>Audit Logs</h1>
+          <p style={{fontSize:11,fontWeight:700,color:T.coral,textTransform:"uppercase",letterSpacing:".12em",marginBottom:4}}>CrewSync · MoneyOps</p>
+          <h1 className="fd" style={{fontSize:23,fontWeight:900,color:"#fff",margin:0}}>Activity Trail</h1>
           <p style={{fontSize:13,color:"rgba(255,255,255,.5)",marginTop:4}}>Track all actions performed in the system</p>
         </div>
       </div>
@@ -103,7 +103,7 @@ export default function AdminAuditLogs() {
             {[["performer","My Actions"],["user","Actions on User"]].map(([val,lbl]) => (
               <button key={val} onClick={() => setMode(val)}
                 style={{padding:"5px 13px",borderRadius:7,border:"none",fontSize:11,fontWeight:700,cursor:"pointer",fontFamily:"'DM Sans',sans-serif",
-                  background:mode===val?`linear-gradient(135deg,${T.coral},#ff8c5a)`:"transparent",
+                  background:mode===val?`linear-gradient(135deg,${T.coral},#FBBF24)`:"transparent",
                   color:mode===val?"#fff":"#64748b",transition:"all .15s"}}>
                 {lbl}
               </button>
@@ -117,7 +117,7 @@ export default function AdminAuditLogs() {
           </div>
 
           <button onClick={handleSearch}
-            style={{padding:"8px 16px",borderRadius:10,border:"none",background:`linear-gradient(135deg,${T.coral},#ff8c5a)`,color:"#fff",fontSize:12,fontWeight:700,cursor:"pointer",fontFamily:"'DM Sans',sans-serif"}}>
+            style={{padding:"8px 16px",borderRadius:10,border:"none",background:`linear-gradient(135deg,${T.coral},#FBBF24)`,color:"#fff",fontSize:12,fontWeight:700,cursor:"pointer",fontFamily:"'DM Sans',sans-serif"}}>
             Search
           </button>
 
@@ -151,7 +151,7 @@ export default function AdminAuditLogs() {
           <div style={{background:`linear-gradient(90deg,${T.navy},${T.navyMid})`,padding:"12px 18px",display:"flex",alignItems:"center",gap:10}}>
             <ScrollText size={15} color={T.coral}/>
             <p className="fd" style={{fontSize:13,fontWeight:800,color:"#fff"}}>Activity Log</p>
-            <span style={{marginLeft:"auto",padding:"2px 9px",borderRadius:999,background:"rgba(255,107,53,.2)",color:T.coral,fontSize:10,fontWeight:700}}>{filtered.length}</span>
+            <span style={{marginLeft:"auto",padding:"2px 9px",borderRadius:999,background:"rgba(139,92,246,.2)",color:T.coral,fontSize:10,fontWeight:700}}>{filtered.length}</span>
           </div>
 
           <div style={{display:"grid",gridTemplateColumns:"1fr 2fr 1.5fr 1fr",gap:12,padding:"10px 18px",borderBottom:`1.5px solid ${T.border}`,background:"#FAFBFF"}}>

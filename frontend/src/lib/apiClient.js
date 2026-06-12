@@ -1,6 +1,6 @@
 // ─────────────────────────────────────────────────────────────────────────────
 //  src/lib/apiClient.js
-//  Centralised HTTP client for SamayaHR
+//  Centralised HTTP client for CrewSync
 //
 //  Usage anywhere in the app:
 //    import api, { API_BASE_URL } from "@/lib/apiClient";
@@ -38,7 +38,7 @@ export function getTenantCode() {
   return localStorage.getItem("tenantCode") || "";
 }
 
-export function getCompanyId() {
+export function getWorkspaceId() {
   return localStorage.getItem("companyId") || "";
 }
 
@@ -54,12 +54,12 @@ export function getRole() {
 export function buildHeaders(extra = {}) {
   const token     = getAuthToken();
   const tenant    = getTenantCode();
-  const companyId = getCompanyId();
+  const companyId = getWorkspaceId();
   return {
     "Content-Type": "application/json",
     ...(token     ? { Authorization: token }      : {}),
     ...(tenant    ? { "X-Tenant-Code": tenant }   : {}),
-    ...(companyId ? { "X-Company-Id": companyId } : {}),
+    ...(companyId ? { "X-Workspace-Id": companyId } : {}),
     ...extra,
   };
 }
@@ -68,11 +68,11 @@ export function buildHeaders(extra = {}) {
 export function buildMultipartHeaders(extra = {}) {
   const token     = getAuthToken();
   const tenant    = getTenantCode();
-  const companyId = getCompanyId();
+  const companyId = getWorkspaceId();
   return {
     ...(token     ? { Authorization: token }      : {}),
     ...(tenant    ? { "X-Tenant-Code": tenant }   : {}),
-    ...(companyId ? { "X-Company-Id": companyId } : {}),
+    ...(companyId ? { "X-Workspace-Id": companyId } : {}),
     ...extra,
   };
 }
@@ -89,11 +89,11 @@ api.interceptors.request.use(
   (config) => {
     const token     = getAuthToken();
     const tenant    = getTenantCode();
-    const companyId = getCompanyId();
+    const companyId = getWorkspaceId();
 
     if (token)     config.headers["Authorization"]  = token;
     if (tenant)    config.headers["X-Tenant-Code"]  = tenant;
-    if (companyId) config.headers["X-Company-Id"]   = companyId;
+    if (companyId) config.headers["X-Workspace-Id"]   = companyId;
 
     return config;
   },

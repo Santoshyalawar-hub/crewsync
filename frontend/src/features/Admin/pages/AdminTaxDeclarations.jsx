@@ -3,7 +3,7 @@ import { Receipt, CheckCircle, XCircle, Eye, Filter } from "lucide-react";
 import api from "@/lib/apiClient";
 
 const T = {
-  navy:"#0D1F2D", navyMid:"#1E3448", coral:"#FF6B35", teal:"#00C2A8",
+  navy:"#0B1020", navyMid:"#374151", coral:"#8B5CF6", teal:"#06B6D4",
   bg:"#F5F7FB", border:"#E8ECF2",
 };
 
@@ -24,14 +24,14 @@ const CSS = `
 
 const STATUS_STYLE = {
   PENDING:  { bg:"#FFFBEB", color:"#B45309", border:"#FDE68A" },
-  APPROVED: { bg:"rgba(0,194,168,.08)", color:"#0D7A6A", border:"rgba(0,194,168,.3)" },
+  APPROVED: { bg:"rgba(6,182,212,.08)", color:"#0D7A6A", border:"rgba(6,182,212,.3)" },
   REJECTED: { bg:"#FEF2F2", color:"#991B1B", border:"#FECACA" },
 };
 
 const fmtDate = d => d ? new Date(d).toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"numeric"}) : "—";
 const fmtAmt  = a => a != null ? `₹${Number(a).toLocaleString("en-IN",{minimumFractionDigits:2})}` : "—";
 
-export default function AdminTaxDeclarations() {
+export default function OperatorTaxDeclarations() {
   const [items,      setItems]     = useState([]);
   const [loading,    setLoading]   = useState(true);
   const [filter,     setFilter]    = useState("ALL");
@@ -90,10 +90,10 @@ export default function AdminTaxDeclarations() {
       <style>{CSS}</style>
 
       <div style={{background:`linear-gradient(135deg,${T.navy},${T.navyMid})`,padding:"22px 26px",position:"relative",overflow:"hidden"}}>
-        <div style={{position:"absolute",top:-50,right:60,width:180,height:180,borderRadius:"50%",background:"rgba(255,107,53,.07)",pointerEvents:"none"}}/>
+        <div style={{position:"absolute",top:-50,right:60,width:180,height:180,borderRadius:"50%",background:"rgba(139,92,246,.07)",pointerEvents:"none"}}/>
         <div style={{position:"relative"}}>
-          <p style={{fontSize:11,fontWeight:700,color:T.coral,textTransform:"uppercase",letterSpacing:".12em",marginBottom:4}}>SamayaHR · Finance</p>
-          <h1 className="fd" style={{fontSize:23,fontWeight:900,color:"#fff",margin:0}}>Tax Declarations</h1>
+          <p style={{fontSize:11,fontWeight:700,color:T.coral,textTransform:"uppercase",letterSpacing:".12em",marginBottom:4}}>CrewSync · MoneyOps</p>
+          <h1 className="fd" style={{fontSize:23,fontWeight:900,color:"#fff",margin:0}}>Tax Desks</h1>
           <p style={{fontSize:13,color:"rgba(255,255,255,.5)",marginTop:4}}>Review and approve employee tax declarations (80C, 80D, HRA)</p>
         </div>
       </div>
@@ -120,7 +120,7 @@ export default function AdminTaxDeclarations() {
           {["ALL","PENDING","APPROVED","REJECTED"].map(f => (
             <button key={f} onClick={() => setFilter(f)}
               style={{padding:"5px 13px",borderRadius:8,border:`1.5px solid ${filter===f?T.coral:T.border}`,
-                background:filter===f?"rgba(255,107,53,.08)":"#fff",
+                background:filter===f?"rgba(139,92,246,.08)":"#fff",
                 color:filter===f?T.coral:"#64748b",
                 fontSize:11,fontWeight:700,cursor:"pointer",fontFamily:"'DM Sans',sans-serif"}}>
               {f}
@@ -132,12 +132,12 @@ export default function AdminTaxDeclarations() {
         <div className="atd-panel atd-in">
           <div style={{background:`linear-gradient(90deg,${T.navy},${T.navyMid})`,padding:"12px 18px",display:"flex",alignItems:"center",gap:10}}>
             <Receipt size={15} color={T.coral}/>
-            <p className="fd" style={{fontSize:13,fontWeight:800,color:"#fff"}}>Tax Declarations</p>
-            <span style={{marginLeft:"auto",padding:"2px 9px",borderRadius:999,background:"rgba(255,107,53,.2)",color:T.coral,fontSize:10,fontWeight:700}}>{filtered.length}</span>
+            <p className="fd" style={{fontSize:13,fontWeight:800,color:"#fff"}}>Tax Desks</p>
+            <span style={{marginLeft:"auto",padding:"2px 9px",borderRadius:999,background:"rgba(139,92,246,.2)",color:T.coral,fontSize:10,fontWeight:700}}>{filtered.length}</span>
           </div>
 
           <div style={{display:"grid",gridTemplateColumns:"1.5fr 1fr 1fr 1fr 1fr 1.2fr",gap:10,padding:"10px 18px",borderBottom:`1.5px solid ${T.border}`,background:"#FAFBFF"}}>
-            {["Employee","FY","80C","80D","HRA","Actions"].map(h => (
+            {["Person","FY","80C","80D","HRA","Actions"].map(h => (
               <p key={h} style={{fontSize:10,fontWeight:700,color:"#94a3b8",textTransform:"uppercase",letterSpacing:".07em",margin:0}}>{h}</p>
             ))}
           </div>
@@ -152,7 +152,7 @@ export default function AdminTaxDeclarations() {
               return (
                 <div key={item.id} className="atd-row">
                   <div>
-                    <p style={{fontSize:13,fontWeight:700,color:T.navy,margin:0}}>Employee #{item.userId}</p>
+                    <p style={{fontSize:13,fontWeight:700,color:T.navy,margin:0}}>Person #{item.userId}</p>
                     <span className="atd-badge" style={{background:st.bg,color:st.color,border:`1px solid ${st.border}`,marginTop:3}}>{item.status}</span>
                   </div>
                   <p style={{fontSize:12,color:"#64748b",margin:0}}>{item.financialYear || "—"}</p>
@@ -165,7 +165,7 @@ export default function AdminTaxDeclarations() {
                     </button>
                     {item.status === "PENDING" && (
                       <>
-                        <button className="atd-btn" disabled={busy} onClick={() => approve(item.id)} style={{background:"rgba(0,194,168,.1)",color:"#0D7A6A"}}>
+                        <button className="atd-btn" disabled={busy} onClick={() => approve(item.id)} style={{background:"rgba(6,182,212,.1)",color:"#0D7A6A"}}>
                           <CheckCircle size={10}/> Approve
                         </button>
                         <button className="atd-btn" disabled={busy} onClick={() => setRejectModal({open:true,id:item.id,reason:""})} style={{background:"rgba(239,68,68,.08)",color:"#991B1B"}}>
@@ -185,9 +185,9 @@ export default function AdminTaxDeclarations() {
       {selected && (
         <div style={{position:"fixed",inset:0,background:"rgba(0,0,0,.45)",display:"flex",alignItems:"center",justifyContent:"center",zIndex:1000,padding:20}} onClick={() => setSelected(null)}>
           <div style={{background:"#fff",borderRadius:18,padding:28,width:"100%",maxWidth:460,maxHeight:"85vh",overflowY:"auto"}} onClick={e => e.stopPropagation()}>
-            <p className="fd" style={{fontSize:16,fontWeight:900,color:T.navy,marginBottom:18}}>Tax Declaration Details</p>
+            <p className="fd" style={{fontSize:16,fontWeight:900,color:T.navy,marginBottom:18}}>Tax Desk Details</p>
             {[
-              ["Employee ID", selected.employeeId || selected.employeeCode || selected.userId],
+              ["Person ID", selected.employeeId || selected.employeeCode || selected.userId],
               ["Financial Year", selected.financialYear || "—"],
               ["Section 80C", fmtAmt(selected.section80c)],
               ["Section 80D", fmtAmt(selected.section80d)],

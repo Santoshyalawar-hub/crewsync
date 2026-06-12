@@ -1,6 +1,6 @@
 // import React from "react";
 
-// export default function EmployeeNavbar({ onLogout, pageTitle = "Employee" }) {
+// export default function PersonNavbar({ onLogout, pageTitle = "Person" }) {
 //   return (
 //     <nav
 //       className="sticky top-0 z-50 px-6 md:px-8 py-3 flex items-center justify-between"
@@ -21,8 +21,8 @@
 //           }}
 //         >
 //           <img
-//             src="/assets/Zlabs-Logo.png"
-//             alt="SamayaHR"
+//             src="/assets/crewsync-mark.svg"
+//             alt="CrewSync"
 //             className="h-8 w-8 object-contain"
 //           />
 //         </div>
@@ -32,20 +32,20 @@
 //             style={{
 //               fontSize: "11px",
 //               fontWeight: 700,
-//               color: "#FF6B35",
+//               color: "#8B5CF6",
 //               textTransform: "uppercase",
 //               letterSpacing: ".12em",
 //               margin: 0,
 //             }}
 //           >
-//             SamayaHR
+//             CrewSync
 //           </p>
 //           <h1
 //             className="m-0"
 //             style={{
 //               fontSize: "18px",
 //               fontWeight: 800,
-//               color: "#0D1F2D",
+//               color: "#0B1020",
 //             }}
 //           >
 //             {pageTitle}
@@ -57,21 +57,21 @@
 //         onClick={onLogout}
 //         className="flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold text-white shadow-lg transition-all duration-300"
 //         style={{
-//           background: "linear-gradient(135deg,#FF6B35,#FF8C5A)",
-//           boxShadow: "0 8px 18px rgba(255,107,53,.25)",
+//           background: "linear-gradient(135deg,#8B5CF6,#FBBF24)",
+//           boxShadow: "0 8px 18px rgba(139,92,246,.25)",
 //         }}
 //         onMouseEnter={(e) => {
 //           e.currentTarget.style.background =
-//             "linear-gradient(135deg,#E85A24,#FF6B35)";
+//             "linear-gradient(135deg,#E85A24,#8B5CF6)";
 //           e.currentTarget.style.boxShadow =
-//             "0 10px 22px rgba(255,107,53,.35)";
+//             "0 10px 22px rgba(139,92,246,.35)";
 //           e.currentTarget.style.transform = "translateY(-1px)";
 //         }}
 //         onMouseLeave={(e) => {
 //           e.currentTarget.style.background =
-//             "linear-gradient(135deg,#FF6B35,#FF8C5A)";
+//             "linear-gradient(135deg,#8B5CF6,#FBBF24)";
 //           e.currentTarget.style.boxShadow =
-//             "0 8px 18px rgba(255,107,53,.25)";
+//             "0 8px 18px rgba(139,92,246,.25)";
 //           e.currentTarget.style.transform = "translateY(0)";
 //         }}
 //       >
@@ -100,21 +100,21 @@ import React, { useState, useEffect } from "react";
 import api from "@/lib/apiClient";
 
 /*
-  EmployeeNavbar
+  PersonNavbar
   ─────────────────────────────────────────────────────────────────
-  • Left  : Company logo (fetched by tenantCode, same as AdminTopNav)
+  • Left  : Workspace logo (fetched by tenantCode, same as OperatorTopNav)
             API: GET /api/global-admin/companies/by-tenant/{tenantCode}
             Response: { data: { logoUrl, name, tenantCode } }
   • Center: pageTitle
   • Right : Logout button
 */
 
-const T = { navy: "#0D1F2D", coral: "#FF6B35", border: "#E8ECF2" };
+const T = { navy: "#0B1020", coral: "#8B5CF6", border: "#E8ECF2" };
 
-export default function EmployeeNavbar({ onLogout, pageTitle = "Dashboard" }) {
+export default function PersonNavbar({ onLogout, pageTitle = "ControlRoom" }) {
   const [logoUrl,      setLogoUrl]      = useState(() => localStorage.getItem("companyLogoUrl") || "");
   const [logoErr,      setLogoErr]      = useState(false);
-  const [companyName,  setCompanyName]  = useState(() => localStorage.getItem("companyName") || "");
+  const [companyName,  setWorkspaceName]  = useState(() => localStorage.getItem("companyName") || "");
   const [scrolled,     setScrolled]     = useState(false);
 
   const tenantCode = (localStorage.getItem("tenantCode") || "").trim();
@@ -127,13 +127,13 @@ export default function EmployeeNavbar({ onLogout, pageTitle = "Dashboard" }) {
   }, []);
 
   /* ── Fetch company logo by tenantCode ────────────────────────────────────
-     Same endpoint as AdminSidebar / AdminTopNav.
+     Same endpoint as OperatorSidebar / OperatorTopNav.
      Result cached in localStorage so sidebar + topnav stay in sync.
   ─────────────────────────────────────────────────────────────────────────── */
   useEffect(() => {
     if (!tenantCode) return;
 
-    const fetchCompany = async () => {
+    const fetchWorkspace = async () => {
       try {
         const res  = await api.get(
           `/api/global-admin/companies/by-tenant/${tenantCode}`
@@ -147,7 +147,7 @@ export default function EmployeeNavbar({ onLogout, pageTitle = "Dashboard" }) {
           localStorage.setItem("companyLogoUrl", co.logoUrl);
         }
         if (co?.name) {
-          setCompanyName(co.name);
+          setWorkspaceName(co.name);
           localStorage.setItem("companyName", co.name);
         }
       } catch {
@@ -155,7 +155,7 @@ export default function EmployeeNavbar({ onLogout, pageTitle = "Dashboard" }) {
       }
     };
 
-    fetchCompany();
+    fetchWorkspace();
 
     /* Listen for logo updates from sidebar (same localStorage key) */
     const onStorage = (e) => {
@@ -168,13 +168,13 @@ export default function EmployeeNavbar({ onLogout, pageTitle = "Dashboard" }) {
     return () => window.removeEventListener("storage", onStorage);
   }, [tenantCode]);
 
-  /* ── Company initials fallback ── */
+  /* ── Workspace initials fallback ── */
   const initials = (companyName || tenantCode || "C")
     .trim().split(/\s+/).map(w => w[0]).join("").slice(0, 2).toUpperCase();
 
   const LogoBrand = () => (
     <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-      {/* Company logo / initials */}
+      {/* Workspace logo / initials */}
       <div style={{
         width: 40, height: 40, borderRadius: 11, overflow: "hidden",
         border: `1.5px solid ${T.border}`,
@@ -183,13 +183,13 @@ export default function EmployeeNavbar({ onLogout, pageTitle = "Dashboard" }) {
         flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center",
       }}>
         {logoUrl && !logoErr
-          ? <img src={logoUrl} alt={companyName || "Company"}
+          ? <img src={logoUrl} alt={companyName || "Workspace"}
               onError={() => setLogoErr(true)}
               style={{ width: "100%", height: "100%", objectFit: "contain", padding: 4 }} />
           : <div style={{
               width: "100%", height: "100%", display: "flex",
               alignItems: "center", justifyContent: "center",
-              background: "linear-gradient(135deg,#FF6B35,#FF8C5A)",
+              background: "linear-gradient(135deg,#8B5CF6,#FBBF24)",
               color: "#fff", fontSize: 13, fontWeight: 900,
               fontFamily: "'Sora',sans-serif",
             }}>{initials}</div>
@@ -201,13 +201,13 @@ export default function EmployeeNavbar({ onLogout, pageTitle = "Dashboard" }) {
         <p style={{
           fontSize: 10, fontWeight: 800, color: T.coral,
           textTransform: "uppercase", letterSpacing: ".12em", margin: "0 0 2px",
-        }}>Employee Portal</p>
+        }}>Person Portal</p>
         <p style={{
           fontSize: 15, fontWeight: 800, color: T.navy,
           fontFamily: "'Sora',sans-serif", margin: 0,
           maxWidth: 180, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",
         }}>
-          {companyName || "SamayaHR"}
+          {companyName || "CrewSync"}
         </p>
       </div>
     </div>
@@ -219,8 +219,8 @@ export default function EmployeeNavbar({ onLogout, pageTitle = "Dashboard" }) {
         @import url('https://fonts.googleapis.com/css2?family=Sora:wght@700;800;900&family=DM+Sans:wght@400;500;600;700&display=swap');
         .en-nav { font-family: 'DM Sans', sans-serif; }
         .en-logout:hover {
-          background: linear-gradient(135deg,#E85A24,#FF6B35) !important;
-          box-shadow: 0 10px 22px rgba(255,107,53,.38) !important;
+          background: linear-gradient(135deg,#E85A24,#8B5CF6) !important;
+          box-shadow: 0 10px 22px rgba(139,92,246,.38) !important;
           transform: translateY(-1px);
         }
       `}</style>
@@ -259,9 +259,9 @@ export default function EmployeeNavbar({ onLogout, pageTitle = "Dashboard" }) {
           style={{
             display: "flex", alignItems: "center", gap: 7,
             padding: "9px 18px", borderRadius: 11, border: "none",
-            background: "linear-gradient(135deg,#FF6B35,#FF8C5A)",
+            background: "linear-gradient(135deg,#8B5CF6,#FBBF24)",
             color: "#fff", fontSize: 13, fontWeight: 700, cursor: "pointer",
-            boxShadow: "0 6px 16px rgba(255,107,53,.25)",
+            boxShadow: "0 6px 16px rgba(139,92,246,.25)",
             transition: "all .18s", fontFamily: "'DM Sans',sans-serif",
             flexShrink: 0,
           }}

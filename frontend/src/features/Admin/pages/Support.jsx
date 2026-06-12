@@ -4,10 +4,10 @@ import api from "@/lib/apiClient";
 
 // ─── Design tokens ────────────────────────────────────────────────────────────
 const T = {
-  navy:    "#0D1F2D",
-  navyMid: "#1E3448",
-  coral:   "#FF6B35",
-  teal:    "#00C2A8",
+  navy:    "#0B1020",
+  navyMid: "#374151",
+  coral:   "#8B5CF6",
+  teal:    "#06B6D4",
   bg:      "#F5F7FB",
   border:  "#E8ECF2",
   soft:    "#64748B",
@@ -41,7 +41,7 @@ const I = {
 
 // ─── Status/priority helpers ──────────────────────────────────────────────────
 const STATUS_META = {
-  'open':        { bg:"rgba(59,130,246,.1)",  color:"#2563EB",  dot:"#3B82F6",  label:"Open"        },
+  'open':        { bg:"rgba(59,130,246,.1)",  color:"#8B5CF6",  dot:"#3B82F6",  label:"Open"        },
   'in-progress': { bg:"rgba(245,158,11,.1)",  color:"#D97706",  dot:"#F59E0B",  label:"In Progress" },
   'resolved':    { bg:"rgba(16,185,129,.1)",   color:"#059669",  dot:"#10B981",  label:"Resolved"    },
   'closed':      { bg:"rgba(100,116,139,.1)",  color:"#475569",  dot:"#94A3B8",  label:"Closed"      },
@@ -64,13 +64,13 @@ const CSS = `
   border-radius:12px; padding:10px 14px; font-size:13px; color:${T.navy};
   outline:none; transition:all .18s; font-family:'DM Sans',sans-serif;
 }
-.sc-input:focus { border-color:${T.coral}; background:#fff; box-shadow:0 0 0 4px rgba(255,107,53,.07); }
+.sc-input:focus { border-color:${T.coral}; background:#fff; box-shadow:0 0 0 4px rgba(139,92,246,.07); }
 .sc-textarea {
   width:100%; border:1.5px solid ${T.border}; background:#FAFBFD;
   border-radius:14px; padding:12px 14px; font-size:12px; color:${T.navy};
   outline:none; transition:all .18s; resize:none; font-family:'DM Sans',sans-serif;
 }
-.sc-textarea:focus { border-color:${T.coral}; background:#fff; box-shadow:0 0 0 4px rgba(255,107,53,.07); }
+.sc-textarea:focus { border-color:${T.coral}; background:#fff; box-shadow:0 0 0 4px rgba(139,92,246,.07); }
 
 .sc-select {
   border:1.5px solid ${T.border}; background:#FAFBFD; border-radius:10px;
@@ -87,8 +87,8 @@ const CSS = `
   padding:10px 18px; border:none; border-radius:12px; font-size:13px;
   font-weight:700; cursor:pointer; transition:all .18s; font-family:'DM Sans',sans-serif;
 }
-.sc-btn.coral { background:linear-gradient(135deg,${T.coral},#FF8C5A); color:#fff; box-shadow:0 4px 14px rgba(255,107,53,.22); }
-.sc-btn.coral:hover { transform:translateY(-1px); box-shadow:0 8px 20px rgba(255,107,53,.3); }
+.sc-btn.coral { background:linear-gradient(135deg,${T.coral},#FBBF24); color:#fff; box-shadow:0 4px 14px rgba(139,92,246,.22); }
+.sc-btn.coral:hover { transform:translateY(-1px); box-shadow:0 8px 20px rgba(139,92,246,.3); }
 .sc-btn.outline { background:#fff; border:1.5px solid ${T.border}; color:${T.navy}; }
 .sc-btn.outline:hover { border-color:${T.coral}; color:${T.coral}; }
 .sc-btn.ghost { background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.18); color:#fff; }
@@ -103,11 +103,11 @@ const CSS = `
   padding:14px 16px; border-radius:16px; border:1.5px solid ${T.border};
   background:#fff; cursor:pointer; transition:all .18s; text-align:left; width:100%;
 }
-.sc-ticket-row:hover { border-color:rgba(255,107,53,.25); background:#FFFAF7; }
-.sc-ticket-row.active { border-color:${T.coral}; background:rgba(255,107,53,.04); box-shadow:0 0 0 3px rgba(255,107,53,.08); }
+.sc-ticket-row:hover { border-color:rgba(139,92,246,.25); background:#FFFAF7; }
+.sc-ticket-row.active { border-color:${T.coral}; background:rgba(139,92,246,.04); box-shadow:0 0 0 3px rgba(139,92,246,.08); }
 
 .sc-comment-bubble {
-  background:#F7F8FA; border:1px solid ${T.border}; border-radius:14px; padding:12px 14px;
+  background:#F6F8FB; border:1px solid ${T.border}; border-radius:14px; padding:12px 14px;
 }
 
 .sc-hero { background:linear-gradient(135deg,${T.navy} 0%,${T.navyMid} 55%,#28445D 100%); padding:26px 28px 24px; position:relative; overflow:hidden; }
@@ -117,7 +117,7 @@ const CSS = `
 `;
 
 // ─────────────────────────────────────────────────────────────────────────────
-export default function SupportCenter() {
+export default function CareDeskCenter() {
   const [tickets,        setTickets]        = useState([]);
   const [loading,        setLoading]        = useState(false);
   const [error,          setError]          = useState('');
@@ -224,23 +224,23 @@ export default function SupportCenter() {
 
       {/* ── HERO ── */}
       <div className="sc-hero">
-        {[[200,200,"right",-28,"top",-38,"rgba(255,255,255,.04)"],[140,140,"right",180,"bottom",-46,"rgba(255,107,53,.1)"],[110,110,"left",-18,"bottom",-22,"rgba(0,194,168,.07)"]].map(([w,h,h1,v1,h2,v2,c],i)=>(
+        {[[200,200,"right",-28,"top",-38,"rgba(255,255,255,.04)"],[140,140,"right",180,"bottom",-46,"rgba(139,92,246,.1)"],[110,110,"left",-18,"bottom",-22,"rgba(6,182,212,.07)"]].map(([w,h,h1,v1,h2,v2,c],i)=>(
           <div key={i} style={{position:"absolute",width:w,height:h,borderRadius:"50%",background:c,[h1]:v1,[h2]:v2,pointerEvents:"none"}}/>
         ))}
         <div style={{ position:"relative",zIndex:2 }}>
           <div style={{ display:"flex",alignItems:"flex-start",justifyContent:"space-between",gap:16,flexWrap:"wrap" }}>
             <div>
               <div style={{ display:"inline-flex",alignItems:"center",gap:7,padding:"6px 12px",borderRadius:999,background:"rgba(255,255,255,.08)",color:"#FFD7C8",fontSize:10,fontWeight:800,letterSpacing:".1em",textTransform:"uppercase",marginBottom:10 }}>
-                <Ic d={I.msg} size={12} color="#FFD7C8"/> Help & Support
+                <Ic d={I.msg} size={12} color="#FFD7C8"/> CareDesk
               </div>
-              <h1 className="fd" style={{ fontSize:26,fontWeight:900,color:"#fff",margin:0 }}>Support Center</h1>
+              <h1 className="fd" style={{ fontSize:26,fontWeight:900,color:"#fff",margin:0 }}>CareDesk Center</h1>
               <p style={{ fontSize:13,color:"rgba(255,255,255,.55)",marginTop:6 }}>Manage employee tickets and resolve issues faster</p>
             </div>
             <div style={{ display:"flex",gap:10,alignItems:"center",flexWrap:"wrap" }}>
               {/* contact pills */}
               {[
                 { icon:I.phone, text:"+1 (91) 123-4567" },
-                { icon:I.mail,  text:"support@samayahr.com" },
+                { icon:I.mail,  text:"support@crewsync.app" },
               ].map(p => (
                 <div key={p.text} style={{ display:"inline-flex",alignItems:"center",gap:7,padding:"9px 14px",borderRadius:12,background:"rgba(255,255,255,.08)",border:"1px solid rgba(255,255,255,.12)",color:"rgba(255,255,255,.8)",fontSize:12,fontWeight:600 }}>
                   <Ic d={p.icon} size={13} color="rgba(255,255,255,.7)"/> {p.text}
@@ -276,7 +276,7 @@ export default function SupportCenter() {
         <div style={{ display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:14,marginBottom:20 }} className="sc-in">
           {[
             { icon:I.book, label:"Knowledge Base", sub:"Search internal articles", accent:"rgba(99,102,241,.1)", color:"#6366F1" },
-            { icon:I.help, label:"FAQs",           sub:"Common support answers",   accent:"rgba(255,107,53,.1)", color:T.coral   },
+            { icon:I.help, label:"FAQs",           sub:"Common support answers",   accent:"rgba(139,92,246,.1)", color:T.coral   },
             { icon:I.file, label:"Documentation",  sub:"Guides & API docs",         accent:"rgba(2,132,199,.1)", color:"#0284C7" },
             { icon:I.clock,label:"Avg Response",   sub:"2.3 hours average",         accent:"rgba(245,158,11,.1)", color:"#F59E0B" },
           ].map(qa => (
@@ -349,7 +349,7 @@ export default function SupportCenter() {
             <div style={{ padding:"16px 14px" }}>
               {loading ? (
                 <div style={{ textAlign:"center",padding:"48px 20px" }}>
-                  <div className="sc-spin" style={{ width:36,height:36,borderRadius:"50%",border:`4px solid rgba(255,107,53,.15)`,borderTopColor:T.coral,margin:"0 auto 14px",display:"block" }}/>
+                  <div className="sc-spin" style={{ width:36,height:36,borderRadius:"50%",border:`4px solid rgba(139,92,246,.15)`,borderTopColor:T.coral,margin:"0 auto 14px",display:"block" }}/>
                   <p style={{ fontSize:13,color:T.soft }}>Loading tickets…</p>
                 </div>
               ) : filtered.length === 0 ? (
@@ -427,7 +427,7 @@ export default function SupportCenter() {
                         { label:"Priority", val:selectedTicket.priority, color: PRIORITY_COLOR[(selectedTicket.priority||'').toLowerCase()]||"#94A3B8" },
                         { label:"Created",  val:new Date(selectedTicket.createdAt).toLocaleDateString(), color:T.soft },
                       ].map(m => (
-                        <div key={m.label} style={{ background:"#F7F8FA",border:`1px solid ${T.border}`,borderRadius:10,padding:"6px 12px" }}>
+                        <div key={m.label} style={{ background:"#F6F8FB",border:`1px solid ${T.border}`,borderRadius:10,padding:"6px 12px" }}>
                           <span style={{ fontSize:9,color:"#94A3B8",fontWeight:700,textTransform:"uppercase",letterSpacing:".08em" }}>{m.label}: </span>
                           <span style={{ fontSize:12,fontWeight:700,color:m.color }}>{m.val}</span>
                         </div>
@@ -482,7 +482,7 @@ export default function SupportCenter() {
                 </>
               ) : (
                 <div style={{ padding:"56px 24px",textAlign:"center" }}>
-                  <div style={{ width:56,height:56,borderRadius:18,background:"rgba(255,107,53,.08)",display:"flex",alignItems:"center",justifyContent:"center",margin:"0 auto 14px" }}>
+                  <div style={{ width:56,height:56,borderRadius:18,background:"rgba(139,92,246,.08)",display:"flex",alignItems:"center",justifyContent:"center",margin:"0 auto 14px" }}>
                     <Ic d={I.msg} size={24} color={T.coral} sw={1.8}/>
                   </div>
                   <div className="fd" style={{ fontSize:15,fontWeight:800,color:T.navy }}>Select a ticket</div>

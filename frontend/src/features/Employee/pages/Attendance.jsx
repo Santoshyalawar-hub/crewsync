@@ -57,12 +57,12 @@ const STATUS_CFG = {
 const getCodeInfo = (status) => {
   const s = String(status || "").toUpperCase().trim();
   if (s === "HALF_DAY" || s === "HALF" || s === "HALF DAY")
-    return { code: "HD", color: "#14b8a6", label: "Half Day" };
+    return { code: "HD", color: "#06B6D4", label: "Half Day" };
   if (s === "PRESENT" || s === "WORKING" || s === "FULL" ||
       s === "FULL_DAY" || s === "COMPLETED" || s === "ON_BREAK")
     return { code: "P", color: "#0ea5e9", label: "Present" };
   if (s.includes("LEAVE") || s.includes("SICK"))
-    return { code: "L", color: "#8b5cf6", label: "Leave" };
+    return { code: "L", color: "#8b5cf6", label: "TimeAway" };
   if (s === "HOLIDAY" || s === "PUBLIC_HOLIDAY" ||
       s.includes("HOLIDAY") || s.includes("COMP") || s.includes("WEEKEND"))
     return { code: "H", color: "#eab308", label: "Holiday" };
@@ -192,7 +192,7 @@ const CSS = `
 `;
 
 // ─────────────────────────────────────────────────────────────────────────────
-export default function Attendance() {
+export default function Presence() {
   const todayKey = todayKeyIST();
   const today    = new Date();
 
@@ -213,12 +213,12 @@ export default function Attendance() {
   const fetchingRef    = useRef(false);
   const fetchedYearRef = useRef(null);
 
-  const [showLeaveModal,      setShowLeaveModal]      = useState(false);
+  const [showTimeAwayModal,      setShowTimeAwayModal]      = useState(false);
   const [showCorrectionModal, setShowCorrectionModal] = useState(false);
   const [yearData,    setYearData]    = useState({});
   const [loadingYear, setLoadingYear] = useState(false);
 
-  const empName = localStorage.getItem("userName") || "Employee";
+  const empName = localStorage.getItem("userName") || "Person";
 
   const getUserKey = (key) => {
     const uid = localStorage.getItem("userId");
@@ -335,7 +335,7 @@ export default function Attendance() {
   }, [selectedYear, todayKey, fetchYearData]);
 
   // ── Load today's attendance from backend ──────────────────────────────────
-  const loadTodayAttendance = useCallback(async () => {
+  const loadTodayPresence = useCallback(async () => {
     const uid  = Number(localStorage.getItem("userId"));
     if (!uid) return;
     try {
@@ -423,13 +423,13 @@ export default function Attendance() {
         }
       }
     } catch (e) {
-      console.error("loadTodayAttendance:", e);
+      console.error("loadTodayPresence:", e);
     }
   }, [todayKey]);
 
   // ── Effects ───────────────────────────────────────────────────────────────
   useEffect(() => {
-    loadTodayAttendance();
+    loadTodayPresence();
     fetchYearData(today.getFullYear());
     return () => {
       if (intervalRef.current)  clearInterval(intervalRef.current);
@@ -515,7 +515,7 @@ export default function Attendance() {
     </div>
   );
 
-  const LeaveForm = ({ onCancel, onSubmit }) => {
+  const TimeAwayForm = ({ onCancel, onSubmit }) => {
     const [type, setType]   = useState("ANNUAL_LEAVE");
     const [start, setStart] = useState("");
     const [end,   setEnd]   = useState("");
@@ -531,7 +531,7 @@ export default function Attendance() {
         const r = await api.post("/api/leaves/apply", { employeeId:eid, type, startDate:start, endDate:end, reason:reason.trim() });
         const res = r.data;
         if (!res?.success && res?.message) { alert(res.message); setSub(false); return; }
-        alert("Leave submitted!"); onSubmit({});
+        alert("TimeAway submitted!"); onSubmit({});
       } catch { alert("Error."); } finally { setSub(false); }
     };
     return (
@@ -539,11 +539,11 @@ export default function Attendance() {
         <div>
           <label className="modal-label">Category</label>
           <select className="modal-input" value={type} onChange={e=>setType(e.target.value)}>
-            <option value="ANNUAL_LEAVE">Annual Leave</option>
-            <option value="SICK_LEAVE">Sick Leave</option>
-            <option value="CASUAL_LEAVE">Casual Leave</option>
-            <option value="MATERNITY_LEAVE">Maternity Leave</option>
-            <option value="PATERNITY_LEAVE">Paternity Leave</option>
+            <option value="ANNUAL_LEAVE">Annual TimeAway</option>
+            <option value="SICK_LEAVE">Sick TimeAway</option>
+            <option value="CASUAL_LEAVE">Casual TimeAway</option>
+            <option value="MATERNITY_LEAVE">Maternity TimeAway</option>
+            <option value="PATERNITY_LEAVE">Paternity TimeAway</option>
           </select>
         </div>
         <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:10 }}>
@@ -696,8 +696,8 @@ export default function Attendance() {
           <div style={{ display:"flex", gap:8, flexWrap:"wrap" }}>
             {[
               { code:"P",  color:"#0ea5e9", label:"Present",  count: yearStats.present  },
-              { code:"HD", color:"#14b8a6", label:"Half Day", count: yearStats.halfDay,  small: true },
-              { code:"L",  color:"#8b5cf6", label:"Leave",    count: yearStats.sick      },
+              { code:"HD", color:"#06B6D4", label:"Half Day", count: yearStats.halfDay,  small: true },
+              { code:"L",  color:"#8b5cf6", label:"TimeAway",    count: yearStats.sick      },
               { code:"A",  color:"#f97316", label:"Absent",   count: yearStats.absent    },
               { code:"H",  color:"#eab308", label:"Holiday",  count: yearStats.holiday   },
             ].map(l => (
@@ -716,7 +716,7 @@ export default function Attendance() {
           {loadingYear ? (
             <div style={{ padding:48, display:"flex", flexDirection:"column", alignItems:"center", gap:12 }}>
               <div style={{ width:34, height:34, borderRadius:"50%", border:"3px solid #f97316", borderTopColor:"transparent", animation:"spin .8s linear infinite" }} />
-              <p style={{ fontSize:13, color:"#94a3b8", fontWeight:600 }}>Loading attendance…</p>
+              <p style={{ fontSize:13, color:"#94a3b8", fontWeight:600 }}>Loading presence…</p>
             </div>
           ) : (
             <table className="atd-table" style={{ tableLayout:"fixed", minWidth: 90 + 31 * 38 }}>
@@ -795,13 +795,13 @@ export default function Attendance() {
       </div>
 
       {/* Modals */}
-      {showLeaveModal && (
-        <Modal title="Apply for Leave" onClose={() => setShowLeaveModal(false)}>
-          <LeaveForm onCancel={() => setShowLeaveModal(false)} onSubmit={() => { setShowLeaveModal(false); fetchedYearRef.current = null; fetchYearData(selectedYear); }} />
+      {showTimeAwayModal && (
+        <Modal title="Apply for TimeAway" onClose={() => setShowTimeAwayModal(false)}>
+          <TimeAwayForm onCancel={() => setShowTimeAwayModal(false)} onSubmit={() => { setShowTimeAwayModal(false); fetchedYearRef.current = null; fetchYearData(selectedYear); }} />
         </Modal>
       )}
       {showCorrectionModal && (
-        <Modal title="Attendance Correction Request" onClose={() => setShowCorrectionModal(false)}>
+        <Modal title="Presence Correction Request" onClose={() => setShowCorrectionModal(false)}>
           <CorrectionForm dateKey={todayKey} onCancel={() => setShowCorrectionModal(false)} onSubmit={() => { setShowCorrectionModal(false); fetchedYearRef.current = null; fetchYearData(selectedYear); }} />
         </Modal>
       )}

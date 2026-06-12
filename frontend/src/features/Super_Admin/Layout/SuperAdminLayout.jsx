@@ -3,7 +3,7 @@
 // import Sidebar from "../components/Sidebar.jsx";   
 // import TopNav from "../components/Navbar.jsx";     
 
-// const AdminLayout = () => {
+// const OperatorLayout = () => {
 //   const navigate = useNavigate();
 
 //   const handleLogout = () => {
@@ -34,14 +34,14 @@
 //   );
 // };
 
-// export default SuperAdminLayout;
+// export default SuperOperatorLayout;
 
 // import React from "react";
 // import { Outlet, useNavigate } from "react-router-dom";
 // import Sidebar from "../components/Sidebar.jsx";
 // import TopNav from "../components/Navbar.jsx";
 
-// const SuperAdminLayout = () => {
+// const SuperOperatorLayout = () => {
 //   const navigate = useNavigate();
 
 //   const handleLogout = () => {
@@ -66,7 +66,7 @@
 //         </div>
 
 //         {/* Scrollable page content */}
-//         <main style={{ flex: 1, overflowY: "auto", overflowX: "hidden" }}>
+//         <main className="cs-main-stage" style={{ flex: 1, overflowY: "auto", overflowX: "hidden" }}>
 //           <Outlet />
 //         </main>
 
@@ -75,14 +75,14 @@
 //   );
 // };
 
-// export default SuperAdminLayout;
+// export default SuperOperatorLayout;
 
 
 
 //layout navigation isued solved now it will not redirect without authetication and no Domain Name in URL Path
 
 // ─────────────────────────────────────────────────────────────────────────────
-//  src/features/Super_Admin/Layout/SuperAdminLayout.jsx
+//  src/features/Super_Operator/Layout/SuperOperatorLayout.jsx
 //
 //  KEY CHANGES vs all previous versions:
 //  1. Uses <Outlet> — no children / setActivePage props
@@ -98,22 +98,22 @@
 // import { clearSession } from "../../../app/authGuard";
 
 // const PAGE_TITLES = {
-//   home:    "Dashboard",
-//   onboard: "Add Employee",
-//   team:    "Employees",
-//   admins:  "Manage Admins",
-//   finance: "Finance",
-//   time:    "Attendance",
-//   docs:    "Documents",
-//   support: "Support",
+//   home:    "ControlRoom",
+//   onboard: "Add Person",
+//   team:    "Persons",
+//   admins:  "Manage Operators",
+//   finance: "MoneyOps",
+//   time:    "Presence",
+//   docs:    "Vault",
+//   support: "CareDesk",
 // };
 
 // const resolveTitle = (pathname) => {
 //   const seg = pathname.split("/").filter(Boolean).pop() || "";
-//   return PAGE_TITLES[seg.toLowerCase()] || "Admin Portal";
+//   return PAGE_TITLES[seg.toLowerCase()] || "Ops Portal";
 // };
 
-// const SuperAdminLayout = () => {
+// const SuperOperatorLayout = () => {
 //   const navigate = useNavigate();
 //   const location = useLocation();
 
@@ -142,10 +142,10 @@
 //   );
 // };
 
-// export default SuperAdminLayout;
+// export default SuperOperatorLayout;
 
 // With Domain Name in URL Path 9/3/2026
-// src/features/Super_Admin/Layout/SuperAdminLayout.jsx
+// src/features/Super_Operator/Layout/SuperOperatorLayout.jsx
 //
 // Props received from AppShell:
 //   currentPage  : string  — active page key e.g. "sa_home"
@@ -158,13 +158,13 @@ import React from "react";
 import Sidebar from "../components/Sidebar.jsx";
 import TopNav  from "../components/Navbar.jsx";
 
-const SuperAdminLayout = ({ children, currentPage, navigateTo, onLogout, pageTitle }) => {
+const SuperOperatorLayout = ({ children, currentPage, navigateTo, onLogout, pageTitle }) => {
   return (
     <div style={{
       display: "flex",
       height: "100vh",
       overflow: "hidden",
-      background: "#f1f5f9",
+      background: "var(--bg-page)",
     }}>
       {/* Sidebar — receives navigateTo instead of React Router links */}
       <Sidebar
@@ -202,4 +202,4 @@ const SuperAdminLayout = ({ children, currentPage, navigateTo, onLogout, pageTit
   );
 };
 
-export default SuperAdminLayout;
+export default SuperOperatorLayout;

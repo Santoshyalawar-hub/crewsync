@@ -122,11 +122,11 @@
 //  *     path="/p/em"
 //  *     element={
 //  *       <ProtectedRoute allowedRoles={["EMPLOYEE"]}>
-//  *         <EmployeeLayout />
+//  *         <PersonLayout />
 //  *       </ProtectedRoute>
 //  *     }
 //  *   >
-//  *     <Route path="home" element={<EmployeeDashboard />} />
+//  *     <Route path="home" element={<PersonControlRoom />} />
 //  *   </Route>
 //  *
 //  * allowedRoles is optional — omit it to allow any authenticated user.

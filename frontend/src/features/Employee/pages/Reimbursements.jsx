@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import api from "@/lib/apiClient";
 
-/* ── SamayaHR design tokens ── */
+/* ── CrewSync design tokens ── */
 const T = {
-  navy:"#0D1F2D", navyMid:"#1E3448", coral:"#FF6B35", teal:"#00C2A8",
+  navy:"#0B1020", navyMid:"#374151", coral:"#8B5CF6", teal:"#06B6D4",
   bg:"#F5F7FB", border:"#E8ECF2",
 };
 
@@ -25,23 +25,23 @@ const CSS = `
   padding:9px 12px; font-size:13px; font-family:'DM Sans',sans-serif;
   color:${T.navy}; outline:none; transition:border-color .15s; background:#fff; box-sizing:border-box;
 }
-.rb-input:focus { border-color:${T.coral}; box-shadow:0 0 0 3px rgba(255,107,53,.1); }
+.rb-input:focus { border-color:${T.coral}; box-shadow:0 0 0 3px rgba(139,92,246,.1); }
 .rb-input.err { border-color:#EF4444; }
 .rb-err { font-size:11px; color:#EF4444; margin-top:4px; }
 
 /* radio/checkbox cards */
 .rb-radio { border:1.5px solid ${T.border}; border-radius:10px; padding:9px 13px; cursor:pointer; transition:all .15s; display:flex; align-items:center; gap:9px; font-size:13px; font-family:'DM Sans',sans-serif; color:${T.navy}; background:#fff; }
-.rb-radio:hover { border-color:rgba(255,107,53,.3); background:#FFFAF8; }
-.rb-radio.selected { border-color:${T.coral}; background:rgba(255,107,53,.05); }
+.rb-radio:hover { border-color:rgba(139,92,246,.3); background:#FFFAF8; }
+.rb-radio.selected { border-color:${T.coral}; background:rgba(139,92,246,.05); }
 
 /* file input */
 .rb-file { border:1.5px dashed ${T.border}; border-radius:10px; padding:10px 12px; font-size:12px; color:#64748b; cursor:pointer; transition:border-color .15s; background:#FAFBFF; width:100%; box-sizing:border-box; }
 .rb-file:hover { border-color:${T.coral}; }
 
 /* action buttons */
-.rb-btn-primary { padding:10px 24px; border-radius:11px; border:none; background:linear-gradient(135deg,${T.coral},#ff8c5a); color:#fff; font-size:13px; font-weight:700; font-family:'DM Sans',sans-serif; cursor:pointer; box-shadow:0 4px 14px rgba(255,107,53,.3); transition:all .15s; }
+.rb-btn-primary { padding:10px 24px; border-radius:11px; border:none; background:linear-gradient(135deg,${T.coral},#FBBF24); color:#fff; font-size:13px; font-weight:700; font-family:'DM Sans',sans-serif; cursor:pointer; box-shadow:0 4px 14px rgba(139,92,246,.3); transition:all .15s; }
 .rb-btn-primary:disabled { opacity:.5; cursor:not-allowed; }
-.rb-btn-primary:hover:not(:disabled) { transform:translateY(-1px); box-shadow:0 6px 18px rgba(255,107,53,.35); }
+.rb-btn-primary:hover:not(:disabled) { transform:translateY(-1px); box-shadow:0 6px 18px rgba(139,92,246,.35); }
 .rb-btn-ghost { padding:10px 20px; border-radius:11px; border:1.5px solid ${T.border}; background:#fff; color:#64748b; font-size:13px; font-weight:600; font-family:'DM Sans',sans-serif; cursor:pointer; transition:all .15s; }
 .rb-btn-ghost:hover:not(:disabled) { border-color:${T.coral}; color:${T.coral}; }
 
@@ -58,15 +58,15 @@ const CSS = `
 `;
 
 const REIMB_TYPES = ["Travel","Food","Medical","Office Supplies","Client Meeting","Internet/Phone","Miscellaneous"];
-const PAYMENT_MODES = ["Bank Transfer","Salary Adjustment"];
-const DEPARTMENTS = ["IT","HR","Finance","Marketing","Other"];
+const PAYMENT_MODES = ["Bank Transfer","Compensation Adjustment"];
+const DEPARTMENTS = ["IT","PeopleOps","MoneyOps","Marketing","Other"];
 
 const SECTIONS = [
   { emoji:"👤", label:"Staff Details",          accent:T.coral  },
   { emoji:"🏷️", label:"Expense Category",        accent:"#6366F1" },
   { emoji:"🧾", label:"Expense Details",          accent:T.teal   },
-  { emoji:"📎", label:"Supporting Documents",     accent:"#D97706" },
-  { emoji:"💳", label:"Reimbursement Method",     accent:"#7C3AED" },
+  { emoji:"📎", label:"CareDesking Vault",     accent:"#D97706" },
+  { emoji:"💳", label:"Reimbursement Method",     accent:"#A855F7" },
   { emoji:"📝", label:"Claim Justification",      accent:T.coral  },
   { emoji:"📌", label:"Additional Information",   accent:"#64748b" },
   { emoji:"✅", label:"Declaration",              accent:T.teal   },
@@ -83,7 +83,7 @@ const INIT_FORM = {
   travelDistance:"",gstNumber:"",declaration:false,
 };
 
-export default function Reimbursements() {
+export default function ClaimsDesk() {
   const [formData, setFormData] = useState(INIT_FORM);
   const [files, setFiles] = useState({ receipt:null, additionalProof:[] });
   const [errors, setErrors] = useState({});
@@ -103,8 +103,8 @@ export default function Reimbursements() {
 
   const validate = () => {
     const e={};
-    if(!formData.employeeName.trim()) e.employeeName="Employee name is required.";
-    if(!formData.employeeId.trim())   e.employeeId="Employee ID is required.";
+    if(!formData.employeeName.trim()) e.employeeName="Person name is required.";
+    if(!formData.employeeId.trim())   e.employeeId="Person ID is required.";
     if(!formData.department)          e.department="Department is required.";
     if(!formData.designation.trim())  e.designation="Designation is required.";
     if(!formData.requestDate)         e.requestDate="Date of request is required.";
@@ -180,18 +180,18 @@ export default function Reimbursements() {
 
       {/* ── HERO ── */}
       <div style={{background:`linear-gradient(135deg,${T.navy},${T.navyMid})`,padding:"22px 26px",position:"relative",overflow:"hidden"}}>
-        <div style={{position:"absolute",top:-50,right:60,width:180,height:180,borderRadius:"50%",background:"rgba(255,107,53,.07)",pointerEvents:"none"}}/>
-        <div style={{position:"absolute",bottom:-30,right:260,width:100,height:100,borderRadius:"50%",background:"rgba(0,194,168,.07)",pointerEvents:"none"}}/>
+        <div style={{position:"absolute",top:-50,right:60,width:180,height:180,borderRadius:"50%",background:"rgba(139,92,246,.07)",pointerEvents:"none"}}/>
+        <div style={{position:"absolute",bottom:-30,right:260,width:100,height:100,borderRadius:"50%",background:"rgba(6,182,212,.07)",pointerEvents:"none"}}/>
         <div style={{position:"relative"}}>
-          <p style={{fontSize:11,fontWeight:700,color:T.coral,textTransform:"uppercase",letterSpacing:".12em",marginBottom:4}}>SamayaHR · Finance</p>
-          <h1 className="fd" style={{fontSize:23,fontWeight:900,color:"#fff",margin:0}}>Reimbursements</h1>
+          <p style={{fontSize:11,fontWeight:700,color:T.coral,textTransform:"uppercase",letterSpacing:".12em",marginBottom:4}}>CrewSync · MoneyOps</p>
+          <h1 className="fd" style={{fontSize:23,fontWeight:900,color:"#fff",margin:0}}>ClaimsDesk</h1>
           <p style={{fontSize:13,color:"rgba(255,255,255,.5)",marginTop:4}}>Submit a new expense claim for review and approval.</p>
         </div>
       </div>
 
       <div style={{padding:"22px 26px"}}>
         {submitStatus==="success"&&(
-          <div className="rb-in" style={{marginBottom:18,padding:"14px 18px",borderRadius:12,background:"rgba(0,194,168,.08)",border:`1.5px solid rgba(0,194,168,.25)`,display:"flex",alignItems:"center",gap:10}}>
+          <div className="rb-in" style={{marginBottom:18,padding:"14px 18px",borderRadius:12,background:"rgba(6,182,212,.08)",border:`1.5px solid rgba(6,182,212,.25)`,display:"flex",alignItems:"center",gap:10}}>
             <span style={{fontSize:18}}>✅</span>
             <div>
               <p className="fd" style={{fontSize:13,fontWeight:800,color:T.navy}}>Request submitted!</p>
@@ -212,14 +212,14 @@ export default function Reimbursements() {
             {/* ── 1. STAFF DETAILS ── */}
             <div className="rb-sec">
               <div className="rb-sec-head">
-                <div className="rb-sec-ico" style={{background:"rgba(255,107,53,.1)"}}>👤</div>
+                <div className="rb-sec-ico" style={{background:"rgba(139,92,246,.1)"}}>👤</div>
                 <p className="fd" style={{fontSize:13,fontWeight:800,color:T.coral}}>1 &nbsp;·&nbsp; Staff Details</p>
               </div>
               <div className="rb-grid-2">
-                <Field label="Employee Name" required error={errors.employeeName}>
+                <Field label="Person Name" required error={errors.employeeName}>
                   <input name="employeeName" value={formData.employeeName} onChange={handleChange} placeholder="Enter full name" className={`rb-input${errors.employeeName?" err":""}`}/>
                 </Field>
-                <Field label="Employee ID" required error={errors.employeeId}>
+                <Field label="Person ID" required error={errors.employeeId}>
                   <input name="employeeId" value={formData.employeeId} onChange={handleChange} placeholder="EMP001" className={`rb-input${errors.employeeId?" err":""}`}/>
                 </Field>
                 <Field label="Department" required error={errors.department}>
@@ -257,7 +257,7 @@ export default function Reimbursements() {
             {/* ── 3. EXPENSE DETAILS ── */}
             <div className="rb-sec">
               <div className="rb-sec-head">
-                <div className="rb-sec-ico" style={{background:"rgba(0,194,168,.1)"}}>🧾</div>
+                <div className="rb-sec-ico" style={{background:"rgba(6,182,212,.1)"}}>🧾</div>
                 <p className="fd" style={{fontSize:13,fontWeight:800,color:T.teal}}>3 &nbsp;·&nbsp; Expense Details</p>
               </div>
               <div className="rb-grid-2">
@@ -284,7 +284,7 @@ export default function Reimbursements() {
             <div className="rb-sec">
               <div className="rb-sec-head">
                 <div className="rb-sec-ico" style={{background:"rgba(217,119,6,.1)"}}>📎</div>
-                <p className="fd" style={{fontSize:13,fontWeight:800,color:"#D97706"}}>4 &nbsp;·&nbsp; Supporting Documents</p>
+                <p className="fd" style={{fontSize:13,fontWeight:800,color:"#D97706"}}>4 &nbsp;·&nbsp; CareDesking Vault</p>
               </div>
               <div className="rb-grid-2">
                 <Field label="Primary bill / receipt (PDF, JPG, PNG)" required error={errors.receipt}>
@@ -304,7 +304,7 @@ export default function Reimbursements() {
             <div className="rb-sec">
               <div className="rb-sec-head">
                 <div className="rb-sec-ico" style={{background:"rgba(124,58,237,.1)"}}>💳</div>
-                <p className="fd" style={{fontSize:13,fontWeight:800,color:"#7C3AED"}}>5 &nbsp;·&nbsp; Reimbursement Method</p>
+                <p className="fd" style={{fontSize:13,fontWeight:800,color:"#A855F7"}}>5 &nbsp;·&nbsp; Reimbursement Method</p>
               </div>
               <div className="rb-grid-2" style={{marginBottom:14}}>
                 {PAYMENT_MODES.map(mode=>(
@@ -323,7 +323,7 @@ export default function Reimbursements() {
             {/* ── 6. CLAIM JUSTIFICATION ── */}
             <div className="rb-sec">
               <div className="rb-sec-head">
-                <div className="rb-sec-ico" style={{background:"rgba(255,107,53,.1)"}}>📝</div>
+                <div className="rb-sec-ico" style={{background:"rgba(139,92,246,.1)"}}>📝</div>
                 <p className="fd" style={{fontSize:13,fontWeight:800,color:T.coral}}>6 &nbsp;·&nbsp; Claim Justification <span style={{fontFamily:"DM Sans",fontWeight:400,fontSize:11,color:"#94a3b8"}}>(1–2 lines)</span></p>
               </div>
               <Field label="" required error={errors.claimReason}>
@@ -361,10 +361,10 @@ export default function Reimbursements() {
             {/* ── 8. DECLARATION ── */}
             <div className="rb-sec" style={{borderBottom:"none"}}>
               <div className="rb-sec-head">
-                <div className="rb-sec-ico" style={{background:"rgba(0,194,168,.1)"}}>✅</div>
+                <div className="rb-sec-ico" style={{background:"rgba(6,182,212,.1)"}}>✅</div>
                 <p className="fd" style={{fontSize:13,fontWeight:800,color:T.teal}}>8 &nbsp;·&nbsp; Declaration <span style={{color:T.coral}}>*</span></p>
               </div>
-              <label style={{display:"flex",alignItems:"flex-start",gap:10,cursor:"pointer",padding:"12px 14px",borderRadius:12,background:formData.declaration?"rgba(0,194,168,.05)":"#F8FAFF",border:`1.5px solid ${formData.declaration?"rgba(0,194,168,.3)":T.border}`,transition:"all .15s"}}>
+              <label style={{display:"flex",alignItems:"flex-start",gap:10,cursor:"pointer",padding:"12px 14px",borderRadius:12,background:formData.declaration?"rgba(6,182,212,.05)":"#F8FAFF",border:`1.5px solid ${formData.declaration?"rgba(6,182,212,.3)":T.border}`,transition:"all .15s"}}>
                 <input type="checkbox" name="declaration" checked={formData.declaration} onChange={handleChange} style={{accentColor:T.teal,width:16,height:16,marginTop:1,flexShrink:0}}/>
                 <span style={{fontSize:13,color:"#374151",lineHeight:1.65}}>
                   I confirm that the submitted expenses are genuine and work-related. I understand that false claims may lead to disciplinary action.

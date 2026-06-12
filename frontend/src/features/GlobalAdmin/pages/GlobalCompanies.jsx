@@ -85,7 +85,7 @@ function LogoUpload({ companyId, currentLogoUrl, onLogoUpdated }) {
 
   return (
     <div>
-      <label style={S.label}>Company Logo — Cloudinary CDN</label>
+      <label style={S.label}>Workspace Logo — Cloudinary CDN</label>
       <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
 
         {/* Preview */}
@@ -222,9 +222,9 @@ function ModalShell({ title, sub, onClose, children, accentBg = "linear-gradient
 /* ═══════════════════════════════════════════════════════════════
    MAIN PAGE
 ═══════════════════════════════════════════════════════════════ */
-export default function CompaniesPage() {
-  const [companies,    setCompanies]    = useState([]);
-  const [stats,        setStats]        = useState({ totalCompanies: 0, activeCompanies: 0, suspendedCompanies: 0, totalEmployees: 0 });
+export default function WorkspacesPage() {
+  const [companies,    setWorkspaces]    = useState([]);
+  const [stats,        setStats]        = useState({ totalWorkspaces: 0, activeWorkspaces: 0, suspendedWorkspaces: 0, totalPersons: 0 });
   const [search,       setSearch]       = useState("");
   const [filterStatus, setFilterStatus] = useState("all");
   const [loading,      setLoading]      = useState(false);
@@ -246,7 +246,7 @@ export default function CompaniesPage() {
       ]);
       const cData = cRes.data;
       const sData = sRes.data;
-      if (cData.success) setCompanies(cData.data);
+      if (cData.success) setWorkspaces(cData.data);
       if (sData.success) setStats(sData.data);
     } catch { showToast("Failed to load data", "error"); }
     finally  { setLoading(false); }
@@ -266,7 +266,7 @@ export default function CompaniesPage() {
   });
 
   /* ── CRUD ──────────────────────────────────────────────────────────────── */
-  const handleCreate = async ({ company: companyData, slipSettings }) => {
+  const handleCreate = async ({ company: companyData, slipConfiguration }) => {
     setLoading(true);
     try {
       // 1. Create company
@@ -275,9 +275,9 @@ export default function CompaniesPage() {
       if (!j.success) { showToast(j.message || "Failed to create company", "error"); return; }
 
       // 2. Save salary slip settings
-      await api.post("/api/salary-slip-settings", { ...slipSettings, tenantCode: j.data.tenantCode });
+      await api.post("/api/salary-slip-settings", { ...slipConfiguration, tenantCode: j.data.tenantCode });
 
-      showToast("Company created! Open Edit to upload the Cloudinary logo.", "success");
+      showToast("Workspace created! Open Edit to upload the Cloudinary logo.", "success");
       setShowCreate(false);
       fetchAll();
     } catch { showToast("Error creating company", "error"); }
@@ -332,7 +332,7 @@ export default function CompaniesPage() {
 
   const handleLogoUpdated = (companyId, url) => {
     // Update the company in local state so table logo updates immediately
-    setCompanies(prev =>
+    setWorkspaces(prev =>
       prev.map(c => c.id === companyId ? { ...c, logoUrl: url } : c)
     );
     if (selected && selected.id === companyId) {
@@ -347,28 +347,28 @@ export default function CompaniesPage() {
 
       {/* Hero */}
       <div style={{ background: "linear-gradient(135deg, #0f172a 0%, #1e293b 60%, #0f172a 100%)", borderRadius: 18, padding: "24px 28px", marginBottom: 20, position: "relative", overflow: "hidden" }}>
-        <div style={{ position: "absolute", top: -30, right: 60, width: 140, height: 140, borderRadius: "50%", background: "rgba(255,107,53,0.1)", pointerEvents: "none" }} />
+        <div style={{ position: "absolute", top: -30, right: 60, width: 140, height: 140, borderRadius: "50%", background: "rgba(139,92,246,0.1)", pointerEvents: "none" }} />
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", position: "relative" }}>
           <div>
-            <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 11, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 6px" }}>SamayaHR · Global Admin</p>
-            <h1 style={{ color: "#fff", fontSize: 24, fontWeight: 800, margin: 0, letterSpacing: "-0.02em" }}>Company Management</h1>
+            <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 11, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 6px" }}>CrewSync · Global Operator</p>
+            <h1 style={{ color: "#fff", fontSize: 24, fontWeight: 800, margin: 0, letterSpacing: "-0.02em" }}>Workspace Control</h1>
             <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 13, margin: "6px 0 0" }}>
-              {companies.length} companies · {stats.totalEmployees} total employees
+              {companies.length} companies · {stats.totalPersons} total employees
             </p>
           </div>
           <button onClick={() => setShowCreate(true)}
-            style={{ ...S.btn("#ff6b35"), padding: "10px 20px", fontSize: 13, borderRadius: 11, boxShadow: "0 4px 14px rgba(255,107,53,0.35)" }}>
-            <Plus size={16} /> Add Company
+            style={{ ...S.btn("#8B5CF6"), padding: "10px 20px", fontSize: 13, borderRadius: 11, boxShadow: "0 4px 14px rgba(139,92,246,0.35)" }}>
+            <Plus size={16} /> Add Workspace
           </button>
         </div>
       </div>
 
       {/* Stats */}
       <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 14, marginBottom: 20 }}>
-        <StatCard label="Total"     value={stats.totalCompanies}     icon={Building2}   accent="#ff6b35" bg="#fff4ef" />
-        <StatCard label="Active"    value={stats.activeCompanies}    icon={CheckCircle} accent="#22c55e" bg="#f0fdf4" />
-        <StatCard label="Suspended" value={stats.suspendedCompanies} icon={XCircle}     accent="#ef4444" bg="#fef2f2" />
-        <StatCard label="Employees" value={stats.totalEmployees}     icon={Users}       accent="#8b5cf6" bg="#f5f3ff" />
+        <StatCard label="Total"     value={stats.totalWorkspaces}     icon={Building2}   accent="#8B5CF6" bg="#fff4ef" />
+        <StatCard label="Active"    value={stats.activeWorkspaces}    icon={CheckCircle} accent="#22c55e" bg="#f0fdf4" />
+        <StatCard label="Suspended" value={stats.suspendedWorkspaces} icon={XCircle}     accent="#ef4444" bg="#fef2f2" />
+        <StatCard label="Persons" value={stats.totalPersons}     icon={Users}       accent="#8b5cf6" bg="#f5f3ff" />
       </div>
 
       {/* Filters */}
@@ -400,7 +400,7 @@ export default function CompaniesPage() {
             <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
               <thead>
                 <tr style={{ background: "#0f172a" }}>
-                  {["Company", "Admin", "Employees", "Plan", "Status", "Actions"].map(h => (
+                  {["Workspace", "Operator", "Persons", "Plan", "Status", "Actions"].map(h => (
                     <th key={h} style={{ textAlign: "left", padding: "12px 18px", fontSize: 11, fontWeight: 700, color: "rgba(255,255,255,0.7)", textTransform: "uppercase", letterSpacing: "0.07em" }}>{h}</th>
                   ))}
                 </tr>
@@ -409,7 +409,7 @@ export default function CompaniesPage() {
                 {filtered.map((c) => {
                   const pct = c.employeeLimit ? Math.min((c.employees / c.employeeLimit) * 100, 100) : 0;
                   const planColors = {
-                    Enterprise:   { bg: "#f5f3ff", color: "#7c3aed" },
+                    Enterprise:   { bg: "#f5f3ff", color: "#A855F7" },
                     Professional: { bg: "#fff4ef", color: "#ea6b35" },
                     Basic:        { bg: "#f0fdf4", color: "#16a34a" },
                   };
@@ -421,14 +421,14 @@ export default function CompaniesPage() {
                       onMouseEnter={e => e.currentTarget.style.background = "#fafbfc"}
                       onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
 
-                      {/* Company — shows Cloudinary logo if available */}
+                      {/* Workspace — shows Cloudinary logo if available */}
                       <td style={{ padding: "13px 18px" }}>
                         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
                           {c.logoUrl ? (
                             <img src={c.logoUrl} alt={c.displayName}
                               style={{ width: 36, height: 36, borderRadius: 10, objectFit: "contain", border: "1px solid #e2e8f0", background: "#fff", flexShrink: 0 }} />
                           ) : (
-                            <div style={{ width: 36, height: 36, borderRadius: 10, background: "linear-gradient(135deg, #ff6b35, #8b5cf6)", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: 800, fontSize: 14, flexShrink: 0 }}>
+                            <div style={{ width: 36, height: 36, borderRadius: 10, background: "linear-gradient(135deg, #8B5CF6, #8b5cf6)", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: 800, fontSize: 14, flexShrink: 0 }}>
                               {(c.displayName || "?").charAt(0).toUpperCase()}
                             </div>
                           )}
@@ -447,7 +447,7 @@ export default function CompaniesPage() {
                       <td style={{ padding: "13px 18px" }}>
                         <p style={{ fontWeight: 600, color: "#334155", margin: "0 0 4px" }}>{c.employees ?? 0} / {c.employeeLimit ?? "∞"}</p>
                         <div style={{ width: 80, height: 4, borderRadius: 4, background: "#e2e8f0" }}>
-                          <div style={{ width: `${pct}%`, height: "100%", borderRadius: 4, background: pct > 80 ? "#ef4444" : "#ff6b35" }} />
+                          <div style={{ width: `${pct}%`, height: "100%", borderRadius: 4, background: pct > 80 ? "#ef4444" : "#8B5CF6" }} />
                         </div>
                       </td>
 
@@ -513,11 +513,11 @@ function CreateModal({ onClose, onSubmit, loading }) {
     slipTitle: "SALARY SLIP",
     footerNote: "This is a computer-generated salary slip and does not require a signature.",
     companyLogoBase64: null, logoMediaType: null,
-    showEmployeeId: true,    showDepartment: true,    showDesignation: true,
+    showPersonId: true,    showDepartment: true,    showDesignation: true,
     showDateOfJoining: true, showPanNumber: false,    showUanNumber: true,
     showPfNumber: true,      showEsiNumber: false,    showBankName: true,
     showAccountNumber: true, showLoanNumber: false,
-    showBasicSalary: true,   showHra: true,           showSpecialAllowance: true,
+    showBasicCompensation: true,   showHra: true,           showSpecialAllowance: true,
     showTransportAllowance: false, showMedicalAllowance: false, showOtherAllowances: false,
     showPfDeduction: true,   showEsiDeduction: false, showProfessionalTax: true,
     showTds: false,          showLoanDeduction: false, showOtherDeductions: false,
@@ -536,30 +536,30 @@ function CreateModal({ onClose, onSubmit, loading }) {
   };
 
   const steps = [
-    { n: 1, label: "Company Info"  },
-    { n: 2, label: "Admin"         },
+    { n: 1, label: "Workspace Info"  },
+    { n: 2, label: "Operator"         },
     { n: 3, label: "Contact"       },
     { n: 4, label: "Subscription"  },
-    { n: 5, label: "Slip Settings" },
+    { n: 5, label: "Slip Configuration" },
   ];
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (step < 5) { setStep(s => s + 1); return; }
-    onSubmit({ company: form, slipSettings: slip });
+    onSubmit({ company: form, slipConfiguration: slip });
   };
 
   return (
-    <ModalShell title="Create Company" sub={`Step ${step} of 5 — ${steps[step - 1].label}`} onClose={onClose}>
+    <ModalShell title="Create Workspace" sub={`Step ${step} of 5 — ${steps[step - 1].label}`} onClose={onClose}>
       {/* Stepper */}
       <div style={{ background: "#f8fafc", padding: "16px 28px", display: "flex", alignItems: "center", borderBottom: "1px solid #eef0f4" }}>
         {steps.map((s, i) => (
           <React.Fragment key={s.n}>
             <div style={{ display: "flex", flexDirection: "column", alignItems: "center", flex: 1 }}>
-              <div style={{ width: 34, height: 34, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 800, fontSize: 12, background: step > s.n ? "#22c55e" : step === s.n ? "#ff6b35" : "#e2e8f0", color: step >= s.n ? "#fff" : "#94a3b8", transition: "all 0.2s" }}>
+              <div style={{ width: 34, height: 34, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 800, fontSize: 12, background: step > s.n ? "#22c55e" : step === s.n ? "#8B5CF6" : "#e2e8f0", color: step >= s.n ? "#fff" : "#94a3b8", transition: "all 0.2s" }}>
                 {step > s.n ? <CheckCircle size={16} /> : s.n}
               </div>
-              <span style={{ fontSize: 10, fontWeight: 600, marginTop: 4, whiteSpace: "nowrap", color: step === s.n ? "#ff6b35" : "#94a3b8" }}>{s.label}</span>
+              <span style={{ fontSize: 10, fontWeight: 600, marginTop: 4, whiteSpace: "nowrap", color: step === s.n ? "#8B5CF6" : "#94a3b8" }}>{s.label}</span>
             </div>
             {i < steps.length - 1 && (
               <div style={{ height: 2, flex: 1, background: step > s.n ? "#22c55e" : "#e2e8f0", borderRadius: 2, margin: "0 4px", marginBottom: 16 }} />
@@ -580,7 +580,7 @@ function CreateModal({ onClose, onSubmit, loading }) {
                 onChange={e => set("tenantCode", e.target.value.toUpperCase().replace(/\s/g, ""))}
                 placeholder="ACME001" />
             </Field>
-            <Field label="Organization Type *">
+            <Field label="Network Type *">
               <select required style={S.input} value={form.organizationType} onChange={e => set("organizationType", e.target.value)}>
                 <option value="">Select type</option>
                 {["Private Limited","Public Limited","Partnership","Sole Proprietorship","LLP"].map(o => <option key={o} value={o}>{o}</option>)}
@@ -589,16 +589,16 @@ function CreateModal({ onClose, onSubmit, loading }) {
             <Field label="Industry *" span>
               <select required style={S.input} value={form.industry} onChange={e => set("industry", e.target.value)}>
                 <option value="">Select industry</option>
-                {["Technology","Healthcare","Finance","Manufacturing","Retail","Education","Other"].map(o => <option key={o} value={o}>{o}</option>)}
+                {["Technology","Healthcare","MoneyOps","Manufacturing","Retail","Education","Other"].map(o => <option key={o} value={o}>{o}</option>)}
               </select>
             </Field>
           </>}
 
           {/* Step 2 */}
           {step === 2 && <>
-            <Field label="Admin Full Name *"><input required style={S.input} value={form.admin} onChange={e => set("admin", e.target.value)} placeholder="John Doe" /></Field>
-            <Field label="Admin Email *"><input required type="email" style={S.input} value={form.adminEmail} onChange={e => set("adminEmail", e.target.value)} placeholder="admin@company.com" /></Field>
-            <Field label="Mobile Number *"><input required style={S.input} value={form.mobileNumber} onChange={e => set("mobileNumber", e.target.value)} placeholder="+91 9876543210" /></Field>
+            <Field label="Operator Full Name *"><input required style={S.input} value={form.admin} onChange={e => set("admin", e.target.value)} placeholder="John Doe" /></Field>
+            <Field label="Operator Email *"><input required type="email" style={S.input} value={form.adminEmail} onChange={e => set("adminEmail", e.target.value)} placeholder="admin@company.com" /></Field>
+            <Field label="Pocket Number *"><input required style={S.input} value={form.mobileNumber} onChange={e => set("mobileNumber", e.target.value)} placeholder="+91 9876543210" /></Field>
             <Field label="Role"><input disabled style={{ ...S.input, background: "#f8fafc", color: "#94a3b8" }} value={form.role} /></Field>
           </>}
 
@@ -626,8 +626,8 @@ function CreateModal({ onClose, onSubmit, loading }) {
                 <option value="Enterprise">Enterprise</option>
               </select>
             </Field>
-            <Field label="Employee Limit *"><input required type="number" min={1} style={S.input} value={form.employeeLimit} onChange={e => set("employeeLimit", parseInt(e.target.value))} /></Field>
-            <Field label="Current Employees"><input type="number" min={0} style={S.input} value={form.employees} onChange={e => set("employees", Number(e.target.value))} /></Field>
+            <Field label="Person Limit *"><input required type="number" min={1} style={S.input} value={form.employeeLimit} onChange={e => set("employeeLimit", parseInt(e.target.value))} /></Field>
+            <Field label="Current Persons"><input type="number" min={0} style={S.input} value={form.employees} onChange={e => set("employees", Number(e.target.value))} /></Field>
             <Field label="Billing Cycle *">
               <select required style={S.input} value={form.billingCycle} onChange={e => set("billingCycle", e.target.value)}>
                 <option value="monthly">Monthly</option>
@@ -638,7 +638,7 @@ function CreateModal({ onClose, onSubmit, loading }) {
             <Field label="Start Date *"><input required type="date" style={S.input} value={form.startDate} onChange={e => set("startDate", e.target.value)} /></Field>
           </>}
 
-          {/* Step 5 — Slip Settings */}
+          {/* Step 5 — Slip Configuration */}
           {step === 5 && (
             <div style={{ gridColumn: "span 2", display: "flex", flexDirection: "column", gap: 16 }}>
 
@@ -646,7 +646,7 @@ function CreateModal({ onClose, onSubmit, loading }) {
               <div style={{ background: "#eff6ff", border: "1px solid #bfdbfe", borderRadius: 10, padding: "10px 14px", display: "flex", gap: 10 }}>
                 <FileText size={16} color="#3b82f6" style={{ marginTop: 1, flexShrink: 0 }} />
                 <div>
-                  <p style={{ margin: 0, fontSize: 12, fontWeight: 700, color: "#1d4ed8" }}>Salary Slip Settings</p>
+                  <p style={{ margin: 0, fontSize: 12, fontWeight: 700, color: "#1d4ed8" }}>PayStatement Setup</p>
                   <p style={{ margin: "2px 0 0", fontSize: 11, color: "#3b82f6" }}>
                     Upload a base64 logo below for salary slips. After creating the company,
                     open <strong>Edit</strong> to upload the full Cloudinary logo — it renders
@@ -658,7 +658,7 @@ function CreateModal({ onClose, onSubmit, loading }) {
               {/* Branding */}
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
                 <div>
-                  <label style={S.label}>Logo for Salary Slips (base64)</label>
+                  <label style={S.label}>Logo for Compensation Slips (base64)</label>
                   <label style={{ display: "flex", alignItems: "center", gap: 10, padding: "10px 14px", borderRadius: 9, border: "1.5px dashed #e2e8f0", cursor: "pointer", background: "#f8fafc" }}>
                     {slip.companyLogoBase64
                       ? <img src={`data:${slip.logoMediaType};base64,${slip.companyLogoBase64}`} alt="logo" style={{ height: 36, objectFit: "contain", borderRadius: 6 }} />
@@ -675,9 +675,9 @@ function CreateModal({ onClose, onSubmit, loading }) {
                 </div>
               </div>
 
-              <ToggleGroup title="Employee Information Fields" color="#6366f1" values={slip} onChange={setS}
+              <ToggleGroup title="Person Information Fields" color="#6366f1" values={slip} onChange={setS}
                 items={[
-                  { key: "showEmployeeId",    label: "Employee ID"     },
+                  { key: "showPersonId",    label: "Person ID"     },
                   { key: "showDepartment",    label: "Department"      },
                   { key: "showDesignation",   label: "Designation"     },
                   { key: "showDateOfJoining", label: "Date of Joining" },
@@ -692,7 +692,7 @@ function CreateModal({ onClose, onSubmit, loading }) {
               />
               <ToggleGroup title="Earnings Components" color="#22c55e" values={slip} onChange={setS}
                 items={[
-                  { key: "showBasicSalary",        label: "Basic Salary"        },
+                  { key: "showBasicCompensation",        label: "Basic Compensation"        },
                   { key: "showHra",                label: "HRA"                 },
                   { key: "showSpecialAllowance",   label: "Special Allowance"   },
                   { key: "showTransportAllowance", label: "Transport Allowance" },
@@ -723,12 +723,12 @@ function CreateModal({ onClose, onSubmit, loading }) {
           <div style={{ display: "flex", gap: 8 }}>
             <button type="button" onClick={onClose} style={S.btn("#f1f5f9", "#475569")}>Cancel</button>
             {step < 5
-              ? <button type="submit" style={{ ...S.btn("#ff6b35"), boxShadow: "0 4px 12px rgba(255,107,53,0.3)" }}>
+              ? <button type="submit" style={{ ...S.btn("#8B5CF6"), boxShadow: "0 4px 12px rgba(139,92,246,0.3)" }}>
                   Next <ChevronRight size={15} />
                 </button>
               : <button type="submit" disabled={loading} style={{ ...S.btn("#22c55e"), boxShadow: "0 4px 12px rgba(34,197,94,0.3)", opacity: loading ? 0.7 : 1 }}>
                   {loading && <Loader2 size={14} style={{ animation: "spin 1s linear infinite" }} />}
-                  <CheckCircle size={15} /> Create Company
+                  <CheckCircle size={15} /> Create Workspace
                 </button>
             }
           </div>
@@ -741,14 +741,14 @@ function CreateModal({ onClose, onSubmit, loading }) {
 /* ─── View Modal ─────────────────────────────────────────────────────────── */
 function ViewModal({ company: c, onClose, onLogoUpdated }) {
   const sections = [
-    { title: "Basic Info",   icon: Building2,  color: "#ff6b35", rows: [["Legal Name", c.legalName], ["Tenant Code", c.tenantCode], ["Industry", c.industry], ["Org Type", c.organizationType]] },
-    { title: "Admin",        icon: UserPlus,   color: "#6366f1", rows: [["Name", c.admin], ["Email", c.adminEmail], ["Mobile", c.mobileNumber]] },
+    { title: "Basic Info",   icon: Building2,  color: "#8B5CF6", rows: [["Legal Name", c.legalName], ["Tenant Code", c.tenantCode], ["Industry", c.industry], ["Org Type", c.organizationType]] },
+    { title: "Operator",        icon: UserPlus,   color: "#6366f1", rows: [["Name", c.admin], ["Email", c.adminEmail], ["Pocket", c.mobileNumber]] },
     { title: "Subscription", icon: CreditCard, color: "#0ea5e9", rows: [["Plan", c.plan], ["Billing", c.billingCycle], ["Start Date", c.startDate]] },
     { title: "Contact",      icon: Building2,  color: "#10b981", rows: [["Phone", c.phoneNumber], ["Website", c.website || "N/A"], ["City/State", [c.city, c.state].filter(Boolean).join(", ")], ["Country", c.country]] },
   ];
 
   return (
-    <ModalShell title={c.displayName || "Company"} sub={`Tenant: ${c.tenantCode}`} onClose={onClose}>
+    <ModalShell title={c.displayName || "Workspace"} sub={`Tenant: ${c.tenantCode}`} onClose={onClose}>
       <div style={{ padding: 28 }}>
 
         {/* ── Cloudinary Logo Upload ── */}
@@ -756,12 +756,12 @@ function ViewModal({ company: c, onClose, onLogoUpdated }) {
           <LogoUpload companyId={c.id} currentLogoUrl={c.logoUrl} onLogoUpdated={onLogoUpdated} />
         </div>
 
-        {/* Employee usage bar */}
+        {/* Person usage bar */}
         <div style={{ background: "#f8fafc", borderRadius: 12, padding: "14px 18px", marginBottom: 20, display: "flex", alignItems: "center", gap: 16 }}>
           <Users size={18} color="#8b5cf6" style={{ flexShrink: 0 }} />
           <div style={{ flex: 1 }}>
             <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 6 }}>
-              <span style={{ fontSize: 12, fontWeight: 600, color: "#475569" }}>Employee Usage</span>
+              <span style={{ fontSize: 12, fontWeight: 600, color: "#475569" }}>Person Usage</span>
               <span style={{ fontSize: 12, fontWeight: 700, color: "#1e293b" }}>{c.employees} / {c.employeeLimit}</span>
             </div>
             <div style={{ height: 6, borderRadius: 6, background: "#e2e8f0" }}>
@@ -822,8 +822,8 @@ function EditModal({ company, onClose, onSubmit, loading, onLogoUpdated }) {
   const fields = [
     ["Legal Name",     "legalName",     "text"],
     ["Display Name",   "displayName",   "text"],
-    ["Admin Name",     "admin",         "text"],
-    ["Admin Email",    "adminEmail",    "email"],
+    ["Operator Name",     "admin",         "text"],
+    ["Operator Email",    "adminEmail",    "email"],
     ["Official Email", "officialEmail", "email"],
     ["Tenant Code",    "tenantCode",    "text"],
     ["Industry",       "industry",      "text"],
@@ -837,7 +837,7 @@ function EditModal({ company, onClose, onSubmit, loading, onLogoUpdated }) {
   ];
 
   return (
-    <ModalShell title="Edit Company" sub={`Tenant: ${company.tenantCode}`} onClose={onClose}
+    <ModalShell title="Edit Workspace" sub={`Tenant: ${company.tenantCode}`} onClose={onClose}
       accentBg="linear-gradient(135deg, #0ea5e9, #0284c7)">
       <div style={{ padding: "24px 28px" }}>
 
@@ -859,7 +859,7 @@ function EditModal({ company, onClose, onSubmit, loading, onLogoUpdated }) {
                 {["Basic","Professional","Enterprise"].map(o => <option key={o} value={o}>{o}</option>)}
               </select>
             </Field>
-            <Field label="Employee Limit">
+            <Field label="Person Limit">
               <input type="number" style={S.input} value={form.employeeLimit}
                 onChange={e => setForm(p => ({ ...p, employeeLimit: parseInt(e.target.value) }))} />
             </Field>

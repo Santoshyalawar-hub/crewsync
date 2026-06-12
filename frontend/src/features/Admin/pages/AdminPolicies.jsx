@@ -4,7 +4,7 @@ import { Upload, X, FileText, ImageIcon, Eye, Download, AlertCircle, Plus, Trash
 
 /* ── Design tokens ── */
 const T = {
-  navy: "#0D1F2D", navyMid: "#1E3448", coral: "#FF6B35", teal: "#00C2A8",
+  navy: "#0B1020", navyMid: "#374151", coral: "#8B5CF6", teal: "#06B6D4",
   bg: "#F5F7FB", border: "#E8ECF2",
 };
 
@@ -14,29 +14,29 @@ const CSS = `
 .ap .fd { font-family:'Sora',sans-serif; }
 .ap-card { background:#fff; border:1.5px solid ${T.border}; border-radius:18px; box-shadow:0 2px 14px rgba(13,31,45,.05); overflow:hidden; }
 .ap-input { width:100%; border:1.5px solid ${T.border}; border-radius:10px; padding:10px 14px; font-size:14px; font-family:'DM Sans',sans-serif; color:${T.navy}; outline:none; transition:border-color .2s,box-shadow .2s; background:#fff; }
-.ap-input:focus { border-color:${T.coral}; box-shadow:0 0 0 3px rgba(255,107,53,.1); }
+.ap-input:focus { border-color:${T.coral}; box-shadow:0 0 0 3px rgba(139,92,246,.1); }
 .ap-label { font-size:12px; font-weight:700; color:#64748b; margin-bottom:6px; display:block; text-transform:uppercase; letter-spacing:.06em; }
-.ap-btn-primary { display:inline-flex; align-items:center; gap:7px; padding:10px 20px; border-radius:11px; background:linear-gradient(135deg,${T.coral},#ff5722); color:#fff; font-size:13px; font-weight:800; border:none; cursor:pointer; transition:all .2s; box-shadow:0 4px 16px rgba(255,107,53,.3); font-family:'DM Sans',sans-serif; }
-.ap-btn-primary:hover { transform:translateY(-1px); box-shadow:0 6px 22px rgba(255,107,53,.4); }
+.ap-btn-primary { display:inline-flex; align-items:center; gap:7px; padding:10px 20px; border-radius:11px; background:linear-gradient(135deg,${T.coral},#06B6D4); color:#fff; font-size:13px; font-weight:800; border:none; cursor:pointer; transition:all .2s; box-shadow:0 4px 16px rgba(139,92,246,.3); font-family:'DM Sans',sans-serif; }
+.ap-btn-primary:hover { transform:translateY(-1px); box-shadow:0 6px 22px rgba(139,92,246,.4); }
 .ap-btn-primary:disabled { opacity:.6; cursor:not-allowed; transform:none; }
 .ap-btn-ghost { display:inline-flex; align-items:center; gap:6px; padding:8px 14px; border-radius:9px; border:1.5px solid ${T.border}; background:#fff; color:${T.navy}; font-size:12px; font-weight:700; cursor:pointer; transition:all .15s; font-family:'DM Sans',sans-serif; }
 .ap-btn-ghost:hover { border-color:${T.coral}; color:${T.coral}; }
 .ap-policy-row { background:#fff; border:1.5px solid ${T.border}; border-radius:14px; padding:16px 18px; transition:all .15s; }
-.ap-policy-row:hover { border-color:rgba(255,107,53,.3); box-shadow:0 4px 16px rgba(13,31,45,.07); }
+.ap-policy-row:hover { border-color:rgba(139,92,246,.3); box-shadow:0 4px 16px rgba(13,31,45,.07); }
 .ap-upload-zone { border:2px dashed ${T.border}; border-radius:12px; padding:30px; display:flex; flex-direction:column; align-items:center; justify-content:center; cursor:pointer; transition:all .2s; background:#fafbff; }
-.ap-upload-zone:hover { border-color:${T.coral}; background:rgba(255,107,53,.03); }
+.ap-upload-zone:hover { border-color:${T.coral}; background:rgba(139,92,246,.03); }
 @keyframes apUp { from{opacity:0;transform:translateY(7px)} to{opacity:1;transform:translateY(0)} }
 .ap-in { animation:apUp .35s ease both; }
 .ap-tag { display:inline-flex; align-items:center; gap:5px; padding:3px 10px; border-radius:999px; font-size:10px; font-weight:700; }
 `;
 
-export default function AdminPolicies() {
+export default function OperatorPlaybooks() {
   const [title,       setTitle]       = useState("");
   const [description, setDescription] = useState("");
-  const [policyType,  setPolicyType]  = useState("COMPANY_POLICY");
+  const [policyType,  setPlaybookType]  = useState("COMPANY_POLICY");
   const [filterType,  setFilterType]  = useState("ALL");
   const [file,        setFile]        = useState(null);
-  const [policies,    setPolicies]    = useState([]);
+  const [policies,    setPlaybooks]    = useState([]);
   const [loading,     setLoading]     = useState(true);
   const [saving,      setSaving]      = useState(false);
   const [deleting,    setDeleting]    = useState(null);
@@ -49,7 +49,7 @@ export default function AdminPolicies() {
   const userId     = localStorage.getItem("userId")     || "";
 
   /* ── Fetch policies ── */
-  const loadPolicies = useCallback(async () => {
+  const loadPlaybooks = useCallback(async () => {
     if (!tenantCode) {
       setError("Tenant code not found. Please login again.");
       setLoading(false);
@@ -59,7 +59,7 @@ export default function AdminPolicies() {
     try {
       const res = await api.get(`/api/policies/tenant/${tenantCode}`);
       const data = res.data?.data || res.data || [];
-      setPolicies(Array.isArray(data) ? data : []);
+      setPlaybooks(Array.isArray(data) ? data : []);
       setError(null);
     } catch (err) {
       console.error("Error loading policies:", err);
@@ -70,8 +70,8 @@ export default function AdminPolicies() {
   }, [tenantCode]);
 
   useEffect(() => {
-    loadPolicies();
-  }, [loadPolicies]);
+    loadPlaybooks();
+  }, [loadPlaybooks]);
 
   /* ── File change ── */
   const handleFileChange = (e) => {
@@ -102,13 +102,13 @@ export default function AdminPolicies() {
   };
 
   /* ── Save policy ── */
-  const savePolicy = async () => {
+  const savePlaybook = async () => {
     if (!title.trim()) {
-      setError("Policy title is required.");
+      setError("Playbook title is required.");
       return;
     }
     if (!description.trim()) {
-      setError("Policy description is required.");
+      setError("Playbook description is required.");
       return;
     }
     if (!tenantCode) {
@@ -149,11 +149,11 @@ export default function AdminPolicies() {
       setTitle("");
       setDescription("");
       setFile(null);
-      setPolicyType("COMPANY_POLICY");
+      setPlaybookType("COMPANY_POLICY");
       setShowForm(false);
-      setSuccess("Policy published successfully!");
+      setSuccess("Playbook published successfully!");
       setTimeout(() => setSuccess(null), 4000);
-      await loadPolicies();
+      await loadPlaybooks();
     } catch (err) {
       console.error("Error saving policy:", err);
       setError(
@@ -167,15 +167,15 @@ export default function AdminPolicies() {
   };
 
   /* ── Delete policy ── */
-  const deletePolicy = async (id) => {
+  const deletePlaybook = async (id) => {
     if (!window.confirm("Are you sure you want to delete this policy?")) return;
 
     setDeleting(id);
     try {
       await api.delete(`/api/policies/${id}`);
-      setSuccess("Policy deleted.");
+      setSuccess("Playbook deleted.");
       setTimeout(() => setSuccess(null), 3000);
-      await loadPolicies();
+      await loadPlaybooks();
     } catch (err) {
       console.error("Error deleting policy:", err);
       setError(err.response?.data?.message || "Failed to delete policy.");
@@ -214,7 +214,7 @@ export default function AdminPolicies() {
     );
   }
 
-  const filteredPolicies = policies.filter(p => filterType === "ALL" || p.policyType === filterType);
+  const filteredPlaybooks = policies.filter(p => filterType === "ALL" || p.policyType === filterType);
 
   return (
     <div className="ap" style={{ padding: "0 0 56px" }}>
@@ -222,19 +222,19 @@ export default function AdminPolicies() {
 
       {/* ── HERO ── */}
       <div style={{ background: `linear-gradient(135deg,${T.navy},${T.navyMid})`, padding: "22px 26px", position: "relative", overflow: "hidden", marginBottom: 22 }}>
-        <div style={{ position: "absolute", top: -50, right: 60, width: 180, height: 180, borderRadius: "50%", background: "rgba(255,107,53,.07)", pointerEvents: "none" }} />
+        <div style={{ position: "absolute", top: -50, right: 60, width: 180, height: 180, borderRadius: "50%", background: "rgba(139,92,246,.07)", pointerEvents: "none" }} />
         <div style={{ position: "relative", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 12 }}>
           <div>
-            <p style={{ fontSize: 11, fontWeight: 700, color: T.coral, textTransform: "uppercase", letterSpacing: ".12em", marginBottom: 4 }}>SamayaHR · Policy Management</p>
-            <h1 className="fd" style={{ fontSize: 23, fontWeight: 900, color: "#fff", margin: 0 }}>Company Policies</h1>
+            <p style={{ fontSize: 11, fontWeight: 700, color: T.coral, textTransform: "uppercase", letterSpacing: ".12em", marginBottom: 4 }}>CrewSync · Playbook Operations</p>
+            <h1 className="fd" style={{ fontSize: 23, fontWeight: 900, color: "#fff", margin: 0 }}>Workspace Playbooks</h1>
             <p style={{ fontSize: 13, color: "rgba(255,255,255,.5)", marginTop: 4 }}>Publish and manage policies visible to all employees in your organisation.</p>
           </div>
           <div style={{ display: "flex", gap: 10 }}>
-            <button className="ap-btn-ghost" onClick={loadPolicies} style={{ color: "#fff", borderColor: "rgba(255,255,255,.3)", background: "rgba(255,255,255,.08)" }}>
+            <button className="ap-btn-ghost" onClick={loadPlaybooks} style={{ color: "#fff", borderColor: "rgba(255,255,255,.3)", background: "rgba(255,255,255,.08)" }}>
               <RefreshCw size={13} /> Refresh
             </button>
             <button className="ap-btn-primary" onClick={() => setShowForm(s => !s)}>
-              <Plus size={14} /> {showForm ? "Cancel" : "New Policy"}
+              <Plus size={14} /> {showForm ? "Cancel" : "New Playbook"}
             </button>
           </div>
         </div>
@@ -265,17 +265,17 @@ export default function AdminPolicies() {
           <div className="ap-card ap-in" style={{ marginBottom: 24 }}>
             <div style={{ background: `linear-gradient(90deg,${T.navy},${T.navyMid})`, padding: "14px 20px", display: "flex", alignItems: "center", gap: 10 }}>
               <BookOpen size={16} color={T.coral} />
-              <p className="fd" style={{ fontSize: 14, fontWeight: 800, color: "#fff" }}>Create New Policy</p>
+              <p className="fd" style={{ fontSize: 14, fontWeight: 800, color: "#fff" }}>Create New Playbook</p>
             </div>
 
             <div style={{ padding: "20px 22px", display: "flex", flexDirection: "column", gap: 18 }}>
               <div>
-                <label className="ap-label">Policy Title *</label>
+                <label className="ap-label">Playbook Title *</label>
                 <input
                   className="ap-input"
                   value={title}
                   onChange={e => setTitle(e.target.value)}
-                  placeholder="e.g. Leave Policy 2025"
+                  placeholder="e.g. TimeAway Playbook 2025"
                 />
               </div>
 
@@ -292,15 +292,15 @@ export default function AdminPolicies() {
               </div>
 
               <div>
-                <label className="ap-label">Policy Type</label>
+                <label className="ap-label">Playbook Type</label>
                 <select
                   className="ap-input"
                   value={policyType}
-                  onChange={e => setPolicyType(e.target.value)}
+                  onChange={e => setPlaybookType(e.target.value)}
                   style={{ appearance: "auto" }}
                 >
-                  <option value="COMPANY_POLICY">Company Policy</option>
-                  <option value="HR_POLICY">HR Policy</option>
+                  <option value="COMPANY_POLICY">Workspace Playbook</option>
+                  <option value="PeopleOps_POLICY">PeopleOps Playbook</option>
                 </select>
               </div>
 
@@ -340,14 +340,14 @@ export default function AdminPolicies() {
                     setTitle("");
                     setDescription("");
                     setFile(null);
-                    setPolicyType("COMPANY_POLICY");
+                    setPlaybookType("COMPANY_POLICY");
                     setError(null);
                   }}
                 >
                   Cancel
                 </button>
-                <button className="ap-btn-primary" onClick={savePolicy} disabled={saving}>
-                  {saving ? "Publishing…" : "Publish Policy"}
+                <button className="ap-btn-primary" onClick={savePlaybook} disabled={saving}>
+                  {saving ? "Publishing…" : "Publish Playbook"}
                 </button>
               </div>
             </div>
@@ -359,12 +359,12 @@ export default function AdminPolicies() {
           <div style={{ background: `linear-gradient(90deg,${T.navy},${T.navyMid})`, padding: "14px 20px", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 10 }}>
             <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
               <BookOpen size={16} color={T.coral} />
-              <p className="fd" style={{ fontSize: 14, fontWeight: 800, color: "#fff" }}>Published Policies</p>
+              <p className="fd" style={{ fontSize: 14, fontWeight: 800, color: "#fff" }}>Published Playbooks</p>
             </div>
 
             <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
               <div style={{ display: "flex", background: "rgba(255,255,255,.1)", borderRadius: 8, padding: 3, gap: 2 }}>
-                {[["ALL", "All"], ["COMPANY_POLICY", "Company"], ["HR_POLICY", "HR"]].map(([val, lbl]) => (
+                {[["ALL", "All"], ["COMPANY_POLICY", "Workspace"], ["PeopleOps_POLICY", "PeopleOps"]].map(([val, lbl]) => (
                   <button
                     key={val}
                     onClick={() => setFilterType(val)}
@@ -381,8 +381,8 @@ export default function AdminPolicies() {
                 ))}
               </div>
 
-              <span style={{ padding: "3px 10px", borderRadius: 999, background: "rgba(255,107,53,.2)", color: T.coral, fontSize: 11, fontWeight: 700, border: "1px solid rgba(255,107,53,.3)" }}>
-                {filteredPolicies.length} {filteredPolicies.length === 1 ? "policy" : "policies"}
+              <span style={{ padding: "3px 10px", borderRadius: 999, background: "rgba(139,92,246,.2)", color: T.coral, fontSize: 11, fontWeight: 700, border: "1px solid rgba(139,92,246,.3)" }}>
+                {filteredPlaybooks.length} {filteredPlaybooks.length === 1 ? "policy" : "policies"}
               </span>
             </div>
           </div>
@@ -394,28 +394,28 @@ export default function AdminPolicies() {
                 <style>{`@keyframes spin{to{transform:rotate(360deg)}}`}</style>
                 <p style={{ fontSize: 13, color: "#64748b" }}>Loading policies…</p>
               </div>
-            ) : filteredPolicies.length === 0 ? (
+            ) : filteredPlaybooks.length === 0 ? (
               <div style={{ padding: "40px 20px", textAlign: "center", border: `1.5px dashed ${T.border}`, borderRadius: 14, background: "#fafbff" }}>
                 <span style={{ fontSize: 36, display: "block", marginBottom: 10 }}>📋</span>
                 <p className="fd" style={{ fontSize: 14, fontWeight: 800, color: T.navy, marginBottom: 6 }}>No policies published yet</p>
-                <p style={{ fontSize: 12, color: "#94a3b8" }}>Click "New Policy" to create and publish your first policy.</p>
+                <p style={{ fontSize: 12, color: "#94a3b8" }}>Click "New Playbook" to create and publish your first policy.</p>
               </div>
             ) : (
-              filteredPolicies.map((p, i) => (
+              filteredPlaybooks.map((p, i) => (
                 <div key={p.id} className="ap-policy-row ap-in" style={{ animationDelay: `${i * 0.05}s` }}>
                   <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 12 }}>
                     <div style={{ flex: 1, minWidth: 0 }}>
                       <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }}>
                         <p className="fd" style={{ fontSize: 14, fontWeight: 800, color: T.navy }}>{p.title}</p>
 
-                        {p.policyType === "HR_POLICY" ? (
-                          <span className="ap-tag" style={{ background: "rgba(99,102,241,.1)", color: "#6366f1", border: "1px solid rgba(99,102,241,.25)" }}>HR Policy</span>
+                        {p.policyType === "PeopleOps_POLICY" ? (
+                          <span className="ap-tag" style={{ background: "rgba(99,102,241,.1)", color: "#6366f1", border: "1px solid rgba(99,102,241,.25)" }}>PeopleOps Playbook</span>
                         ) : (
-                          <span className="ap-tag" style={{ background: "rgba(255,107,53,.1)", color: T.coral, border: "1px solid rgba(255,107,53,.25)" }}>Company Policy</span>
+                          <span className="ap-tag" style={{ background: "rgba(139,92,246,.1)", color: T.coral, border: "1px solid rgba(139,92,246,.25)" }}>Workspace Playbook</span>
                         )}
 
                         {p.fileUrl && (
-                          <span className="ap-tag" style={{ background: "rgba(0,194,168,.1)", color: T.teal, border: "1px solid rgba(0,194,168,.25)" }}>
+                          <span className="ap-tag" style={{ background: "rgba(6,182,212,.1)", color: T.teal, border: "1px solid rgba(6,182,212,.25)" }}>
                             <FileText size={10} /> Attachment
                           </span>
                         )}
@@ -442,7 +442,7 @@ export default function AdminPolicies() {
                             href={p.fileUrl}
                             target="_blank"
                             rel="noreferrer"
-                            style={{ display: "inline-flex", alignItems: "center", gap: 5, padding: "7px 12px", borderRadius: 9, border: `1.5px solid rgba(0,194,168,.3)`, background: "rgba(0,194,168,.08)", color: T.teal, fontSize: 11, fontWeight: 700, textDecoration: "none" }}
+                            style={{ display: "inline-flex", alignItems: "center", gap: 5, padding: "7px 12px", borderRadius: 9, border: `1.5px solid rgba(6,182,212,.3)`, background: "rgba(6,182,212,.08)", color: T.teal, fontSize: 11, fontWeight: 700, textDecoration: "none" }}
                           >
                             <Eye size={11} /> View
                           </a>
@@ -458,7 +458,7 @@ export default function AdminPolicies() {
                       )}
 
                       <button
-                        onClick={() => deletePolicy(p.id)}
+                        onClick={() => deletePlaybook(p.id)}
                         disabled={deleting === p.id}
                         style={{ display: "inline-flex", alignItems: "center", gap: 5, padding: "7px 12px", borderRadius: 9, border: "1.5px solid rgba(239,68,68,.25)", background: "rgba(239,68,68,.06)", color: "#EF4444", fontSize: 11, fontWeight: 700, cursor: "pointer" }}
                       >

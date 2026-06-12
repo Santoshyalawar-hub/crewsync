@@ -22,25 +22,25 @@
 // };
 
 // const MENU = [
-//   { id: "ad_home",    label: "Command Center",       icon: "overview",      group: "Core"       },
-//   { id: "ad_org",     label: "Org Structure",        icon: "hierarchy",     group: "Core"       },
+//   { id: "ad_home",    label: "Control Room",       icon: "overview",      group: "Core"       },
+//   { id: "ad_org",     label: "People Map",        icon: "hierarchy",     group: "Core"       },
 //   { id: "ad_team",    label: "Workforce Hub",        icon: "workforce",     group: "Core"       },
-//   { id: "ad_perf",    label: "Growth & Performance", icon: "performance",   group: "Operations" },
-//   { id: "ad_finance", label: "Finance & Payroll",    icon: "finance",       group: "Operations" },
+//   { id: "ad_perf",    label: "Growth Signals", icon: "performance",   group: "Operations" },
+//   { id: "ad_finance", label: "MoneyOps & Payouts",    icon: "finance",       group: "Operations" },
 //   { id: "ad_time",    label: "Time & Presence",      icon: "attendance",    group: "Operations" },
-//   { id: "ad_docs",    label: "Document Vault",       icon: "documents",     group: "Resources"  },
-//   { id: "ad_gear",    label: "Asset Registry",       icon: "assets",        group: "Resources"  },
-//   { id: "ad_alerts",  label: "Alerts & Updates",     icon: "notifications", group: "System"     },
-//   { id: "ad_support", label: "Help & Support",       icon: "support",       group: "System"     },
+//   { id: "ad_docs",    label: "Vault",       icon: "documents",     group: "Resources"  },
+//   { id: "ad_gear",    label: "Equipment Registry",       icon: "assets",        group: "Resources"  },
+//   { id: "ad_alerts",  label: "Signals",     icon: "notifications", group: "System"     },
+//   { id: "ad_support", label: "Care Desk",       icon: "support",       group: "System"     },
 // ];
 
 // const GROUPS = ["Core", "Operations", "Resources", "System"];
 
-// export default function AdminSidebar({ currentPage, navigateTo }) {
+// export default function OperatorSidebar({ currentPage, navigateTo }) {
 //   const [collapsed, setCollapsed] = useState(false);
 //   const [hovered,   setHovered]   = useState(null);
 
-//   const companyName = (localStorage.getItem("companyName") || "Your Company").trim();
+//   const companyName = (localStorage.getItem("companyName") || "Your Workspace").trim();
 //   const initials    = companyName.split(" ").slice(0, 2).map(w => w[0]).join("").toUpperCase();
 
 //   return (
@@ -53,7 +53,7 @@
 //         .sb-aside {
 //           height:100vh; position:sticky; top:0;
 //           display:flex; flex-direction:column;
-//           background:#0D1F2D;
+//           background:#0B1020;
 //           transition:width .3s cubic-bezier(.4,0,.2,1);
 //           overflow:hidden; flex-shrink:0; z-index:50;
 //         }
@@ -68,10 +68,10 @@
 //         }
 //         .sb-logo {
 //           width:38px; height:38px; border-radius:11px;
-//           background:linear-gradient(135deg,#FF6B35,#FF5722);
+//           background:linear-gradient(135deg,#8B5CF6,#06B6D4);
 //           display:flex; align-items:center; justify-content:center;
 //           font-size:16px; font-weight:900; color:#fff; flex-shrink:0;
-//           box-shadow:0 4px 14px rgba(255,107,53,.4);
+//           box-shadow:0 4px 14px rgba(139,92,246,.4);
 //           font-family:'Sora',sans-serif;
 //         }
 //         .sb-brand { overflow:hidden; }
@@ -84,9 +84,9 @@
 //           background:#fff; border:1.5px solid #e5e7eb;
 //           box-shadow:0 2px 8px rgba(0,0,0,.12);
 //           display:flex; align-items:center; justify-content:center;
-//           cursor:pointer; color:#FF6B35; transition:all .2s; z-index:60;
+//           cursor:pointer; color:#8B5CF6; transition:all .2s; z-index:60;
 //         }
-//         .sb-toggle:hover { background:#FF6B35; color:#fff; border-color:#FF6B35; }
+//         .sb-toggle:hover { background:#8B5CF6; color:#fff; border-color:#8B5CF6; }
 
 //         .sb-company {
 //           margin:12px 10px 8px;
@@ -97,13 +97,13 @@
 //         }
 //         .sb-company-avatar {
 //           width:32px; height:32px; border-radius:9px;
-//           background:linear-gradient(135deg,#00C2A8,#00a896);
+//           background:linear-gradient(135deg,#06B6D4,#0D9488);
 //           display:flex; align-items:center; justify-content:center;
 //           font-size:12px; font-weight:900; color:#fff;
 //           flex-shrink:0; font-family:'Sora',sans-serif;
 //         }
 //         .sb-company-name { font-size:12px; font-weight:700; color:#fff; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-//         .sb-company-plan { font-size:10px; color:#00C2A8; font-weight:700; }
+//         .sb-company-plan { font-size:10px; color:#06B6D4; font-weight:700; }
 
 //         .sb-nav { flex:1; overflow-y:auto; overflow-x:hidden; padding:4px 8px 8px; }
 //         .sb-nav::-webkit-scrollbar { width:3px; }
@@ -124,15 +124,15 @@
 //         }
 //         .sb-item:hover { background:rgba(255,255,255,.06); color:rgba(255,255,255,.85); border-color:rgba(255,255,255,.05); }
 //         .sb-item.active {
-//           background:linear-gradient(135deg,rgba(255,107,53,.18),rgba(255,107,53,.08));
-//           color:#fff; border-color:rgba(255,107,53,.25);
+//           background:linear-gradient(135deg,rgba(139,92,246,.18),rgba(139,92,246,.08));
+//           color:#fff; border-color:rgba(139,92,246,.25);
 //         }
-//         .sb-item.active .sb-icon-wrap { color:#FF6B35; }
+//         .sb-item.active .sb-icon-wrap { color:#8B5CF6; }
 
 //         .sb-active-bar {
 //           position:absolute; left:0; top:50%; transform:translateY(-50%);
 //           width:3px; height:60%; border-radius:0 2px 2px 0;
-//           background:#FF6B35; box-shadow:0 0 8px rgba(255,107,53,.5);
+//           background:#8B5CF6; box-shadow:0 0 8px rgba(139,92,246,.5);
 //         }
 //         .sb-icon-wrap {
 //           width:22px; height:22px; display:flex; align-items:center;
@@ -142,7 +142,7 @@
 
 //         .sb-tooltip {
 //           position:absolute; left:calc(100% + 14px); top:50%; transform:translateY(-50%);
-//           background:#0D1F2D; color:#fff; font-size:12px; font-weight:700;
+//           background:#0B1020; color:#fff; font-size:12px; font-weight:700;
 //           padding:6px 12px; border-radius:8px; border:1px solid rgba(255,255,255,.1);
 //           white-space:nowrap; pointer-events:none;
 //           box-shadow:0 4px 20px rgba(0,0,0,.4); z-index:999; font-family:'Sora',sans-serif;
@@ -158,10 +158,10 @@
 //           border-radius:12px; padding:12px; flex-shrink:0;
 //         }
 //         .sb-footer-live { display:flex; align-items:center; gap:8px; }
-//         .sb-live-dot { width:7px; height:7px; border-radius:50%; background:#00C2A8; animation:sb-pulse 2s ease-in-out infinite; }
+//         .sb-live-dot { width:7px; height:7px; border-radius:50%; background:#06B6D4; animation:sb-pulse 2s ease-in-out infinite; }
 //         @keyframes sb-pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(1.6)} }
 //         .sb-footer-text { font-size:11px; color:rgba(255,255,255,.4); font-weight:500; white-space:nowrap; }
-//         .sb-footer-text strong { color:#00C2A8; }
+//         .sb-footer-text strong { color:#06B6D4; }
 //       `}</style>
 
 //       <aside className={`sb-root sb-aside ${collapsed ? "closed" : "open"}`}>
@@ -181,13 +181,13 @@
 //           <div className="sb-logo">S</div>
 //           {!collapsed && (
 //             <div className="sb-brand">
-//               <div className="sb-fd sb-brand-name">SamayaHR</div>
-//               <div className="sb-brand-sub">Admin Console</div>
+//               <div className="sb-fd sb-brand-name">CrewSync</div>
+//               <div className="sb-brand-sub">Ops Console</div>
 //             </div>
 //           )}
 //         </div>
 
-//         {/* Company badge */}
+//         {/* Workspace badge */}
 //         {!collapsed && (
 //           <div className="sb-company">
 //             <div className="sb-company-avatar">{initials || "C"}</div>
@@ -273,16 +273,16 @@
 // };
 
 // const MENU = [
-//   { id: "ad_home",    label: "Command Center",       icon: "overview",      group: "Core"       },
-//   { id: "ad_org",     label: "Org Structure",        icon: "hierarchy",     group: "Core"       },
+//   { id: "ad_home",    label: "Control Room",       icon: "overview",      group: "Core"       },
+//   { id: "ad_org",     label: "People Map",        icon: "hierarchy",     group: "Core"       },
 //   { id: "ad_team",    label: "Workforce Hub",        icon: "workforce",     group: "Core"       },
-//   { id: "ad_perf",    label: "Growth & Performance", icon: "performance",   group: "Operations" },
-//   { id: "ad_finance", label: "Finance & Payroll",    icon: "finance",       group: "Operations" },
+//   { id: "ad_perf",    label: "Growth Signals", icon: "performance",   group: "Operations" },
+//   { id: "ad_finance", label: "MoneyOps & Payouts",    icon: "finance",       group: "Operations" },
 //   { id: "ad_time",    label: "Time & Presence",      icon: "attendance",    group: "Operations" },
-//   { id: "ad_docs",    label: "Document Vault",       icon: "documents",     group: "Resources"  },
-//   { id: "ad_gear",    label: "Asset Registry",       icon: "assets",        group: "Resources"  },
-//   { id: "ad_alerts",  label: "Alerts & Updates",     icon: "notifications", group: "System"     },
-//   { id: "ad_support", label: "Help & Support",       icon: "support",       group: "System"     },
+//   { id: "ad_docs",    label: "Vault",       icon: "documents",     group: "Resources"  },
+//   { id: "ad_gear",    label: "Equipment Registry",       icon: "assets",        group: "Resources"  },
+//   { id: "ad_alerts",  label: "Signals",     icon: "notifications", group: "System"     },
+//   { id: "ad_support", label: "Care Desk",       icon: "support",       group: "System"     },
 // ];
 
 // const GROUPS = ["Core", "Operations", "Resources", "System"];
@@ -290,9 +290,9 @@
 // /* ─────────────────────────────────────────────────────────────
 //    Fetch company logo by tenantCode
 //    GET /api/global-admin/companies/by-tenant/{tenantCode}
-//    Returns Company entity → logoUrl (Cloudinary CDN URL)
+//    Returns Workspace entity → logoUrl (Cloudinary CDN URL)
 // ───────────────────────────────────────────────────────────── */
-// function useCompanyLogo(tenantCode) {
+// function useWorkspaceLogo(tenantCode) {
 //   const [logoUrl, setLogoUrl] = useState(
 //     () => localStorage.getItem("companyLogoUrl") || ""
 //   );
@@ -337,7 +337,7 @@
 // /* ─────────────────────────────────────────────────────────────
 //    Logo component — Cloudinary image OR coloured initials
 // ───────────────────────────────────────────────────────────── */
-// function CompanyLogo({ logoUrl, companyName, size = 42, radius = 12 }) {
+// function WorkspaceLogo({ logoUrl, companyName, size = 42, radius = 12 }) {
 //   const [err, setErr] = useState(false);
 
 //   const initials = (companyName || "C")
@@ -366,11 +366,11 @@
 //   return (
 //     <div style={{
 //       width: size, height: size, borderRadius: radius,
-//       background: "linear-gradient(135deg,#FF6B35,#FF5722)",
+//       background: "linear-gradient(135deg,#8B5CF6,#06B6D4)",
 //       display: "flex", alignItems: "center", justifyContent: "center",
 //       fontSize: size * 0.35, fontWeight: 900, color: "#fff",
 //       fontFamily: "'Sora',sans-serif", flexShrink: 0,
-//       boxShadow: "0 4px 14px rgba(255,107,53,0.4)",
+//       boxShadow: "0 4px 14px rgba(139,92,246,0.4)",
 //       border: "1.5px solid rgba(255,255,255,0.1)",
 //     }}>
 //       {initials}
@@ -379,17 +379,17 @@
 // }
 
 // /* ═══════════════════════════════════════════════════════════
-//    MAIN AdminSidebar
+//    MAIN OperatorSidebar
 // ═══════════════════════════════════════════════════════════ */
-// export default function AdminSidebar({ currentPage, navigateTo }) {
+// export default function OperatorSidebar({ currentPage, navigateTo }) {
 //   const [collapsed, setCollapsed] = useState(false);
 //   const [hovered,   setHovered]   = useState(null);
 
-//   const companyName = (localStorage.getItem("companyName") || "Your Company").trim();
+//   const companyName = (localStorage.getItem("companyName") || "Your Workspace").trim();
 //   const tenantCode  = (localStorage.getItem("tenantCode")  || "").trim();
 
 //   /* Fetch Cloudinary logo */
-//   const { logoUrl, logoError, setLogoError } = useCompanyLogo(tenantCode);
+//   const { logoUrl, logoError, setLogoError } = useWorkspaceLogo(tenantCode);
 
 //   return (
 //     <>
@@ -401,7 +401,7 @@
 //         .sb-aside {
 //           height: 100vh; position: sticky; top: 0;
 //           display: flex; flex-direction: column;
-//           background: #0D1F2D;
+//           background: #0B1020;
 //           transition: width .3s cubic-bezier(.4,0,.2,1);
 //           overflow: hidden; flex-shrink: 0; z-index: 50;
 //         }
@@ -435,12 +435,12 @@
 //           background: #fff; border: 1.5px solid #e5e7eb;
 //           box-shadow: 0 2px 8px rgba(0,0,0,.12);
 //           display: flex; align-items: center; justify-content: center;
-//           cursor: pointer; color: #FF6B35;
+//           cursor: pointer; color: #8B5CF6;
 //           transition: all .2s; z-index: 60;
 //         }
-//         .sb-toggle:hover { background: #FF6B35; color: #fff; border-color: #FF6B35; }
+//         .sb-toggle:hover { background: #8B5CF6; color: #fff; border-color: #8B5CF6; }
 
-//         /* ── Company badge (below header when expanded) ── */
+//         /* ── Workspace badge (below header when expanded) ── */
 //         .sb-company {
 //           margin: 10px 10px 6px;
 //           background: rgba(255,255,255,.05);
@@ -452,7 +452,7 @@
 //           font-size: 12px; font-weight: 700; color: #fff;
 //           white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 //         }
-//         .sb-company-plan { font-size: 10px; color: #00C2A8; font-weight: 700; }
+//         .sb-company-plan { font-size: 10px; color: #06B6D4; font-weight: 700; }
 
 //         /* ── Nav ── */
 //         .sb-nav {
@@ -486,15 +486,15 @@
 //           border-color: rgba(255,255,255,.05);
 //         }
 //         .sb-item.active {
-//           background: linear-gradient(135deg,rgba(255,107,53,.18),rgba(255,107,53,.08));
-//           color: #fff; border-color: rgba(255,107,53,.25);
+//           background: linear-gradient(135deg,rgba(139,92,246,.18),rgba(139,92,246,.08));
+//           color: #fff; border-color: rgba(139,92,246,.25);
 //         }
-//         .sb-item.active .sb-icon-wrap { color: #FF6B35; }
+//         .sb-item.active .sb-icon-wrap { color: #8B5CF6; }
 
 //         .sb-active-bar {
 //           position: absolute; left: 0; top: 50%; transform: translateY(-50%);
 //           width: 3px; height: 60%; border-radius: 0 2px 2px 0;
-//           background: #FF6B35; box-shadow: 0 0 8px rgba(255,107,53,.5);
+//           background: #8B5CF6; box-shadow: 0 0 8px rgba(139,92,246,.5);
 //         }
 //         .sb-icon-wrap {
 //           width: 22px; height: 22px;
@@ -510,7 +510,7 @@
 //         .sb-tooltip {
 //           position: absolute; left: calc(100% + 14px); top: 50%;
 //           transform: translateY(-50%);
-//           background: #0D1F2D; color: #fff;
+//           background: #0B1020; color: #fff;
 //           font-size: 12px; font-weight: 700;
 //           padding: 6px 12px; border-radius: 8px;
 //           border: 1px solid rgba(255,255,255,.1);
@@ -535,7 +535,7 @@
 //         .sb-footer-live { display: flex; align-items: center; gap: 8px; }
 //         .sb-live-dot {
 //           width: 7px; height: 7px; border-radius: 50%;
-//           background: #00C2A8;
+//           background: #06B6D4;
 //           animation: sb-pulse 2s ease-in-out infinite;
 //           flex-shrink: 0;
 //         }
@@ -544,16 +544,16 @@
 //           50%      { opacity:.4; transform:scale(1.6); }
 //         }
 //         .sb-footer-text { font-size: 11px; color: rgba(255,255,255,.4); font-weight: 500; white-space: nowrap; }
-//         .sb-footer-text strong { color: #00C2A8; }
+//         .sb-footer-text strong { color: #06B6D4; }
 
 //         /* Tenant pill */
 //         .sb-tenant-pill {
 //           display: inline-flex; align-items: center; gap: 4px;
-//           background: rgba(0,194,168,.12);
-//           border: 1px solid rgba(0,194,168,.2);
+//           background: rgba(6,182,212,.12);
+//           border: 1px solid rgba(6,182,212,.2);
 //           border-radius: 6px; padding: 2px 7px;
 //           font-size: 9px; font-weight: 800;
-//           color: #00C2A8; letter-spacing: .06em;
+//           color: #06B6D4; letter-spacing: .06em;
 //           font-family: monospace; white-space: nowrap;
 //         }
 //       `}</style>
@@ -570,14 +570,14 @@
 //           </svg>
 //         </button>
 
-//         {/* ── Header — Company Logo ── */}
+//         {/* ── Header — Workspace Logo ── */}
 //         <div className="sb-header">
 //           {/*
 //             Logo spot:
 //             - Expanded  → logo image (or initials) + company name + tenant code pill
 //             - Collapsed → just the logo image (or initials), centered
 //           */}
-//           <CompanyLogo
+//           <WorkspaceLogo
 //             logoUrl={logoUrl}
 //             companyName={companyName}
 //             size={collapsed ? 40 : 42}
@@ -596,11 +596,11 @@
 //           )}
 //         </div>
 
-//         {/* ── Company badge (expanded only) ── */}
+//         {/* ── Workspace badge (expanded only) ── */}
 //         {!collapsed && (
 //           <div className="sb-company">
 //             <div style={{ flex: 1, minWidth: 0 }}>
-//               <div className="sb-company-name">Admin Console</div>
+//               <div className="sb-company-name">Ops Console</div>
 //               <div className="sb-company-plan">Pro Plan · Active</div>
 //             </div>
 //             <div style={{ flexShrink: 0 }}>
@@ -681,7 +681,7 @@ const ICONS = {
   finance:       ["M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"],
   attendance:    ["M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"],
   documents:     ["M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"],
-  // ✅ NEW icon for HR Documents — pen/signature style
+  // ✅ NEW icon for PeopleOps Vault — pen/signature style
   hrdocuments:   ["M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"],
   assets:        ["M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17H3a2 2 0 01-2-2V5a2 2 0 012-2h16a2 2 0 012 2v10a2 2 0 01-2 2h-2"],
   support:       ["M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"],
@@ -692,23 +692,23 @@ const ICONS = {
 // ─────────────────────────────────────────────────────────────────────────────
 //  MENU — each item.id must exactly match a key in PAGE_REGISTRY in AppShell.jsx
 //
-//  ✅ ADDED: { id: "ad_hrdocs", label: "HR Documents", icon: "hrdocuments", group: "Resources" }
+//  ✅ ADDED: { id: "ad_hrdocs", label: "People Vault", icon: "hrdocuments", group: "Resources" }
 //  This is the ONLY change from your original file.
-//  It appears right after "Document Vault" in the Resources group.
+//  It appears right after "Vault" in the Resources group.
 // ─────────────────────────────────────────────────────────────────────────────
 const MENU = [
-  { id: "ad_home",    label: "Command Center",       icon: "overview",      group: "Core"       },
-  { id: "ad_org",     label: "Org Structure",        icon: "hierarchy",     group: "Core"       },
+  { id: "ad_home",    label: "Control Room",       icon: "overview",      group: "Core"       },
+  { id: "ad_org",     label: "People Map",        icon: "hierarchy",     group: "Core"       },
   { id: "ad_team",    label: "Workforce Hub",        icon: "workforce",     group: "Core"       },
-  { id: "ad_perf",    label: "Growth & Performance", icon: "performance",   group: "Operations" },
-  { id: "ad_finance", label: "Finance & Payroll",    icon: "finance",       group: "Operations" },
+  { id: "ad_perf",    label: "Growth Signals", icon: "performance",   group: "Operations" },
+  { id: "ad_finance", label: "MoneyOps & Payouts",    icon: "finance",       group: "Operations" },
   { id: "ad_time",    label: "Time & Presence",      icon: "attendance",    group: "Operations" },
-  { id: "ad_docs",    label: "Document Vault",       icon: "documents",     group: "Resources"  },
-  { id: "ad_hrdocs",  label: "HR Documents",         icon: "hrdocuments",   group: "Resources"  }, // ← NEW ✅
-  { id: "ad_policy",  label: "Policy Vault",         icon: "policy",        group: "Resources"  },
-  { id: "ad_gear",    label: "Asset Registry",       icon: "assets",        group: "Resources"  },
-  { id: "ad_alerts",  label: "Alerts & Updates",     icon: "notifications", group: "System"     },
-  { id: "ad_support", label: "Help & Support",       icon: "support",       group: "System"     },
+  { id: "ad_docs",    label: "Vault",       icon: "documents",     group: "Resources"  },
+  { id: "ad_hrdocs",  label: "People Vault",         icon: "hrdocuments",   group: "Resources"  }, // ← NEW ✅
+  { id: "ad_policy",  label: "Playbook Vault",         icon: "policy",        group: "Resources"  },
+  { id: "ad_gear",    label: "Equipment Registry",       icon: "assets",        group: "Resources"  },
+  { id: "ad_alerts",  label: "Signals",     icon: "notifications", group: "System"     },
+  { id: "ad_support", label: "Care Desk",       icon: "support",       group: "System"     },
 ];
 
 const GROUPS = ["Core", "Operations", "Resources", "System"];
@@ -716,7 +716,7 @@ const GROUPS = ["Core", "Operations", "Resources", "System"];
 /* ─────────────────────────────────────────────────────────────────────────────
    Fetch company logo by tenantCode
 ────────────────────────────────────────────────────────────────────────────── */
-function useCompanyLogo(tenantCode) {
+function useWorkspaceLogo(tenantCode) {
   const [logoUrl,   setLogoUrl]   = useState(() => localStorage.getItem("companyLogoUrl") || "");
   const [logoError, setLogoError] = useState(false);
 
@@ -747,7 +747,7 @@ function useCompanyLogo(tenantCode) {
 /* ─────────────────────────────────────────────────────────────────────────────
    Logo — Cloudinary image OR coloured initials
 ────────────────────────────────────────────────────────────────────────────── */
-function CompanyLogo({ logoUrl, companyName, size = 42, radius = 12 }) {
+function WorkspaceLogo({ logoUrl, companyName, size = 42, radius = 12 }) {
   const [err, setErr] = useState(false);
   const initials = (companyName || "C").split(" ").slice(0, 2).map(w => w[0]).join("").toUpperCase();
   useEffect(() => { setErr(false); }, [logoUrl]);
@@ -764,11 +764,11 @@ function CompanyLogo({ logoUrl, companyName, size = 42, radius = 12 }) {
 
   return (
     <div style={{ width: size, height: size, borderRadius: radius,
-      background: "linear-gradient(135deg,#FF6B35,#FF5722)",
+      background: "linear-gradient(135deg,#8B5CF6,#06B6D4)",
       display: "flex", alignItems: "center", justifyContent: "center",
       fontSize: size * 0.35, fontWeight: 900, color: "#fff",
       fontFamily: "'Sora',sans-serif", flexShrink: 0,
-      boxShadow: "0 4px 14px rgba(255,107,53,0.4)",
+      boxShadow: "0 4px 14px rgba(139,92,246,0.4)",
       border: "1.5px solid rgba(255,255,255,0.1)" }}>
       {initials}
     </div>
@@ -776,16 +776,16 @@ function CompanyLogo({ logoUrl, companyName, size = 42, radius = 12 }) {
 }
 
 /* ═══════════════════════════════════════════════════════════
-   MAIN AdminSidebar — identical to your original except MENU above
+   MAIN OperatorSidebar — identical to your original except MENU above
 ═══════════════════════════════════════════════════════════ */
-export default function AdminSidebar({ currentPage, navigateTo }) {
+export default function OperatorSidebar({ currentPage, navigateTo }) {
   const [collapsed, setCollapsed] = useState(false);
   const [hovered,   setHovered]   = useState(null);
 
-  const companyName = (localStorage.getItem("companyName") || "Your Company").trim();
+  const companyName = (localStorage.getItem("companyName") || "Your Workspace").trim();
   const tenantCode  = (localStorage.getItem("tenantCode")  || "").trim();
 
-  const { logoUrl } = useCompanyLogo(tenantCode);
+  const { logoUrl } = useWorkspaceLogo(tenantCode);
 
   return (
     <>
@@ -797,7 +797,7 @@ export default function AdminSidebar({ currentPage, navigateTo }) {
         .sb-aside {
           height: 100vh; position: sticky; top: 0;
           display: flex; flex-direction: column;
-          background: #0D1F2D;
+          background: #0B1020;
           transition: width .3s cubic-bezier(.4,0,.2,1);
           overflow: hidden; flex-shrink: 0; z-index: 50;
         }
@@ -829,10 +829,10 @@ export default function AdminSidebar({ currentPage, navigateTo }) {
           background: #fff; border: 1.5px solid #e5e7eb;
           box-shadow: 0 2px 8px rgba(0,0,0,.12);
           display: flex; align-items: center; justify-content: center;
-          cursor: pointer; color: #FF6B35;
+          cursor: pointer; color: #8B5CF6;
           transition: all .2s; z-index: 60;
         }
-        .sb-toggle:hover { background: #FF6B35; color: #fff; border-color: #FF6B35; }
+        .sb-toggle:hover { background: #8B5CF6; color: #fff; border-color: #8B5CF6; }
 
         .sb-company {
           margin: 10px 10px 6px;
@@ -842,7 +842,7 @@ export default function AdminSidebar({ currentPage, navigateTo }) {
           display: flex; align-items: center; gap: 10px; flex-shrink: 0;
         }
         .sb-company-name { font-size: 12px; font-weight: 700; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .sb-company-plan { font-size: 10px; color: #00C2A8; font-weight: 700; }
+        .sb-company-plan { font-size: 10px; color: #06B6D4; font-weight: 700; }
 
         .sb-nav {
           flex: 1; overflow-y: auto; overflow-x: hidden;
@@ -875,15 +875,15 @@ export default function AdminSidebar({ currentPage, navigateTo }) {
           border-color: rgba(255,255,255,.05);
         }
         .sb-item.active {
-          background: linear-gradient(135deg,rgba(255,107,53,.18),rgba(255,107,53,.08));
-          color: #fff; border-color: rgba(255,107,53,.25);
+          background: linear-gradient(135deg,rgba(139,92,246,.18),rgba(139,92,246,.08));
+          color: #fff; border-color: rgba(139,92,246,.25);
         }
-        .sb-item.active .sb-icon-wrap { color: #FF6B35; }
+        .sb-item.active .sb-icon-wrap { color: #8B5CF6; }
 
         .sb-active-bar {
           position: absolute; left: 0; top: 50%; transform: translateY(-50%);
           width: 3px; height: 60%; border-radius: 0 2px 2px 0;
-          background: #FF6B35; box-shadow: 0 0 8px rgba(255,107,53,.5);
+          background: #8B5CF6; box-shadow: 0 0 8px rgba(139,92,246,.5);
         }
         .sb-icon-wrap {
           width: 22px; height: 22px;
@@ -895,7 +895,7 @@ export default function AdminSidebar({ currentPage, navigateTo }) {
         .sb-tooltip {
           position: absolute; left: calc(100% + 14px); top: 50%;
           transform: translateY(-50%);
-          background: #0D1F2D; color: #fff;
+          background: #0B1020; color: #fff;
           font-size: 12px; font-weight: 700;
           padding: 6px 12px; border-radius: 8px;
           border: 1px solid rgba(255,255,255,.1);
@@ -919,7 +919,7 @@ export default function AdminSidebar({ currentPage, navigateTo }) {
         .sb-footer-live { display: flex; align-items: center; gap: 8px; }
         .sb-live-dot {
           width: 7px; height: 7px; border-radius: 50%;
-          background: #00C2A8;
+          background: #06B6D4;
           animation: sb-pulse 2s ease-in-out infinite;
           flex-shrink: 0;
         }
@@ -928,15 +928,15 @@ export default function AdminSidebar({ currentPage, navigateTo }) {
           50%      { opacity:.4; transform:scale(1.6); }
         }
         .sb-footer-text { font-size: 11px; color: rgba(255,255,255,.4); font-weight: 500; white-space: nowrap; }
-        .sb-footer-text strong { color: #00C2A8; }
+        .sb-footer-text strong { color: #06B6D4; }
 
         .sb-tenant-pill {
           display: inline-flex; align-items: center; gap: 4px;
-          background: rgba(0,194,168,.12);
-          border: 1px solid rgba(0,194,168,.2);
+          background: rgba(6,182,212,.12);
+          border: 1px solid rgba(6,182,212,.2);
           border-radius: 6px; padding: 2px 7px;
           font-size: 9px; font-weight: 800;
-          color: #00C2A8; letter-spacing: .06em;
+          color: #06B6D4; letter-spacing: .06em;
           font-family: monospace; white-space: nowrap;
         }
       `}</style>
@@ -952,22 +952,22 @@ export default function AdminSidebar({ currentPage, navigateTo }) {
           </svg>
         </button>
 
-        {/* Header — Company Logo */}
+        {/* Header — Workspace Logo */}
         <div className="sb-header">
           {collapsed ? (
-            <img src="/SamayaHRSidebar.png" alt="SamayaHR"
+            <img src="/crewsync-mark.svg" alt="CrewSync"
               style={{ width: 40, height: 40, borderRadius: 11, objectFit: "contain", flexShrink: 0, mixBlendMode: "screen" }} />
           ) : (
-            <img src="/SamayaHR.png" alt="SamayaHR"
+            <img src="/crewsync-logo.svg" alt="CrewSync"
               style={{ height: 42, maxWidth: 175, objectFit: "contain", objectPosition: "left", flexShrink: 0, mixBlendMode: "screen" }} />
           )}
         </div>
 
-        {/* Company badge (expanded only) */}
+        {/* Workspace badge (expanded only) */}
         {!collapsed && (
           <div className="sb-company">
             <div style={{ flex: 1, minWidth: 0 }}>
-              <div className="sb-company-name">Admin Console</div>
+              <div className="sb-company-name">Ops Console</div>
               <div className="sb-company-plan">Pro Plan · Active</div>
             </div>
             <div style={{ flexShrink: 0 }}>

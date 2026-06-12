@@ -3,7 +3,7 @@ import { LogOut, CheckCircle, XCircle, Clock, AlertCircle, Eye, ChevronRight } f
 import api from "@/lib/apiClient";
 
 const T = {
-  navy:"#0D1F2D", navyMid:"#1E3448", coral:"#FF6B35", teal:"#00C2A8",
+  navy:"#0B1020", navyMid:"#374151", coral:"#8B5CF6", teal:"#06B6D4",
   bg:"#F5F7FB", border:"#E8ECF2",
 };
 
@@ -24,12 +24,12 @@ const CSS = `
 
 const STATUS_CFG = {
   PENDING:              { icon:Clock,        bg:"#FFFBEB", color:"#B45309", border:"#FDE68A",            label:"Pending" },
-  TEAM_LEADER_APPROVED: { icon:CheckCircle,  bg:"rgba(255,107,53,.07)", color:T.coral, border:"rgba(255,107,53,.25)", label:"TL Approved" },
+  TEAM_LEADER_APPROVED: { icon:CheckCircle,  bg:"rgba(139,92,246,.07)", color:T.coral, border:"rgba(139,92,246,.25)", label:"TL Approved" },
   TEAM_LEADER_REJECTED: { icon:XCircle,      bg:"#FEF2F2", color:"#991B1B", border:"#FECACA",            label:"TL Rejected" },
-  HR_APPROVED:          { icon:CheckCircle,  bg:"rgba(0,194,168,.07)", color:T.teal, border:"rgba(0,194,168,.25)",  label:"HR Approved" },
-  HR_REJECTED:          { icon:XCircle,      bg:"#FEF2F2", color:"#991B1B", border:"#FECACA",            label:"HR Rejected" },
+  PeopleOps_APPROVED:          { icon:CheckCircle,  bg:"rgba(6,182,212,.07)", color:T.teal, border:"rgba(6,182,212,.25)",  label:"PeopleOps Approved" },
+  PeopleOps_REJECTED:          { icon:XCircle,      bg:"#FEF2F2", color:"#991B1B", border:"#FECACA",            label:"PeopleOps Rejected" },
   IN_PROGRESS:          { icon:AlertCircle,  bg:"rgba(99,102,241,.07)", color:"#4F46E5", border:"rgba(99,102,241,.2)", label:"In Progress" },
-  COMPLETED:            { icon:CheckCircle,  bg:"rgba(0,194,168,.08)", color:T.teal, border:"rgba(0,194,168,.3)",  label:"Completed" },
+  COMPLETED:            { icon:CheckCircle,  bg:"rgba(6,182,212,.08)", color:T.teal, border:"rgba(6,182,212,.3)",  label:"Completed" },
 };
 
 const EXIT_TYPE_LABEL = { RESIGNATION:"Resignation", TERMINATION:"Termination", RETIREMENT:"Retirement" };
@@ -40,12 +40,12 @@ const fmtDateTime = d => d ? new Date(d).toLocaleString("en-IN",{day:"numeric",m
 // What action label to show based on current status
 const nextActionLabel = status => ({
   PENDING: "Approve (TL)",
-  TEAM_LEADER_APPROVED: "Approve (HR)",
-  HR_APPROVED: "Start Clearance",
+  TEAM_LEADER_APPROVED: "Approve (PeopleOps)",
+  PeopleOps_APPROVED: "Start Clearance",
   IN_PROGRESS: "Mark Completed",
 }[status] || null);
 
-export default function AdminExitRequests() {
+export default function OperatorExitRequests() {
   const [items,       setItems]      = useState([]);
   const [loading,     setLoading]    = useState(true);
   const [filterStatus,setFilter]     = useState("ALL");
@@ -99,9 +99,9 @@ export default function AdminExitRequests() {
   const stats = {
     total:    items.length,
     pending:  items.filter(i => i.status === "PENDING").length,
-    inReview: items.filter(i => ["TEAM_LEADER_APPROVED","HR_APPROVED","IN_PROGRESS"].includes(i.status)).length,
+    inReview: items.filter(i => ["TEAM_LEADER_APPROVED","PeopleOps_APPROVED","IN_PROGRESS"].includes(i.status)).length,
     completed:items.filter(i => i.status === "COMPLETED").length,
-    rejected: items.filter(i => ["TEAM_LEADER_REJECTED","HR_REJECTED"].includes(i.status)).length,
+    rejected: items.filter(i => ["TEAM_LEADER_REJECTED","PeopleOps_REJECTED"].includes(i.status)).length,
   };
 
   return (
@@ -110,9 +110,9 @@ export default function AdminExitRequests() {
 
       {/* HERO */}
       <div style={{background:`linear-gradient(135deg,${T.navy},${T.navyMid})`,padding:"22px 26px",position:"relative",overflow:"hidden"}}>
-        <div style={{position:"absolute",top:-50,right:60,width:180,height:180,borderRadius:"50%",background:"rgba(255,107,53,.07)",pointerEvents:"none"}}/>
+        <div style={{position:"absolute",top:-50,right:60,width:180,height:180,borderRadius:"50%",background:"rgba(139,92,246,.07)",pointerEvents:"none"}}/>
         <div style={{position:"relative"}}>
-          <p style={{fontSize:11,fontWeight:700,color:T.coral,textTransform:"uppercase",letterSpacing:".12em",marginBottom:4}}>SamayaHR · HR Management</p>
+          <p style={{fontSize:11,fontWeight:700,color:T.coral,textTransform:"uppercase",letterSpacing:".12em",marginBottom:4}}>CrewSync · PeopleOps Operations</p>
           <h1 className="fd" style={{fontSize:23,fontWeight:900,color:"#fff",margin:0}}>Exit Requests</h1>
           <p style={{fontSize:13,color:"rgba(255,255,255,.5)",marginTop:4}}>Manage employee resignation, termination and retirement requests</p>
         </div>
@@ -138,13 +138,13 @@ export default function AdminExitRequests() {
 
         {/* Filter tabs */}
         <div style={{display:"flex",gap:6,flexWrap:"wrap"}}>
-          {["ALL","PENDING","TEAM_LEADER_APPROVED","HR_APPROVED","IN_PROGRESS","COMPLETED","TEAM_LEADER_REJECTED","HR_REJECTED"].map(f => {
+          {["ALL","PENDING","TEAM_LEADER_APPROVED","PeopleOps_APPROVED","IN_PROGRESS","COMPLETED","TEAM_LEADER_REJECTED","PeopleOps_REJECTED"].map(f => {
             const cfg = STATUS_CFG[f];
             return (
               <button key={f} onClick={() => setFilter(f)}
                 style={{padding:"5px 12px",borderRadius:8,
                   border:`1.5px solid ${filterStatus===f ? T.coral : T.border}`,
-                  background: filterStatus===f ? "rgba(255,107,53,.08)" : "#fff",
+                  background: filterStatus===f ? "rgba(139,92,246,.08)" : "#fff",
                   color: filterStatus===f ? T.coral : "#64748b",
                   fontSize:10,fontWeight:700,cursor:"pointer",fontFamily:"'DM Sans',sans-serif",transition:"all .15s"}}>
                 {cfg ? cfg.label : "All"}
@@ -158,14 +158,14 @@ export default function AdminExitRequests() {
           <div style={{background:`linear-gradient(90deg,${T.navy},${T.navyMid})`,padding:"12px 18px",display:"flex",alignItems:"center",gap:10}}>
             <LogOut size={15} color={T.coral}/>
             <p className="fd" style={{fontSize:13,fontWeight:800,color:"#fff"}}>Exit Requests</p>
-            <span style={{marginLeft:"auto",padding:"2px 9px",borderRadius:999,background:"rgba(255,107,53,.2)",color:T.coral,fontSize:10,fontWeight:700}}>
+            <span style={{marginLeft:"auto",padding:"2px 9px",borderRadius:999,background:"rgba(139,92,246,.2)",color:T.coral,fontSize:10,fontWeight:700}}>
               {filtered.length}
             </span>
           </div>
 
           {/* Col headers */}
           <div style={{display:"grid",gridTemplateColumns:"2fr 1fr 1fr 1fr 1.5fr",gap:12,padding:"10px 18px",borderBottom:`1.5px solid ${T.border}`,background:"#FAFBFF"}}>
-            {["Employee","Exit Type","Last Day","Status","Actions"].map(h => (
+            {["Person","Exit Type","Last Day","Status","Actions"].map(h => (
               <p key={h} style={{fontSize:10,fontWeight:700,color:"#94a3b8",textTransform:"uppercase",letterSpacing:".07em",margin:0}}>{h}</p>
             ))}
           </div>
@@ -182,7 +182,7 @@ export default function AdminExitRequests() {
               return (
                 <div key={item.id} className="aex-row">
                   <div>
-                    <p className="fd" style={{fontSize:13,fontWeight:800,color:T.navy,margin:0}}>{item.employeeName || `Employee #${item.userId}`}</p>
+                    <p className="fd" style={{fontSize:13,fontWeight:800,color:T.navy,margin:0}}>{item.employeeName || `Person #${item.userId}`}</p>
                     <p style={{fontSize:11,color:"#94a3b8",margin:"2px 0 0"}}>{item.employeeCode} · {item.department}</p>
                     <p style={{fontSize:10,color:"#b0bec5",margin:"2px 0 0"}}>Applied: {fmtDate(item.appliedOn)}</p>
                   </div>
@@ -199,7 +199,7 @@ export default function AdminExitRequests() {
                     {nextLabel && (
                       <button className="aex-btn" disabled={actionBusy}
                         onClick={() => setApproveModal({ open:true, id:item.id, comments:"" })}
-                        style={{background:"rgba(0,194,168,.1)",color:"#0D7A6A"}}>
+                        style={{background:"rgba(6,182,212,.1)",color:"#0D7A6A"}}>
                         <CheckCircle size={10}/> {nextLabel}
                       </button>
                     )}
@@ -226,8 +226,8 @@ export default function AdminExitRequests() {
             onClick={e => e.stopPropagation()}>
             <p className="fd" style={{fontSize:16,fontWeight:900,color:T.navy,marginBottom:18}}>Exit Request Details</p>
             {[
-              ["Employee", selected.employeeName || `#${selected.userId}`],
-              ["Employee Code", selected.employeeCode || "—"],
+              ["Person", selected.employeeName || `#${selected.userId}`],
+              ["Person Code", selected.employeeCode || "—"],
               ["Department", selected.department || "—"],
               ["Exit Type", EXIT_TYPE_LABEL[selected.exitType] || selected.exitType],
               ["Reason", selected.reason],
@@ -236,8 +236,8 @@ export default function AdminExitRequests() {
               ["Status", STATUS_CFG[selected.status]?.label || selected.status],
               ["TL Reviewed At", fmtDateTime(selected.teamLeaderReviewedAt)],
               ["TL Comments", selected.teamLeaderComments || "—"],
-              ["HR Reviewed At", fmtDateTime(selected.hrReviewedAt)],
-              ["HR Comments", selected.hrComments || "—"],
+              ["PeopleOps Reviewed At", fmtDateTime(selected.hrReviewedAt)],
+              ["PeopleOps Comments", selected.hrComments || "—"],
               ["Rejection Reason", selected.rejectionReason || "—"],
               ["Clearance At", fmtDateTime(selected.clearanceCompletedAt)],
               ["Completed At", fmtDateTime(selected.completedAt)],
@@ -280,7 +280,7 @@ export default function AdminExitRequests() {
                 Cancel
               </button>
               <button onClick={approve} disabled={actionBusy}
-                style={{flex:1,padding:"10px",borderRadius:10,border:"none",background:`linear-gradient(135deg,${T.teal},#00a896)`,color:"#fff",fontSize:12,fontWeight:700,cursor:"pointer",fontFamily:"'DM Sans',sans-serif",opacity:actionBusy?.5:1}}>
+                style={{flex:1,padding:"10px",borderRadius:10,border:"none",background:`linear-gradient(135deg,${T.teal},#0D9488)`,color:"#fff",fontSize:12,fontWeight:700,cursor:"pointer",fontFamily:"'DM Sans',sans-serif",opacity:actionBusy?.5:1}}>
                 Confirm Approve
               </button>
             </div>

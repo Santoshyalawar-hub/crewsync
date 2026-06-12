@@ -3,8 +3,8 @@
 // import { API_BASE_URL } from "@/lib/apiClient";
 
 // // ── Tokens ────────────────────────────────────────────────────────────────────
-// const CORAL = "#FF6B35";
-// const NAVY  = "#0D1F2D";
+// const CORAL = "#8B5CF6";
+// const NAVY  = "#0B1020";
 
 // // ── Minimal SVG icon ──────────────────────────────────────────────────────────
 // const Ic = ({ d, size = 20, sw = 1.8, color = "currentColor" }) => (
@@ -63,23 +63,23 @@
 
 // // ── Quick actions ─────────────────────────────────────────────────────────────
 // const quickActions = [
-//   { id: "manual-entry",       title: "Manual Payroll",  description: "Select employee → Input details → Save",   icon: "plus"      },
+//   { id: "manual-entry",       title: "Manual Payouts",  description: "Select employee → Input details → Save",   icon: "plus"      },
 //   { id: "auto-generate",      title: "Auto Generate",   description: "Auto-calculates payroll using attendance",  icon: "refresh"   },
 //   { id: "tax-management",     title: "Tax Review",      description: "View pending declarations",                 icon: "clipboard" },
-//   { id: "reimbursements",     title: "Reimbursements",  description: "View pending claims",                       icon: "rupee"     },
+//   { id: "reimbursements",     title: "ClaimsDesk",  description: "View pending claims",                       icon: "rupee"     },
 // ];
 
 // // ── Feature cards ─────────────────────────────────────────────────────────────
 // const featureCards = [
-//   { id: "overview",           title: "Overview",           description: "Stats, graphs, employee count, payroll trends", icon: "barChart"  },
-//   { id: "payroll-management", title: "Payroll Management", description: "Manual + Auto payroll generation",              icon: "rupee"     },
-//   { id: "payslip-management", title: "Payslip Management", description: "Generate & download payslips",                  icon: "fileText"  },
-//   { id: "tax-management",     title: "Tax Management",     description: "Review & approve declarations",                 icon: "receipt"   },
-//   { id: "reimbursements",     title: "Reimbursements",     description: "Approve / reject reimbursement claims",         icon: "banknote"  },
-//   { id: "compliance",         title: "Compliance",         description: "PF, TDS, PT monthly reports",                  icon: "shield"    },
-//   { id: "audit-logs",         title: "Audit & Logs",       description: "Track payroll actions",                        icon: "scroll"    },
-//   { id: "settings",           title: "Settings",           description: "Templates & pay cycle settings",               icon: "settings"  },
-//   { id: "manual-entry",       title: "Manual Entry",       description: "Individual salary entry system",               icon: "trending"  },
+//   { id: "overview",           title: "Overview",           description: "Stats, graphs, employee count, payout trends", icon: "barChart"  },
+//   { id: "payroll-management", title: "Payout Control", description: "Manual + Auto payout generation",              icon: "rupee"     },
+//   { id: "payslip-management", title: "PayStatement Operations", description: "Generate and download pay statements",                  icon: "fileText"  },
+//   { id: "tax-management",     title: "Tax Operations",     description: "Review & approve declarations",                 icon: "receipt"   },
+//   { id: "reimbursements",     title: "ClaimsDesk",     description: "Approve / reject reimbursement claims",         icon: "banknote"  },
+//   { id: "compliance",         title: "Assurance",         description: "PF, TDS, PT monthly reports",                  icon: "shield"    },
+//   { id: "audit-logs",         title: "Audit & Logs",       description: "Track payout actions",                        icon: "scroll"    },
+//   { id: "settings",           title: "Configuration",           description: "Templates & pay cycle settings",               icon: "settings"  },
+//   { id: "manual-entry",       title: "Direct Entry",       description: "Individual salary entry system",               icon: "trending"  },
 // ];
 
 // // ── Feature card component ────────────────────────────────────────────────────
@@ -109,12 +109,12 @@
 //             {card.description}
 //           </p>
 //         </div>
-//         <div style={{ width: 44, height: 44, borderRadius: 12, background: hov ? "rgba(255,107,53,.2)" : "rgba(255,107,53,.1)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, transition: "all .22s", transform: hov ? "scale(1.08)" : "none" }}>
+//         <div style={{ width: 44, height: 44, borderRadius: 12, background: hov ? "rgba(139,92,246,.2)" : "rgba(139,92,246,.1)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, transition: "all .22s", transform: hov ? "scale(1.08)" : "none" }}>
 //           <Ic d={ICONS[card.icon]} size={22} sw={1.8} color={CORAL} />
 //         </div>
 //       </div>
 //       <div style={{ display: "flex", justifyContent: "flex-end" }}>
-//         <span style={{ fontSize: 11, fontWeight: 800, padding: "4px 12px", borderRadius: 999, background: hov ? "rgba(255,107,53,.15)" : "rgba(255,107,53,.08)", color: CORAL, border: "1px solid rgba(255,107,53,.2)", letterSpacing: ".04em" }}>
+//         <span style={{ fontSize: 11, fontWeight: 800, padding: "4px 12px", borderRadius: 999, background: hov ? "rgba(139,92,246,.15)" : "rgba(139,92,246,.08)", color: CORAL, border: "1px solid rgba(139,92,246,.2)", letterSpacing: ".04em" }}>
 //           Manage
 //         </span>
 //       </div>
@@ -130,8 +130,8 @@
 //       onClick={onClick}
 //       onMouseEnter={() => setHov(true)}
 //       onMouseLeave={() => setHov(false)}
-//       style={{ display: "flex", alignItems: "center", gap: 14, borderRadius: 16, background: "#fff", border: `1.5px solid ${hov ? CORAL : "#f0f0f0"}`, padding: "14px 18px", cursor: "pointer", transition: "all .18s", textAlign: "left", boxShadow: hov ? "0 8px 22px rgba(255,107,53,.15)" : "0 1px 4px rgba(13,31,45,.04)", transform: hov ? "translateY(-2px)" : "none", fontFamily: "'DM Sans', sans-serif" }}>
-//       <div style={{ width: 40, height: 40, borderRadius: 11, background: "rgba(255,107,53,.1)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+//       style={{ display: "flex", alignItems: "center", gap: 14, borderRadius: 16, background: "#fff", border: `1.5px solid ${hov ? CORAL : "#f0f0f0"}`, padding: "14px 18px", cursor: "pointer", transition: "all .18s", textAlign: "left", boxShadow: hov ? "0 8px 22px rgba(139,92,246,.15)" : "0 1px 4px rgba(13,31,45,.04)", transform: hov ? "translateY(-2px)" : "none", fontFamily: "'DM Sans', sans-serif" }}>
+//       <div style={{ width: 40, height: 40, borderRadius: 11, background: "rgba(139,92,246,.1)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
 //         <Ic d={ICONS[action.icon]} size={18} sw={2} color={CORAL} />
 //       </div>
 //       <div>
@@ -145,7 +145,7 @@
 // // ══════════════════════════════════════════════════════════════════════════════
 // //  MAIN COMPONENT
 // // ══════════════════════════════════════════════════════════════════════════════
-// const FinanceHub = ({ onBack, navigateTo }) => {
+// const MoneyOpsHub = ({ onBack, navigateTo }) => {
 //   const navigate = useNavigate();
 
 //   const handleNavigate = (id) => {
@@ -159,7 +159,7 @@
 //     if (path) {
 //       navigate(path);
 //     } else {
-//       console.warn(`FinanceHub: no route mapped for id="${id}". Add it to ROUTE_MAP.`);
+//       console.warn(`MoneyOpsHub: no route mapped for id="${id}". Add it to ROUTE_MAP.`);
 //     }
 //   };
 
@@ -174,20 +174,20 @@
 //       <div className="fh-root" style={{ minHeight: "100vh", padding: "16px 20px" }}>
 
 //         {/* ── Header ── */}
-//         <div style={{ background: `linear-gradient(135deg,${NAVY},#162639)`, borderRadius: 20, padding: "22px 28px", marginBottom: 24, position: "relative", overflow: "hidden" }}>
-//           <div style={{ position: "absolute", top: -30, right: 80, width: 160, height: 160, borderRadius: "50%", background: "rgba(255,107,53,.12)", filter: "blur(40px)", pointerEvents: "none" }} />
+//         <div style={{ background: `linear-gradient(135deg,${NAVY},#182033)`, borderRadius: 20, padding: "22px 28px", marginBottom: 24, position: "relative", overflow: "hidden" }}>
+//           <div style={{ position: "absolute", top: -30, right: 80, width: 160, height: 160, borderRadius: "50%", background: "rgba(139,92,246,.12)", filter: "blur(40px)", pointerEvents: "none" }} />
 //           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 14, position: "relative" }}>
 //             <div>
-//               <h1 className="fh-fd" style={{ fontSize: 22, fontWeight: 900, color: "#fff", margin: "0 0 4px" }}>Finance Hub</h1>
+//               <h1 className="fh-fd" style={{ fontSize: 22, fontWeight: 900, color: "#fff", margin: "0 0 4px" }}>MoneyOps</h1>
 //               <p style={{ fontSize: 12, color: "rgba(255,255,255,.4)", margin: 0 }}>
-//                 Central place to manage payroll, taxes, and compliance.
+//                 Central place to manage payouts, taxes, and compliance.
 //               </p>
 //             </div>
 //             {onBack && (
 //               <button
 //                 onClick={onBack}
 //                 style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "9px 18px", borderRadius: 999, background: "rgba(255,255,255,.1)", border: "1px solid rgba(255,255,255,.18)", color: "#fff", fontSize: 13, fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans',sans-serif", transition: "all .2s" }}
-//                 onMouseEnter={e => e.currentTarget.style.background = "rgba(255,107,53,.25)"}
+//                 onMouseEnter={e => e.currentTarget.style.background = "rgba(139,92,246,.25)"}
 //                 onMouseLeave={e => e.currentTarget.style.background = "rgba(255,255,255,.1)"}>
 //                 <Ic d={ICONS.arrowLeft} size={16} sw={2.5} color="#fff" />
 //                 Back
@@ -213,10 +213,10 @@
 //           </div>
 //         </section>
 
-//         {/* ── Finance Modules ── */}
+//         {/* ── MoneyOps Modules ── */}
 //         <section>
 //           <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 14 }}>
-//             <span style={{ fontSize: 10, fontWeight: 800, textTransform: "uppercase", letterSpacing: ".1em", color: "#9ca3af" }}>Finance Modules</span>
+//             <span style={{ fontSize: 10, fontWeight: 800, textTransform: "uppercase", letterSpacing: ".1em", color: "#9ca3af" }}>MoneyOps Modules</span>
 //             <div style={{ flex: 1, height: 1, background: "#f0f0f0" }} />
 //           </div>
 //           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(240px,1fr))", gap: 16 }}>
@@ -235,7 +235,7 @@
 //   );
 // };
 
-// export default FinanceHub;
+// export default MoneyOpsHub;
 
 
 //18-3-2026
@@ -244,8 +244,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 // ── Tokens ────────────────────────────────────────────────────────────────────
-const CORAL = "#FF6B35";
-const NAVY  = "#0D1F2D";
+const CORAL = "#8B5CF6";
+const NAVY  = "#0B1020";
 
 // ── Minimal SVG icon ──────────────────────────────────────────────────────────
 const Ic = ({ d, size = 20, sw = 1.8, color = "currentColor" }) => (
@@ -305,24 +305,24 @@ const PAGE_MAP = {
 
 // ── Quick actions ─────────────────────────────────────────────────────────────
 const quickActions = [
-  { id: "manual-entry",   title: "Manual Payroll",  description: "Select employee → data auto-loads → Save",    icon: "plus"     },
-  { id: "auto-generate",  title: "Auto Generate",   description: "Attendance-driven payroll for 1 / dept / all", icon: "refresh"  },
-  { id: "tax-management", title: "Tax Declarations", description: "Review & approve employee tax declarations",   icon: "clipboard"},
-  { id: "reimbursements", title: "Reimbursements",   description: "Approve / reject employee claims",             icon: "rupee"    },
+  { id: "manual-entry",   title: "Manual Payouts",  description: "Select employee → data auto-loads → Save",    icon: "plus"     },
+  { id: "auto-generate",  title: "Auto Generate",   description: "Presence-driven payouts for 1 / dept / all", icon: "refresh"  },
+  { id: "tax-management", title: "Tax Desks", description: "Review & approve employee tax declarations",   icon: "clipboard"},
+  { id: "reimbursements", title: "ClaimsDesk",   description: "Approve / reject employee claims",             icon: "rupee"    },
 ];
 
 // ── Feature cards ─────────────────────────────────────────────────────────────
 const featureCards = [
-  { id: "overview",           title: "Overview",           description: "Stats, graphs, employee count, payroll trends", icon: "barChart"  },
-  { id: "payroll-management", title: "Payroll Management", description: "Manual + Auto payroll generation",              icon: "rupee"     },
-  { id: "auto-generate",      title: "Auto Payroll",       description: "Attendance-driven auto salary calculation",     icon: "refresh"   }, // ✅ UPDATED description
-  { id: "payslip-management", title: "Payslip Management", description: "Generate & download payslips",                  icon: "fileText"  },
-  { id: "tax-management",     title: "Tax Management",     description: "Review & approve declarations",                 icon: "receipt"   },
-  { id: "reimbursements",     title: "Reimbursements",     description: "Approve / reject reimbursement claims",         icon: "banknote"  },
-  { id: "compliance",         title: "Compliance",         description: "PF, TDS, PT monthly reports",                  icon: "shield"    },
-  { id: "audit-logs",         title: "Audit & Logs",       description: "Track payroll actions",                        icon: "scroll"    },
-  { id: "settings",           title: "Settings",           description: "Templates & pay cycle settings",               icon: "settings"  },
-  { id: "manual-entry",       title: "Manual Entry",       description: "Individual salary entry — data auto-fills",    icon: "trending"  }, // ✅ UPDATED description
+  { id: "overview",           title: "Overview",           description: "Stats, graphs, employee count, payout trends", icon: "barChart"  },
+  { id: "payroll-management", title: "Payout Control", description: "Manual + Auto payout generation",              icon: "rupee"     },
+  { id: "auto-generate",      title: "Auto Payouts",       description: "Presence-driven auto salary calculation",     icon: "refresh"   }, // ✅ UPDATED description
+  { id: "payslip-management", title: "PayStatement Operations", description: "Generate and download pay statements",                  icon: "fileText"  },
+  { id: "tax-management",     title: "Tax Operations",     description: "Review & approve declarations",                 icon: "receipt"   },
+  { id: "reimbursements",     title: "ClaimsDesk",     description: "Approve / reject reimbursement claims",         icon: "banknote"  },
+  { id: "compliance",         title: "Assurance",         description: "PF, TDS, PT monthly reports",                  icon: "shield"    },
+  { id: "audit-logs",         title: "Audit & Logs",       description: "Track payout actions",                        icon: "scroll"    },
+  { id: "settings",           title: "Configuration",           description: "Templates & pay cycle settings",               icon: "settings"  },
+  { id: "manual-entry",       title: "Direct Entry",       description: "Individual salary entry — data auto-fills",    icon: "trending"  }, // ✅ UPDATED description
 ];
 
 // ── Feature card component ────────────────────────────────────────────────────
@@ -352,12 +352,12 @@ function FeatureCard({ card, onClick }) {
             {card.description}
           </p>
         </div>
-        <div style={{ width:44, height:44, borderRadius:12, background: hov ? "rgba(255,107,53,.2)" : "rgba(255,107,53,.1)", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0, transition:"all .22s", transform: hov ? "scale(1.08)" : "none" }}>
+        <div style={{ width:44, height:44, borderRadius:12, background: hov ? "rgba(139,92,246,.2)" : "rgba(139,92,246,.1)", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0, transition:"all .22s", transform: hov ? "scale(1.08)" : "none" }}>
           <Ic d={ICONS[card.icon]} size={22} sw={1.8} color={CORAL} />
         </div>
       </div>
       <div style={{ display:"flex", justifyContent:"flex-end" }}>
-        <span style={{ fontSize:11, fontWeight:800, padding:"4px 12px", borderRadius:999, background: hov ? "rgba(255,107,53,.15)" : "rgba(255,107,53,.08)", color:CORAL, border:"1px solid rgba(255,107,53,.2)", letterSpacing:".04em" }}>
+        <span style={{ fontSize:11, fontWeight:800, padding:"4px 12px", borderRadius:999, background: hov ? "rgba(139,92,246,.15)" : "rgba(139,92,246,.08)", color:CORAL, border:"1px solid rgba(139,92,246,.2)", letterSpacing:".04em" }}>
           Manage
         </span>
       </div>
@@ -373,8 +373,8 @@ function QuickTile({ action, onClick }) {
       onClick={onClick}
       onMouseEnter={() => setHov(true)}
       onMouseLeave={() => setHov(false)}
-      style={{ display:"flex", alignItems:"center", gap:14, borderRadius:16, background:"#fff", border:`1.5px solid ${hov ? CORAL : "#f0f0f0"}`, padding:"14px 18px", cursor:"pointer", transition:"all .18s", textAlign:"left", boxShadow: hov ? "0 8px 22px rgba(255,107,53,.15)" : "0 1px 4px rgba(13,31,45,.04)", transform: hov ? "translateY(-2px)" : "none", fontFamily:"'DM Sans', sans-serif" }}>
-      <div style={{ width:40, height:40, borderRadius:11, background:"rgba(255,107,53,.1)", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>
+      style={{ display:"flex", alignItems:"center", gap:14, borderRadius:16, background:"#fff", border:`1.5px solid ${hov ? CORAL : "#f0f0f0"}`, padding:"14px 18px", cursor:"pointer", transition:"all .18s", textAlign:"left", boxShadow: hov ? "0 8px 22px rgba(139,92,246,.15)" : "0 1px 4px rgba(13,31,45,.04)", transform: hov ? "translateY(-2px)" : "none", fontFamily:"'DM Sans', sans-serif" }}>
+      <div style={{ width:40, height:40, borderRadius:11, background:"rgba(139,92,246,.1)", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>
         <Ic d={ICONS[action.icon]} size={18} sw={2} color={CORAL} />
       </div>
       <div>
@@ -388,7 +388,7 @@ function QuickTile({ action, onClick }) {
 // ══════════════════════════════════════════════════════════════════════════════
 //  MAIN COMPONENT
 // ══════════════════════════════════════════════════════════════════════════════
-const FinanceHub = ({ onBack, navigateTo }) => {
+const MoneyOpsHub = ({ onBack, navigateTo }) => {
   const navigate = useNavigate();
 
   const handleNavigate = (id) => {
@@ -403,7 +403,7 @@ const FinanceHub = ({ onBack, navigateTo }) => {
     if (path) {
       navigate(path);
     } else {
-      console.warn(`FinanceHub: no route mapped for id="${id}".`);
+      console.warn(`MoneyOpsHub: no route mapped for id="${id}".`);
     }
   };
 
@@ -418,20 +418,20 @@ const FinanceHub = ({ onBack, navigateTo }) => {
       <div className="fh-root" style={{ minHeight:"100vh", padding:"16px 20px" }}>
 
         {/* ── Header ── */}
-        <div style={{ background:`linear-gradient(135deg,${NAVY},#162639)`, borderRadius:20, padding:"22px 28px", marginBottom:24, position:"relative", overflow:"hidden" }}>
-          <div style={{ position:"absolute", top:-30, right:80, width:160, height:160, borderRadius:"50%", background:"rgba(255,107,53,.12)", filter:"blur(40px)", pointerEvents:"none" }}/>
+        <div style={{ background:`linear-gradient(135deg,${NAVY},#182033)`, borderRadius:20, padding:"22px 28px", marginBottom:24, position:"relative", overflow:"hidden" }}>
+          <div style={{ position:"absolute", top:-30, right:80, width:160, height:160, borderRadius:"50%", background:"rgba(139,92,246,.12)", filter:"blur(40px)", pointerEvents:"none" }}/>
           <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", flexWrap:"wrap", gap:14, position:"relative" }}>
             <div>
-              <h1 className="fh-fd" style={{ fontSize:22, fontWeight:900, color:"#fff", margin:"0 0 4px" }}>Finance Hub</h1>
+              <h1 className="fh-fd" style={{ fontSize:22, fontWeight:900, color:"#fff", margin:"0 0 4px" }}>MoneyOps</h1>
               <p style={{ fontSize:12, color:"rgba(255,255,255,.4)", margin:0 }}>
-                Central place to manage payroll, taxes, and compliance.
+                Central place to manage payouts, taxes, and compliance.
               </p>
             </div>
             {onBack && (
               <button
                 onClick={onBack}
                 style={{ display:"inline-flex", alignItems:"center", gap:8, padding:"9px 18px", borderRadius:999, background:"rgba(255,255,255,.1)", border:"1px solid rgba(255,255,255,.18)", color:"#fff", fontSize:13, fontWeight:700, cursor:"pointer", fontFamily:"'DM Sans',sans-serif", transition:"all .2s" }}
-                onMouseEnter={e => e.currentTarget.style.background = "rgba(255,107,53,.25)"}
+                onMouseEnter={e => e.currentTarget.style.background = "rgba(139,92,246,.25)"}
                 onMouseLeave={e => e.currentTarget.style.background = "rgba(255,255,255,.1)"}>
                 <Ic d={ICONS.arrowLeft} size={16} sw={2.5} color="#fff"/>
                 Back
@@ -453,10 +453,10 @@ const FinanceHub = ({ onBack, navigateTo }) => {
           </div>
         </section>
 
-        {/* ── Finance Modules ── */}
+        {/* ── MoneyOps Modules ── */}
         <section>
           <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:14 }}>
-            <span style={{ fontSize:10, fontWeight:800, textTransform:"uppercase", letterSpacing:".1em", color:"#9ca3af" }}>Finance Modules</span>
+            <span style={{ fontSize:10, fontWeight:800, textTransform:"uppercase", letterSpacing:".1em", color:"#9ca3af" }}>MoneyOps Modules</span>
             <div style={{ flex:1, height:1, background:"#f0f0f0" }}/>
           </div>
           <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(240px,1fr))", gap:16 }}>
@@ -471,4 +471,4 @@ const FinanceHub = ({ onBack, navigateTo }) => {
   );
 };
 
-export default FinanceHub;
+export default MoneyOpsHub;

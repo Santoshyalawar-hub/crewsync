@@ -6,7 +6,7 @@ import api from "@/lib/apiClient";
    DESIGN TOKENS
 ───────────────────────────────────────────────────────────────── */
 const C = {
-  navy:"#0D1F2D", mid:"#162639", teal:"#00C2A8", coral:"#FF6B35",
+  navy:"#0B1020", mid:"#182033", teal:"#06B6D4", coral:"#8B5CF6",
   purple:"#818cf8", amber:"#f59e0b", green:"#10b981", red:"#ef4444",
   bg:"#F4F6FB", border:"#EDF0F7",
 };
@@ -237,7 +237,7 @@ const Panel = ({ children, style = {} }) => (
 const PanelHead = ({ title, badge }) => (
   <div style={{ display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:14 }}>
     <span style={{ fontSize:9,fontWeight:700,textTransform:"uppercase",letterSpacing:".1em",color:"#94a3b8" }}>{title}</span>
-    {badge && <span style={{ fontSize:9,fontWeight:700,color:C.coral,background:"rgba(255,107,53,.08)",padding:"2px 8px",borderRadius:999 }}>{badge}</span>}
+    {badge && <span style={{ fontSize:9,fontWeight:700,color:C.coral,background:"rgba(139,92,246,.08)",padding:"2px 8px",borderRadius:999 }}>{badge}</span>}
   </div>
 );
 const SectionHead = ({ title }) => (
@@ -248,9 +248,9 @@ const SectionHead = ({ title }) => (
 );
 
 /* ═══════════════════════════════════════════════════════════════════
-   MAIN AdminDashboard
+   MAIN OperatorControlRoom
 ═══════════════════════════════════════════════════════════════════ */
-export default function AdminDashboard() {
+export default function OperatorControlRoom() {
   const navigate = useNavigate();
 
   const [tenantInfo,  setTenantInfo]  = useState({ tenantCode:"", companyName:"", companyId:null });
@@ -261,7 +261,7 @@ export default function AdminDashboard() {
 
   /* attendance stats — from real API, same as original */
   const [stats, setStats] = useState({
-    totalEmployees:0, presentToday:0, onLeave:0,
+    totalPersons:0, presentToday:0, onTimeAway:0,
     absentToday:0, lateToday:0, pendingRequests:0, onBreak:0, workingNow:0,
   });
 
@@ -270,16 +270,16 @@ export default function AdminDashboard() {
   /* weekly bars — today = real API, other days from weekly endpoint or 0 */
   const [weekBars,   setWeekBars]   = useState([]);
   /* leave breakdown — from /api/admin/leave/summary */
-  const [leaveTypes, setLeaveTypes] = useState({ sick:0, casual:0, earned:0, unpaid:0 });
+  const [leaveTypes, setTimeAwayTypes] = useState({ sick:0, casual:0, earned:0, unpaid:0 });
   /* sparkline buffer — accumulates real present counts across refreshes */
   const sparkBuf = useRef([0,0,0,0,0,0,0]);
   /* system health — live pinged */
   const [health, setHealth] = useState([
     { l:"API",       s:"—", c:"#94a3b8" },
-    { l:"Payroll",   s:"—", c:"#94a3b8" },
+    { l:"Payouts",   s:"—", c:"#94a3b8" },
     { l:"Face Recog",s:"—", c:"#94a3b8" },
     { l:"Backup",    s:"—", c:"#94a3b8" },
-    { l:"Compliance",s:"—", c:"#94a3b8" },
+    { l:"Assurance",s:"—", c:"#94a3b8" },
   ]);
 
   /* init */
@@ -288,7 +288,7 @@ export default function AdminDashboard() {
     setGreeting(h < 12 ? "Good morning" : h < 17 ? "Good afternoon" : "Good evening");
     try {
       const tenantCode  = (localStorage.getItem("tenantCode")  || "").trim();
-      const companyName = (localStorage.getItem("companyName") || "Company").trim();
+      const companyName = (localStorage.getItem("companyName") || "Workspace").trim();
       const raw         = (localStorage.getItem("companyId")   || "").trim();
       const companyId   = raw && raw !== "null" ? Number(raw) : null;
       setTenantInfo({ tenantCode, companyName, companyId });
@@ -301,7 +301,7 @@ export default function AdminDashboard() {
     setLoading(true); setError(null);
 
     try {
-      /* 1. Attendance dashboard-stats — same 3 fallback paths as original */
+      /* 1. Presence dashboard-stats — same 3 fallback paths as original */
       let attData = null;
       for (const path of [
         "/api/admin/attendance/dashboard-stats",
@@ -314,7 +314,7 @@ export default function AdminDashboard() {
         } catch { /* try next */ }
       }
 
-      /* 2. Employee list — same call as original, also drives dept chart */
+      /* 2. Person list — same call as original, also drives dept chart */
       let employees = [];
       try {
         const empRes = await api.get("/api/users/tenant/employees");
@@ -329,7 +329,7 @@ export default function AdminDashboard() {
           const dept = (e.department || e.dept || "Unassigned").trim();
           map[dept] = (map[dept] || 0) + 1;
         });
-        const COLORS = [C.teal, C.purple, C.coral, C.amber, C.green, "#0284c7", "#ec4899", "#14b8a6"];
+        const COLORS = [C.teal, C.purple, C.coral, C.amber, C.green, "#0284c7", "#ec4899", "#06B6D4"];
         const sorted = Object.entries(map).sort((a,b) => b[1] - a[1]);
         const maxV = sorted[0]?.[1] || 1;
         setDeptRows(sorted.map(([label, value], i) => ({
@@ -351,25 +351,25 @@ export default function AdminDashboard() {
         if (Array.isArray(wArr) && wArr.length > 0) weekHistory = wArr;
       } catch {}
 
-      /* 5. Leave-type breakdown — non-fatal */
+      /* 5. TimeAway-type breakdown — non-fatal */
       try {
         const lRes = await api.get("/api/leaves/admin/summary");
         const ld = lRes.data?.data ?? lRes.data ?? {};
-        setLeaveTypes({
-          sick:   ld.sickLeave   ?? ld.sick   ?? ld.SICK   ?? 0,
-          casual: ld.casualLeave ?? ld.casual ?? ld.CASUAL ?? 0,
-          earned: ld.earnedLeave ?? ld.earned ?? ld.EARNED ?? 0,
-          unpaid: ld.unpaidLeave ?? ld.unpaid ?? ld.UNPAID ?? 0,
+        setTimeAwayTypes({
+          sick:   ld.sickTimeAway   ?? ld.sick   ?? ld.SICK   ?? 0,
+          casual: ld.casualTimeAway ?? ld.casual ?? ld.CASUAL ?? 0,
+          earned: ld.earnedTimeAway ?? ld.earned ?? ld.EARNED ?? 0,
+          unpaid: ld.unpaidTimeAway ?? ld.unpaid ?? ld.UNPAID ?? 0,
         });
       } catch {}
 
       /* 6. Merge attendance stats */
-      const totalEmployees = employees.length || attData?.totalEmployees || attData?.total || 0;
+      const totalPersons = employees.length || attData?.totalPersons || attData?.total || 0;
       const presentToday   = attData?.presentToday ?? attData?.present ?? 0;
       const newStats = {
-        totalEmployees,
+        totalPersons,
         presentToday,
-        onLeave:         attData?.onLeave         ?? attData?.leaveCount       ?? 0,
+        onTimeAway:         attData?.onTimeAway         ?? attData?.leaveCount       ?? 0,
         absentToday:     attData?.absentToday     ?? attData?.absent           ?? 0,
         lateToday:       attData?.lateToday       ?? attData?.lateCheckIns     ?? 0,
         pendingRequests: attData?.pendingRequests ?? attData?.pending           ?? 0,
@@ -402,10 +402,10 @@ export default function AdminDashboard() {
       /* 9. Live health pings */
       const healthDefs = [
         { l:"API",       path:"/api/health"           },
-        { l:"Payroll",   path:"/api/payroll/health"   },
+        { l:"Payouts",   path:"/api/payroll/health"   },
         { l:"Face Recog",path:"/api/face/health"      },
         { l:"Backup",    path:"/api/backup/status"    },
-        { l:"Compliance",path:"/api/compliance/status"},
+        { l:"Assurance",path:"/api/compliance/status"},
       ];
       const results = await Promise.all(healthDefs.map(async ({ l, path }) => {
         try {
@@ -430,20 +430,20 @@ export default function AdminDashboard() {
   useEffect(() => { fetchAllStats(); }, [fetchAllStats]);
 
   /* ── derived values — zero hardcoded ratios ── */
-  const emp    = Math.max(stats.totalEmployees, 1);
+  const emp    = Math.max(stats.totalPersons, 1);
   const toPct  = (n) => Math.min(Math.round((n / emp) * 100), 100);
   const fmt    = (n) => (Number(n) || 0).toLocaleString("en-IN");
 
   const donutSegs = [
     { label:"Present", pct:toPct(stats.presentToday), color:C.teal   },
     { label:"Absent",  pct:toPct(stats.absentToday),  color:C.purple },
-    { label:"On Leave",pct:toPct(stats.onLeave),      color:C.coral  },
+    { label:"On TimeAway",pct:toPct(stats.onTimeAway),      color:C.coral  },
     { label:"Late",    pct:toPct(stats.lateToday),    color:C.amber  },
   ];
 
   const leaveTotal = Math.max(
     leaveTypes.sick + leaveTypes.casual + leaveTypes.earned + leaveTypes.unpaid,
-    stats.onLeave, 1
+    stats.onTimeAway, 1
   );
 
   return (
@@ -465,16 +465,16 @@ export default function AdminDashboard() {
       <div style={{ maxWidth:1200, margin:"0 auto", display:"flex", flexDirection:"column", gap:18 }}>
 
         {/* ════ HERO ════════════════════════════════════════════════════ */}
-        <div className="a0" style={{ background:"linear-gradient(135deg,#0D1F2D 0%,#162639 60%,#1a3a52 100%)", borderRadius:20, padding:"24px 30px", position:"relative", overflow:"hidden" }}>
-          <div style={{ position:"absolute",top:-30,right:140,width:180,height:180,borderRadius:"50%",background:"rgba(255,107,53,.10)",filter:"blur(40px)",pointerEvents:"none" }}/>
-          <div style={{ position:"absolute",bottom:-20,right:-20,width:200,height:200,borderRadius:"50%",background:"rgba(0,194,168,.07)",filter:"blur(50px)",pointerEvents:"none" }}/>
+        <div className="a0" style={{ background:"linear-gradient(135deg,#0B1020 0%,#182033 60%,#1a3a52 100%)", borderRadius:20, padding:"24px 30px", position:"relative", overflow:"hidden" }}>
+          <div style={{ position:"absolute",top:-30,right:140,width:180,height:180,borderRadius:"50%",background:"rgba(139,92,246,.10)",filter:"blur(40px)",pointerEvents:"none" }}/>
+          <div style={{ position:"absolute",bottom:-20,right:-20,width:200,height:200,borderRadius:"50%",background:"rgba(6,182,212,.07)",filter:"blur(50px)",pointerEvents:"none" }}/>
           <div style={{ display:"flex",alignItems:"center",justifyContent:"space-between",flexWrap:"wrap",gap:14,position:"relative" }}>
             <div>
               <div style={{ fontSize:10,fontWeight:700,textTransform:"uppercase",letterSpacing:".1em",color:"rgba(255,255,255,.3)",marginBottom:4 }}>
                 {new Date().toLocaleDateString("en-IN",{ weekday:"long",day:"numeric",month:"long",year:"numeric" })}
               </div>
               <h1 className="db-s" style={{ fontSize:22,fontWeight:900,color:"#fff",margin:"0 0 3px" }}>{greeting} 👋</h1>
-              <p style={{ fontSize:12,color:"rgba(255,255,255,.4)",margin:0 }}>{tenantInfo.companyName} · Admin Dashboard</p>
+              <p style={{ fontSize:12,color:"rgba(255,255,255,.4)",margin:0 }}>{tenantInfo.companyName} · Operator ControlRoom</p>
             </div>
             <div style={{ display:"flex",gap:10,alignItems:"center",flexWrap:"wrap" }}>
               {tenantInfo.tenantCode && (
@@ -491,7 +491,7 @@ export default function AdminDashboard() {
               )}
               <button onClick={fetchAllStats} disabled={loading}
                 style={{ background:"rgba(255,255,255,.08)",border:"1px solid rgba(255,255,255,.1)",borderRadius:10,padding:"9px 14px",color:"rgba(255,255,255,.5)",cursor:loading?"not-allowed":"pointer",fontSize:11,fontWeight:600,display:"flex",alignItems:"center",gap:6,transition:"all .2s",fontFamily:"'DM Sans',sans-serif" }}
-                onMouseEnter={e=>{ if(!loading)e.currentTarget.style.background="rgba(255,107,53,.2)"; }}
+                onMouseEnter={e=>{ if(!loading)e.currentTarget.style.background="rgba(139,92,246,.2)"; }}
                 onMouseLeave={e=>e.currentTarget.style.background="rgba(255,255,255,.08)"}>
                 <Ic d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" size={13} color="currentColor"/>
                 {loading ? "Loading…" : "Refresh"}
@@ -512,7 +512,7 @@ export default function AdminDashboard() {
         <div className="a1" style={{ display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(155px,1fr))",gap:12 }}>
           <KpiCard
             icon={<Ic d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>}
-            label="Total Staff"   value={stats.totalEmployees}  accent={C.coral}  loading={loading} spark={sparkBuf.current} />
+            label="Total Staff"   value={stats.totalPersons}  accent={C.coral}  loading={loading} spark={sparkBuf.current} />
           <KpiCard
             icon={<Ic d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>}
             label="Present"       value={stats.presentToday}    accent={C.teal}   loading={loading} pctLabel={`${toPct(stats.presentToday)}%`} spark={sparkBuf.current}/>
@@ -521,7 +521,7 @@ export default function AdminDashboard() {
             label="Absent"        value={stats.absentToday}     accent={C.red}    loading={loading} pctLabel={`${toPct(stats.absentToday)}%`}/>
           <KpiCard
             icon={<Ic d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>}
-            label="On Leave"      value={stats.onLeave}         accent={C.amber}  loading={loading}/>
+            label="On TimeAway"      value={stats.onTimeAway}         accent={C.amber}  loading={loading}/>
           <KpiCard
             icon={<Ic d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>}
             label="Late Today"    value={stats.lateToday}       accent={C.purple} loading={loading}/>
@@ -551,7 +551,7 @@ export default function AdminDashboard() {
                 ))}
                 <div style={{ marginTop:4,paddingTop:8,borderTop:`1px solid ${C.border}`,display:"flex",justifyContent:"space-between" }}>
                   <span style={{ fontSize:10,color:"#94a3b8",fontWeight:600 }}>Total</span>
-                  <span className="db-s" style={{ fontSize:11,fontWeight:900,color:C.navy }}>{loading?"—":fmt(stats.totalEmployees)}</span>
+                  <span className="db-s" style={{ fontSize:11,fontWeight:900,color:C.navy }}>{loading?"—":fmt(stats.totalPersons)}</span>
                 </div>
               </div>
             </div>
@@ -559,7 +559,7 @@ export default function AdminDashboard() {
 
           {/* Weekly V-bars — today = real, rest = weekly API if available, else 0 */}
           <Panel>
-            <PanelHead title="7-Day Attendance" badge="Today Live"/>
+            <PanelHead title="7-Day Presence" badge="Today Live"/>
             {weekBars.length > 0
               ? <VBars data={weekBars}/>
               : <div style={{ height:84,display:"flex",alignItems:"center",justifyContent:"center" }}>
@@ -591,12 +591,12 @@ export default function AdminDashboard() {
           </Panel>
         </div>
 
-        {/* ════ CHARTS ROW 2: Leave rings · Ratios · Action panel ═════ */}
+        {/* ════ CHARTS ROW 2: TimeAway rings · Ratios · Action panel ═════ */}
         <div className="a3" style={{ display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:14 }}>
 
-          {/* Leave-type ring meters — from /api/admin/leave/summary */}
+          {/* TimeAway-type ring meters — from /api/admin/leave/summary */}
           <Panel>
-            <PanelHead title="Leave Breakdown"/>
+            <PanelHead title="TimeAway Breakdown"/>
             <div style={{ display:"grid",gridTemplateColumns:"1fr 1fr",gap:14 }}>
               <Ring label="Sick"   value={leaveTypes.sick}   total={leaveTotal} color={C.red}/>
               <Ring label="Casual" value={leaveTypes.casual} total={leaveTotal} color={C.amber}/>
@@ -605,18 +605,18 @@ export default function AdminDashboard() {
             </div>
             <div style={{ marginTop:14,background:"#f8faff",borderRadius:10,padding:"10px 14px",display:"flex",justifyContent:"space-between",alignItems:"center" }}>
               <span style={{ fontSize:11,color:"#6b7280",fontWeight:600 }}>On leave today</span>
-              <span className="db-s" style={{ fontSize:14,fontWeight:900,color:C.navy }}>{loading?"—":stats.onLeave}</span>
+              <span className="db-s" style={{ fontSize:14,fontWeight:900,color:C.navy }}>{loading?"—":stats.onTimeAway}</span>
             </div>
           </Panel>
 
-          {/* Attendance ratio H-bars — all from real stats, no hardcoded percentages */}
+          {/* Presence ratio H-bars — all from real stats, no hardcoded percentages */}
           <Panel>
-            <PanelHead title="Attendance Ratios"/>
+            <PanelHead title="Presence Ratios"/>
             <div style={{ display:"flex",flexDirection:"column",gap:12 }}>
               {[
                 { label:"Present Rate", value:`${toPct(stats.presentToday)}%`, pct:toPct(stats.presentToday), color:C.teal   },
                 { label:"Absent Rate",  value:`${toPct(stats.absentToday)}%`,  pct:toPct(stats.absentToday),  color:C.red    },
-                { label:"On Leave",     value:`${toPct(stats.onLeave)}%`,      pct:toPct(stats.onLeave),      color:C.amber  },
+                { label:"On TimeAway",     value:`${toPct(stats.onTimeAway)}%`,      pct:toPct(stats.onTimeAway),      color:C.amber  },
                 { label:"Late Rate",    value:`${toPct(stats.lateToday)}%`,    pct:toPct(stats.lateToday),    color:C.purple },
               ].map((r,i) => (
                 <HBar key={r.label} label={r.label} value={r.value} pct={r.pct} color={r.color} delay={i*70}/>
@@ -639,12 +639,12 @@ export default function AdminDashboard() {
                   {loading?"—":<Counter to={stats.pendingRequests}/>}
                 </div>
                 <div style={{ marginTop:8,height:4,background:"rgba(255,255,255,.1)",borderRadius:999,overflow:"hidden" }}>
-                  <div style={{ height:"100%",width:`${Math.min((stats.pendingRequests/Math.max(stats.totalEmployees,1))*200,100)}%`,background:C.coral,borderRadius:999,transition:"width 1s ease" }}/>
+                  <div style={{ height:"100%",width:`${Math.min((stats.pendingRequests/Math.max(stats.totalPersons,1))*200,100)}%`,background:C.coral,borderRadius:999,transition:"width 1s ease" }}/>
                 </div>
                 <button onClick={()=>navigate("/admin/attendance")}
-                  style={{ marginTop:10,fontSize:11,fontWeight:700,color:C.coral,background:"rgba(255,107,53,.15)",border:"none",borderRadius:8,padding:"6px 12px",cursor:"pointer",fontFamily:"'DM Sans',sans-serif",transition:"all .18s" }}
-                  onMouseEnter={e=>e.currentTarget.style.background="rgba(255,107,53,.28)"}
-                  onMouseLeave={e=>e.currentTarget.style.background="rgba(255,107,53,.15)"}>
+                  style={{ marginTop:10,fontSize:11,fontWeight:700,color:C.coral,background:"rgba(139,92,246,.15)",border:"none",borderRadius:8,padding:"6px 12px",cursor:"pointer",fontFamily:"'DM Sans',sans-serif",transition:"all .18s" }}
+                  onMouseEnter={e=>e.currentTarget.style.background="rgba(139,92,246,.28)"}
+                  onMouseLeave={e=>e.currentTarget.style.background="rgba(139,92,246,.15)"}>
                   Review Requests →
                 </button>
               </div>

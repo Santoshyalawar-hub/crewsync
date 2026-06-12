@@ -1,0 +1,9 @@
+<svg width="300" height="84" viewBox="0 0 300 84" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect x="4" y="8" width="68" height="68" rx="18" fill="#0B1020"/>
+  <path d="M21 46C21 34.954 29.954 26 41 26H58V37H41C36.029 37 32 41.029 32 46C32 50.971 36.029 55 41 55H58V66H41C29.954 66 21 57.046 21 46Z" fill="#8B5CF6"/>
+  <path d="M41 42H62C65.314 42 68 44.686 68 48C68 51.314 65.314 54 62 54H41V42Z" fill="#06B6D4"/>
+  <circle cx="41" cy="48" r="6" fill="white"/>
+  <text x="88" y="48" font-family="Inter, Arial, sans-serif" font-size="31" font-weight="800" fill="#0B1020">Crew</text>
+  <text x="178" y="48" font-family="Inter, Arial, sans-serif" font-size="31" font-weight="800" fill="#8B5CF6">Sync</text>
+  <text x="90" y="66" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="700" letter-spacing="2" fill="#64748B">WORKFORCE OPERATIONS</text>
+</svg>

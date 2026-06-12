@@ -11,7 +11,7 @@ export default function PageShell({ title, subtitle, actions, children, classNam
     <div className={`page-shell ${className}`}>
       <div className="page-hero">
         <div>
-          <span className="pill">SamayaHR</span>
+          <span className="pill">Workspace Console</span>
           <h1>{title}</h1>
           {subtitle && <p>{subtitle}</p>}
         </div>

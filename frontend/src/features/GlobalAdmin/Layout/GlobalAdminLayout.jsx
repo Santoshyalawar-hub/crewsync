@@ -3,7 +3,7 @@
 // import Sidebar from "../components/Sidebar.jsx";
 // import Navbar from "../components/Navbar.jsx";
 
-// export default function GlobalAdminLayout() {
+// export default function GlobalOperatorLayout() {
 //   return (
 //     <div className="app-surface flex min-h-screen">
 //       {/* Sidebar */}
@@ -26,7 +26,7 @@
 
 //updated styling 7/3/2026 No Domain Name
 // ─────────────────────────────────────────────────────────────────────────────
-//  src/features/GlobalAdmin/Layout/GlobalAdminLayout.jsx
+//  src/features/GlobalOperator/Layout/GlobalOperatorLayout.jsx
 //
 //  KEY CHANGES vs all previous versions:
 //  1. Uses <Outlet> — consistent with all other layouts
@@ -42,24 +42,24 @@
 // import { clearSession } from "../../../app/authGuard";
 
 // const PAGE_TITLES = {
-//   home:     "Dashboard",
-//   org:      "Companies",
-//   billing:  "Subscriptions & Billing",
-//   users:    "User & Role Management",
-//   reports:  "Reports & Analytics",
-//   paysetup: "Salary Slip Settings",
-//   security: "Security & Compliance",
-//   tickets:  "Support Tickets",
-//   audit:    "System Logs",
-//   config:   "System Settings",
+//   home:     "ControlRoom",
+//   org:      "Workspaces",
+//   billing:  "Plans & Billing",
+//   users:    "Access Matrix",
+//   reports:  "Signals Studio",
+//   paysetup: "PayStatement Setup",
+//   security: "Trust Center",
+//   tickets:  "Care Requests",
+//   audit:    "System Trail",
+//   config:   "System Configuration",
 // };
 
 // const resolveTitle = (pathname) => {
 //   const seg = pathname.split("/").filter(Boolean).pop() || "";
-//   return PAGE_TITLES[seg.toLowerCase()] || "Global Admin";
+//   return PAGE_TITLES[seg.toLowerCase()] || "Global Operator";
 // };
 
-// export default function GlobalAdminLayout() {
+// export default function GlobalOperatorLayout() {
 //   const navigate = useNavigate();
 //   const location = useLocation();
 
@@ -85,7 +85,7 @@
 
 // with Domain Name in URL Path 9/3/2026 No Domain Name in URL
 
-// src/features/GlobalAdmin/Layout/GlobalAdminLayout.jsx
+// src/features/GlobalOperator/Layout/GlobalOperatorLayout.jsx
 //
 // Props received from AppShell:
 //   currentPage  : string  — active page key e.g. "ga_home"
@@ -93,12 +93,12 @@
 //   onLogout     : fn      — call to logout
 //   pageTitle    : string  — human-readable title shown in navbar
 //   children     : node    — the active page component
-// src/features/GlobalAdmin/Layout/GlobalAdminLayout.jsx
+// src/features/GlobalOperator/Layout/GlobalOperatorLayout.jsx
 //
 // FIXED: Sidebar + content always fill exactly 100vh, nothing bleeds out
 // Props from AppShell: currentPage, navigateTo, onLogout, pageTitle, children
 
-// src/features/GlobalAdmin/Layout/GlobalAdminLayout.jsx
+// src/features/GlobalOperator/Layout/GlobalOperatorLayout.jsx
 //
 // FIXED: Sidebar + content always fill exactly 100vh, nothing bleeds out
 // Props from AppShell: currentPage, navigateTo, onLogout, pageTitle, children
@@ -107,7 +107,7 @@ import React from "react";
 import Sidebar from "../components/Sidebar.jsx";
 import Navbar  from "../components/Navbar.jsx";
 
-const GlobalAdminLayout = ({ children, currentPage, navigateTo, onLogout, pageTitle }) => {
+const GlobalOperatorLayout = ({ children, currentPage, navigateTo, onLogout, pageTitle }) => {
   return (
     /*
       Root: full viewport, no scroll, flex row
@@ -119,7 +119,7 @@ const GlobalAdminLayout = ({ children, currentPage, navigateTo, onLogout, pageTi
       width: "100vw",
       height: "100vh",
       overflow: "hidden",           /* ← prevent ANY outer scroll */
-      background: "#f1f5f9",
+      background: "var(--bg-page)",
     }}>
 
       {/* ── SIDEBAR (sticky, never scrolls the page) ── */}
@@ -149,7 +149,7 @@ const GlobalAdminLayout = ({ children, currentPage, navigateTo, onLogout, pageTi
         </div>
 
         {/* Page content — ONLY this part scrolls */}
-        <main data-main-scroll="true" style={{
+        <main className="cs-main-stage" data-main-scroll="true" style={{
           flex: 1,
           overflowY: "auto",
           overflowX: "hidden",
@@ -163,4 +163,4 @@ const GlobalAdminLayout = ({ children, currentPage, navigateTo, onLogout, pageTi
   );
 };
 
-export default GlobalAdminLayout;
+export default GlobalOperatorLayout;

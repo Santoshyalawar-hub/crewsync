@@ -2,21 +2,21 @@ import React, { useState, useEffect } from "react";
 import api from "@/lib/apiClient";
 
 /**
- * ChangePassword — Employee Dashboard page.
+ * ChangePassword — Person ControlRoom page.
  *
  * Features:
  *  • Enter current password → verify before showing new-password fields
  *  • New Password + Confirm Password
  *  • Monthly limit counter (max 2/month) fetched from /api/login-access/password-summary
  *  • Email (username) is shown as read-only — cannot be changed
- *  • Responsive, polished UI consistent with EmployeeDashboard style
+ *  • Responsive, polished UI consistent with PersonControlRoom style
  */
 
 const T = {
-  navy:    "#0D1F2D",
-  coral:   "#FF6B35",
-  teal:    "#00C2A8",
-  navyMid: "#1E3448",
+  navy:    "#0B1020",
+  coral:   "#8B5CF6",
+  teal:    "#06B6D4",
+  navyMid: "#374151",
   bg:      "#F5F7FB",
   border:  "#E8ECF2",
 };
@@ -206,7 +206,7 @@ export default function ChangePassword({ navigateTo }) {
         {/* ── Page heading ── */}
         <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
           <div style={{ width: 40, height: 40, borderRadius: 12,
-            background: "linear-gradient(135deg,rgba(255,107,53,.15),rgba(0,194,168,.15))",
+            background: "linear-gradient(135deg,rgba(139,92,246,.15),rgba(6,182,212,.15))",
             display: "flex", alignItems: "center", justifyContent: "center",
             color: T.coral }}>
             <LockIcon />
@@ -368,12 +368,12 @@ export default function ChangePassword({ navigateTo }) {
                 padding: "13px 0", borderRadius: 11, border: "none",
                 background: (loading || limitReached)
                   ? "#cbd5e1"
-                  : "linear-gradient(135deg,#FF6B35,#f97316)",
+                  : "linear-gradient(135deg,#8B5CF6,#f97316)",
                 color: "#fff", fontSize: 14, fontWeight: 700,
                 cursor: (loading || limitReached) ? "not-allowed" : "pointer",
                 fontFamily: "inherit",
                 boxShadow: (!loading && !limitReached)
-                  ? "0 4px 14px rgba(255,107,53,0.35)" : "none",
+                  ? "0 4px 14px rgba(139,92,246,0.35)" : "none",
                 transition: "all 0.2s",
               }}
             >

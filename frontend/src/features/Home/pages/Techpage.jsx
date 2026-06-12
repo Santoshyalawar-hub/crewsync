@@ -5,24 +5,24 @@ const S = `
   @import url('https://fonts.googleapis.com/css2?family=Sora:wght@700;800;900&family=DM+Sans:wght@400;500;600&display=swap');
   *{font-family:'DM Sans',sans-serif}
   h1,h2,h3,.fd{font-family:'Sora',sans-serif}
-  .cb{background:linear-gradient(135deg,#FF6B35,#FF5722);box-shadow:0 4px 20px rgba(255,107,53,.3);transition:all .2s;border:none;cursor:pointer}
-  .cb:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(255,107,53,.45)}
-  .sl{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#FF6B35;background:rgba(255,107,53,.08);border:1px solid rgba(255,107,53,.2);padding:5px 14px;border-radius:999px}
+  .cb{background:linear-gradient(135deg,#8B5CF6,#06B6D4);box-shadow:0 4px 20px rgba(139,92,246,.3);transition:all .2s;border:none;cursor:pointer}
+  .cb:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(139,92,246,.45)}
+  .sl{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#8B5CF6;background:rgba(139,92,246,.08);border:1px solid rgba(139,92,246,.2);padding:5px 14px;border-radius:999px}
   .gcard{background:#fff;border:1px solid #f0f0f0;border-radius:20px;padding:28px;transition:all .25s}
-  .gcard:hover{border-color:#FFD4C2;box-shadow:0 8px 32px rgba(255,107,53,.08);transform:translateY(-3px)}
+  .gcard:hover{border-color:#DDD6FE;box-shadow:0 8px 32px rgba(139,92,246,.08);transform:translateY(-3px)}
   .grid3{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px}
 `;
 
 export default function TechPage() {
   return (
-    <div style={{minHeight:'100vh',background:'#F7F8FA'}}>
+    <div style={{minHeight:'100vh',background:'#F6F8FB'}}>
       <style>{S}</style>
 
       {/* ── Navbar ── */}
       <header style={{background:'#fff',borderBottom:'1px solid #f0f0f0',position:'sticky',top:0,zIndex:100,boxShadow:'0 1px 8px rgba(0,0,0,.04)'}}>
         <nav style={{maxWidth:1200,margin:'0 auto',padding:'0 24px',height:64,display:'flex',alignItems:'center',justifyContent:'space-between'}}>
-          <Link to="/" style={{fontFamily:'Sora,sans-serif',fontWeight:900,fontSize:20,color:'#0D1F2D',textDecoration:'none'}}>
-            Samaya<span style={{color:'#FF6B35'}}>HR</span>
+          <Link to="/" style={{fontFamily:'Sora,sans-serif',fontWeight:900,fontSize:20,color:'#0B1020',textDecoration:'none'}}>
+            CrewSync
           </Link>
           <div style={{display:'flex',gap:12,alignItems:'center'}}>
             <Link to="/" style={{fontSize:13,fontWeight:600,color:'#6b7280',textDecoration:'none'}}>← Back to Home</Link>
@@ -35,15 +35,15 @@ export default function TechPage() {
       {/* ── Hero ── */}
       <section style={{background:'linear-gradient(160deg,#fff 0%,#fff8f5 100%)',padding:'72px 24px',textAlign:'center'}}>
         <div style={{maxWidth:700,margin:'0 auto'}}>
-          <span className="sl" style={{marginBottom:20,display:'inline-flex'}}>💻 For Technology Companies</span>
-          <h1 className="fd" style={{fontSize:'clamp(2rem,5vw,3rem)',fontWeight:900,color:'#0D1F2D',lineHeight:1.12,marginBottom:20,marginTop:16}}
-            dangerouslySetInnerHTML={{ __html: 'HR for teams that<br />build the future.' }} />
-          <p style={{fontSize:17,color:'#6b7280',lineHeight:1.75,marginBottom:32,maxWidth:560,margin:'0 auto 32px'}}>Remote-friendly attendance, engineering org charts, OKR tracking, and dev-friendly API access — SamayaHR is built for how tech teams actually work.</p>
+          <span className="sl" style={{marginBottom:20,display:'inline-flex'}}>💻 For Technology Workspaces</span>
+          <h1 className="fd" style={{fontSize:'clamp(2rem,5vw,3rem)',fontWeight:900,color:'#0B1020',lineHeight:1.12,marginBottom:20,marginTop:16}}
+            dangerouslySetInnerHTML={{ __html: 'People Studio for teams that<br />build the future.' }} />
+          <p style={{fontSize:17,color:'#6b7280',lineHeight:1.75,marginBottom:32,maxWidth:560,margin:'0 auto 32px'}}>Remote-friendly presence, engineering org charts, OKR tracking, and dev-friendly API access — CrewSync is built for how tech teams actually work.</p>
           <div style={{display:'flex',gap:12,justifyContent:'center',flexWrap:'wrap'}}>
             <Link to="/signup" className="cb" style={{color:'#fff',fontWeight:700,fontSize:14,padding:'12px 28px',borderRadius:12,textDecoration:'none'}}>
               Get Started Free →
             </Link>
-            <Link to="/solutions/bookdemo" style={{fontWeight:700,fontSize:14,padding:'12px 28px',borderRadius:12,textDecoration:'none',border:'2px solid #e5e7eb',color:'#0D1F2D',background:'#fff',transition:'all .2s'}}>
+            <Link to="/solutions/bookdemo" style={{fontWeight:700,fontSize:14,padding:'12px 28px',borderRadius:12,textDecoration:'none',border:'2px solid #e5e7eb',color:'#0B1020',background:'#fff',transition:'all .2s'}}>
               Book a Demo
             </Link>
           </div>
@@ -54,46 +54,46 @@ export default function TechPage() {
       <section style={{maxWidth:1100,margin:'0 auto',padding:'72px 24px'}}>
         <div style={{textAlign:'center',marginBottom:48}}>
           <span className="sl" style={{marginBottom:12,display:'inline-flex'}}>🎯 Key Capabilities</span>
-          <h2 className="fd" style={{fontSize:'clamp(1.5rem,3vw,2rem)',fontWeight:900,color:'#0D1F2D',marginTop:12}}>
-            Built to make your HR team faster
+          <h2 className="fd" style={{fontSize:'clamp(1.5rem,3vw,2rem)',fontWeight:900,color:'#0B1020',marginTop:12}}>
+            Built to make your People team faster
           </h2>
         </div>
         <div className="grid3">
           <div className="gcard" key="Remote-first">
             <div style={{fontSize:28,marginBottom:12}}>🌍</div>
-            <h3 className="fd" style={{fontSize:16,fontWeight:800,color:'#0D1F2D',marginBottom:6}}>Remote-first</h3>
-            <p style={{fontSize:13,color:'#6b7280',lineHeight:1.7}}>GPS and mobile attendance for distributed teams across time zones.</p>
+            <h3 className="fd" style={{fontSize:16,fontWeight:800,color:'#0B1020',marginBottom:6}}>Remote-first</h3>
+            <p style={{fontSize:13,color:'#6b7280',lineHeight:1.7}}>GPS and mobile presence for distributed teams across time zones.</p>
           </div>
           <div className="gcard" key="OKR & goal tracking">
             <div style={{fontSize:28,marginBottom:12}}>🎯</div>
-            <h3 className="fd" style={{fontSize:16,fontWeight:800,color:'#0D1F2D',marginBottom:6}}>OKR & goal tracking</h3>
+            <h3 className="fd" style={{fontSize:16,fontWeight:800,color:'#0B1020',marginBottom:6}}>OKR & goal tracking</h3>
             <p style={{fontSize:13,color:'#6b7280',lineHeight:1.7}}>Align every engineer's goals to company-level outcomes.</p>
           </div>
           <div className="gcard" key="Developer API">
             <div style={{fontSize:28,marginBottom:12}}>🔌</div>
-            <h3 className="fd" style={{fontSize:16,fontWeight:800,color:'#0D1F2D',marginBottom:6}}>Developer API</h3>
-            <p style={{fontSize:13,color:'#6b7280',lineHeight:1.7}}>REST APIs to pull HR data into your internal tools and dashboards.</p>
+            <h3 className="fd" style={{fontSize:16,fontWeight:800,color:'#0B1020',marginBottom:6}}>Developer API</h3>
+            <p style={{fontSize:13,color:'#6b7280',lineHeight:1.7}}>REST APIs to pull People Studio data into your internal tools and dashboards.</p>
           </div>
           <div className="gcard" key="Tech org charts">
             <div style={{fontSize:28,marginBottom:12}}>📊</div>
-            <h3 className="fd" style={{fontSize:16,fontWeight:800,color:'#0D1F2D',marginBottom:6}}>Tech org charts</h3>
+            <h3 className="fd" style={{fontSize:16,fontWeight:800,color:'#0B1020',marginBottom:6}}>Tech org charts</h3>
             <p style={{fontSize:13,color:'#6b7280',lineHeight:1.7}}>Visualise squads, pods, and tribes with live headcount data.</p>
           </div>
           <div className="gcard" key="SSO integration">
             <div style={{fontSize:28,marginBottom:12}}>🔐</div>
-            <h3 className="fd" style={{fontSize:16,fontWeight:800,color:'#0D1F2D',marginBottom:6}}>SSO integration</h3>
+            <h3 className="fd" style={{fontSize:16,fontWeight:800,color:'#0B1020',marginBottom:6}}>SSO integration</h3>
             <p style={{fontSize:13,color:'#6b7280',lineHeight:1.7}}>Google Workspace or Microsoft 365 SSO — one-click login.</p>
           </div>
-          <div className="gcard" key="Flexible leave types">
+          <div className="gcard" key="Flexible time away types">
             <div style={{fontSize:28,marginBottom:12}}>📅</div>
-            <h3 className="fd" style={{fontSize:16,fontWeight:800,color:'#0D1F2D',marginBottom:6}}>Flexible leave types</h3>
-            <p style={{fontSize:13,color:'#6b7280',lineHeight:1.7}}>WFH days, comp-offs, and hackathon leave — custom policies.</p>
+            <h3 className="fd" style={{fontSize:16,fontWeight:800,color:'#0B1020',marginBottom:6}}>Flexible time away types</h3>
+            <p style={{fontSize:13,color:'#6b7280',lineHeight:1.7}}>WFH days, comp-offs, and hackathon time away — custom policies.</p>
           </div>
         </div>
       </section>
 
       {/* ── CTA Banner ── */}
-      <section style={{background:'linear-gradient(135deg,#0D1F2D 0%,#162639 100%)',padding:'72px 24px',textAlign:'center'}}>
+      <section style={{background:'linear-gradient(135deg,#0B1020 0%,#182033 100%)',padding:'72px 24px',textAlign:'center'}}>
         <h2 className="fd" style={{fontSize:'clamp(1.5rem,3vw,2rem)',fontWeight:900,color:'#fff',marginBottom:12}}>
           Ready to see it in action?
         </h2>
@@ -110,7 +110,7 @@ export default function TechPage() {
 
       {/* ── Footer ── */}
       <footer style={{background:'#080e1a',padding:'24px',textAlign:'center',fontSize:12,color:'#4b5563'}}>
-        © {new Date().getFullYear()} Zlabs Innovation Private Limited · All rights reserved
+        © {new Date().getFullYear()} CrewSync Technologies · All rights reserved
       </footer>
     </div>
   );

@@ -5,24 +5,24 @@ const S = `
   @import url('https://fonts.googleapis.com/css2?family=Sora:wght@700;800;900&family=DM+Sans:wght@400;500;600&display=swap');
   *{font-family:'DM Sans',sans-serif}
   h1,h2,h3,.fd{font-family:'Sora',sans-serif}
-  .cb{background:linear-gradient(135deg,#FF6B35,#FF5722);box-shadow:0 4px 20px rgba(255,107,53,.3);transition:all .2s;border:none;cursor:pointer}
-  .cb:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(255,107,53,.45)}
-  .sl{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#FF6B35;background:rgba(255,107,53,.08);border:1px solid rgba(255,107,53,.2);padding:5px 14px;border-radius:999px}
+  .cb{background:linear-gradient(135deg,#8B5CF6,#06B6D4);box-shadow:0 4px 20px rgba(139,92,246,.3);transition:all .2s;border:none;cursor:pointer}
+  .cb:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(139,92,246,.45)}
+  .sl{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#8B5CF6;background:rgba(139,92,246,.08);border:1px solid rgba(139,92,246,.2);padding:5px 14px;border-radius:999px}
   .gcard{background:#fff;border:1px solid #f0f0f0;border-radius:20px;padding:28px;transition:all .25s}
-  .gcard:hover{border-color:#FFD4C2;box-shadow:0 8px 32px rgba(255,107,53,.08);transform:translateY(-3px)}
+  .gcard:hover{border-color:#DDD6FE;box-shadow:0 8px 32px rgba(139,92,246,.08);transform:translateY(-3px)}
   .grid3{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px}
 `;
 
 export default function BlogPage() {
   return (
-    <div style={{minHeight:'100vh',background:'#F7F8FA'}}>
+    <div style={{minHeight:'100vh',background:'#F6F8FB'}}>
       <style>{S}</style>
 
       {/* ── Navbar ── */}
       <header style={{background:'#fff',borderBottom:'1px solid #f0f0f0',position:'sticky',top:0,zIndex:100,boxShadow:'0 1px 8px rgba(0,0,0,.04)'}}>
         <nav style={{maxWidth:1200,margin:'0 auto',padding:'0 24px',height:64,display:'flex',alignItems:'center',justifyContent:'space-between'}}>
-          <Link to="/" style={{fontFamily:'Sora,sans-serif',fontWeight:900,fontSize:20,color:'#0D1F2D',textDecoration:'none'}}>
-            Samaya<span style={{color:'#FF6B35'}}>HR</span>
+          <Link to="/" style={{fontFamily:'Sora,sans-serif',fontWeight:900,fontSize:20,color:'#0B1020',textDecoration:'none'}}>
+            CrewSync
           </Link>
           <div style={{display:'flex',gap:12,alignItems:'center'}}>
             <Link to="/" style={{fontSize:13,fontWeight:600,color:'#6b7280',textDecoration:'none'}}>← Back to Home</Link>
@@ -35,15 +35,15 @@ export default function BlogPage() {
       {/* ── Hero ── */}
       <section style={{background:'linear-gradient(160deg,#fff 0%,#fff8f5 100%)',padding:'72px 24px',textAlign:'center'}}>
         <div style={{maxWidth:700,margin:'0 auto'}}>
-          <span className="sl" style={{marginBottom:20,display:'inline-flex'}}>📝 HR Blog</span>
-          <h1 className="fd" style={{fontSize:'clamp(2rem,5vw,3rem)',fontWeight:900,color:'#0D1F2D',lineHeight:1.12,marginBottom:20,marginTop:16}}
-            dangerouslySetInnerHTML={{ __html: 'Ideas that make HR<br />better every day.' }} />
-          <p style={{fontSize:17,color:'#6b7280',lineHeight:1.75,marginBottom:32,maxWidth:560,margin:'0 auto 32px'}}>Practical guides, compliance updates, people management tips, and HR tech trends — written by HR practitioners for HR practitioners.</p>
+          <span className="sl" style={{marginBottom:20,display:'inline-flex'}}>📝 People Studio Journal</span>
+          <h1 className="fd" style={{fontSize:'clamp(2rem,5vw,3rem)',fontWeight:900,color:'#0B1020',lineHeight:1.12,marginBottom:20,marginTop:16}}
+            dangerouslySetInnerHTML={{ __html: 'Ideas that make People Studio<br />better every day.' }} />
+          <p style={{fontSize:17,color:'#6b7280',lineHeight:1.75,marginBottom:32,maxWidth:560,margin:'0 auto 32px'}}>Practical guides, compliance updates, crew coordination tips, and People Studio tech trends — written by People Studio practitioners for People Studio practitioners.</p>
           <div style={{display:'flex',gap:12,justifyContent:'center',flexWrap:'wrap'}}>
             <Link to="/signup" className="cb" style={{color:'#fff',fontWeight:700,fontSize:14,padding:'12px 28px',borderRadius:12,textDecoration:'none'}}>
               Get Started Free →
             </Link>
-            <Link to="/solutions/bookdemo" style={{fontWeight:700,fontSize:14,padding:'12px 28px',borderRadius:12,textDecoration:'none',border:'2px solid #e5e7eb',color:'#0D1F2D',background:'#fff',transition:'all .2s'}}>
+            <Link to="/solutions/bookdemo" style={{fontWeight:700,fontSize:14,padding:'12px 28px',borderRadius:12,textDecoration:'none',border:'2px solid #e5e7eb',color:'#0B1020',background:'#fff',transition:'all .2s'}}>
               Book a Demo
             </Link>
           </div>
@@ -54,46 +54,46 @@ export default function BlogPage() {
       <section style={{maxWidth:1100,margin:'0 auto',padding:'72px 24px'}}>
         <div style={{textAlign:'center',marginBottom:48}}>
           <span className="sl" style={{marginBottom:12,display:'inline-flex'}}>🎯 Key Capabilities</span>
-          <h2 className="fd" style={{fontSize:'clamp(1.5rem,3vw,2rem)',fontWeight:900,color:'#0D1F2D',marginTop:12}}>
-            Built to make your HR team faster
+          <h2 className="fd" style={{fontSize:'clamp(1.5rem,3vw,2rem)',fontWeight:900,color:'#0B1020',marginTop:12}}>
+            Built to make your People team faster
           </h2>
         </div>
         <div className="grid3">
-          <div className="gcard" key="Compliance updates">
+          <div className="gcard" key="Assurance updates">
             <div style={{fontSize:28,marginBottom:12}}>📋</div>
-            <h3 className="fd" style={{fontSize:16,fontWeight:800,color:'#0D1F2D',marginBottom:6}}>Compliance updates</h3>
+            <h3 className="fd" style={{fontSize:16,fontWeight:800,color:'#0B1020',marginBottom:6}}>Assurance updates</h3>
             <p style={{fontSize:13,color:'#6b7280',lineHeight:1.7}}>Stay ahead of PF, ESI, TDS, and DPDPA 2023 changes.</p>
           </div>
           <div className="gcard" key="People strategy">
             <div style={{fontSize:28,marginBottom:12}}>🧠</div>
-            <h3 className="fd" style={{fontSize:16,fontWeight:800,color:'#0D1F2D',marginBottom:6}}>People strategy</h3>
+            <h3 className="fd" style={{fontSize:16,fontWeight:800,color:'#0B1020',marginBottom:6}}>People strategy</h3>
             <p style={{fontSize:13,color:'#6b7280',lineHeight:1.7}}>Build cultures where great employees choose to stay.</p>
           </div>
-          <div className="gcard" key="HR metrics that matter">
+          <div className="gcard" key="People Studio metrics that matter">
             <div style={{fontSize:28,marginBottom:12}}>📊</div>
-            <h3 className="fd" style={{fontSize:16,fontWeight:800,color:'#0D1F2D',marginBottom:6}}>HR metrics that matter</h3>
-            <p style={{fontSize:13,color:'#6b7280',lineHeight:1.7}}>The 10 numbers every HR leader should track monthly.</p>
+            <h3 className="fd" style={{fontSize:16,fontWeight:800,color:'#0B1020',marginBottom:6}}>People Studio metrics that matter</h3>
+            <p style={{fontSize:13,color:'#6b7280',lineHeight:1.7}}>The 10 numbers every People Studio leader should track monthly.</p>
           </div>
-          <div className="gcard" key="HR tech trends">
+          <div className="gcard" key="People Studio tech trends">
             <div style={{fontSize:28,marginBottom:12}}>🤖</div>
-            <h3 className="fd" style={{fontSize:16,fontWeight:800,color:'#0D1F2D',marginBottom:6}}>HR tech trends</h3>
+            <h3 className="fd" style={{fontSize:16,fontWeight:800,color:'#0B1020',marginBottom:6}}>People Studio tech trends</h3>
             <p style={{fontSize:13,color:'#6b7280',lineHeight:1.7}}>How Indian companies are using AI to transform people ops.</p>
           </div>
-          <div className="gcard" key="Startup HR playbooks">
+          <div className="gcard" key="Startup People Studio playbooks">
             <div style={{fontSize:28,marginBottom:12}}>🚀</div>
-            <h3 className="fd" style={{fontSize:16,fontWeight:800,color:'#0D1F2D',marginBottom:6}}>Startup HR playbooks</h3>
+            <h3 className="fd" style={{fontSize:16,fontWeight:800,color:'#0B1020',marginBottom:6}}>Startup People Studio playbooks</h3>
             <p style={{fontSize:13,color:'#6b7280',lineHeight:1.7}}>From 10 to 500 employees — what changes and what doesn't.</p>
           </div>
           <div className="gcard" key="Expert interviews">
             <div style={{fontSize:28,marginBottom:12}}>💬</div>
-            <h3 className="fd" style={{fontSize:16,fontWeight:800,color:'#0D1F2D',marginBottom:6}}>Expert interviews</h3>
-            <p style={{fontSize:13,color:'#6b7280',lineHeight:1.7}}>Real conversations with CHROs and Heads of People across India.</p>
+            <h3 className="fd" style={{fontSize:16,fontWeight:800,color:'#0B1020',marginBottom:6}}>Expert interviews</h3>
+            <p style={{fontSize:13,color:'#6b7280',lineHeight:1.7}}>Real conversations with CPeople StudioOs and Heads of People across India.</p>
           </div>
         </div>
       </section>
 
       {/* ── CTA Banner ── */}
-      <section style={{background:'linear-gradient(135deg,#0D1F2D 0%,#162639 100%)',padding:'72px 24px',textAlign:'center'}}>
+      <section style={{background:'linear-gradient(135deg,#0B1020 0%,#182033 100%)',padding:'72px 24px',textAlign:'center'}}>
         <h2 className="fd" style={{fontSize:'clamp(1.5rem,3vw,2rem)',fontWeight:900,color:'#fff',marginBottom:12}}>
           Ready to see it in action?
         </h2>
@@ -110,7 +110,7 @@ export default function BlogPage() {
 
       {/* ── Footer ── */}
       <footer style={{background:'#080e1a',padding:'24px',textAlign:'center',fontSize:12,color:'#4b5563'}}>
-        © {new Date().getFullYear()} Zlabs Innovation Private Limited · All rights reserved
+        © {new Date().getFullYear()} CrewSync Technologies · All rights reserved
       </footer>
     </div>
   );

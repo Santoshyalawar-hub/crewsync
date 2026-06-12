@@ -3,10 +3,10 @@ import api from "@/lib/apiClient";
 
 /* ── tokens ── */
 const T = {
-  navy: "#0D1F2D",
-  navyMid: "#1E3448",
-  coral: "#FF6B35",
-  teal: "#00C2A8",
+  navy: "#0B1020",
+  navyMid: "#374151",
+  coral: "#8B5CF6",
+  teal: "#06B6D4",
   bg: "#F5F7FB",
   border: "#E8ECF2",
 };
@@ -40,18 +40,18 @@ const STATUS_CFG = {
 };
 
 const LEAVE_TYPES = [
-  { val: "CASUAL", label: "Casual Leave" },
-  { val: "ANNUAL", label: "Annual Leave" },
-  { val: "SICK", label: "Medical Leave" },
-  { val: "MATERNITY", label: "Maternity Leave" },
-  { val: "PATERNITY", label: "Paternity Leave" },
+  { val: "CASUAL", label: "Casual TimeAway" },
+  { val: "ANNUAL", label: "Annual TimeAway" },
+  { val: "SICK", label: "Medical TimeAway" },
+  { val: "MATERNITY", label: "Maternity TimeAway" },
+  { val: "PATERNITY", label: "Paternity TimeAway" },
 ];
 
 const FILTERS = ["ALL", "PENDING", "APPROVED", "REJECTED"];
 const TOTAL_LEAVES = 24;
 
-export default function EmployeeLeaves() {
-  const [leaves, setLeaves] = useState([]);
+export default function PersonTimeAways() {
+  const [leaves, setTimeAways] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [filterStatus, setFilterStatus] = useState("ALL");
@@ -71,12 +71,12 @@ export default function EmployeeLeaves() {
     setTimeout(() => setToast({ show: false, msg: "", type: "success" }), 3500);
   };
 
-  const fetchLeaves = async () => {
+  const fetchTimeAways = async () => {
     setLoading(true);
     setError("");
     try {
       const r = await api.get("/api/leaves/my-leaves");
-      setLeaves(r.data?.data || r.data || []);
+      setTimeAways(r.data?.data || r.data || []);
     } catch {
       setError("Unable to load leave records.");
     } finally {
@@ -85,10 +85,10 @@ export default function EmployeeLeaves() {
   };
 
   useEffect(() => {
-    fetchLeaves();
+    fetchTimeAways();
   }, []);
 
-  const handleApplyLeave = async () => {
+  const handleApplyTimeAway = async () => {
     if (!formData.startDate || !formData.endDate || !formData.reason.trim()) return;
 
     setSubmitting(true);
@@ -104,8 +104,8 @@ export default function EmployeeLeaves() {
         reason: "",
       });
       setShowForm(false);
-      showToast("Leave request submitted successfully!");
-      fetchLeaves();
+      showToast("TimeAway request submitted successfully!");
+      fetchTimeAways();
     } catch {
       setError("Unable to submit leave request.");
       showToast("Unable to submit leave request.", "error");
@@ -120,11 +120,11 @@ export default function EmployeeLeaves() {
   const rejected = leaves.filter((l) => l.status === "REJECTED").length;
   const approved = approvedRequests.length;
 
-  const usedLeaveDays = approvedRequests.reduce((sum, leave) => {
+  const usedTimeAwayDays = approvedRequests.reduce((sum, leave) => {
     return sum + (Number(leave.totalDays) || 0);
   }, 0);
 
-  const available = Math.max(0, TOTAL_LEAVES - usedLeaveDays);
+  const available = Math.max(0, TOTAL_LEAVES - usedTimeAwayDays);
 
   const filtered =
     filterStatus === "ALL"
@@ -132,7 +132,7 @@ export default function EmployeeLeaves() {
       : leaves.filter((l) => l.status === filterStatus);
 
   const today = new Date().toISOString().split("T")[0];
-  const consumedPercentage = Math.min(100, (usedLeaveDays / TOTAL_LEAVES) * 100);
+  const consumedPercentage = Math.min(100, (usedTimeAwayDays / TOTAL_LEAVES) * 100);
 
   /* ── loading skeleton ── */
   if (loading) {
@@ -212,7 +212,7 @@ export default function EmployeeLeaves() {
             width: 160,
             height: 160,
             borderRadius: "50%",
-            background: "rgba(255,107,53,.08)",
+            background: "rgba(139,92,246,.08)",
             pointerEvents: "none",
           }}
         />
@@ -224,7 +224,7 @@ export default function EmployeeLeaves() {
             width: 90,
             height: 90,
             borderRadius: "50%",
-            background: "rgba(0,194,168,.06)",
+            background: "rgba(6,182,212,.06)",
             pointerEvents: "none",
           }}
         />
@@ -250,10 +250,10 @@ export default function EmployeeLeaves() {
                 marginBottom: 4,
               }}
             >
-              SamayaHR · Time Off
+              CrewSync · Time Off
             </p>
             <h1 className="fd" style={{ fontSize: 22, fontWeight: 900, color: "#fff", margin: 0 }}>
-              Leave Planner
+              TimeAway Planner
             </h1>
             <p style={{ fontSize: 13, color: "rgba(255,255,255,.5)", marginTop: 4 }}>
               {available} of {TOTAL_LEAVES} days still available this year.
@@ -268,12 +268,12 @@ export default function EmployeeLeaves() {
               border: "none",
               background: showForm
                 ? "rgba(255,255,255,.15)"
-                : `linear-gradient(135deg,${T.coral},#ff8c5a)`,
+                : `linear-gradient(135deg,${T.coral},#FBBF24)`,
               color: "#fff",
               fontSize: 13,
               fontWeight: 700,
               cursor: "pointer",
-              boxShadow: showForm ? "none" : "0 4px 14px rgba(255,107,53,.35)",
+              boxShadow: showForm ? "none" : "0 4px 14px rgba(139,92,246,.35)",
               transition: "all .2s",
             }}
           >
@@ -304,7 +304,7 @@ export default function EmployeeLeaves() {
                     marginBottom: 5,
                   }}
                 >
-                  Leave Category
+                  TimeAway Category
                 </label>
                 <select
                   className="lv-input"
@@ -427,7 +427,7 @@ export default function EmployeeLeaves() {
               </button>
 
               <button
-                onClick={handleApplyLeave}
+                onClick={handleApplyTimeAway}
                 disabled={
                   submitting ||
                   !formData.startDate ||
@@ -438,12 +438,12 @@ export default function EmployeeLeaves() {
                   padding: "9px 22px",
                   borderRadius: 10,
                   border: "none",
-                  background: `linear-gradient(135deg,${T.coral},#ff8c5a)`,
+                  background: `linear-gradient(135deg,${T.coral},#FBBF24)`,
                   color: "#fff",
                   fontSize: 13,
                   fontWeight: 700,
                   cursor: "pointer",
-                  boxShadow: "0 4px 14px rgba(255,107,53,.3)",
+                  boxShadow: "0 4px 14px rgba(139,92,246,.3)",
                   opacity:
                     submitting ||
                     !formData.startDate ||
@@ -475,7 +475,7 @@ export default function EmployeeLeaves() {
               label: "Total Requests",
               val: leaves.length,
               accent: T.coral,
-              bg: "rgba(255,107,53,.08)",
+              bg: "rgba(139,92,246,.08)",
               icon: "📋",
             },
             {
@@ -496,7 +496,7 @@ export default function EmployeeLeaves() {
               label: "Days Remaining",
               val: available,
               accent: T.teal,
-              bg: "rgba(0,194,168,.08)",
+              bg: "rgba(6,182,212,.08)",
               icon: "🗓️",
             },
           ].map((k) => (
@@ -582,11 +582,11 @@ export default function EmployeeLeaves() {
                       background: active
                         ? cfg
                           ? cfg.bg
-                          : `linear-gradient(135deg,${T.coral},#ff8c5a)`
+                          : `linear-gradient(135deg,${T.coral},#FBBF24)`
                         : "#F1F5F9",
                       color: active ? (cfg ? cfg.color : "#fff") : "#64748b",
                       borderColor: active ? (cfg ? cfg.border : "transparent") : T.border,
-                      boxShadow: active && !cfg ? "0 3px 10px rgba(255,107,53,.25)" : "none",
+                      boxShadow: active && !cfg ? "0 3px 10px rgba(139,92,246,.25)" : "none",
                     }}
                   >
                     {f === "ALL" ? "All Requests" : STATUS_CFG[f]?.label || f}
@@ -600,7 +600,7 @@ export default function EmployeeLeaves() {
             <table style={{ width: "100%", borderCollapse: "collapse" }}>
               <thead>
                 <tr style={{ background: `linear-gradient(90deg,${T.navy},${T.navyMid})` }}>
-                  {["Ref #", "Leave Category", "Purpose", "Period", "Duration", "Status"].map((h) => (
+                  {["Ref #", "TimeAway Category", "Purpose", "Period", "Duration", "Status"].map((h) => (
                     <th
                       key={h}
                       style={{
@@ -705,7 +705,7 @@ export default function EmployeeLeaves() {
                               height: 22,
                               padding: "0 8px",
                               borderRadius: 6,
-                              background: "rgba(255,107,53,.08)",
+                              background: "rgba(139,92,246,.08)",
                               color: T.coral,
                               fontSize: 12,
                               fontWeight: 800,
@@ -763,10 +763,10 @@ export default function EmployeeLeaves() {
             }}
           >
             <p style={{ fontSize: 12, fontWeight: 700, color: T.navy }}>
-              Annual Leave Balance
+              Annual TimeAway Balance
             </p>
             <p style={{ fontSize: 12, color: "#94a3b8" }}>
-              <span style={{ fontWeight: 800, color: T.coral }}>{usedLeaveDays}</span> used ·{" "}
+              <span style={{ fontWeight: 800, color: T.coral }}>{usedTimeAwayDays}</span> used ·{" "}
               <span style={{ fontWeight: 800, color: T.teal }}>{available}</span> remaining of{" "}
               {TOTAL_LEAVES}
             </p>

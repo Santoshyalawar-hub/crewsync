@@ -4,7 +4,7 @@ import api from "@/lib/apiClient";
 
 /* ── Design tokens ── */
 const T = {
-  navy: "#0D1F2D", navyMid: "#1E3448", coral: "#FF6B35", teal: "#00C2A8",
+  navy: "#0B1020", navyMid: "#374151", coral: "#8B5CF6", teal: "#06B6D4",
   bg: "#F5F7FB", border: "#E8ECF2",
 };
 
@@ -14,8 +14,8 @@ const CSS = `
 .srh .fd { font-family:'Sora',sans-serif; }
 .srh-card { background:#fff; border:1.5px solid ${T.border}; border-radius:18px; box-shadow:0 2px 14px rgba(13,31,45,.05); overflow:hidden; }
 .srh-emp-item { display:flex; align-items:center; gap:12px; padding:10px 14px; border-radius:10px; cursor:pointer; transition:all .15s; }
-.srh-emp-item:hover { background:rgba(255,107,53,.06); }
-.srh-emp-item.active { background:rgba(255,107,53,.1); }
+.srh-emp-item:hover { background:rgba(139,92,246,.06); }
+.srh-emp-item.active { background:rgba(139,92,246,.1); }
 .srh-emp-avatar { width:36px; height:36px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:13px; flex-shrink:0; }
 .srh-badge { display:inline-flex; align-items:center; gap:4px; padding:3px 8px; border-radius:6px; font-size:10px; font-weight:700; }
 .srh-row { border-bottom:1px solid ${T.border}; }
@@ -34,7 +34,7 @@ const fmt = (n) => {
 };
 
 const avatarColor = (name = "") => {
-  const colors = ["#FF6B35","#00C2A8","#6366f1","#f59e0b","#22c55e","#ec4899","#3b82f6"];
+  const colors = ["#8B5CF6","#06B6D4","#6366f1","#f59e0b","#22c55e","#ec4899","#3b82f6"];
   let h = 0;
   for (let i = 0; i < name.length; i++) h = (h * 31 + name.charCodeAt(i)) % colors.length;
   return colors[h];
@@ -43,7 +43,7 @@ const avatarColor = (name = "") => {
 const CHANGE_COLORS = {
   "Added":             { bg: "rgba(34,197,94,.1)",    color: "#16a34a" },
   "Amount changed":    { bg: "rgba(99,102,241,.1)",   color: "#6366f1" },
-  "Activated":         { bg: "rgba(0,194,168,.1)",    color: "#00C2A8" },
+  "Activated":         { bg: "rgba(6,182,212,.1)",    color: "#06B6D4" },
   "Deactivated":       { bg: "rgba(239,68,68,.1)",    color: "#dc2626" },
   "default":           { bg: "rgba(100,116,139,.1)",  color: "#64748b" },
 };
@@ -56,8 +56,8 @@ function ChangeIcon({ reason }) {
   return <Minus size={12} />;
 }
 
-export default function SalaryRevisionHistory() {
-  const [employees, setEmployees]   = useState([]);
+export default function CompensationRevisionHistory() {
+  const [employees, setPersons]   = useState([]);
   const [selected,  setSelected]    = useState(null);
   const [history,   setHistory]     = useState([]);
   const [empSearch, setEmpSearch]   = useState("");
@@ -69,7 +69,7 @@ export default function SalaryRevisionHistory() {
     api.get("/api/users/tenant/employees")
       .then(res => {
         const list = Array.isArray(res.data.data) ? res.data.data : [];
-        setEmployees(list);
+        setPersons(list);
         if (list.length > 0) setSelected(list[0]);
       })
       .catch(() => {})
@@ -114,14 +114,14 @@ export default function SalaryRevisionHistory() {
 
       {/* Hero */}
       <div style={{ background: `linear-gradient(135deg,${T.navy},${T.navyMid})`, padding: "22px 26px", marginBottom: 22, position: "relative", overflow: "hidden" }}>
-        <div style={{ position: "absolute", top: -40, right: 80, width: 160, height: 160, borderRadius: "50%", background: "rgba(255,107,53,.07)", pointerEvents: "none" }} />
+        <div style={{ position: "absolute", top: -40, right: 80, width: 160, height: 160, borderRadius: "50%", background: "rgba(139,92,246,.07)", pointerEvents: "none" }} />
         <div style={{ position: "relative", display: "flex", alignItems: "center", gap: 12 }}>
-          <div style={{ width: 40, height: 40, borderRadius: 12, background: "rgba(255,107,53,.15)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <div style={{ width: 40, height: 40, borderRadius: 12, background: "rgba(139,92,246,.15)", display: "flex", alignItems: "center", justifyContent: "center" }}>
             <History size={18} color={T.coral} />
           </div>
           <div>
-            <p style={{ fontSize: 11, fontWeight: 700, color: T.coral, textTransform: "uppercase", letterSpacing: ".12em", marginBottom: 3 }}>SamayaHR · Payroll</p>
-            <h1 className="fd" style={{ fontSize: 22, fontWeight: 900, color: "#fff", margin: 0 }}>Salary Revision History</h1>
+            <p style={{ fontSize: 11, fontWeight: 700, color: T.coral, textTransform: "uppercase", letterSpacing: ".12em", marginBottom: 3 }}>CrewSync · Payouts</p>
+            <h1 className="fd" style={{ fontSize: 22, fontWeight: 900, color: "#fff", margin: 0 }}>Compensation Revision History</h1>
             <p style={{ fontSize: 12, color: "rgba(255,255,255,.5)", marginTop: 3 }}>Immutable audit trail of every salary component change</p>
           </div>
         </div>
@@ -129,7 +129,7 @@ export default function SalaryRevisionHistory() {
 
       <div style={{ padding: "0 26px", display: "flex", gap: 16 }}>
 
-        {/* ── Employee list panel ── */}
+        {/* ── Person list panel ── */}
         <div className="srh-card" style={{ width: 260, flexShrink: 0, maxHeight: "calc(100vh - 200px)", display: "flex", flexDirection: "column" }}>
           <div style={{ padding: "12px 14px", borderBottom: `1px solid ${T.border}` }}>
             <div style={{ display: "flex", alignItems: "center", gap: 8, background: T.bg, borderRadius: 9, padding: "7px 10px", border: `1px solid ${T.border}` }}>
@@ -244,7 +244,7 @@ export default function SalaryRevisionHistory() {
                           <div style={{ flex: 1, minWidth: 0 }}>
                             <div style={{ display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap" }}>
                               <p style={{ fontSize: 13, fontWeight: 600, color: T.navy }}>{rev.componentName || rev.componentKey}</p>
-                              <span className="srh-badge" style={{ background: rev.componentType === "EARNING" ? "rgba(0,194,168,.1)" : "rgba(239,68,68,.08)", color: rev.componentType === "EARNING" ? T.teal : "#dc2626" }}>
+                              <span className="srh-badge" style={{ background: rev.componentType === "EARNING" ? "rgba(6,182,212,.1)" : "rgba(239,68,68,.08)", color: rev.componentType === "EARNING" ? T.teal : "#dc2626" }}>
                                 {rev.componentType}
                               </span>
                             </div>

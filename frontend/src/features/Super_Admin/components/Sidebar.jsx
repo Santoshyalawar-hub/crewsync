@@ -2,8 +2,8 @@
 // import { ChevronLeft, ChevronRight } from "lucide-react";
 
 // const T = {
-//   coral:  "#FF6B35",
-//   navy:   "#0D1F2D",
+//   coral:  "#8B5CF6",
+//   navy:   "#0B1020",
 //   border: "#E8ECF2",
 //   soft:   "#64748B",
 // };
@@ -31,24 +31,24 @@
 //   {
 //     label: "Main",
 //     items: [
-//       { key: "sa_home",    label: "Dashboard",       icon: "grid"     },
-//       { key: "sa_team",    label: "Manage Employees",icon: "users"    },
-//       { key: "sa_admins",  label: "Manage Admins",   icon: "shield"   },
-//       { key: "sa_onboard", label: "Add Employee",    icon: "onboard"  },
+//       { key: "sa_home",    label: "Control Room",       icon: "grid"     },
+//       { key: "sa_team",    label: "People Grid",icon: "users"    },
+//       { key: "sa_admins",  label: "Manage Operators",   icon: "shield"   },
+//       { key: "sa_onboard", label: "Add Person",    icon: "onboard"  },
 //     ],
 //   },
 //   {
 //     label: "Operations",
 //     items: [
-//       { key: "sa_finance", label: "Finance Hub",     icon: "dollar"   },
-//       { key: "sa_time",    label: "Attendance",      icon: "calendar" },
-//       { key: "sa_docs",    label: "Documents",       icon: "file"     },
+//       { key: "sa_finance", label: "Money Desk",     icon: "dollar"   },
+//       { key: "sa_time",    label: "Presence",      icon: "calendar" },
+//       { key: "sa_docs",    label: "Vault",       icon: "file"     },
 //     ],
 //   },
 //   {
-//     label: "Support",
+//     label: "Care Desk",
 //     items: [
-//       { key: "sa_support", label: "Help & Support",  icon: "help"     },
+//       { key: "sa_support", label: "Care Desk",  icon: "help"     },
 //     ],
 //   },
 // ];
@@ -66,17 +66,17 @@
 //   width:100%; text-align:left;
 // }
 // .sasb-link:hover {
-//   background:linear-gradient(135deg,rgba(255,107,53,.08),rgba(0,194,168,.04));
-//   color:${T.coral}; border-color:rgba(255,107,53,.10); transform:translateX(2px);
+//   background:linear-gradient(135deg,rgba(139,92,246,.08),rgba(6,182,212,.04));
+//   color:${T.coral}; border-color:rgba(139,92,246,.10); transform:translateX(2px);
 // }
 // .sasb-link.active {
-//   background:linear-gradient(135deg,rgba(255,107,53,.14),rgba(0,194,168,.05));
-//   color:${T.navy}; font-weight:800; border-color:rgba(255,107,53,.14);
-//   box-shadow:inset 3px 0 0 ${T.coral},0 8px 18px rgba(255,107,53,.08);
+//   background:linear-gradient(135deg,rgba(139,92,246,.14),rgba(6,182,212,.05));
+//   color:${T.navy}; font-weight:800; border-color:rgba(139,92,246,.14);
+//   box-shadow:inset 3px 0 0 ${T.coral},0 8px 18px rgba(139,92,246,.08);
 // }
 // .sasb-link.active .sasb-icon-wrap {
-//   background:linear-gradient(135deg,${T.coral},#FF8C5A);
-//   color:#fff; box-shadow:0 6px 14px rgba(255,107,53,.25);
+//   background:linear-gradient(135deg,${T.coral},#FBBF24);
+//   color:#fff; box-shadow:0 6px 14px rgba(139,92,246,.25);
 // }
 // .sasb-link.collapsed-link { justify-content:center; padding:11px 0; gap:0; }
 
@@ -85,7 +85,7 @@
 //   display:flex; align-items:center; justify-content:center;
 //   transition:all .18s ease; background:rgba(100,116,139,.10); color:inherit;
 // }
-// .sasb-link:hover .sasb-icon-wrap { background:rgba(255,107,53,.10); color:${T.coral}; }
+// .sasb-link:hover .sasb-icon-wrap { background:rgba(139,92,246,.10); color:${T.coral}; }
 
 // .sasb-section-label {
 //   font-size:9px; font-weight:800; letter-spacing:.14em; text-transform:uppercase;
@@ -95,25 +95,25 @@
 // .sasb-collapse-btn {
 //   position:absolute; top:50%; transform:translateY(-50%); right:-11px; z-index:10;
 //   width:24px; height:24px; border-radius:999px;
-//   background:linear-gradient(135deg,${T.coral},#FF8C5A);
+//   background:linear-gradient(135deg,${T.coral},#FBBF24);
 //   color:#fff; border:2.5px solid #fff;
 //   display:flex; align-items:center; justify-content:center;
-//   cursor:pointer; box-shadow:0 4px 12px rgba(255,107,53,.30); transition:all .18s ease;
+//   cursor:pointer; box-shadow:0 4px 12px rgba(139,92,246,.30); transition:all .18s ease;
 // }
 // .sasb-collapse-btn:hover { transform:translateY(-50%) scale(1.05); }
 
 // .sasb-help-btn {
 //   display:flex; align-items:center; gap:10px; padding:10px 12px;
 //   border-radius:14px; color:#64748B; font-size:13px; font-weight:600;
-//   transition:all .18s ease; border:1px solid rgba(255,107,53,.14);
-//   cursor:pointer; background:rgba(255,107,53,.04); width:100%; text-align:left;
+//   transition:all .18s ease; border:1px solid rgba(139,92,246,.14);
+//   cursor:pointer; background:rgba(139,92,246,.04); width:100%; text-align:left;
 // }
-// .sasb-help-btn:hover { background:rgba(255,107,53,.08); color:${T.coral}; transform:translateX(2px); }
-// .sasb-help-btn .sasb-icon-wrap { background:rgba(255,107,53,.10); color:${T.coral}; }
+// .sasb-help-btn:hover { background:rgba(139,92,246,.08); color:${T.coral}; transform:translateX(2px); }
+// .sasb-help-btn .sasb-icon-wrap { background:rgba(139,92,246,.10); color:${T.coral}; }
 // .sasb-help-btn.collapsed { justify-content:center; padding:11px 0; gap:0; }
 // `;
 
-// export default function SuperAdminSidebar({ currentPage, navigateTo }) {
+// export default function SuperOperatorSidebar({ currentPage, navigateTo }) {
 //   const [collapsed, setCollapsed] = useState(false);
 
 //   return (
@@ -141,16 +141,16 @@
 //       }}>
 //         <div className="fd" style={{
 //           width:38, height:38, borderRadius:12,
-//           background:"linear-gradient(135deg,#FF6B35,#FF8C5A)",
+//           background:"linear-gradient(135deg,#8B5CF6,#FBBF24)",
 //           display:"flex", alignItems:"center", justifyContent:"center",
 //           color:"#fff", fontSize:15, fontWeight:900, flexShrink:0,
-//           boxShadow:"0 8px 18px rgba(255,107,53,.25)",
+//           boxShadow:"0 8px 18px rgba(139,92,246,.25)",
 //         }}>S</div>
 //         {!collapsed && (
 //           <div style={{ lineHeight:1.15 }}>
-//             <p style={{ fontSize:10, fontWeight:800, color:T.soft, textTransform:"uppercase", letterSpacing:".12em", margin:"0 0 2px" }}>Super Admin</p>
+//             <p style={{ fontSize:10, fontWeight:800, color:T.soft, textTransform:"uppercase", letterSpacing:".12em", margin:"0 0 2px" }}>Owner</p>
 //             <p className="fd" style={{ fontSize:16, fontWeight:900, color:T.navy, lineHeight:1, margin:0 }}>
-//               Samaya<span style={{ background:"linear-gradient(135deg,#FF6B35,#FF9A5C)", WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent", backgroundClip:"text" }}>HR</span>
+//               CrewSync<span style={{ background:"linear-gradient(135deg,#8B5CF6,#60A5FA)", WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent", backgroundClip:"text" }}>PeopleOps</span>
 //             </p>
 //           </div>
 //         )}
@@ -179,7 +179,7 @@
 //                   </span>
 //                   {!collapsed && <span style={{ flex:1 }}>{label}</span>}
 //                   {!collapsed && active && (
-//                     <span style={{ width:6, height:6, borderRadius:"50%", background:T.coral, flexShrink:0, boxShadow:"0 0 0 4px rgba(255,107,53,.10)" }} />
+//                     <span style={{ width:6, height:6, borderRadius:"50%", background:T.coral, flexShrink:0, boxShadow:"0 0 0 4px rgba(139,92,246,.10)" }} />
 //                   )}
 //                 </button>
 //               );
@@ -191,14 +191,14 @@
 //       {/* FOOTER */}
 //       <div style={{ padding:"8px 8px 16px", borderTop:`1px solid ${T.border}`, background:"rgba(250,251,253,.8)", flexShrink:0 }}>
 //         {!collapsed && (
-//           <p style={{ fontSize:10, color:"#94A3B8", fontWeight:600, margin:"0 4px 8px" }}>v2.0.1 · SamayaHR</p>
+//           <p style={{ fontSize:10, color:"#94A3B8", fontWeight:600, margin:"0 4px 8px" }}>v2.0.1 · CrewSync</p>
 //         )}
-//         <button onClick={() => navigateTo("sa_support")} title={collapsed ? "Help & Support" : undefined}
+//         <button onClick={() => navigateTo("sa_support")} title={collapsed ? "Care Desk" : undefined}
 //           className={`sasb-help-btn${collapsed ? " collapsed" : ""}`}>
 //           <span className="sasb-icon-wrap">
 //             <Ic d={ICONS.help} size={15} />
 //           </span>
-//           {!collapsed && <span>Help & Support</span>}
+//           {!collapsed && <span>CareDesk</span>}
 //         </button>
 //       </div>
 //     </aside>
@@ -211,7 +211,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import api from "@/lib/apiClient";
 
 /* Fetch company logo by tenantCode from API */
-function useCompanyLogo(tenantCode) {
+function useWorkspaceLogo(tenantCode) {
   const [logoUrl, setLogoUrl] = useState(() => localStorage.getItem("companyLogoUrl") || "");
   useEffect(() => {
     if (!tenantCode) return;
@@ -225,8 +225,8 @@ function useCompanyLogo(tenantCode) {
   return logoUrl;
 }
 
-/* Company logo — image or initials fallback */
-function CompanyLogo({ logoUrl, companyName, size = 38 }) {
+/* Workspace logo — image or initials fallback */
+function WorkspaceLogo({ logoUrl, companyName, size = 38 }) {
   const [err, setErr] = useState(false);
   const initials = (companyName || "C").split(" ").slice(0, 2).map(w => w[0]).join("").toUpperCase();
   useEffect(() => { setErr(false); }, [logoUrl]);
@@ -240,10 +240,10 @@ function CompanyLogo({ logoUrl, companyName, size = 38 }) {
   }
   return (
     <div style={{ width: size, height: size, borderRadius: 10,
-      background: "linear-gradient(135deg,#FF6B35,#FF8C5A)",
+      background: "linear-gradient(135deg,#8B5CF6,#FBBF24)",
       display: "flex", alignItems: "center", justifyContent: "center",
       color: "#fff", fontSize: Math.round(size * 0.38), fontWeight: 900,
-      flexShrink: 0, boxShadow: "0 6px 16px rgba(255,107,53,.28)",
+      flexShrink: 0, boxShadow: "0 6px 16px rgba(139,92,246,.28)",
       fontFamily: "'Sora',sans-serif" }}>
       {initials}
     </div>
@@ -251,8 +251,8 @@ function CompanyLogo({ logoUrl, companyName, size = 38 }) {
 }
 
 const T = {
-  coral:  "#FF6B35",
-  navy:   "#0D1F2D",
+  coral:  "#8B5CF6",
+  navy:   "#0B1020",
   border: "#E8ECF2",
   soft:   "#64748B",
 };
@@ -280,25 +280,25 @@ const NAV_SECTIONS = [
   {
     label: "Core",
     items: [
-      { key: "sa_home",    label: "Dashboard",        icon: "grid"     },
-      { key: "sa_team",    label: "Manage Employees", icon: "users"    },
-      { key: "sa_admins",  label: "Manage Admins",    icon: "shield"   },
-      { key: "sa_onboard", label: "Add Employee",     icon: "onboard"  },
-      { key: "sa_org",     label: "Org Chart",        icon: "org"      },
+      { key: "sa_home",    label: "Control Room",        icon: "grid"     },
+      { key: "sa_team",    label: "People Grid", icon: "users"    },
+      { key: "sa_admins",  label: "Manage Operators",    icon: "shield"   },
+      { key: "sa_onboard", label: "Add Person",     icon: "onboard"  },
+      { key: "sa_org",     label: "People Map",        icon: "org"      },
     ],
   },
   {
     label: "Content",
     items: [
-      { key: "sa_docs",    label: "HR Documents",     icon: "file"     },
-      { key: "sa_policy",  label: "Policy Vault",     icon: "policy"   },
+      { key: "sa_docs",    label: "People Vault",     icon: "file"     },
+      { key: "sa_policy",  label: "Playbook Vault",     icon: "policy"   },
     ],
   },
   {
     label: "System",
     items: [
-      { key: "sa_company", label: "Company Settings", icon: "company"  },
-      { key: "sa_audit",   label: "Audit Logs",       icon: "audit"    },
+      { key: "sa_company", label: "Workspace Configuration", icon: "company"  },
+      { key: "sa_audit",   label: "Activity Trail",       icon: "audit"    },
     ],
   },
 ];
@@ -316,17 +316,17 @@ const CSS = `
   width:100%; text-align:left;
 }
 .sasb-link:hover {
-  background:linear-gradient(135deg,rgba(255,107,53,.08),rgba(0,194,168,.04));
-  color:${T.coral}; border-color:rgba(255,107,53,.10); transform:translateX(2px);
+  background:linear-gradient(135deg,rgba(139,92,246,.08),rgba(6,182,212,.04));
+  color:${T.coral}; border-color:rgba(139,92,246,.10); transform:translateX(2px);
 }
 .sasb-link.active {
-  background:linear-gradient(135deg,rgba(255,107,53,.14),rgba(0,194,168,.05));
-  color:${T.navy}; font-weight:800; border-color:rgba(255,107,53,.14);
-  box-shadow:inset 3px 0 0 ${T.coral},0 8px 18px rgba(255,107,53,.08);
+  background:linear-gradient(135deg,rgba(139,92,246,.14),rgba(6,182,212,.05));
+  color:${T.navy}; font-weight:800; border-color:rgba(139,92,246,.14);
+  box-shadow:inset 3px 0 0 ${T.coral},0 8px 18px rgba(139,92,246,.08);
 }
 .sasb-link.active .sasb-icon-wrap {
-  background:linear-gradient(135deg,${T.coral},#FF8C5A);
-  color:#fff; box-shadow:0 6px 14px rgba(255,107,53,.25);
+  background:linear-gradient(135deg,${T.coral},#FBBF24);
+  color:#fff; box-shadow:0 6px 14px rgba(139,92,246,.25);
 }
 .sasb-link.collapsed-link { justify-content:center; padding:11px 0; gap:0; }
 
@@ -335,7 +335,7 @@ const CSS = `
   display:flex; align-items:center; justify-content:center;
   transition:all .18s ease; background:rgba(100,116,139,.10); color:inherit;
 }
-.sasb-link:hover .sasb-icon-wrap { background:rgba(255,107,53,.10); color:${T.coral}; }
+.sasb-link:hover .sasb-icon-wrap { background:rgba(139,92,246,.10); color:${T.coral}; }
 
 .sasb-section-label {
   font-size:9px; font-weight:800; letter-spacing:.14em; text-transform:uppercase;
@@ -345,30 +345,30 @@ const CSS = `
 .sasb-collapse-btn {
   position:absolute; top:50%; transform:translateY(-50%); right:-11px; z-index:10;
   width:24px; height:24px; border-radius:999px;
-  background:linear-gradient(135deg,${T.coral},#FF8C5A);
+  background:linear-gradient(135deg,${T.coral},#FBBF24);
   color:#fff; border:2.5px solid #fff;
   display:flex; align-items:center; justify-content:center;
-  cursor:pointer; box-shadow:0 4px 12px rgba(255,107,53,.30); transition:all .18s ease;
+  cursor:pointer; box-shadow:0 4px 12px rgba(139,92,246,.30); transition:all .18s ease;
 }
 .sasb-collapse-btn:hover { transform:translateY(-50%) scale(1.05); }
 
 .sasb-help-btn {
   display:flex; align-items:center; gap:10px; padding:10px 12px;
   border-radius:14px; color:#64748B; font-size:13px; font-weight:600;
-  transition:all .18s ease; border:1px solid rgba(255,107,53,.14);
-  cursor:pointer; background:rgba(255,107,53,.04); width:100%; text-align:left;
+  transition:all .18s ease; border:1px solid rgba(139,92,246,.14);
+  cursor:pointer; background:rgba(139,92,246,.04); width:100%; text-align:left;
 }
-.sasb-help-btn:hover { background:rgba(255,107,53,.08); color:${T.coral}; transform:translateX(2px); }
-.sasb-help-btn .sasb-icon-wrap { background:rgba(255,107,53,.10); color:${T.coral}; }
+.sasb-help-btn:hover { background:rgba(139,92,246,.08); color:${T.coral}; transform:translateX(2px); }
+.sasb-help-btn .sasb-icon-wrap { background:rgba(139,92,246,.10); color:${T.coral}; }
 .sasb-help-btn.collapsed { justify-content:center; padding:11px 0; gap:0; }
 `;
 
-export default function SuperAdminSidebar({ currentPage, navigateTo }) {
+export default function SuperOperatorSidebar({ currentPage, navigateTo }) {
   const [collapsed, setCollapsed] = useState(false);
 
-  const companyName = (localStorage.getItem("companyName") || "Company").trim();
+  const companyName = (localStorage.getItem("companyName") || "Workspace").trim();
   const tenantCode  = (localStorage.getItem("tenantCode")  || "").trim();
-  const logoUrl     = useCompanyLogo(tenantCode);
+  const logoUrl     = useWorkspaceLogo(tenantCode);
 
   return (
     <aside className="sasb" style={{
@@ -394,10 +394,10 @@ export default function SuperAdminSidebar({ currentPage, navigateTo }) {
         background: "linear-gradient(180deg,rgba(255,255,255,1) 0%,rgba(250,251,253,1) 100%)",
       }}>
         {collapsed ? (
-          <img src="/SamayaHRSidebar.png" alt="SamayaHR"
+          <img src="/crewsync-mark.svg" alt="CrewSync"
             style={{ width: 40, height: 40, borderRadius: 12, objectFit: "contain", flexShrink: 0 }} />
         ) : (
-          <img src="/SamayaHR.png" alt="SamayaHR"
+          <img src="/crewsync-logo.svg" alt="CrewSync"
             style={{ height: 44, maxWidth: 180, objectFit: "contain", objectPosition: "left", flexShrink: 0 }} />
         )}
       </div>
@@ -425,7 +425,7 @@ export default function SuperAdminSidebar({ currentPage, navigateTo }) {
                   </span>
                   {!collapsed && <span style={{ flex: 1 }}>{label}</span>}
                   {!collapsed && active && (
-                    <span style={{ width: 6, height: 6, borderRadius: "50%", background: T.coral, flexShrink: 0, boxShadow: "0 0 0 4px rgba(255,107,53,.10)" }} />
+                    <span style={{ width: 6, height: 6, borderRadius: "50%", background: T.coral, flexShrink: 0, boxShadow: "0 0 0 4px rgba(139,92,246,.10)" }} />
                   )}
                 </button>
               );
@@ -437,10 +437,10 @@ export default function SuperAdminSidebar({ currentPage, navigateTo }) {
       {/* FOOTER */}
       <div style={{ padding: "8px 8px 16px", borderTop: `1px solid ${T.border}`, background: "rgba(250,251,253,.8)", flexShrink: 0 }}>
         {!collapsed && (
-          <p style={{ fontSize: 10, color: "#94A3B8", fontWeight: 600, margin: "0 4px 4px" }}>v2.0.1 · SamayaHR</p>
+          <p style={{ fontSize: 10, color: "#94A3B8", fontWeight: 600, margin: "0 4px 4px" }}>v2.0.1 · CrewSync</p>
         )}
         {!collapsed && (
-          <p style={{ fontSize: 10, color: "#cbd5e1", fontWeight: 500, margin: "0 4px" }}>Super Admin Portal</p>
+          <p style={{ fontSize: 10, color: "#cbd5e1", fontWeight: 500, margin: "0 4px" }}>Super Ops Portal</p>
         )}
       </div>
     </aside>

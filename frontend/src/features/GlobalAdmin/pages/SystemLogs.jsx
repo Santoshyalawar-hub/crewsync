@@ -10,8 +10,8 @@ const S = {
   card: { background: "#fff", borderRadius: 14, border: "1px solid #eef0f4", boxShadow: "0 1px 3px rgba(0,0,0,0.06)" },
 };
 
-const TAG_ICONS = { Auth: ShieldCheck, Company: Building2, Payment: DollarSign, Subscription: Package, System: Server, Support: FileText, Demo: Activity };
-const TAG_COLORS = { Auth: "#6366f1", Company: "#ff6b35", Payment: "#22c55e", Subscription: "#0ea5e9", System: "#f59e0b", Support: "#8b5cf6", Demo: "#ec4899", Activity: "#64748b" };
+const TAG_ICONS = { Auth: ShieldCheck, Workspace: Building2, Payment: DollarSign, Subscription: Package, System: Server, CareDesk: FileText, Demo: Activity };
+const TAG_COLORS = { Auth: "#6366f1", Workspace: "#8B5CF6", Payment: "#22c55e", Subscription: "#0ea5e9", System: "#f59e0b", CareDesk: "#8b5cf6", Demo: "#ec4899", Activity: "#64748b" };
 
 function tagIcon(tag) {
   const Icon = TAG_ICONS[tag] || Activity;
@@ -20,7 +20,7 @@ function tagIcon(tag) {
 
 function sevStyle(s) {
   const m = { success: { bg: "#dcfce7", color: "#16a34a" }, warning: { bg: "#fef9c3", color: "#ca8a04" }, error: { bg: "#fee2e2", color: "#dc2626" }, danger: { bg: "#fee2e2", color: "#dc2626" } };
-  return m[s] || { bg: "#dbeafe", color: "#2563eb" };
+  return m[s] || { bg: "#dbeafe", color: "#8B5CF6" };
 }
 
 const Th = ({ ch }) => (
@@ -45,7 +45,7 @@ function exportCSV(logs) {
   a.click(); URL.revokeObjectURL(url);
 }
 
-const ALL_TAGS = ["Company", "Auth", "Payment", "Subscription", "System", "Support", "Demo"];
+const ALL_TAGS = ["Workspace", "Auth", "Payment", "Subscription", "System", "CareDesk", "Demo"];
 
 export default function SystemLogs() {
   const [logs,      setLogs]      = useState([]);
@@ -98,8 +98,8 @@ export default function SystemLogs() {
         <div style={{ position: "absolute", top: -30, right: 60, width: 130, height: 130, borderRadius: "50%", background: "rgba(99,102,241,0.1)", pointerEvents: "none" }} />
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", position: "relative" }}>
           <div>
-            <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 11, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 6px" }}>SamayaHR · Global Admin</p>
-            <h1 style={{ color: "#fff", fontSize: 24, fontWeight: 800, margin: 0, letterSpacing: "-0.02em" }}>System Logs</h1>
+            <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 11, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 6px" }}>CrewSync · Global Operator</p>
+            <h1 style={{ color: "#fff", fontSize: 24, fontWeight: 800, margin: 0, letterSpacing: "-0.02em" }}>System Trail</h1>
             <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 13, margin: "6px 0 0" }}>
               {loading ? "Loading…" : `${filtered.length} events · live audit trail`}
             </p>

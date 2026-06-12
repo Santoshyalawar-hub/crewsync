@@ -25,13 +25,13 @@
 //       r:  1 + Math.random() * 2,
 //       dx: (Math.random() - 0.5) * 0.35,
 //       dy: (Math.random() - 0.5) * 0.35,
-//       color: Math.random() > 0.5 ? "#FF6B35" : "#00C2A8",
+//       color: Math.random() > 0.5 ? "#8B5CF6" : "#06B6D4",
 //       alpha: 0.25 + Math.random() * 0.45,
 //     }));
 
 //     const orbs = [
-//       { x: 0.2, y: 0.3, r: 90, color: "#FF6B35", dx: 0.18, dy: 0.12 },
-//       { x: 0.8, y: 0.6, r: 70, color: "#00C2A8", dx: -0.14, dy: 0.16 },
+//       { x: 0.2, y: 0.3, r: 90, color: "#8B5CF6", dx: 0.18, dy: 0.12 },
+//       { x: 0.8, y: 0.6, r: 70, color: "#06B6D4", dx: -0.14, dy: 0.16 },
 //       { x: 0.5, y: 0.85,r: 60, color: "#818cf8", dx: 0.10, dy: -0.18 },
 //     ].map(o => ({ ...o, x: o.x * canvas.width, y: o.y * canvas.height }));
 
@@ -73,7 +73,7 @@
 //             ctx.beginPath();
 //             ctx.moveTo(particles[i].x, particles[i].y);
 //             ctx.lineTo(particles[j].x, particles[j].y);
-//             ctx.strokeStyle = `rgba(255,107,53,${0.12 * (1 - dist/70)})`;
+//             ctx.strokeStyle = `rgba(139,92,246,${0.12 * (1 - dist/70)})`;
 //             ctx.lineWidth = 0.6;
 //             ctx.stroke();
 //           }
@@ -88,7 +88,7 @@
 // }
 
 // /* Rotating typewriter word */
-// const WORDS = ["Payroll", "Attendance", "Leaves", "Onboarding", "Analytics", "Compliance"];
+// const WORDS = ["Payouts", "Presence", "Time Aways", "Joiner Flow", "Signals", "Assurance"];
 // function RotatingWord() {
 //   const [idx, setIdx]         = useState(0);
 //   const [visible, setVisible] = useState(true);
@@ -101,7 +101,7 @@
 //   }, []);
 //   return (
 //     <span style={{
-//       background: "linear-gradient(90deg,#FF6B35,#ff9a6c)",
+//       background: "linear-gradient(90deg,#8B5CF6,#ff9a6c)",
 //       WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
 //       display: "inline-block",
 //       transition: "opacity .3s cubic-bezier(.4,0,.2,1), transform .3s cubic-bezier(.4,0,.2,1)",
@@ -121,20 +121,20 @@
 //     <div style={{ position:"relative", width:230, height:230 }}>
 
 //       {/* glow layers */}
-//       <div style={{ position:"absolute", top:"50%", left:"50%", width:100, height:100, marginLeft:-50, marginTop:-50, borderRadius:"50%", background:"radial-gradient(circle,rgba(255,107,53,.35) 0%,transparent 70%)", animation:"pulse-glow 2.8s ease-in-out infinite" }} />
-//       <div style={{ position:"absolute", top:"50%", left:"50%", width:60, height:60, marginLeft:-30, marginTop:-30, borderRadius:"50%", background:"radial-gradient(circle,rgba(255,107,53,.5) 0%,transparent 70%)", animation:"pulse-glow 2.8s ease-in-out infinite .4s" }} />
+//       <div style={{ position:"absolute", top:"50%", left:"50%", width:100, height:100, marginLeft:-50, marginTop:-50, borderRadius:"50%", background:"radial-gradient(circle,rgba(139,92,246,.35) 0%,transparent 70%)", animation:"pulse-glow 2.8s ease-in-out infinite" }} />
+//       <div style={{ position:"absolute", top:"50%", left:"50%", width:60, height:60, marginLeft:-30, marginTop:-30, borderRadius:"50%", background:"radial-gradient(circle,rgba(139,92,246,.5) 0%,transparent 70%)", animation:"pulse-glow 2.8s ease-in-out infinite .4s" }} />
 
 //       {/* center */}
-//       <div style={{ position:"absolute", top:"50%", left:"50%", transform:"translate(-50%,-50%)", width:54, height:54, borderRadius:16, background:"linear-gradient(135deg,#FF6B35,#FF5722)", display:"flex", alignItems:"center", justifyContent:"center", zIndex:5, boxShadow:"0 0 0 6px rgba(255,107,53,.15), 0 0 40px rgba(255,107,53,.4)" }}>
+//       <div style={{ position:"absolute", top:"50%", left:"50%", transform:"translate(-50%,-50%)", width:54, height:54, borderRadius:16, background:"linear-gradient(135deg,#8B5CF6,#06B6D4)", display:"flex", alignItems:"center", justifyContent:"center", zIndex:5, boxShadow:"0 0 0 6px rgba(139,92,246,.15), 0 0 40px rgba(139,92,246,.4)" }}>
 //         <span style={{ fontSize:24 }}>⚡</span>
 //       </div>
 
 //       {/* ring 1 */}
-//       <div style={{ position:"absolute", top:"50%", left:"50%", width:126, height:126, marginLeft:-63, marginTop:-63, borderRadius:"50%", border:"1.5px solid rgba(255,107,53,.25)", boxShadow:"0 0 20px rgba(255,107,53,.08) inset", animation:"spin-cw 10s linear infinite" }}>
+//       <div style={{ position:"absolute", top:"50%", left:"50%", width:126, height:126, marginLeft:-63, marginTop:-63, borderRadius:"50%", border:"1.5px solid rgba(139,92,246,.25)", boxShadow:"0 0 20px rgba(139,92,246,.08) inset", animation:"spin-cw 10s linear infinite" }}>
 //         {icons1.map((ic, i) => {
 //           const deg = i * 90;
 //           return (
-//             <div key={i} style={{ position:"absolute", top:"50%", left:"50%", width:30, height:30, marginLeft:-15, marginTop:-15, borderRadius:"50%", background:`linear-gradient(135deg,${["#FF6B35","#00C2A8","#818cf8","#34d399"][i]},${["#ff9a6c","#00a896","#a5b4fc","#6ee7b7"][i]})`, display:"flex", alignItems:"center", justifyContent:"center", fontSize:13, boxShadow:`0 0 16px ${["rgba(255,107,53,.6)","rgba(0,194,168,.6)","rgba(129,140,248,.6)","rgba(52,211,153,.6)"][i]}`, transform:`rotate(${deg}deg) translateX(62px) rotate(-${deg}deg)` }}>
+//             <div key={i} style={{ position:"absolute", top:"50%", left:"50%", width:30, height:30, marginLeft:-15, marginTop:-15, borderRadius:"50%", background:`linear-gradient(135deg,${["#8B5CF6","#06B6D4","#818cf8","#34d399"][i]},${["#ff9a6c","#0D9488","#a5b4fc","#6ee7b7"][i]})`, display:"flex", alignItems:"center", justifyContent:"center", fontSize:13, boxShadow:`0 0 16px ${["rgba(139,92,246,.6)","rgba(6,182,212,.6)","rgba(129,140,248,.6)","rgba(52,211,153,.6)"][i]}`, transform:`rotate(${deg}deg) translateX(62px) rotate(-${deg}deg)` }}>
 //               {ic}
 //             </div>
 //           );
@@ -142,7 +142,7 @@
 //       </div>
 
 //       {/* ring 2 */}
-//       <div style={{ position:"absolute", top:"50%", left:"50%", width:200, height:200, marginLeft:-100, marginTop:-100, borderRadius:"50%", border:"1px dashed rgba(0,194,168,.2)", animation:"spin-ccw 16s linear infinite" }}>
+//       <div style={{ position:"absolute", top:"50%", left:"50%", width:200, height:200, marginLeft:-100, marginTop:-100, borderRadius:"50%", border:"1px dashed rgba(6,182,212,.2)", animation:"spin-ccw 16s linear infinite" }}>
 //         {icons2.map((ic, i) => {
 //           const deg = 45 + i * 90;
 //           return (
@@ -202,7 +202,7 @@
 //     else if (formData.password.length < 6) e.password = "Password must be at least 6 characters";
 //     if (!formData.phoneNumber.trim()) e.phoneNumber = "Phone number is required";
 //     else if (!/^\d{7,15}$/.test(formData.phoneNumber.replace(/\s+/g,""))) e.phoneNumber = "Enter a valid phone number (7–15 digits)";
-//     if (!formData.companyName.trim()) e.companyName = "Company name is required";
+//     if (!formData.companyName.trim()) e.companyName = "Workspace name is required";
 //     if (!formData.role || formData.role === "Select Role") e.role = "Please select your role";
 //     setErrors(e);
 //     return Object.keys(e).length === 0;
@@ -244,7 +244,7 @@
 //   };
 
 //   return (
-//     <div style={{ minHeight:"100vh", background:"#F7F8FA" }}>
+//     <div style={{ minHeight:"100vh", background:"#F6F8FB" }}>
 //       <style>{`
 //         @import url('https://fonts.googleapis.com/css2?family=Sora:wght@700;800;900&family=DM+Sans:wght@400;500;600&display=swap');
 //         *, *::before, *::after { font-family:'DM Sans',sans-serif; box-sizing:border-box; }
@@ -259,25 +259,25 @@
 
 //         .bk-input {
 //           width:100%; border:1.5px solid #e5e7eb; border-radius:12px;
-//           padding:11px 14px; font-size:14px; color:#0D1F2D; outline:none;
+//           padding:11px 14px; font-size:14px; color:#0B1020; outline:none;
 //           transition:border-color .2s, box-shadow .2s; background:#fff;
 //         }
-//         .bk-input:focus { border-color:#FF6B35; box-shadow:0 0 0 3px rgba(255,107,53,.1); }
+//         .bk-input:focus { border-color:#8B5CF6; box-shadow:0 0 0 3px rgba(139,92,246,.1); }
 //         .bk-input.err   { border-color:#f87171; }
 //         .bk-input::placeholder { color:#9ca3af; }
 //         select.bk-input { cursor:pointer; }
 
 //         .cta-btn {
 //           width:100%;
-//           background: linear-gradient(135deg,#FF6B35 0%,#FF5722 50%,#ff7043 100%);
+//           background: linear-gradient(135deg,#8B5CF6 0%,#06B6D4 50%,#38BDF8 100%);
 //           background-size: 200% auto;
 //           color:#fff; font-weight:800; font-size:15px; padding:14px;
 //           border-radius:14px; border:none; cursor:pointer;
-//           box-shadow:0 4px 24px rgba(255,107,53,.4);
+//           box-shadow:0 4px 24px rgba(139,92,246,.4);
 //           transition:transform .22s, box-shadow .22s, background-position .4s;
 //           letter-spacing:.03em;
 //         }
-//         .cta-btn:hover   { transform:translateY(-2px); box-shadow:0 10px 32px rgba(255,107,53,.5); background-position:right center; }
+//         .cta-btn:hover   { transform:translateY(-2px); box-shadow:0 10px 32px rgba(139,92,246,.5); background-position:right center; }
 //         .cta-btn:disabled{ opacity:.65; cursor:not-allowed; transform:none; }
 
 //         .stat-card {
@@ -294,13 +294,13 @@
 //       <header style={{ background:"#fff", borderBottom:"1px solid #f0f0f0", position:"sticky", top:0, zIndex:100, boxShadow:"0 1px 10px rgba(0,0,0,.05)" }}>
 //         <nav style={{ maxWidth:1120, margin:"0 auto", padding:"0 24px", height:64, display:"flex", alignItems:"center", justifyContent:"space-between" }}>
 //           <Link to="/" style={{ display:"flex", alignItems:"center", gap:9, textDecoration:"none" }}>
-//             <div className="sora" style={{ width:32, height:32, borderRadius:10, background:"linear-gradient(135deg,#FF6B35,#FF5722)", display:"flex", alignItems:"center", justifyContent:"center", color:"#fff", fontWeight:900, fontSize:15 }}>S</div>
-//             <span className="sora" style={{ fontWeight:900, fontSize:20, color:"#0D1F2D" }}>Samaya<span style={{ color:"#FF6B35" }}>HR</span></span>
+//             <div className="sora" style={{ width:32, height:32, borderRadius:10, background:"linear-gradient(135deg,#8B5CF6,#06B6D4)", display:"flex", alignItems:"center", justifyContent:"center", color:"#fff", fontWeight:900, fontSize:15 }}>S</div>
+//             <span className="sora" style={{ fontWeight:900, fontSize:20, color:"#0B1020" }}>CrewSync<span style={{ color:"#8B5CF6" }}>People Studio</span></span>
 //           </Link>
 //           <Link to="/"
 //             style={{ display:"flex", alignItems:"center", gap:6, fontSize:13, fontWeight:600, color:"#6b7280", textDecoration:"none", padding:"7px 16px", borderRadius:10, border:"1.5px solid #e5e7eb", transition:"all .2s" }}
-//             onMouseEnter={e => { e.currentTarget.style.borderColor="#FF6B35"; e.currentTarget.style.color="#FF6B35"; }}
-//             onMouseLeave={e => { e.currentTarget.style.borderColor="#e5e7eb"; e.currentTarget.style.color="#6b7280"; }}>
+//             onMouseEnter={e => { e.currentTarget.style.borderColor="#8B5CF6"; e.currentTarget.style.color="#8B5CF6"; }}
+//             onMouseTime Away={e => { e.currentTarget.style.borderColor="#e5e7eb"; e.currentTarget.style.color="#6b7280"; }}>
 //             <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
 //               <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
 //             </svg>
@@ -314,15 +314,15 @@
 //         <div style={{ display:"flex", borderRadius:28, overflow:"hidden", boxShadow:"0 20px 70px rgba(13,31,45,.15)" }}>
 
 //           {/* ══ LEFT: pure visual ══ */}
-//           <div style={{ width:"42%", flexShrink:0, background:"linear-gradient(150deg,#0b1a28 0%,#0f2840 60%,#0d1f2d 100%)", position:"relative", overflow:"hidden", display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", padding:"48px 32px", gap:28 }}>
+//           <div style={{ width:"42%", flexShrink:0, background:"linear-gradient(150deg,#0b1a28 0%,#0f2840 60%,#0B1020 100%)", position:"relative", overflow:"hidden", display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", padding:"48px 32px", gap:28 }}>
 
 //             <AnimatedBg />
 
 //             {/* badge */}
 //             <div style={{ position:"relative", zIndex:2, display:"flex", flexDirection:"column", alignItems:"center", gap:12, textAlign:"center" }}>
-//               <div style={{ display:"inline-flex", alignItems:"center", gap:7, background:"rgba(255,107,53,.14)", border:"1px solid rgba(255,107,53,.3)", borderRadius:999, padding:"5px 16px" }}>
-//                 <span style={{ width:7, height:7, borderRadius:"50%", background:"#FF6B35", display:"inline-block", animation:"ping-dot 1.8s ease-in-out infinite" }} />
-//                 <span style={{ fontSize:11, fontWeight:700, letterSpacing:".1em", color:"#FF6B35", textTransform:"uppercase" }}>Free · 30 min Demo</span>
+//               <div style={{ display:"inline-flex", alignItems:"center", gap:7, background:"rgba(139,92,246,.14)", border:"1px solid rgba(139,92,246,.3)", borderRadius:999, padding:"5px 16px" }}>
+//                 <span style={{ width:7, height:7, borderRadius:"50%", background:"#8B5CF6", display:"inline-block", animation:"ping-dot 1.8s ease-in-out infinite" }} />
+//                 <span style={{ fontSize:11, fontWeight:700, letterSpacing:".1em", color:"#8B5CF6", textTransform:"uppercase" }}>Free · 30 min Demo</span>
 //               </div>
 
 //               <h2 className="sora" style={{ fontSize:"clamp(1.55rem,2.6vw,2.05rem)", fontWeight:900, color:"#fff", lineHeight:1.2, margin:0 }}>
@@ -341,8 +341,8 @@
 //             {/* stat counters */}
 //             {/* <div style={{ position:"relative", zIndex:2, display:"grid", gridTemplateColumns:"1fr 1fr", gap:9, width:"100%" }}>
 //               {[
-//                 { icon:"🏢", to:500,  suffix:"+",   label:"Companies"  },
-//                 { icon:"👥", to:12,   suffix:"k+",  label:"Employees"  },
+//                 { icon:"🏢", to:500,  suffix:"+",   label:"Workspaces"  },
+//                 { icon:"👥", to:12,   suffix:"k+",  label:"Persons"  },
 //                 { icon:"⚡", to:98,   suffix:"%",   label:"Accuracy"   },
 //                 { icon:"🕐", to:5,    suffix:"min", label:"Avg Setup"  },
 //               ].map(s => (
@@ -362,17 +362,17 @@
 //             {/* <div style={{ position:"relative", zIndex:2, background:"rgba(255,255,255,.05)", border:"1px solid rgba(255,255,255,.1)", borderRadius:16, padding:"14px 18px", width:"100%", backdropFilter:"blur(6px)" }}>
 //               <div style={{ display:"flex", gap:2, marginBottom:7 }}>
 //                 {[...Array(5)].map((_,i) => (
-//                   <svg key={i} width="13" height="13" viewBox="0 0 24 24" fill="#FF6B35"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+//                   <svg key={i} width="13" height="13" viewBox="0 0 24 24" fill="#8B5CF6"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
 //                 ))}
 //               </div>
 //               <p style={{ fontSize:12, color:"#d1d5db", margin:"0 0 10px", lineHeight:1.65, fontStyle:"italic" }}>
-//                 "Onboarding took 5 minutes. Payroll runs itself now."
+//                 "Joiner Flow took 5 minutes. Payouts runs itself now."
 //               </p>
 //               <div style={{ display:"flex", alignItems:"center", gap:9 }}>
-//                 <div style={{ width:30, height:30, borderRadius:"50%", background:"linear-gradient(135deg,#FF6B35,#FF5722)", display:"flex", alignItems:"center", justifyContent:"center", fontSize:12, fontWeight:800, color:"#fff", flexShrink:0, boxShadow:"0 0 10px rgba(255,107,53,.4)" }}>R</div>
+//                 <div style={{ width:30, height:30, borderRadius:"50%", background:"linear-gradient(135deg,#8B5CF6,#06B6D4)", display:"flex", alignItems:"center", justifyContent:"center", fontSize:12, fontWeight:800, color:"#fff", flexShrink:0, boxShadow:"0 0 10px rgba(139,92,246,.4)" }}>R</div>
 //                 <div>
 //                   <div style={{ fontSize:12, fontWeight:700, color:"#fff" }}>Rohit M.</div>
-//                   <div style={{ fontSize:10, color:"#6b7280" }}>HR Director, NexaTech</div>
+//                   <div style={{ fontSize:10, color:"#6b7280" }}>People Studio Director, NexaTech</div>
 //                 </div>
 //               </div>
 //             </div> */}
@@ -381,16 +381,16 @@
 //           {/* ══ RIGHT: form (untouched) ══ */}
 //           <div style={{ flex:1, background:"#fff", padding:"44px 40px", overflowY:"auto" }}>
 //             <div style={{ marginBottom:22 }}>
-//               <h3 className="sora" style={{ fontSize:22, fontWeight:900, color:"#0D1F2D", margin:"0 0 5px" }}>Get started today</h3>
+//               <h3 className="sora" style={{ fontSize:22, fontWeight:900, color:"#0B1020", margin:"0 0 5px" }}>Get started today</h3>
 //               <p style={{ fontSize:13, color:"#9ca3af", margin:0 }}>Takes 2 minutes · We confirm your slot within 24 hrs</p>
 //             </div>
 
 //             {submitStatus.type && (
 //               <div style={{
 //                 marginBottom:18, padding:"12px 16px", borderRadius:12, fontSize:14, fontWeight:500,
-//                 background: submitStatus.type === "success" ? "rgba(0,194,168,.08)" : "rgba(239,68,68,.08)",
-//                 border: `1.5px solid ${submitStatus.type === "success" ? "rgba(0,194,168,.3)" : "rgba(239,68,68,.3)"}`,
-//                 color: submitStatus.type === "success" ? "#00A896" : "#dc2626",
+//                 background: submitStatus.type === "success" ? "rgba(6,182,212,.08)" : "rgba(239,68,68,.08)",
+//                 border: `1.5px solid ${submitStatus.type === "success" ? "rgba(6,182,212,.3)" : "rgba(239,68,68,.3)"}`,
+//                 color: submitStatus.type === "success" ? "#0D9488" : "#dc2626",
 //               }}>{submitStatus.message}</div>
 //             )}
 
@@ -398,14 +398,14 @@
 
 //               <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:14 }}>
 //                 <div style={{ display:"flex", flexDirection:"column", gap:4 }}>
-//                   <label style={{ fontSize:12, fontWeight:700, color:"#374151", textTransform:"uppercase", letterSpacing:".06em" }}>Your Name <span style={{ color:"#FF6B35" }}>*</span></label>
+//                   <label style={{ fontSize:12, fontWeight:700, color:"#374151", textTransform:"uppercase", letterSpacing:".06em" }}>Your Name <span style={{ color:"#8B5CF6" }}>*</span></label>
 //                   <input type="text" name="fullName" placeholder="e.g. Rahul Sharma"
 //                     value={formData.fullName} onChange={handleChange}
 //                     className={`bk-input${errors.fullName ? " err" : ""}`} />
 //                   {errors.fullName && <p style={{ fontSize:11, color:"#ef4444", margin:0 }}>{errors.fullName}</p>}
 //                 </div>
 //                 <div style={{ display:"flex", flexDirection:"column", gap:4 }}>
-//                   <label style={{ fontSize:12, fontWeight:700, color:"#374151", textTransform:"uppercase", letterSpacing:".06em" }}>Business Email <span style={{ color:"#FF6B35" }}>*</span></label>
+//                   <label style={{ fontSize:12, fontWeight:700, color:"#374151", textTransform:"uppercase", letterSpacing:".06em" }}>Business Email <span style={{ color:"#8B5CF6" }}>*</span></label>
 //                   <input type="email" name="workEmail" placeholder="you@yourcompany.com"
 //                     value={formData.workEmail} onChange={handleChange}
 //                     className={`bk-input${errors.workEmail ? " err" : ""}`} />
@@ -414,7 +414,7 @@
 //               </div>
 
 //               {/* <div style={{ display:"flex", flexDirection:"column", gap:4 }}>
-//                 <label style={{ fontSize:12, fontWeight:700, color:"#374151", textTransform:"uppercase", letterSpacing:".06em" }}>Create a Password <span style={{ color:"#FF6B35" }}>*</span></label>
+//                 <label style={{ fontSize:12, fontWeight:700, color:"#374151", textTransform:"uppercase", letterSpacing:".06em" }}>Create a Password <span style={{ color:"#8B5CF6" }}>*</span></label>
 //                 <input type="password" name="password" placeholder="Minimum 6 characters"
 //                   value={formData.password} onChange={handleChange}
 //                   className={`bk-input${errors.password ? " err" : ""}`} />
@@ -425,10 +425,10 @@
 //                 </div>
 
 //               <div style={{ display:"flex", flexDirection:"column", gap:4 }}>
-//                 <label style={{ fontSize:12, fontWeight:700, color:"#374151", textTransform:"uppercase", letterSpacing:".06em" }}>Mobile Number <span style={{ color:"#FF6B35" }}>*</span></label>
+//                 <label style={{ fontSize:12, fontWeight:700, color:"#374151", textTransform:"uppercase", letterSpacing:".06em" }}>Pocket Number <span style={{ color:"#8B5CF6" }}>*</span></label>
 //                 <div style={{ display:"flex" }}>
 //                   <select name="phoneCountryCode" value={formData.phoneCountryCode} onChange={handleChange}
-//                     style={{ border:"1.5px solid #e5e7eb", borderRight:"none", borderRadius:"12px 0 0 12px", padding:"11px 10px", background:"#f9fafb", fontSize:13, color:"#0D1F2D", outline:"none", flexShrink:0, width:94 }}>
+//                     style={{ border:"1.5px solid #e5e7eb", borderRight:"none", borderRadius:"12px 0 0 12px", padding:"11px 10px", background:"#f9fafb", fontSize:13, color:"#0B1020", outline:"none", flexShrink:0, width:94 }}>
 //                     <option>IN +91</option>
 //                     <option>US +1</option>
 //                     <option>UK +44</option>
@@ -444,20 +444,20 @@
 
 //               <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:14 }}>
 //                 <div style={{ display:"flex", flexDirection:"column", gap:4 }}>
-//                   <label style={{ fontSize:12, fontWeight:700, color:"#374151", textTransform:"uppercase", letterSpacing:".06em" }}>Organisation <span style={{ color:"#FF6B35" }}>*</span></label>
+//                   <label style={{ fontSize:12, fontWeight:700, color:"#374151", textTransform:"uppercase", letterSpacing:".06em" }}>Organisation <span style={{ color:"#8B5CF6" }}>*</span></label>
 //                   <input type="text" name="companyName" placeholder="Your company name"
 //                     value={formData.companyName} onChange={handleChange}
 //                     className={`bk-input${errors.companyName ? " err" : ""}`} />
 //                   {errors.companyName && <p style={{ fontSize:11, color:"#ef4444", margin:0 }}>{errors.companyName}</p>}
 //                 </div>
 //                 <div style={{ display:"flex", flexDirection:"column", gap:4 }}>
-//                   <label style={{ fontSize:12, fontWeight:700, color:"#374151", textTransform:"uppercase", letterSpacing:".06em" }}>I Am A… <span style={{ color:"#FF6B35" }}>*</span></label>
+//                   <label style={{ fontSize:12, fontWeight:700, color:"#374151", textTransform:"uppercase", letterSpacing:".06em" }}>I Am A… <span style={{ color:"#8B5CF6" }}>*</span></label>
 //                   <select name="role" value={formData.role} onChange={handleChange}
 //                     className={`bk-input${errors.role ? " err" : ""}`}>
 //                     <option value="">Who best describes you?</option>
-//                     <option value="HR Manager / Director">People &amp; Culture Lead</option>
+//                     <option value="People Studio Manager / Director">People &amp; Culture Lead</option>
 //                     <option value="Founder / CEO">Business Owner / Co-Founder</option>
-//                     <option value="Finance / Admin">Finance &amp; Accounts Head</option>
+//                     <option value="Money Desk / Operator">Money Desk &amp; Accounts Head</option>
 //                     <option value="IT / Operations">Operations &amp; Tech Lead</option>
 //                     <option value="Other">Exploring for My Team</option>
 //                   </select>
@@ -465,7 +465,7 @@
 //                 </div>
 //               </div>
 
-//               <div style={{ display:"flex", flexWrap:"wrap", gap:14, background:"#F7F8FA", borderRadius:14, padding:"12px 16px" }}>
+//               <div style={{ display:"flex", flexWrap:"wrap", gap:14, background:"#F6F8FB", borderRadius:14, padding:"12px 16px" }}>
 //                 {[["🔒","Secure & Private"],["🆓","No Credit Card"],["⚡","Response in 24h"]].map(([ic,tx]) => (
 //                   <div key={tx} style={{ display:"flex", alignItems:"center", gap:6, fontSize:12, color:"#6b7280", fontWeight:500 }}>
 //                     <span>{ic}</span>{tx}
@@ -479,7 +479,7 @@
 
 //               <p style={{ fontSize:11, color:"#9ca3af", textAlign:"center", margin:"-4px 0 0" }}>
 //                 No spam, ever. By submitting you agree to our{" "}
-//                 <Link to="/privacy" style={{ color:"#FF6B35", textDecoration:"none" }}>Privacy Policy</Link>.
+//                 <Link to="/privacy" style={{ color:"#8B5CF6", textDecoration:"none" }}>Privacy Playbook</Link>.
 //               </p>
 //             </form>
 //           </div>
@@ -516,13 +516,13 @@ function AnimatedBg() {
       r:  1 + Math.random() * 2,
       dx: (Math.random() - 0.5) * 0.35,
       dy: (Math.random() - 0.5) * 0.35,
-      color: Math.random() > 0.5 ? "#FF6B35" : "#00C2A8",
+      color: Math.random() > 0.5 ? "#8B5CF6" : "#06B6D4",
       alpha: 0.25 + Math.random() * 0.45,
     }));
 
     const orbs = [
-      { x: 0.2, y: 0.3, r: 90, color: "#FF6B35", dx: 0.18, dy: 0.12 },
-      { x: 0.8, y: 0.6, r: 70, color: "#00C2A8", dx: -0.14, dy: 0.16 },
+      { x: 0.2, y: 0.3, r: 90, color: "#8B5CF6", dx: 0.18, dy: 0.12 },
+      { x: 0.8, y: 0.6, r: 70, color: "#06B6D4", dx: -0.14, dy: 0.16 },
       { x: 0.5, y: 0.85,r: 60, color: "#818cf8", dx: 0.10, dy: -0.18 },
     ].map(o => ({ ...o, x: o.x * canvas.width, y: o.y * canvas.height }));
 
@@ -564,7 +564,7 @@ function AnimatedBg() {
             ctx.beginPath();
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = `rgba(255,107,53,${0.12 * (1 - dist/70)})`;
+            ctx.strokeStyle = `rgba(139,92,246,${0.12 * (1 - dist/70)})`;
             ctx.lineWidth = 0.6;
             ctx.stroke();
           }
@@ -579,7 +579,7 @@ function AnimatedBg() {
 }
 
 /* Rotating typewriter word */
-const WORDS = ["Payroll", "Attendance", "Leaves", "Onboarding", "Analytics", "Compliance"];
+const WORDS = ["Payouts", "Presence", "Time Aways", "Joiner Flow", "Signals", "Assurance"];
 function RotatingWord() {
   const [idx, setIdx]         = useState(0);
   const [visible, setVisible] = useState(true);
@@ -592,7 +592,7 @@ function RotatingWord() {
   }, []);
   return (
     <span style={{
-      background: "linear-gradient(90deg,#FF6B35,#ff9a6c)",
+      background: "linear-gradient(90deg,#8B5CF6,#ff9a6c)",
       WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
       display: "inline-block",
       transition: "opacity .3s cubic-bezier(.4,0,.2,1), transform .3s cubic-bezier(.4,0,.2,1)",
@@ -612,20 +612,20 @@ function OrbitGraphic() {
     <div style={{ position:"relative", width:230, height:230 }}>
 
       {/* glow layers */}
-      <div style={{ position:"absolute", top:"50%", left:"50%", width:100, height:100, marginLeft:-50, marginTop:-50, borderRadius:"50%", background:"radial-gradient(circle,rgba(255,107,53,.35) 0%,transparent 70%)", animation:"pulse-glow 2.8s ease-in-out infinite" }} />
-      <div style={{ position:"absolute", top:"50%", left:"50%", width:60, height:60, marginLeft:-30, marginTop:-30, borderRadius:"50%", background:"radial-gradient(circle,rgba(255,107,53,.5) 0%,transparent 70%)", animation:"pulse-glow 2.8s ease-in-out infinite .4s" }} />
+      <div style={{ position:"absolute", top:"50%", left:"50%", width:100, height:100, marginLeft:-50, marginTop:-50, borderRadius:"50%", background:"radial-gradient(circle,rgba(139,92,246,.35) 0%,transparent 70%)", animation:"pulse-glow 2.8s ease-in-out infinite" }} />
+      <div style={{ position:"absolute", top:"50%", left:"50%", width:60, height:60, marginLeft:-30, marginTop:-30, borderRadius:"50%", background:"radial-gradient(circle,rgba(139,92,246,.5) 0%,transparent 70%)", animation:"pulse-glow 2.8s ease-in-out infinite .4s" }} />
 
       {/* center */}
-      <div style={{ position:"absolute", top:"50%", left:"50%", transform:"translate(-50%,-50%)", width:54, height:54, borderRadius:16, background:"linear-gradient(135deg,#FF6B35,#FF5722)", display:"flex", alignItems:"center", justifyContent:"center", zIndex:5, boxShadow:"0 0 0 6px rgba(255,107,53,.15), 0 0 40px rgba(255,107,53,.4)" }}>
+      <div style={{ position:"absolute", top:"50%", left:"50%", transform:"translate(-50%,-50%)", width:54, height:54, borderRadius:16, background:"linear-gradient(135deg,#8B5CF6,#06B6D4)", display:"flex", alignItems:"center", justifyContent:"center", zIndex:5, boxShadow:"0 0 0 6px rgba(139,92,246,.15), 0 0 40px rgba(139,92,246,.4)" }}>
         <span style={{ fontSize:24 }}>⚡</span>
       </div>
 
       {/* ring 1 */}
-      <div style={{ position:"absolute", top:"50%", left:"50%", width:126, height:126, marginLeft:-63, marginTop:-63, borderRadius:"50%", border:"1.5px solid rgba(255,107,53,.25)", boxShadow:"0 0 20px rgba(255,107,53,.08) inset", animation:"spin-cw 10s linear infinite" }}>
+      <div style={{ position:"absolute", top:"50%", left:"50%", width:126, height:126, marginLeft:-63, marginTop:-63, borderRadius:"50%", border:"1.5px solid rgba(139,92,246,.25)", boxShadow:"0 0 20px rgba(139,92,246,.08) inset", animation:"spin-cw 10s linear infinite" }}>
         {icons1.map((ic, i) => {
           const deg = i * 90;
           return (
-            <div key={i} style={{ position:"absolute", top:"50%", left:"50%", width:30, height:30, marginLeft:-15, marginTop:-15, borderRadius:"50%", background:`linear-gradient(135deg,${["#FF6B35","#00C2A8","#818cf8","#34d399"][i]},${["#ff9a6c","#00a896","#a5b4fc","#6ee7b7"][i]})`, display:"flex", alignItems:"center", justifyContent:"center", fontSize:13, boxShadow:`0 0 16px ${["rgba(255,107,53,.6)","rgba(0,194,168,.6)","rgba(129,140,248,.6)","rgba(52,211,153,.6)"][i]}`, transform:`rotate(${deg}deg) translateX(62px) rotate(-${deg}deg)` }}>
+            <div key={i} style={{ position:"absolute", top:"50%", left:"50%", width:30, height:30, marginLeft:-15, marginTop:-15, borderRadius:"50%", background:`linear-gradient(135deg,${["#8B5CF6","#06B6D4","#818cf8","#34d399"][i]},${["#ff9a6c","#0D9488","#a5b4fc","#6ee7b7"][i]})`, display:"flex", alignItems:"center", justifyContent:"center", fontSize:13, boxShadow:`0 0 16px ${["rgba(139,92,246,.6)","rgba(6,182,212,.6)","rgba(129,140,248,.6)","rgba(52,211,153,.6)"][i]}`, transform:`rotate(${deg}deg) translateX(62px) rotate(-${deg}deg)` }}>
               {ic}
             </div>
           );
@@ -633,7 +633,7 @@ function OrbitGraphic() {
       </div>
 
       {/* ring 2 */}
-      <div style={{ position:"absolute", top:"50%", left:"50%", width:200, height:200, marginLeft:-100, marginTop:-100, borderRadius:"50%", border:"1px dashed rgba(0,194,168,.2)", animation:"spin-ccw 16s linear infinite" }}>
+      <div style={{ position:"absolute", top:"50%", left:"50%", width:200, height:200, marginLeft:-100, marginTop:-100, borderRadius:"50%", border:"1px dashed rgba(6,182,212,.2)", animation:"spin-ccw 16s linear infinite" }}>
         {icons2.map((ic, i) => {
           const deg = 45 + i * 90;
           return (
@@ -694,7 +694,7 @@ export default function BookDemoPage() {
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.workEmail)) e.workEmail = "Enter a valid email address";
     if (!formData.phoneNumber.trim()) e.phoneNumber = "Phone number is required";
     else if (!/^\d{7,15}$/.test(formData.phoneNumber.replace(/\s+/g,""))) e.phoneNumber = "Enter a valid phone number (7–15 digits)";
-    if (!formData.companyName.trim()) e.companyName = "Company name is required";
+    if (!formData.companyName.trim()) e.companyName = "Workspace name is required";
     if (!formData.role || formData.role === "Select Role") e.role = "Please select your role";
     setErrors(e);
     return Object.keys(e).length === 0;
@@ -736,7 +736,7 @@ export default function BookDemoPage() {
   };
 
   return (
-    <div style={{ minHeight:"100vh", background:"#F7F8FA" }}>
+    <div style={{ minHeight:"100vh", background:"#F6F8FB" }}>
       <style>{`
         @import url('[fonts.googleapis.com](https://fonts.googleapis.com/css2?family=Sora:wght@700;800;900&family=DM+Sans:wght@400;500;600&display=swap)');
         *, *::before, *::after { font-family:'DM Sans',sans-serif; box-sizing:border-box; }
@@ -751,25 +751,25 @@ export default function BookDemoPage() {
 
         .bk-input {
           width:100%; border:1.5px solid #e5e7eb; border-radius:12px;
-          padding:11px 14px; font-size:14px; color:#0D1F2D; outline:none;
+          padding:11px 14px; font-size:14px; color:#0B1020; outline:none;
           transition:border-color .2s, box-shadow .2s; background:#fff;
         }
-        .bk-input:focus { border-color:#FF6B35; box-shadow:0 0 0 3px rgba(255,107,53,.1); }
+        .bk-input:focus { border-color:#8B5CF6; box-shadow:0 0 0 3px rgba(139,92,246,.1); }
         .bk-input.err   { border-color:#f87171; }
         .bk-input::placeholder { color:#9ca3af; }
         select.bk-input { cursor:pointer; }
 
         .cta-btn {
           width:100%;
-          background: linear-gradient(135deg,#FF6B35 0%,#FF5722 50%,#ff7043 100%);
+          background: linear-gradient(135deg,#8B5CF6 0%,#06B6D4 50%,#38BDF8 100%);
           background-size: 200% auto;
           color:#fff; font-weight:800; font-size:15px; padding:14px;
           border-radius:14px; border:none; cursor:pointer;
-          box-shadow:0 4px 24px rgba(255,107,53,.4);
+          box-shadow:0 4px 24px rgba(139,92,246,.4);
           transition:transform .22s, box-shadow .22s, background-position .4s;
           letter-spacing:.03em;
         }
-        .cta-btn:hover   { transform:translateY(-2px); box-shadow:0 10px 32px rgba(255,107,53,.5); background-position:right center; }
+        .cta-btn:hover   { transform:translateY(-2px); box-shadow:0 10px 32px rgba(139,92,246,.5); background-position:right center; }
         .cta-btn:disabled{ opacity:.65; cursor:not-allowed; transform:none; }
 
         .stat-card {
@@ -786,13 +786,13 @@ export default function BookDemoPage() {
       <header style={{ background:"#fff", borderBottom:"1px solid #f0f0f0", position:"sticky", top:0, zIndex:100, boxShadow:"0 1px 10px rgba(0,0,0,.05)" }}>
         <nav style={{ maxWidth:1120, margin:"0 auto", padding:"0 24px", height:64, display:"flex", alignItems:"center", justifyContent:"space-between" }}>
           <Link to="/" style={{ display:"flex", alignItems:"center", gap:9, textDecoration:"none" }}>
-            <div className="sora" style={{ width:32, height:32, borderRadius:10, background:"linear-gradient(135deg,#FF6B35,#FF5722)", display:"flex", alignItems:"center", justifyContent:"center", color:"#fff", fontWeight:900, fontSize:15 }}>S</div>
-            <span className="sora" style={{ fontWeight:900, fontSize:20, color:"#0D1F2D" }}>Samaya<span style={{ color:"#FF6B35" }}>HR</span></span>
+            <div className="sora" style={{ width:32, height:32, borderRadius:10, background:"linear-gradient(135deg,#8B5CF6,#06B6D4)", display:"flex", alignItems:"center", justifyContent:"center", color:"#fff", fontWeight:900, fontSize:15 }}>S</div>
+            <span className="sora" style={{ fontWeight:900, fontSize:20, color:"#0B1020" }}>CrewSync<span style={{ color:"#8B5CF6" }}>People Studio</span></span>
           </Link>
           <Link to="/"
             style={{ display:"flex", alignItems:"center", gap:6, fontSize:13, fontWeight:600, color:"#6b7280", textDecoration:"none", padding:"7px 16px", borderRadius:10, border:"1.5px solid #e5e7eb", transition:"all .2s" }}
-            onMouseEnter={e => { e.currentTarget.style.borderColor="#FF6B35"; e.currentTarget.style.color="#FF6B35"; }}
-            onMouseLeave={e => { e.currentTarget.style.borderColor="#e5e7eb"; e.currentTarget.style.color="#6b7280"; }}>
+            onMouseEnter={e => { e.currentTarget.style.borderColor="#8B5CF6"; e.currentTarget.style.color="#8B5CF6"; }}
+            onMouseTime Away={e => { e.currentTarget.style.borderColor="#e5e7eb"; e.currentTarget.style.color="#6b7280"; }}>
             <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
               <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
             </svg>
@@ -806,15 +806,15 @@ export default function BookDemoPage() {
         <div style={{ display:"flex", borderRadius:28, overflow:"hidden", boxShadow:"0 20px 70px rgba(13,31,45,.15)" }}>
 
           {/* ══ LEFT: pure visual ══ */}
-          <div style={{ width:"42%", flexShrink:0, background:"linear-gradient(150deg,#0b1a28 0%,#0f2840 60%,#0d1f2d 100%)", position:"relative", overflow:"hidden", display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", padding:"48px 32px", gap:28 }}>
+          <div style={{ width:"42%", flexShrink:0, background:"linear-gradient(150deg,#0b1a28 0%,#0f2840 60%,#0B1020 100%)", position:"relative", overflow:"hidden", display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", padding:"48px 32px", gap:28 }}>
 
             <AnimatedBg />
 
             {/* badge */}
             <div style={{ position:"relative", zIndex:2, display:"flex", flexDirection:"column", alignItems:"center", gap:12, textAlign:"center" }}>
-              <div style={{ display:"inline-flex", alignItems:"center", gap:7, background:"rgba(255,107,53,.14)", border:"1px solid rgba(255,107,53,.3)", borderRadius:999, padding:"5px 16px" }}>
-                <span style={{ width:7, height:7, borderRadius:"50%", background:"#FF6B35", display:"inline-block", animation:"ping-dot 1.8s ease-in-out infinite" }} />
-                <span style={{ fontSize:11, fontWeight:700, letterSpacing:".1em", color:"#FF6B35", textTransform:"uppercase" }}>Free · 30 min Demo</span>
+              <div style={{ display:"inline-flex", alignItems:"center", gap:7, background:"rgba(139,92,246,.14)", border:"1px solid rgba(139,92,246,.3)", borderRadius:999, padding:"5px 16px" }}>
+                <span style={{ width:7, height:7, borderRadius:"50%", background:"#8B5CF6", display:"inline-block", animation:"ping-dot 1.8s ease-in-out infinite" }} />
+                <span style={{ fontSize:11, fontWeight:700, letterSpacing:".1em", color:"#8B5CF6", textTransform:"uppercase" }}>Free · 30 min Demo</span>
               </div>
 
               <h2 className="sora" style={{ fontSize:"clamp(1.55rem,2.6vw,2.05rem)", fontWeight:900, color:"#fff", lineHeight:1.2, margin:0 }}>
@@ -834,16 +834,16 @@ export default function BookDemoPage() {
           {/* ══ RIGHT: form ══ */}
           <div style={{ flex:1, background:"#fff", padding:"44px 40px", overflowY:"auto" }}>
             <div style={{ marginBottom:22 }}>
-              <h3 className="sora" style={{ fontSize:22, fontWeight:900, color:"#0D1F2D", margin:"0 0 5px" }}>Get started today</h3>
+              <h3 className="sora" style={{ fontSize:22, fontWeight:900, color:"#0B1020", margin:"0 0 5px" }}>Get started today</h3>
               <p style={{ fontSize:13, color:"#9ca3af", margin:0 }}>Takes 2 minutes · We confirm your slot within 24 hrs</p>
             </div>
 
             {submitStatus.type && (
               <div style={{
                 marginBottom:18, padding:"12px 16px", borderRadius:12, fontSize:14, fontWeight:500,
-                background: submitStatus.type === "success" ? "rgba(0,194,168,.08)" : "rgba(239,68,68,.08)",
-                border: `1.5px solid ${submitStatus.type === "success" ? "rgba(0,194,168,.3)" : "rgba(239,68,68,.3)"}`,
-                color: submitStatus.type === "success" ? "#00A896" : "#dc2626",
+                background: submitStatus.type === "success" ? "rgba(6,182,212,.08)" : "rgba(239,68,68,.08)",
+                border: `1.5px solid ${submitStatus.type === "success" ? "rgba(6,182,212,.3)" : "rgba(239,68,68,.3)"}`,
+                color: submitStatus.type === "success" ? "#0D9488" : "#dc2626",
               }}>{submitStatus.message}</div>
             )}
 
@@ -851,14 +851,14 @@ export default function BookDemoPage() {
 
               <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:14 }}>
                 <div style={{ display:"flex", flexDirection:"column", gap:4 }}>
-                  <label style={{ fontSize:12, fontWeight:700, color:"#374151", textTransform:"uppercase", letterSpacing:".06em" }}>Your Name <span style={{ color:"#FF6B35" }}>*</span></label>
+                  <label style={{ fontSize:12, fontWeight:700, color:"#374151", textTransform:"uppercase", letterSpacing:".06em" }}>Your Name <span style={{ color:"#8B5CF6" }}>*</span></label>
                   <input type="text" name="fullName" placeholder="e.g. Rahul Sharma"
                     value={formData.fullName} onChange={handleChange}
                     className={`bk-input${errors.fullName ? " err" : ""}`} />
                   {errors.fullName && <p style={{ fontSize:11, color:"#ef4444", margin:0 }}>{errors.fullName}</p>}
                 </div>
                 <div style={{ display:"flex", flexDirection:"column", gap:4 }}>
-                  <label style={{ fontSize:12, fontWeight:700, color:"#374151", textTransform:"uppercase", letterSpacing:".06em" }}>Business Email <span style={{ color:"#FF6B35" }}>*</span></label>
+                  <label style={{ fontSize:12, fontWeight:700, color:"#374151", textTransform:"uppercase", letterSpacing:".06em" }}>Business Email <span style={{ color:"#8B5CF6" }}>*</span></label>
                   <input type="email" name="workEmail" placeholder="you@yourcompany.com"
                     value={formData.workEmail} onChange={handleChange}
                     className={`bk-input${errors.workEmail ? " err" : ""}`} />
@@ -867,10 +867,10 @@ export default function BookDemoPage() {
               </div>
 
               <div style={{ display:"flex", flexDirection:"column", gap:4 }}>
-                <label style={{ fontSize:12, fontWeight:700, color:"#374151", textTransform:"uppercase", letterSpacing:".06em" }}>Mobile Number <span style={{ color:"#FF6B35" }}>*</span></label>
+                <label style={{ fontSize:12, fontWeight:700, color:"#374151", textTransform:"uppercase", letterSpacing:".06em" }}>Pocket Number <span style={{ color:"#8B5CF6" }}>*</span></label>
                 <div style={{ display:"flex" }}>
                   <select name="phoneCountryCode" value={formData.phoneCountryCode} onChange={handleChange}
-                    style={{ border:"1.5px solid #e5e7eb", borderRight:"none", borderRadius:"12px 0 0 12px", padding:"11px 10px", background:"#f9fafb", fontSize:13, color:"#0D1F2D", outline:"none", flexShrink:0, width:94 }}>
+                    style={{ border:"1.5px solid #e5e7eb", borderRight:"none", borderRadius:"12px 0 0 12px", padding:"11px 10px", background:"#f9fafb", fontSize:13, color:"#0B1020", outline:"none", flexShrink:0, width:94 }}>
                     <option>IN +91</option>
                     <option>US +1</option>
                     <option>UK +44</option>
@@ -886,20 +886,20 @@ export default function BookDemoPage() {
 
               <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:14 }}>
                 <div style={{ display:"flex", flexDirection:"column", gap:4 }}>
-                  <label style={{ fontSize:12, fontWeight:700, color:"#374151", textTransform:"uppercase", letterSpacing:".06em" }}>Organisation <span style={{ color:"#FF6B35" }}>*</span></label>
+                  <label style={{ fontSize:12, fontWeight:700, color:"#374151", textTransform:"uppercase", letterSpacing:".06em" }}>Organisation <span style={{ color:"#8B5CF6" }}>*</span></label>
                   <input type="text" name="companyName" placeholder="Your company name"
                     value={formData.companyName} onChange={handleChange}
                     className={`bk-input${errors.companyName ? " err" : ""}`} />
                   {errors.companyName && <p style={{ fontSize:11, color:"#ef4444", margin:0 }}>{errors.companyName}</p>}
                 </div>
                 <div style={{ display:"flex", flexDirection:"column", gap:4 }}>
-                  <label style={{ fontSize:12, fontWeight:700, color:"#374151", textTransform:"uppercase", letterSpacing:".06em" }}>I Am A… <span style={{ color:"#FF6B35" }}>*</span></label>
+                  <label style={{ fontSize:12, fontWeight:700, color:"#374151", textTransform:"uppercase", letterSpacing:".06em" }}>I Am A… <span style={{ color:"#8B5CF6" }}>*</span></label>
                   <select name="role" value={formData.role} onChange={handleChange}
                     className={`bk-input${errors.role ? " err" : ""}`}>
                     <option value="">Who best describes you?</option>
-                    <option value="HR Manager / Director">People &amp; Culture Lead</option>
+                    <option value="People Studio Manager / Director">People &amp; Culture Lead</option>
                     <option value="Founder / CEO">Business Owner / Co-Founder</option>
-                    <option value="Finance / Admin">Finance &amp; Accounts Head</option>
+                    <option value="Money Desk / Operator">Money Desk &amp; Accounts Head</option>
                     <option value="IT / Operations">Operations &amp; Tech Lead</option>
                     <option value="Other">Exploring for My Team</option>
                   </select>
@@ -907,7 +907,7 @@ export default function BookDemoPage() {
                 </div>
               </div>
 
-              <div style={{ display:"flex", flexWrap:"wrap", gap:14, background:"#F7F8FA", borderRadius:14, padding:"12px 16px" }}>
+              <div style={{ display:"flex", flexWrap:"wrap", gap:14, background:"#F6F8FB", borderRadius:14, padding:"12px 16px" }}>
                 {[["🔒","Secure & Private"],["🆓","No Credit Card"],["⚡","Response in 24h"]].map(([ic,tx]) => (
                   <div key={tx} style={{ display:"flex", alignItems:"center", gap:6, fontSize:12, color:"#6b7280", fontWeight:500 }}>
                     <span>{ic}</span>{tx}
@@ -921,7 +921,7 @@ export default function BookDemoPage() {
 
               <p style={{ fontSize:11, color:"#9ca3af", textAlign:"center", margin:"-4px 0 0" }}>
                 No spam, ever. By submitting you agree to our{" "}
-                <Link to="/privacy" style={{ color:"#FF6B35", textDecoration:"none" }}>Privacy Policy</Link>.
+                <Link to="/privacy" style={{ color:"#8B5CF6", textDecoration:"none" }}>Privacy Playbook</Link>.
               </p>
             </form>
           </div>

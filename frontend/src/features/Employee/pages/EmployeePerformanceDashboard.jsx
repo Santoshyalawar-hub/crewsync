@@ -36,7 +36,7 @@
 //   "Needs Improvement":{ bg:"#FFF0F0",color:"#7A1A1A",ring:"#FF7070" },
 // };
 
-// export default function EmployeePerformanceDashboard() {
+// export default function PersonMomentumControlRoom() {
 //   const [perf,  setPerf]  = useState(null);
 //   const [board, setBoard] = useState(null);
 //   const [busy,  setBusy]  = useState(true);
@@ -268,7 +268,7 @@
 
 // /* ── LEADERBOARD ── */
 // function Leaderboard({ data }) {
-//   const { currentUser, topPerformers, totalEmployees, month } = data;
+//   const { currentUser, topPerformers, totalPersons, month } = data;
 //   const fmtMonth = s => {
 //     if (!s) return "";
 //     const [y, m] = s.split("-");
@@ -287,7 +287,7 @@
 //         <div style={{ background:"rgba(255,255,255,.06)", border:"1px solid rgba(255,255,255,.1)", borderRadius:12, padding:"10px 20px", textAlign:"center" }}>
 //           <p style={{ fontSize:9, color:C.silver, marginBottom:2, fontWeight:600, textTransform:"uppercase", letterSpacing:".08em" }}>Your Position</p>
 //           <p className="disp" style={{ fontSize:36, color:C.lime, lineHeight:1 }}>#{currentUser?.rank||"—"}</p>
-//           <p style={{ fontSize:10, color:C.silver }}>of {totalEmployees}</p>
+//           <p style={{ fontSize:10, color:C.silver }}>of {totalPersons}</p>
 //         </div>
 //       </div>
 
@@ -468,7 +468,7 @@ import { RefreshCw, CheckCircle, Clock, TrendingUp, Star } from "lucide-react";
 import api from "@/lib/apiClient";
 
 /*
-  EmployeePerformanceDashboard
+  PersonMomentumControlRoom
   ─────────────────────────────────────────────────────────────────
   Fixes:
   1. Replaced axios.create({ withCredentials: true }) with plain fetch
@@ -510,7 +510,7 @@ const gradeMap = {
   "Needs Improvement": { bg:"#FFF0F0", color:"#7A1A1A", ring:"#FF7070" },
 };
 
-export default function EmployeePerformanceDashboard() {
+export default function PersonMomentumControlRoom() {
   const [perf,  setPerf]  = useState(null);
   const [board, setBoard] = useState(null);
   const [busy,  setBusy]  = useState(true);
@@ -523,7 +523,7 @@ export default function EmployeePerformanceDashboard() {
 
       /* ── Fetch performance data ───────────────────────────────────────────
          GET /api/performance/me
-         Response: ApiResponse<PerformanceResponse>
+         Response: ApiResponse<MomentumResponse>
          { success: true, data: { employeeId, name, currentScore, ... } }
       ─────────────────────────────────────────────────────────────────────── */
       try {
@@ -541,7 +541,7 @@ export default function EmployeePerformanceDashboard() {
           // No performance record yet — show empty state, not error
           setPerf(null);
         } else {
-          throw new Error(pErr?.response?.data?.message || pErr.message || "Performance data unavailable");
+          throw new Error(pErr?.response?.data?.message || pErr.message || "Momentum data unavailable");
         }
       }
 
@@ -560,7 +560,7 @@ export default function EmployeePerformanceDashboard() {
       }
 
     } catch (e) {
-      console.error("Performance load error:", e);
+      console.error("Momentum load error:", e);
       setErr(e.message || "Failed to load performance data.");
     } finally {
       setBusy(false);
@@ -792,7 +792,7 @@ export default function EmployeePerformanceDashboard() {
 
 /* ── LEADERBOARD ── */
 function Leaderboard({ data }) {
-  const { currentUser, topPerformers, totalEmployees, month } = data;
+  const { currentUser, topPerformers, totalPersons, month } = data;
   const fmtMonth = s => {
     if (!s) return "";
     const [y, m] = s.split("-");
@@ -811,7 +811,7 @@ function Leaderboard({ data }) {
         <div style={{ background:"rgba(255,255,255,.06)", border:"1px solid rgba(255,255,255,.1)", borderRadius:12, padding:"10px 20px", textAlign:"center" }}>
           <p style={{ fontSize:9, color:C.silver, marginBottom:2, fontWeight:600, textTransform:"uppercase", letterSpacing:".08em" }}>Your Position</p>
           <p className="disp" style={{ fontSize:36, color:C.lime, lineHeight:1 }}>#{currentUser?.rank || "—"}</p>
-          <p style={{ fontSize:10, color:C.silver }}>of {totalEmployees}</p>
+          <p style={{ fontSize:10, color:C.silver }}>of {totalPersons}</p>
         </div>
       </div>
 

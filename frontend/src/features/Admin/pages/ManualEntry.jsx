@@ -7,7 +7,7 @@ import {
 
 /* ── Design tokens ── */
 const T = {
-  navy: "#0D1F2D", navyMid: "#1E3448", coral: "#FF6B35", teal: "#00C2A8",
+  navy: "#0B1020", navyMid: "#374151", coral: "#8B5CF6", teal: "#06B6D4",
   bg: "#F5F7FB", border: "#E8ECF2",
 };
 
@@ -17,12 +17,12 @@ const CSS = `
 .me2 .fd { font-family:'Sora',sans-serif; }
 .me2-card { background:#fff; border:1.5px solid ${T.border}; border-radius:18px; box-shadow:0 2px 14px rgba(13,31,45,.05); overflow:hidden; }
 .me2-input { width:100%; border:1.5px solid ${T.border}; border-radius:10px; padding:10px 14px; font-size:13px; font-family:'DM Sans',sans-serif; color:${T.navy}; outline:none; transition:border-color .2s,box-shadow .2s; background:#fff; }
-.me2-input:focus { border-color:${T.coral}; box-shadow:0 0 0 3px rgba(255,107,53,.1); }
+.me2-input:focus { border-color:${T.coral}; box-shadow:0 0 0 3px rgba(139,92,246,.1); }
 .me2-select { appearance:none; width:100%; border:1.5px solid ${T.border}; border-radius:10px; padding:10px 34px 10px 14px; font-size:13px; font-family:'DM Sans',sans-serif; color:${T.navy}; outline:none; background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2.5'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat right 12px center; }
-.me2-select:focus { border-color:${T.coral}; box-shadow:0 0 0 3px rgba(255,107,53,.1); }
+.me2-select:focus { border-color:${T.coral}; box-shadow:0 0 0 3px rgba(139,92,246,.1); }
 .me2-label { font-size:11px; font-weight:700; color:#64748b; margin-bottom:6px; display:block; text-transform:uppercase; letter-spacing:.06em; }
 .me2-emp-card { background:#fff; border:1.5px solid ${T.border}; border-radius:14px; padding:14px 16px; cursor:pointer; transition:all .15s; }
-.me2-emp-card:hover, .me2-emp-card.selected { border-color:${T.coral}; background:#FFFAF8; box-shadow:0 4px 16px rgba(255,107,53,.1); }
+.me2-emp-card:hover, .me2-emp-card.selected { border-color:${T.coral}; background:#FFFAF8; box-shadow:0 4px 16px rgba(139,92,246,.1); }
 .me2-comp-row { display:flex; align-items:center; justify-content:space-between; padding:10px 0; border-bottom:1px solid ${T.border}; }
 .me2-comp-row:last-child { border-bottom:none; }
 @keyframes me2Up { from{opacity:0;transform:translateY(7px)} to{opacity:1;transform:translateY(0)} }
@@ -36,16 +36,16 @@ const MONTHS = [
 ];
 
 const COMPONENT_LABELS = {
-  basicSalary:      "Basic Salary",
+  basicCompensation:      "Basic Compensation",
   hra:              "HRA",
   conveyanceAllowance: "Conveyance Allowance",
   medicalAllowance: "Medical Allowance",
   specialAllowance: "Special Allowance",
   otherAllowance:   "Other Allowance",
-  performanceBonus: "Performance Bonus",
-  pfEmployee:       "PF (Employee)",
+  performanceBonus: "Momentum Bonus",
+  pfPerson:       "PF (Person)",
   pfEmployer:       "PF (Employer)",
-  esiEmployee:      "ESI (Employee)",
+  esiPerson:      "ESI (Person)",
   esiEmployer:      "ESI (Employer)",
   incomeTax:        "Income Tax (TDS)",
   professionalTax:  "Professional Tax",
@@ -54,19 +54,19 @@ const COMPONENT_LABELS = {
   lopDeduction:     "LOP Deduction",
 };
 
-const EARNING_KEYS  = ["basicSalary","hra","conveyanceAllowance","medicalAllowance","specialAllowance","otherAllowance","performanceBonus"];
-const DEDUCTION_KEYS = ["pfEmployee","pfEmployer","esiEmployee","esiEmployer","incomeTax","professionalTax","loanDeduction","otherDeduction","lopDeduction"];
+const EARNING_KEYS  = ["basicCompensation","hra","conveyanceAllowance","medicalAllowance","specialAllowance","otherAllowance","performanceBonus"];
+const DEDUCTION_KEYS = ["pfPerson","pfEmployer","esiPerson","esiEmployer","incomeTax","professionalTax","loanDeduction","otherDeduction","lopDeduction"];
 
 function fmt(n) { return Number(n || 0).toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
 
 /* ══════════════════════════════════════════════════════════════════ */
 export default function ManualEntry() {
   const [step,       setStep]       = useState(1); // 1=select emp, 2=entry, 3=preview
-  const [employees,  setEmployees]  = useState([]);
+  const [employees,  setPersons]  = useState([]);
   const [loading,    setLoading]    = useState(true);
   const [search,     setSearch]     = useState("");
   const [selected,   setSelected]   = useState(null);
-  const [salaryData, setSalaryData] = useState(null);
+  const [salaryData, setCompensationData] = useState(null);
   const [components, setComponents] = useState({});
   const [payMonth,   setPayMonth]   = useState(new Date().getMonth()); // 0-indexed
   const [payYear,    setPayYear]    = useState(new Date().getFullYear());
@@ -77,22 +77,22 @@ export default function ManualEntry() {
   const [success,    setSuccess]    = useState(null);
 
   /* ── Load employees ── */
-  const fetchEmployees = useCallback(async () => {
+  const fetchPersons = useCallback(async () => {
     setLoading(true);
     try {
       const res = await api.get("/api/users/tenant/employees");
       const raw = res.data?.data || res.data || [];
-      setEmployees(Array.isArray(raw) ? raw : []);
+      setPersons(Array.isArray(raw) ? raw : []);
     } catch (err) {
       console.error("Fetch employees error:", err);
       setError("Failed to load employees.");
     } finally { setLoading(false); }
   }, []);
 
-  useEffect(() => { fetchEmployees(); }, [fetchEmployees]);
+  useEffect(() => { fetchPersons(); }, [fetchPersons]);
 
   /* ── Load salary components when employee selected ── */
-  const loadSalaryData = async (emp) => {
+  const loadCompensationData = async (emp) => {
     setSelected(emp);
     setError(null);
     try {
@@ -104,7 +104,7 @@ export default function ManualEntry() {
       const sal   = salRes.status   === "fulfilled" ? (salRes.value.data?.data   || salRes.value.data)   : null;
       const comps = compRes.status  === "fulfilled" ? (compRes.value.data?.data  || compRes.value.data)  : [];
 
-      setSalaryData(sal);
+      setCompensationData(sal);
 
       // Build initial component values from saved salary + active components
       const init = {};
@@ -130,13 +130,13 @@ export default function ManualEntry() {
   /* ── Totals ── */
   const totalEarnings   = EARNING_KEYS.reduce((s, k)  => s + Number(components[k]  || 0), 0);
   const totalDeductions = DEDUCTION_KEYS.reduce((s, k) => s + Number(components[k] || 0), 0);
-  const lopDeductionCalc = salaryData?.basicSalary
-    ? ((Number(salaryData.basicSalary) / 26) * Number(lopDays || 0))
+  const lopDeductionCalc = salaryData?.basicCompensation
+    ? ((Number(salaryData.basicCompensation) / 26) * Number(lopDays || 0))
     : 0;
-  const netSalary = totalEarnings - totalDeductions - lopDeductionCalc;
+  const netCompensation = totalEarnings - totalDeductions - lopDeductionCalc;
 
   /* ── Submit payroll ── */
-  const submitPayroll = async () => {
+  const submitPayouts = async () => {
     if (!selected) return;
     setSaving(true);
     setError(null);
@@ -153,16 +153,16 @@ export default function ManualEntry() {
         ),
         totalEarnings,
         totalDeductions: totalDeductions + lopDeductionCalc,
-        netSalary,
+        netCompensation,
         lopDeduction:    lopDeductionCalc,
         source:          "MANUAL",
       };
       await api.post("/api/payroll/manual-entry", payload);
-      setSuccess(`Payroll saved for ${selected.fullName} — ${MONTHS[payMonth]} ${payYear}.`);
+      setSuccess(`Payouts saved for ${selected.fullName} — ${MONTHS[payMonth]} ${payYear}.`);
       setTimeout(() => setSuccess(null), 5000);
       setStep(1);
       setSelected(null);
-      setSalaryData(null);
+      setCompensationData(null);
       setComponents({});
       setLopDays(0);
       setRemarks("");
@@ -188,14 +188,14 @@ export default function ManualEntry() {
 
       {/* ── HERO ── */}
       <div style={{ background: `linear-gradient(135deg,${T.navy},${T.navyMid})`, padding: "22px 26px", position: "relative", overflow: "hidden", marginBottom: 22 }}>
-        <div style={{ position: "absolute", top: -50, right: 60, width: 180, height: 180, borderRadius: "50%", background: "rgba(255,107,53,.07)", pointerEvents: "none" }} />
+        <div style={{ position: "absolute", top: -50, right: 60, width: 180, height: 180, borderRadius: "50%", background: "rgba(139,92,246,.07)", pointerEvents: "none" }} />
         <div style={{ position: "relative" }}>
-          <p style={{ fontSize: 11, fontWeight: 700, color: T.coral, textTransform: "uppercase", letterSpacing: ".12em", marginBottom: 4 }}>SamayaHR · Payroll</p>
-          <h1 className="fd" style={{ fontSize: 23, fontWeight: 900, color: "#fff", margin: 0 }}>Manual Payroll Entry</h1>
+          <p style={{ fontSize: 11, fontWeight: 700, color: T.coral, textTransform: "uppercase", letterSpacing: ".12em", marginBottom: 4 }}>CrewSync · Payouts</p>
+          <h1 className="fd" style={{ fontSize: 23, fontWeight: 900, color: "#fff", margin: 0 }}>Manual Payouts Entry</h1>
           <p style={{ fontSize: 13, color: "rgba(255,255,255,.5)", marginTop: 4 }}>Create a custom payroll record for an individual employee.</p>
           {/* Step indicator */}
           <div style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 16 }}>
-            {["Select Employee","Enter Components","Review & Save"].map((s, i) => (
+            {["Select Person","Enter Components","Review & Save"].map((s, i) => (
               <React.Fragment key={s}>
                 <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
                   <div style={{ width: 24, height: 24, borderRadius: "50%", background: step > i + 1 ? T.teal : step === i + 1 ? T.coral : "rgba(255,255,255,.2)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11, fontWeight: 800, color: "#fff" }}>
@@ -234,7 +234,7 @@ export default function ManualEntry() {
           <div className="me2-card me2-in">
             <div style={{ background: `linear-gradient(90deg,${T.navy},${T.navyMid})`, padding: "14px 20px", display: "flex", alignItems: "center", gap: 10 }}>
               <User size={16} color={T.coral} />
-              <p className="fd" style={{ fontSize: 14, fontWeight: 800, color: "#fff" }}>Select Employee</p>
+              <p className="fd" style={{ fontSize: 14, fontWeight: 800, color: "#fff" }}>Select Person</p>
             </div>
             <div style={{ padding: "18px 20px" }}>
               <div style={{ position: "relative", marginBottom: 16 }}>
@@ -254,7 +254,7 @@ export default function ManualEntry() {
               ) : (
                 <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(280px,1fr))", gap: 12 }}>
                   {filtered.map(emp => (
-                    <button key={emp.id} className={`me2-emp-card ${selected?.id === emp.id ? "selected" : ""}`} onClick={() => loadSalaryData(emp)}
+                    <button key={emp.id} className={`me2-emp-card ${selected?.id === emp.id ? "selected" : ""}`} onClick={() => loadCompensationData(emp)}
                       style={{ textAlign: "left", width: "100%", border: `1.5px solid ${T.border}`, borderRadius: 14, padding: "14px 16px", cursor: "pointer", transition: "all .15s", background: "#fff" }}>
                       <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
                         <div style={{ width: 38, height: 38, borderRadius: "50%", background: `linear-gradient(135deg,${T.coral},${T.teal})`, display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: 800, fontSize: 13, flexShrink: 0 }}>
@@ -281,7 +281,7 @@ export default function ManualEntry() {
             {/* Month & Year */}
             <div className="me2-card" style={{ marginBottom: 18 }}>
               <div style={{ background: `linear-gradient(90deg,${T.navy},${T.navyMid})`, padding: "14px 20px" }}>
-                <p className="fd" style={{ fontSize: 14, fontWeight: 800, color: "#fff" }}>Payroll Period & Employee</p>
+                <p className="fd" style={{ fontSize: 14, fontWeight: 800, color: "#fff" }}>Payouts Period & Person</p>
               </div>
               <div style={{ padding: "18px 20px", display: "flex", flexWrap: "wrap", gap: 16, alignItems: "flex-end" }}>
                 <div style={{ minWidth: 160 }}>
@@ -297,7 +297,7 @@ export default function ManualEntry() {
                   </select>
                 </div>
                 <div style={{ flex: 1, minWidth: 200, padding: "12px 16px", background: "#F8FAFF", border: `1px solid ${T.border}`, borderRadius: 10 }}>
-                  <p style={{ fontSize: 10, fontWeight: 700, color: "#94a3b8", textTransform: "uppercase", letterSpacing: ".07em", marginBottom: 3 }}>Selected Employee</p>
+                  <p style={{ fontSize: 10, fontWeight: 700, color: "#94a3b8", textTransform: "uppercase", letterSpacing: ".07em", marginBottom: 3 }}>Selected Person</p>
                   <p style={{ fontSize: 14, fontWeight: 800, color: T.navy }}>{selected.fullName}</p>
                   <p style={{ fontSize: 11, color: "#64748b" }}>{selected.employeeId ? `${selected.employeeId} · ` : ""}{selected.department || "—"}</p>
                 </div>
@@ -307,7 +307,7 @@ export default function ManualEntry() {
                 </div>
                 <button onClick={() => setStep(1)}
                   style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "10px 16px", borderRadius: 10, border: `1.5px solid ${T.border}`, background: "#fff", color: T.navy, fontSize: 12, fontWeight: 700, cursor: "pointer", fontFamily: "DM Sans" }}>
-                  ← Change Employee
+                  ← Change Person
                 </button>
               </div>
             </div>
@@ -316,7 +316,7 @@ export default function ManualEntry() {
             <div className="me2-card" style={{ marginBottom: 18 }}>
               <div style={{ background: `linear-gradient(90deg,${T.navy},${T.navyMid})`, padding: "14px 20px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                 <p className="fd" style={{ fontSize: 14, fontWeight: 800, color: "#fff" }}>Earnings</p>
-                <span style={{ padding: "3px 10px", borderRadius: 999, background: "rgba(0,194,168,.2)", color: T.teal, fontSize: 11, fontWeight: 700, border: "1px solid rgba(0,194,168,.3)" }}>
+                <span style={{ padding: "3px 10px", borderRadius: 999, background: "rgba(6,182,212,.2)", color: T.teal, fontSize: 11, fontWeight: 700, border: "1px solid rgba(6,182,212,.3)" }}>
                   ₹{fmt(totalEarnings)}
                 </span>
               </div>
@@ -371,7 +371,7 @@ export default function ManualEntry() {
             </div>
 
             <div style={{ display: "flex", gap: 10, justifyContent: "flex-end" }}>
-              <button onClick={() => setStep(3)} style={{ display: "inline-flex", alignItems: "center", gap: 7, padding: "11px 22px", borderRadius: 11, background: `linear-gradient(135deg,${T.coral},#ff5722)`, color: "#fff", fontSize: 13, fontWeight: 800, border: "none", cursor: "pointer", fontFamily: "DM Sans", boxShadow: "0 4px 16px rgba(255,107,53,.3)" }}>
+              <button onClick={() => setStep(3)} style={{ display: "inline-flex", alignItems: "center", gap: 7, padding: "11px 22px", borderRadius: 11, background: `linear-gradient(135deg,${T.coral},#06B6D4)`, color: "#fff", fontSize: 13, fontWeight: 800, border: "none", cursor: "pointer", fontFamily: "DM Sans", boxShadow: "0 4px 16px rgba(139,92,246,.3)" }}>
                 <Eye size={14} /> Preview & Review
               </button>
             </div>
@@ -385,7 +385,7 @@ export default function ManualEntry() {
           <div className="me2-in">
             <div className="me2-card" style={{ marginBottom: 18, overflow: "hidden" }}>
               <div style={{ background: `linear-gradient(90deg,${T.navy},${T.navyMid})`, padding: "14px 20px" }}>
-                <p className="fd" style={{ fontSize: 14, fontWeight: 800, color: "#fff" }}>Payroll Summary — {selected.fullName} ({MONTHS[payMonth]} {payYear})</p>
+                <p className="fd" style={{ fontSize: 14, fontWeight: 800, color: "#fff" }}>Payouts Summary — {selected.fullName} ({MONTHS[payMonth]} {payYear})</p>
               </div>
               <div style={{ padding: "20px 22px" }}>
                 {/* Net summary */}
@@ -393,7 +393,7 @@ export default function ManualEntry() {
                   {[
                     { label: "Total Earnings",   value: totalEarnings,                        color: T.teal  },
                     { label: "Total Deductions",  value: totalDeductions + lopDeductionCalc,   color: "#EF4444" },
-                    { label: "Net Salary",        value: netSalary,                            color: T.coral },
+                    { label: "Net Compensation",        value: netCompensation,                            color: T.coral },
                   ].map(({ label, value, color }) => (
                     <div key={label} style={{ padding: "14px 16px", background: "#F8FAFF", border: `1.5px solid ${T.border}`, borderRadius: 12, textAlign: "center" }}>
                       <p style={{ fontSize: 10, fontWeight: 700, color: "#94a3b8", textTransform: "uppercase", letterSpacing: ".07em", marginBottom: 6 }}>{label}</p>
@@ -436,9 +436,9 @@ export default function ManualEntry() {
                   <button onClick={() => setStep(2)} style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "10px 18px", borderRadius: 10, border: `1.5px solid ${T.border}`, background: "#fff", color: T.navy, fontSize: 13, fontWeight: 700, cursor: "pointer", fontFamily: "DM Sans" }}>
                     ← Edit
                   </button>
-                  <button onClick={submitPayroll} disabled={saving}
-                    style={{ display: "inline-flex", alignItems: "center", gap: 7, padding: "11px 22px", borderRadius: 11, background: `linear-gradient(135deg,${T.coral},#ff5722)`, color: "#fff", fontSize: 13, fontWeight: 800, border: "none", cursor: saving ? "not-allowed" : "pointer", opacity: saving ? .7 : 1, fontFamily: "DM Sans", boxShadow: "0 4px 16px rgba(255,107,53,.3)" }}>
-                    {saving ? "Saving…" : <><Save size={14} /> Save Payroll</>}
+                  <button onClick={submitPayouts} disabled={saving}
+                    style={{ display: "inline-flex", alignItems: "center", gap: 7, padding: "11px 22px", borderRadius: 11, background: `linear-gradient(135deg,${T.coral},#06B6D4)`, color: "#fff", fontSize: 13, fontWeight: 800, border: "none", cursor: saving ? "not-allowed" : "pointer", opacity: saving ? .7 : 1, fontFamily: "DM Sans", boxShadow: "0 4px 16px rgba(139,92,246,.3)" }}>
+                    {saving ? "Saving…" : <><Save size={14} /> Save Payouts</>}
                   </button>
                 </div>
               </div>

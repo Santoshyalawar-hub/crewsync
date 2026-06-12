@@ -8,9 +8,9 @@ import api from "@/lib/apiClient";
 ───────────────────────────────────────────────────────────── */
 const STEPS = [
   { id: 1, label: "Personal Info",   icon: "👤" },
-  { id: 2, label: "Salary Details",  icon: "💰" },
+  { id: 2, label: "Compensation Details",  icon: "💰" },
   { id: 3, label: "Bank Details",    icon: "🏦" },
-  { id: 4, label: "Documents",       icon: "📄" },
+  { id: 4, label: "Vault",       icon: "📄" },
   { id: 5, label: "Review & Submit", icon: "✅" },
 ];
 
@@ -26,31 +26,31 @@ const DOC_TYPES = [
 
 // All salary amount field keys
 const AMOUNT_KEYS = [
-  "annualCtc","monthlyGross","basicSalary","hra","specialAllowance",
+  "annualCtc","monthlyGross","basicCompensation","hra","specialAllowance",
   "transportAllowance","medicalAllowance","lta","otherAllowance",
-  "pfEmployee","pfEmployer","professionalTax","tds","esiEmployee",
+  "pfPerson","pfEmployer","professionalTax","tds","esiPerson",
   "esiEmployer","otherDeduction","netTakeHome",
 ];
 
 const COMPONENT_META = [
-  { key: "basicSalary",        name: "Basic Salary",        type: "EARNING"   },
+  { key: "basicCompensation",        name: "Basic Compensation",        type: "EARNING"   },
   { key: "hra",                name: "HRA",                 type: "EARNING"   },
   { key: "specialAllowance",   name: "Special Allowance",   type: "EARNING"   },
   { key: "transportAllowance", name: "Transport Allowance", type: "EARNING"   },
   { key: "medicalAllowance",   name: "Medical Allowance",   type: "EARNING"   },
   { key: "lta",                name: "LTA",                 type: "EARNING"   },
   { key: "otherAllowance",     name: "Other Allowance",     type: "EARNING"   },
-  { key: "pfEmployee",         name: "PF",                  type: "DEDUCTION" },
+  { key: "pfPerson",         name: "PF",                  type: "DEDUCTION" },
   { key: "professionalTax",    name: "Professional Tax",    type: "DEDUCTION" },
   { key: "tds",                name: "TDS",                 type: "DEDUCTION" },
-  { key: "esiEmployee",        name: "ESI",                 type: "DEDUCTION" },
+  { key: "esiPerson",        name: "ESI",                 type: "DEDUCTION" },
   { key: "otherDeduction",     name: "Other Deduction",     type: "DEDUCTION" },
 ];
 
-// toggles: { basicSalary: true, hra: true, pfEmployee: false, ... }
+// toggles: { basicCompensation: true, hra: true, pfPerson: false, ... }
 // A component is included if its toggle is ON (regardless of amount).
 // Amount defaults to 0 if toggle is ON but no value entered.
-const buildSalaryComponents = (salary, toggles = {}) =>
+const buildCompensationComponents = (salary, toggles = {}) =>
   COMPONENT_META.map((item, index) => {
     const isActive = toggles[item.key] === true;
     const amount = salary[item.key] ? parseFloat(salary[item.key]) : 0;
@@ -94,7 +94,7 @@ const Field = ({ label, required, span, children }) => (
 const Inp = ({ label, required, span, ...props }) => (
   <Field label={label} required={required} span={span}>
     <input style={inp} {...props}
-      onFocus={e => e.target.style.borderColor="#ff6b35"}
+      onFocus={e => e.target.style.borderColor="#8B5CF6"}
       onBlur={e  => e.target.style.borderColor="#e2e8f0"} />
   </Field>
 );
@@ -102,7 +102,7 @@ const Inp = ({ label, required, span, ...props }) => (
 const Sel = ({ label, required, span, options, ...props }) => (
   <Field label={label} required={required} span={span}>
     <select style={{ ...inp, cursor:"pointer" }} {...props}
-      onFocus={e => e.target.style.borderColor="#ff6b35"}
+      onFocus={e => e.target.style.borderColor="#8B5CF6"}
       onBlur={e  => e.target.style.borderColor="#e2e8f0"}>
       <option value="">Select…</option>
       {options.map(o => <option key={o.value??o} value={o.value??o}>{o.label??o}</option>)}
@@ -169,7 +169,7 @@ function NumInput({ label, fieldKey, initialValue, onCommit, compact = false }) 
       value={val}
       onChange={handleChange}
       placeholder="0.00"
-      onFocus={e => e.target.style.borderColor="#ff6b35"}
+      onFocus={e => e.target.style.borderColor="#8B5CF6"}
       onBlur={e  => e.target.style.borderColor="#e2e8f0"}
     />
   );
@@ -185,7 +185,7 @@ function NumInput({ label, fieldKey, initialValue, onCommit, compact = false }) 
 
 /* ─────────────────────────────────────────────────────────────
    TOGGLE ROW — shows a pill toggle + conditional amount input
-   Used in StepSalary for each dynamic component.
+   Used in StepCompensation for each dynamic component.
 ───────────────────────────────────────────────────────────── */
 function ToggleRow({ label, fieldKey, isEarning, isActive, onToggle, initialValue, onCommit }) {
   const color = isEarning ? "#16a34a" : "#dc2626";
@@ -249,19 +249,19 @@ function ToggleRow({ label, fieldKey, isEarning, isActive, onToggle, initialValu
 
 /* ─────────────────────────────────────────────────────────────
    SALARY SLIP PREVIEW  — module-level
-   Fetches company SalarySlipSettings once and shows which
+   Fetches company CompensationSlipConfiguration once and shows which
    fields WILL appear on the slip (toggle ON + value > 0).
 ───────────────────────────────────────────────────────────── */
 function SlipPreview({ salary }) {
   const tenantCode = localStorage.getItem("tenantCode") || "";
-  const [settings, setSettings] = useState(null);
+  const [settings, setConfiguration] = useState(null);
   const fetched = useRef(false);
 
   React.useEffect(() => {
     if (!tenantCode || fetched.current) return;
     fetched.current = true;
     api.get(`/api/salary-slip-settings/${tenantCode}`)
-      .then(res => { if(res.data.success && res.data.data) setSettings(res.data.data); })
+      .then(res => { if(res.data.success && res.data.data) setConfiguration(res.data.data); })
       .catch(()=>{});
   }, [tenantCode]);
 
@@ -271,7 +271,7 @@ function SlipPreview({ salary }) {
   const fmt = (v) => "₹"+Number(v||0).toLocaleString("en-IN",{minimumFractionDigits:2});
 
   const earn = [
-    { key:"basicSalary",        label:"Basic Salary",        show:showAll||b(s.showBasicSalary),        val:salary.basicSalary        },
+    { key:"basicCompensation",        label:"Basic Compensation",        show:showAll||b(s.showBasicCompensation),        val:salary.basicCompensation        },
     { key:"hra",                label:"HRA",                 show:showAll||b(s.showHra),                val:salary.hra                },
     { key:"specialAllowance",   label:"Special Allowance",   show:showAll||b(s.showSpecialAllowance),   val:salary.specialAllowance   },
     { key:"transportAllowance", label:"Transport Allowance", show:showAll||b(s.showTransportAllowance), val:salary.transportAllowance },
@@ -280,8 +280,8 @@ function SlipPreview({ salary }) {
   ].filter(f=>f.show&&Number(f.val||0)>0);
 
   const ded = [
-    { key:"pfEmployee",      label:"Provident Fund (PF)", show:showAll||b(s.showPfDeduction),    val:salary.pfEmployee      },
-    { key:"esiEmployee",     label:"ESI Deduction",       show:showAll||b(s.showEsiDeduction),   val:salary.esiEmployee     },
+    { key:"pfPerson",      label:"Provident Fund (PF)", show:showAll||b(s.showPfDeduction),    val:salary.pfPerson      },
+    { key:"esiPerson",     label:"ESI Deduction",       show:showAll||b(s.showEsiDeduction),   val:salary.esiPerson     },
     { key:"professionalTax", label:"Professional Tax",    show:showAll||b(s.showProfessionalTax),val:salary.professionalTax },
     { key:"tds",             label:"TDS",                 show:showAll||b(s.showTds),            val:salary.tds             },
     { key:"otherDeduction",  label:"Other Deductions",    show:showAll||b(s.showOtherDeductions),val:salary.otherDeduction  },
@@ -340,21 +340,21 @@ function StepPersonal({ data, onChange }) {
     <div style={{ display:"flex", flexDirection:"column", gap:16 }}>
       <h3 style={{ fontSize:15, fontWeight:800, color:"#0f172a", margin:0 }}>Personal Information</h3>
       <Banner color="#0369a1" bg="#eff6ff" border="#bfdbfe">
-        💡 Employee will receive login credentials via email after registration.
+        💡 Person will receive login credentials via email after registration.
       </Banner>
       <G>
         <Inp label="Full Name"              required value={data.fullName    ||""} onChange={e=>set("fullName",    e.target.value)} placeholder="John Doe" />
         <Inp label="Email"                  required type="email" value={data.email||""} onChange={e=>set("email",e.target.value)} placeholder="john@company.com" />
         <Inp label="Password"               required type="password" value={data.password||""} onChange={e=>set("password",e.target.value)} placeholder="Min 8 characters" />
-        <Inp label="Mobile Number"          value={data.mobile     ||""} onChange={e=>set("mobile",     e.target.value)} placeholder="+91 9876543210" />
-        <Inp label="Employee ID"            value={data.employeeId ||""} onChange={e=>set("employeeId", e.target.value)} placeholder="EMP001" />
+        <Inp label="Pocket Number"          value={data.mobile     ||""} onChange={e=>set("mobile",     e.target.value)} placeholder="+91 9876543210" />
+        <Inp label="Person ID"            value={data.employeeId ||""} onChange={e=>set("employeeId", e.target.value)} placeholder="EMP001" />
         <Inp label="Date of Birth"          type="date" value={data.dob||""} onChange={e=>set("dob",e.target.value)} />
         <Inp label="Joining Date"           type="date" value={data.joiningDate||""} onChange={e=>set("joiningDate",e.target.value)} />
         <Sel label="Department" value={data.department||""} onChange={e=>set("department",e.target.value)}
-          options={["Engineering","HR","Finance","Marketing","Operations","Sales","Legal","Design","Product","IT","Admin"]} />
+          options={["Engineering","PeopleOps","MoneyOps","Marketing","Operations","Sales","Legal","Design","Product","IT","Operator"]} />
         <Inp label="Position / Designation" value={data.position||""} onChange={e=>set("position",e.target.value)} placeholder="Software Engineer" />
         <Sel label="Role" value={data.role||"EMPLOYEE"} onChange={e=>set("role",e.target.value)}
-          options={[{value:"EMPLOYEE",label:"Employee"},{value:"ADMIN",label:"Admin"}]} />
+          options={[{value:"EMPLOYEE",label:"Person"},{value:"ADMIN",label:"Operator"}]} />
       </G>
     </div>
   );
@@ -364,22 +364,22 @@ function StepPersonal({ data, onChange }) {
    STEP 2 — SALARY DETAILS
    
    DEFINITIVE CURSOR FIX:
-   - Component defined at MODULE LEVEL (not inside AddEmployee)
+   - Component defined at MODULE LEVEL (not inside AddPerson)
    - Each NumInput manages its OWN local state
    - onCommit only updates the parent's salary object — it does NOT
-     cause StepSalary to re-render because salary is a ref in parent
+     cause StepCompensation to re-render because salary is a ref in parent
    - The select/text fields use normal controlled state via onMeta
 ═══════════════════════════════════════════════════════════ */
-function StepSalary({ salary, onCommit, meta, onMeta, toggles, onToggle }) {
+function StepCompensation({ salary, onCommit, meta, onMeta, toggles, onToggle }) {
   const earnings    = COMPONENT_META.filter(c => c.type === "EARNING");
   const deductions  = COMPONENT_META.filter(c => c.type === "DEDUCTION");
   const activeCount = COMPONENT_META.filter(c => toggles[c.key]).length;
 
   return (
     <div style={{ display:"flex", flexDirection:"column", gap:8 }}>
-      <h3 style={{ fontSize:15, fontWeight:800, color:"#0f172a", margin:"0 0 4px" }}>Salary Structure</h3>
+      <h3 style={{ fontSize:15, fontWeight:800, color:"#0f172a", margin:"0 0 4px" }}>Compensation Structure</h3>
       <Banner color="#c2410c" bg="#fff7ed" border="#fed7aa">
-        💡 Toggle each component ON/OFF to control what appears on this employee's payslip.
+        💡 Toggle each component ON/OFF to control what appears on this person's pay statement.
         Enter the monthly amount (₹) for each active component.
         <strong> {activeCount} component{activeCount !== 1 ? "s" : ""} active.</strong>
       </Banner>
@@ -431,10 +431,10 @@ function StepSalary({ salary, onCommit, meta, onMeta, toggles, onToggle }) {
         <NumInput key="netTakeHome" label="Net Take-Home (₹)" fieldKey="netTakeHome" initialValue={salary.netTakeHome||""} onCommit={onCommit} />
         <Sel label="Pay Cycle" value={meta.payCycle||"MONTHLY"} onChange={e=>onMeta("payCycle",e.target.value)}
           options={[{value:"MONTHLY",label:"Monthly"},{value:"BI_WEEKLY",label:"Bi-Weekly"},{value:"WEEKLY",label:"Weekly"}]} />
-        <Sel label="Salary Mode" value={meta.salaryMode||"BANK_TRANSFER"} onChange={e=>onMeta("salaryMode",e.target.value)}
+        <Sel label="Compensation Mode" value={meta.salaryMode||"BANK_TRANSFER"} onChange={e=>onMeta("salaryMode",e.target.value)}
           options={[{value:"BANK_TRANSFER",label:"Bank Transfer"},{value:"CASH",label:"Cash"},{value:"CHEQUE",label:"Cheque"}]} />
         <Inp label="Effective From" type="date" value={meta.effectiveFrom||""} onChange={e=>onMeta("effectiveFrom",e.target.value)} />
-        <Inp label="Salary Grade"   value={meta.salaryGrade||""} onChange={e=>onMeta("salaryGrade",e.target.value)} placeholder="L4" />
+        <Inp label="Compensation Grade"   value={meta.salaryGrade||""} onChange={e=>onMeta("salaryGrade",e.target.value)} placeholder="L4" />
         <Inp label="Pay Band"       value={meta.payBand||""}     onChange={e=>onMeta("payBand",    e.target.value)} placeholder="Band 3" />
       </G>
 
@@ -489,7 +489,7 @@ function StepBank({ data, onChange }) {
         <Inp label="IFSC Code"           required value={data.ifscCode            ||""} onChange={e=>set("ifscCode",e.target.value.toUpperCase())} placeholder="SBIN0001234" />
         <Inp label="Branch Name"  value={data.branchName ||""} onChange={e=>set("branchName", e.target.value)} placeholder="Koramangala Branch" />
         <Sel label="Account Type" value={data.accountType||"SAVINGS"} onChange={e=>set("accountType",e.target.value)}
-          options={[{value:"SAVINGS",label:"Savings"},{value:"CURRENT",label:"Current"},{value:"SALARY",label:"Salary"}]} />
+          options={[{value:"SAVINGS",label:"Savings"},{value:"CURRENT",label:"Current"},{value:"SALARY",label:"Compensation"}]} />
         <Inp label="MICR Code"  value={data.micrCode ||""} onChange={e=>set("micrCode", e.target.value)} placeholder="560002094" />
         <Inp label="SWIFT Code" value={data.swiftCode||""} onChange={e=>set("swiftCode",e.target.value)} placeholder="SBININBB" />
       </G>
@@ -497,7 +497,7 @@ function StepBank({ data, onChange }) {
         <textarea value={data.branchAddress||""} onChange={e=>set("branchAddress",e.target.value)}
           placeholder="Full branch address…" style={{ ...inp, minHeight:56, resize:"vertical" }} />
       </Field>
-      <SectionHead color="#7c3aed">Proof Document</SectionHead>
+      <SectionHead color="#A855F7">Proof Document</SectionHead>
       <G>
         <Sel label="Document Type" value={data.proofDocumentType||"CANCELLED_CHEQUE"} onChange={e=>set("proofDocumentType",e.target.value)}
           options={[{value:"CANCELLED_CHEQUE",label:"Cancelled Cheque"},{value:"PASSBOOK",label:"Bank Passbook"},{value:"BANK_STATEMENT",label:"Bank Statement"}]} />
@@ -580,7 +580,7 @@ function DocCard({ docMeta, fileEntry, onUpload, onRemove }) {
         ) : (
           <button onClick={()=>inputRef.current.click()}
             style={{ display:"flex",alignItems:"center",gap:6,padding:"7px 14px",borderRadius:9,border:"none",
-              background:"linear-gradient(135deg,#ff6b35,#f97316)",color:"#fff",fontSize:12,fontWeight:700,
+              background:"linear-gradient(135deg,#8B5CF6,#f97316)",color:"#fff",fontSize:12,fontWeight:700,
               cursor:"pointer",fontFamily:"inherit",whiteSpace:"nowrap" }}>
             <span dangerouslySetInnerHTML={{ __html:SVG_UP }} /> Upload
           </button>
@@ -591,7 +591,7 @@ function DocCard({ docMeta, fileEntry, onUpload, onRemove }) {
   );
 }
 
-function StepDocuments({ data, onChange }) {
+function StepVault({ data, onChange }) {
   const [fileEntries, setFileEntries] = useState({});
 
   const handleUpload = (key, entry) => {
@@ -614,11 +614,11 @@ function StepDocuments({ data, onChange }) {
   return (
     <div style={{ display:"flex", flexDirection:"column", gap:10 }}>
       <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between" }}>
-        <h3 style={{ fontSize:15, fontWeight:800, color:"#0f172a", margin:0 }}>Upload Documents</h3>
+        <h3 style={{ fontSize:15, fontWeight:800, color:"#0f172a", margin:0 }}>Upload Vault</h3>
         <span style={{ fontSize:12, fontWeight:600, color:"#64748b" }}>{uploaded} / {DOC_TYPES.length} selected</span>
       </div>
       <div style={{ height:5, background:"#f1f5f9", borderRadius:99, overflow:"hidden" }}>
-        <div style={{ height:"100%", borderRadius:99, background:"linear-gradient(90deg,#ff6b35,#16a34a)",
+        <div style={{ height:"100%", borderRadius:99, background:"linear-gradient(90deg,#8B5CF6,#16a34a)",
           width:`${(uploaded/DOC_TYPES.length)*100}%`, transition:"width 0.4s ease" }} />
       </div>
       <Banner color="#15803d" bg="#f0fdf4" border="#bbf7d0">
@@ -661,21 +661,21 @@ function StepReview({ personal, salary, meta, bank, docs }) {
       <Banner color="#0369a1" bg="#eff6ff" border="#bfdbfe">
         ℹ Review all details. Each section saves independently.
       </Banner>
-      <Section title="Personal Info" color="#ff6b35">
+      <Section title="Personal Info" color="#8B5CF6">
         <Row label="Name"        value={personal.fullName} />
         <Row label="Email"       value={personal.email} />
-        <Row label="Employee ID" value={personal.employeeId} />
+        <Row label="Person ID" value={personal.employeeId} />
         <Row label="Department"  value={personal.department} />
         <Row label="Position"    value={personal.position} />
         <Row label="Role"        value={personal.role||"EMPLOYEE"} />
         <Row label="Joining"     value={personal.joiningDate} />
       </Section>
-      <Section title="Salary" color="#16a34a">
+      <Section title="Compensation" color="#16a34a">
         <Row label="Annual CTC"    value={fmt(salary.annualCtc)} />
         <Row label="Monthly Gross" value={fmt(salary.monthlyGross)} />
-        <Row label="Basic Salary"  value={fmt(salary.basicSalary)} />
+        <Row label="Basic Compensation"  value={fmt(salary.basicCompensation)} />
         <Row label="HRA"           value={fmt(salary.hra)} />
-        <Row label="PF (Employee)" value={fmt(salary.pfEmployee)} />
+        <Row label="PF (Person)" value={fmt(salary.pfPerson)} />
         <Row label="Net Take-Home" value={fmt(salary.netTakeHome)} />
         <Row label="Pay Cycle"     value={meta.payCycle||"MONTHLY"} />
       </Section>
@@ -685,7 +685,7 @@ function StepReview({ personal, salary, meta, bank, docs }) {
         <Row label="IFSC"        value={bank.ifscCode} />
         <Row label="Proof File"  value={bank.proofFile?`${bank.proofFile.name} ✅`:"Not uploaded"} />
       </Section>
-      <Section title="Documents" color="#7c3aed">
+      <Section title="Vault" color="#A855F7">
         <Row label="Files Selected" value={`${docCount} / ${DOC_TYPES.length}`} />
         {DOC_TYPES.filter(d=>docs[d.key]).map(d=>(
           <Row key={d.key} label={d.label} value={`${docs[d.key].name} ✅`} />
@@ -696,9 +696,9 @@ function StepReview({ personal, salary, meta, bank, docs }) {
 }
 
 /* ═══════════════════════════════════════════════════════════
-   MAIN — AddEmployee
+   MAIN — AddPerson
 ═══════════════════════════════════════════════════════════ */
-export default function AddEmployee() {
+export default function AddPerson() {
   const navigate   = useNavigate();
   const tenantCode = localStorage.getItem("tenantCode") || "";
   const companyId  = localStorage.getItem("companyId")  || "";
@@ -710,16 +710,16 @@ export default function AddEmployee() {
   const [logs,    setLogs]    = useState([]);
 
   const [personal, setPersonal] = useState({
-    fullName:"", email:"", password:"", mobile:"",
+    fullName:"", email:"", password:"", fieldDevice:"",
     employeeId:"", dob:"", joiningDate:"", department:"", position:"", role:"EMPLOYEE",
   });
 
   // salary: plain object, updated via onCommit from NumInput
   // Stored in a ref so that NumInput's onCommit call does NOT
-  // trigger a re-render of StepSalary (which would lose focus)
+  // trigger a re-render of StepCompensation (which would lose focus)
   const salaryRef = useRef({});
   // salaryDisplay is ONLY used in Step 5 review — updated when user navigates to step 5
-  const [salaryDisplay, setSalaryDisplay] = useState({});
+  const [salaryDisplay, setCompensationDisplay] = useState({});
 
   const [meta, setMeta] = useState({
     payCycle:"MONTHLY", salaryMode:"BANK_TRANSFER", effectiveFrom:"",
@@ -729,7 +729,7 @@ export default function AddEmployee() {
   const handleMetaChange = (k,v) => setMeta(prev => ({...prev,[k]:v}));
 
   // onCommit: NumInput calls this on every change.
-  // We update only the ref — NO state update — so StepSalary does NOT re-render.
+  // We update only the ref — NO state update — so StepCompensation does NOT re-render.
   // This is why the cursor never jumps.
   const handleCommit = (key, value) => {
     salaryRef.current[key] = value;
@@ -740,9 +740,9 @@ export default function AddEmployee() {
   const [componentToggles, setComponentToggles] = useState(() => {
     const defaults = {};
     COMPONENT_META.forEach(c => { defaults[c.key] = false; });
-    defaults.basicSalary = true;
+    defaults.basicCompensation = true;
     defaults.hra         = true;
-    defaults.pfEmployee  = true;
+    defaults.pfPerson  = true;
     return defaults;
   });
 
@@ -773,7 +773,7 @@ export default function AddEmployee() {
     if (err) { setError(err); return; }
     setError("");
     // When navigating to review (step 5), snapshot salary for display
-    if (step===4) setSalaryDisplay({...salaryRef.current});
+    if (step===4) setCompensationDisplay({...salaryRef.current});
     setStep(s => Math.min(s+1, STEPS.length));
   };
 
@@ -790,7 +790,7 @@ export default function AddEmployee() {
         fullName:   personal.fullName.trim(),
         email:      personal.email.trim().toLowerCase(),
         password:   personal.password,
-        mobile:     personal.mobile     ||null,
+        fieldDevice:     personal.mobile     ||null,
         employeeId: personal.employeeId ||null,
         dob:        personal.dob        ||null,
         joiningDate:personal.joiningDate||null,
@@ -806,29 +806,29 @@ export default function AddEmployee() {
       if (!userId) throw new Error("No userId returned.");
       addLog(`✅ Registered — userId: ${userId}`);
 
-      // Salary — read from ref
+      // Compensation — read from ref
       const s = salaryRef.current;
       const toF = (v) => v ? parseFloat(v) : null;
-      const components = buildSalaryComponents(s, componentToggles);
-      const hasSalary = AMOUNT_KEYS.some(k => s[k] && parseFloat(s[k]) > 0);
-      if (hasSalary) {
+      const components = buildCompensationComponents(s, componentToggles);
+      const hasCompensation = AMOUNT_KEYS.some(k => s[k] && parseFloat(s[k]) > 0);
+      if (hasCompensation) {
         addLog("Saving salary…");
         try {
           const sr = await api.post(`/api/salary/employee/${userId}`, {
             annualCtc:          toF(s.annualCtc),
             monthlyGross:       toF(s.monthlyGross),
-            basicSalary:        toF(s.basicSalary),
+            basicCompensation:        toF(s.basicCompensation),
             hra:                toF(s.hra),
             specialAllowance:   toF(s.specialAllowance),
             transportAllowance: toF(s.transportAllowance),
             medicalAllowance:   toF(s.medicalAllowance),
             lta:                toF(s.lta),
             otherAllowance:     toF(s.otherAllowance),
-            pfEmployee:         toF(s.pfEmployee),
+            pfPerson:         toF(s.pfPerson),
             pfEmployer:         toF(s.pfEmployer),
             professionalTax:    toF(s.professionalTax),
             tds:                toF(s.tds),
-            esiEmployee:        toF(s.esiEmployee),
+            esiPerson:        toF(s.esiPerson),
             esiEmployer:        toF(s.esiEmployer),
             otherDeduction:     toF(s.otherDeduction),
             netTakeHome:        toF(s.netTakeHome),
@@ -844,10 +844,10 @@ export default function AddEmployee() {
             components,
           });
           const sd = sr.data;
-          if (!sd.success) addLog(`⚠ Salary: ${sd.message||"error"}`, false);
-          else addLog("✅ Salary saved");
-        } catch(e) { addLog(`⚠ Salary: ${e.message}`, false); }
-      } else { addLog("ℹ Salary skipped (no values entered)"); }
+          if (!sd.success) addLog(`⚠ Compensation: ${sd.message||"error"}`, false);
+          else addLog("✅ Compensation saved");
+        } catch(e) { addLog(`⚠ Compensation: ${e.message}`, false); }
+      } else { addLog("ℹ Compensation skipped (no values entered)"); }
 
       // Bank
       if (bank.bankName||bank.accountNumber||bank.ifscCode) {
@@ -874,7 +874,7 @@ export default function AddEmployee() {
         } catch(e) { addLog(`⚠ Proof: ${e.message}`, false); }
       }
 
-      // Documents
+      // Vault
       for (const {key} of DOC_TYPES) {
         if (docs[key]) {
           addLog(`Uploading ${key}…`);
@@ -905,7 +905,7 @@ export default function AddEmployee() {
         <div style={{ width:64, height:64, borderRadius:"50%", background:"#dcfce7",
           display:"flex", alignItems:"center", justifyContent:"center", fontSize:28 }}>✅</div>
         <h2 style={{ fontFamily:"'Outfit',sans-serif", fontWeight:900, color:"#0f172a", margin:0 }}>
-          Employee Added Successfully!
+          Person Added Successfully!
         </h2>
         <p style={{ color:"#94a3b8", fontSize:13, margin:0 }}>Redirecting…</p>
         <div style={{ width:"100%", maxWidth:480, background:"#f8fafc", borderRadius:12, padding:"12px 16px" }}>
@@ -932,22 +932,22 @@ export default function AddEmployee() {
         {/* Header */}
         <div style={{ display:"flex", alignItems:"center", gap:12, marginBottom:28 }}>
           <div style={{ width:5, height:32, borderRadius:3,
-            background:"linear-gradient(180deg,#ff6b35,#fbbf24)", flexShrink:0 }} />
+            background:"linear-gradient(180deg,#8B5CF6,#fbbf24)", flexShrink:0 }} />
           <div>
             <h1 style={{ fontSize:22, fontWeight:900, color:"#0f172a",
-              fontFamily:"'Outfit',sans-serif", margin:0 }}>Add New Employee</h1>
+              fontFamily:"'Outfit',sans-serif", margin:0 }}>Add New Person</h1>
             <p style={{ fontSize:12, color:"#94a3b8", margin:"3px 0 0" }}>
-              Salary fields entered here appear on the employee's salary slip based on company settings
+              Compensation fields entered here appear on the employee's salary slip based on company settings
             </p>
           </div>
         </div>
 
         {tenantCode && (
           <div style={{ display:"inline-flex", alignItems:"center", gap:7,
-            padding:"5px 12px", borderRadius:20, background:"rgba(255,107,53,0.08)",
-            border:"1px solid rgba(255,107,53,0.2)", marginBottom:20 }}>
+            padding:"5px 12px", borderRadius:20, background:"rgba(139,92,246,0.08)",
+            border:"1px solid rgba(139,92,246,0.2)", marginBottom:20 }}>
             <span style={{ width:6, height:6, borderRadius:"50%", background:"#22c55e" }} />
-            <span style={{ fontSize:11, fontWeight:700, color:"#ff6b35" }}>Tenant: {tenantCode}</span>
+            <span style={{ fontSize:11, fontWeight:700, color:"#8B5CF6" }}>Tenant: {tenantCode}</span>
           </div>
         )}
 
@@ -962,13 +962,13 @@ export default function AddEmployee() {
                   <div style={{ width:36, height:36, borderRadius:"50%", display:"flex",
                     alignItems:"center", justifyContent:"center", fontSize:done?16:13,
                     fontWeight:700, transition:"all 0.2s",
-                    background:done?"#16a34a":active?"#ff6b35":"#f1f5f9",
+                    background:done?"#16a34a":active?"#8B5CF6":"#f1f5f9",
                     color:done||active?"#fff":"#94a3b8",
-                    border:active?"2px solid #ff6b35":"2px solid transparent" }}>
+                    border:active?"2px solid #8B5CF6":"2px solid transparent" }}>
                     {done?"✓":s.icon}
                   </div>
                   <span style={{ fontSize:10, fontWeight:700, textAlign:"center", lineHeight:1.2,
-                    color:active?"#ff6b35":done?"#16a34a":"#94a3b8" }}>{s.label}</span>
+                    color:active?"#8B5CF6":done?"#16a34a":"#94a3b8" }}>{s.label}</span>
                 </div>
                 {i < STEPS.length-1 && (
                   <div style={{ flex:1, height:2, marginTop:17, minWidth:16,
@@ -992,7 +992,7 @@ export default function AddEmployee() {
           minHeight:360, animation:"ae-fade 0.3s ease" }}>
           {step===1 && <StepPersonal data={personal} onChange={setPersonal} />}
           {step===2 && (
-            <StepSalary
+            <StepCompensation
               salary={salaryRef.current}
               onCommit={handleCommit}
               meta={meta}
@@ -1002,7 +1002,7 @@ export default function AddEmployee() {
             />
           )}
           {step===3 && <StepBank      data={bank} onChange={setBank} />}
-          {step===4 && <StepDocuments data={docs} onChange={setDocs} />}
+          {step===4 && <StepVault data={docs} onChange={setDocs} />}
           {step===5 && <StepReview    personal={personal} salary={salaryDisplay} meta={meta} bank={bank} docs={docs} />}
         </div>
 
@@ -1017,7 +1017,7 @@ export default function AddEmployee() {
           </button>
           <div style={{ display:"flex", gap:10 }}>
             {step < STEPS.length && (
-              <button onClick={() => { setError(""); if(step===4) setSalaryDisplay({...salaryRef.current}); setStep(s=>Math.min(s+1,STEPS.length)); }}
+              <button onClick={() => { setError(""); if(step===4) setCompensationDisplay({...salaryRef.current}); setStep(s=>Math.min(s+1,STEPS.length)); }}
                 style={{ display:"flex", alignItems:"center", gap:7, padding:"10px 20px",
                   borderRadius:11, border:"1px solid #e2e8f0", background:"#f8fafc",
                   color:"#64748b", fontSize:13, fontWeight:600, fontFamily:"inherit", cursor:"pointer" }}>
@@ -1028,9 +1028,9 @@ export default function AddEmployee() {
               <button onClick={next}
                 style={{ display:"flex", alignItems:"center", gap:7, padding:"10px 24px",
                   borderRadius:11, border:"none",
-                  background:"linear-gradient(135deg,#ff6b35,#f97316)", color:"#fff",
+                  background:"linear-gradient(135deg,#8B5CF6,#f97316)", color:"#fff",
                   fontSize:13, fontWeight:700, cursor:"pointer", fontFamily:"inherit",
-                  boxShadow:"0 4px 14px rgba(255,107,53,0.3)" }}>
+                  boxShadow:"0 4px 14px rgba(139,92,246,0.3)" }}>
                 Next →
               </button>
             ) : (
@@ -1041,7 +1041,7 @@ export default function AddEmployee() {
                   color:"#fff", fontSize:13, fontWeight:700, fontFamily:"inherit",
                   cursor:saving?"not-allowed":"pointer",
                   boxShadow:saving?"none":"0 4px 14px rgba(22,163,74,0.3)" }}>
-                {saving?"⏳ Submitting…":"✅ Submit Employee"}
+                {saving?"⏳ Submitting…":"✅ Submit Person"}
               </button>
             )}
           </div>

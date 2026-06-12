@@ -18,7 +18,7 @@ const getTenantContext = () => {
 
 const ASSET_TYPES = [
     { value: "laptop", label: "Laptop" },
-    { value: "mobile", label: "Mobile Phone" },
+    { value: "mobile", label: "Pocket Phone" },
     { value: "tablet", label: "Tablet" },
     { value: "sim", label: "SIM Card" },
     { value: "other", label: "Other" },
@@ -27,12 +27,12 @@ const ASSET_TYPES = [
 const labelForType = (type) =>
     ASSET_TYPES.find((t) => t.value === type)?.label || type;
 
-export default function AdminAssets() {
+export default function OperatorEquipment() {
     // IMPORTANT:
     // assetsRaw = whatever backend returns
-    // visibleAssets = filtered (only employees in this tenant+company)
-    const [assetsRaw, setAssetsRaw] = useState([]);
-    const [employees, setEmployees] = useState([]);
+    // visibleEquipment = filtered (only employees in this tenant+company)
+    const [assetsRaw, setEquipmentRaw] = useState([]);
+    const [employees, setPersons] = useState([]);
 
     const [loading, setLoading] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
@@ -42,7 +42,7 @@ export default function AdminAssets() {
     const [modalMode, setModalMode] = useState("add"); // add | edit | view
     const [selectedAsset, setSelectedAsset] = useState(null);
 
-    const [selectedAssets, setSelectedAssets] = useState([]);
+    const [selectedEquipment, setSelectedEquipment] = useState([]);
     const [selectAll, setSelectAll] = useState(false);
 
     const [formData, setFormData] = useState({
@@ -59,7 +59,7 @@ export default function AdminAssets() {
 
 
     /* -------------------- EMPLOYEE IDS ALLOWED (tenant+company) -------------------- */
-    const allowedEmployeeIdSet = useMemo(() => {
+    const allowedPersonIdSet = useMemo(() => {
         const set = new Set();
         employees.forEach((e) => {
             if (e?.id != null) set.add(String(e.id));
@@ -70,17 +70,17 @@ export default function AdminAssets() {
     /* -------------------- FILTER ASSETS SAFELY (NO CLASH) --------------------
        Only show assets whose employeeId exists in employees list of this tenant+company
     -------------------------------------------------------------------------- */
-    const visibleAssets = useMemo(() => {
+    const visibleEquipment = useMemo(() => {
         const base = Array.isArray(assetsRaw) ? assetsRaw : [];
         // If employees not loaded yet, don't show anything to avoid leaking other-company rows
-        if (!allowedEmployeeIdSet || allowedEmployeeIdSet.size === 0) return [];
-        return base.filter((a) => allowedEmployeeIdSet.has(String(a.employeeId)));
-    }, [assetsRaw, allowedEmployeeIdSet]);
+        if (!allowedPersonIdSet || allowedPersonIdSet.size === 0) return [];
+        return base.filter((a) => allowedPersonIdSet.has(String(a.employeeId)));
+    }, [assetsRaw, allowedPersonIdSet]);
 
-    /* -------------------- LOCAL STATS (from visibleAssets) -------------------- */
+    /* -------------------- LOCAL STATS (from visibleEquipment) -------------------- */
     const stats = useMemo(() => {
         const s = {
-            totalAssets: visibleAssets.length,
+            totalEquipment: visibleEquipment.length,
             laptops: 0,
             mobiles: 0,
             tablets: 0,
@@ -88,7 +88,7 @@ export default function AdminAssets() {
             others: 0,
         };
 
-        for (const a of visibleAssets) {
+        for (const a of visibleEquipment) {
             const t = String(a.assetType || "").toLowerCase();
             if (t === "laptop") s.laptops += 1;
             else if (t === "mobile") s.mobiles += 1;
@@ -97,16 +97,16 @@ export default function AdminAssets() {
             else s.others += 1;
         }
         return s;
-    }, [visibleAssets]);
+    }, [visibleEquipment]);
 
     /* -------------------- FETCH EMPLOYEES (TENANT+COMPANY) -------------------- */
-    const fetchEmployees = async () => {
+    const fetchPersons = async () => {
         try {
             const { tenantCode, companyId } = getTenantContext();
 
             if (!tenantCode || !companyId) {
-                console.warn("Tenant Code / Company ID missing in localStorage.");
-                setEmployees([]);
+                console.warn("Tenant Code / Workspace ID missing in localStorage.");
+                setPersons([]);
                 return;
             }
 
@@ -125,16 +125,16 @@ export default function AdminAssets() {
                 ? list.filter((u) => Number(u.companyId) === Number(companyId) || u.companyId == null)
                 : list;
 
-            setEmployees(filtered);
+            setPersons(filtered);
         } catch (err) {
             console.error("Error fetching employees:", err);
-            setEmployees([]);
+            setPersons([]);
             alert(err.message || "Failed to load employees");
         }
     };
 
     /* -------------------- FETCH ASSETS (send tenant headers) -------------------- */
-    const fetchAssets = async () => {
+    const fetchEquipment = async () => {
         try {
             setLoading(true);
 
@@ -146,10 +146,10 @@ export default function AdminAssets() {
             }
 
             const list = Array.isArray(json.data) ? json.data : [];
-            setAssetsRaw(list);
+            setEquipmentRaw(list);
         } catch (err) {
             console.error("Error fetching assets:", err);
-            setAssetsRaw([]);
+            setEquipmentRaw([]);
             alert(err.message || "Error loading assets");
         } finally {
             setLoading(false);
@@ -157,7 +157,7 @@ export default function AdminAssets() {
     };
 
     /* -------------------- SEARCH ASSETS (send tenant headers) -------------------- */
-    const searchAssets = async (search, type) => {
+    const searchEquipment = async (search, type) => {
         try {
             setLoading(true);
 
@@ -169,7 +169,7 @@ export default function AdminAssets() {
             if (json.success === false) return;
 
             const list = Array.isArray(json.data) ? json.data : [];
-            setAssetsRaw(list);
+            setEquipmentRaw(list);
         } catch (err) {
             console.error("Error searching assets:", err);
         } finally {
@@ -182,8 +182,8 @@ export default function AdminAssets() {
         // Load employees first, then assets.
         // This avoids showing other-company assets while employees list is still empty.
         (async () => {
-            await fetchEmployees();
-            await fetchAssets();
+            await fetchPersons();
+            await fetchEquipment();
         })();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -191,21 +191,21 @@ export default function AdminAssets() {
     /* -------------------- Debounced search -------------------- */
     useEffect(() => {
         const timer = setTimeout(() => {
-            searchAssets(searchTerm, filterType);
+            searchEquipment(searchTerm, filterType);
         }, 300);
         return () => clearTimeout(timer);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchTerm, filterType]);
 
-    /* -------------------- When visibleAssets changes: cleanup selections -------------------- */
+    /* -------------------- When visibleEquipment changes: cleanup selections -------------------- */
     useEffect(() => {
-        const visibleIds = new Set(visibleAssets.map((a) => a.id));
-        setSelectedAssets((prev) => prev.filter((id) => visibleIds.has(id)));
+        const visibleIds = new Set(visibleEquipment.map((a) => a.id));
+        setSelectedEquipment((prev) => prev.filter((id) => visibleIds.has(id)));
         setSelectAll(false);
-    }, [visibleAssets]);
+    }, [visibleEquipment]);
 
     /* -------------------- EMPLOYEE SELECT -> AUTO FILL -------------------- */
-    const handleEmployeeSelect = (e) => {
+    const handlePersonSelect = (e) => {
         const selectedId = e.target.value;
         const employee = employees.find((emp) => String(emp.id) === String(selectedId));
 
@@ -232,7 +232,7 @@ export default function AdminAssets() {
         setSelectedAsset(asset);
 
         if (mode === "add") {
-            await fetchEmployees(); // refresh tenant employees before issuing
+            await fetchPersons(); // refresh tenant employees before issuing
             setFormData({
                 employeeId: "",
                 employeeName: "",
@@ -283,7 +283,7 @@ export default function AdminAssets() {
         }
 
         // ✅ HARD BLOCK: do not allow issuing asset to employee outside tenant list
-        if (!allowedEmployeeIdSet.has(String(formData.employeeId))) {
+        if (!allowedPersonIdSet.has(String(formData.employeeId))) {
             alert("Invalid employee for this company. Please select the correct employee.");
             return;
         }
@@ -304,7 +304,7 @@ export default function AdminAssets() {
 
             alert(json.message || "Saved successfully");
             handleCloseModal();
-            await fetchAssets();
+            await fetchEquipment();
         } catch (err) {
             console.error("Error submitting form:", err);
             alert(err.message || "Error saving asset");
@@ -324,7 +324,7 @@ export default function AdminAssets() {
             }
 
             alert(json.message || "Deleted successfully");
-            await fetchAssets();
+            await fetchEquipment();
         } catch (err) {
             console.error("Error deleting asset:", err);
             alert(err.message || "Error deleting asset");
@@ -333,15 +333,15 @@ export default function AdminAssets() {
 
     /* -------------------- BULK DELETE -------------------- */
     const handleDeleteSelected = async () => {
-        if (selectedAssets.length === 0) {
+        if (selectedEquipment.length === 0) {
             alert("Please select at least one asset to delete");
             return;
         }
 
-        if (!window.confirm(`Are you sure you want to delete ${selectedAssets.length} asset(s)?`)) return;
+        if (!window.confirm(`Are you sure you want to delete ${selectedEquipment.length} asset(s)?`)) return;
 
         try {
-            const res = await api.post('/api/assets/bulk-delete', { ids: selectedAssets });
+            const res = await api.post('/api/assets/bulk-delete', { ids: selectedEquipment });
 
             const json = res.data;
             if (json.success === false) {
@@ -349,18 +349,18 @@ export default function AdminAssets() {
             }
 
             alert(json.message || "Deleted successfully");
-            setSelectedAssets([]);
+            setSelectedEquipment([]);
             setSelectAll(false);
-            await fetchAssets();
+            await fetchEquipment();
         } catch (err) {
             console.error("Error deleting assets:", err);
             alert(err.message || "Error deleting assets");
         }
     };
 
-    /* -------------------- SELECT CHECKBOXES (based on visibleAssets) -------------------- */
+    /* -------------------- SELECT CHECKBOXES (based on visibleEquipment) -------------------- */
     const handleSelectAsset = (id) => {
-        setSelectedAssets((prev) => {
+        setSelectedEquipment((prev) => {
             if (prev.includes(id)) {
                 setSelectAll(false);
                 return prev.filter((sid) => sid !== id);
@@ -371,10 +371,10 @@ export default function AdminAssets() {
 
     const handleSelectAll = () => {
         if (selectAll) {
-            setSelectedAssets([]);
+            setSelectedEquipment([]);
             setSelectAll(false);
         } else {
-            setSelectedAssets(visibleAssets.map((a) => a.id));
+            setSelectedEquipment(visibleEquipment.map((a) => a.id));
             setSelectAll(true);
         }
     };
@@ -384,8 +384,8 @@ export default function AdminAssets() {
             {/* Stats Cards (FILTERED) */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                 <div className="bg-white p-6 rounded-lg shadow">
-                    <p className="text-3xl font-bold text-[#0f172a] mb-1">{stats.totalAssets}</p>
-                    <p className="text-gray-600 text-sm">Total Assets</p>
+                    <p className="text-3xl font-bold text-[#0f172a] mb-1">{stats.totalEquipment}</p>
+                    <p className="text-gray-600 text-sm">Total Equipment</p>
                 </div>
                 <div className="bg-white p-6 rounded-lg shadow">
                     <p className="text-3xl font-bold text-green-600 mb-1">{stats.laptops}</p>
@@ -393,36 +393,36 @@ export default function AdminAssets() {
                 </div>
                 <div className="bg-white p-6 rounded-lg shadow">
                     <p className="text-3xl font-bold text-gray-600 mb-1">{stats.mobiles}</p>
-                    <p className="text-gray-600 text-sm">Mobile Phones</p>
+                    <p className="text-gray-600 text-sm">Pocket Phones</p>
                 </div>
                 <div className="bg-white p-6 rounded-lg shadow">
                     <p className="text-3xl font-bold text-red-600 mb-1">
                         {stats.tablets + stats.simCards + stats.others}
                     </p>
-                    <p className="text-gray-600 text-sm">Other Assets</p>
+                    <p className="text-gray-600 text-sm">Other Equipment</p>
                 </div>
             </div>
 
             {/* Asset List Section */}
             <div className="bg-white rounded-lg shadow">
-                <div className="p-6 border-[#ff6b35] border-gray-200">
+                <div className="p-6 border-[#8B5CF6] border-gray-200">
                     <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                         <div>
                             <h2 className="text-xl font-bold text-[#0f172a]">Asset List</h2>
                             <p className="text-gray-600 text-sm mt-1">
-                                Currently showing {visibleAssets.length} assets
-                                {selectedAssets.length > 0 && ` • ${selectedAssets.length} selected`}
+                                Currently showing {visibleEquipment.length} assets
+                                {selectedEquipment.length > 0 && ` • ${selectedEquipment.length} selected`}
                             </p>
                         </div>
 
                         <div className="flex gap-2">
-                            {selectedAssets.length > 0 && (
+                            {selectedEquipment.length > 0 && (
                                 <button
                                     onClick={handleDeleteSelected}
                                     className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
                                 >
                                     <Trash2 size={20} />
-                                    Delete Selected ({selectedAssets.length})
+                                    Delete Selected ({selectedEquipment.length})
                                 </button>
                             )}
 
@@ -438,7 +438,7 @@ export default function AdminAssets() {
                 </div>
 
                 {/* Search and Filters */}
-                <div className="p-6 border-[#ff6b35] border-gray-200">
+                <div className="p-6 border-[#8B5CF6] border-gray-200">
                     <div className="flex flex-col md:flex-row gap-4">
                         <div className="flex-1">
                             <input
@@ -490,7 +490,7 @@ export default function AdminAssets() {
                                         className="w-4 h-4 rounded border-gray-300 text-[#0f172a] focus:ring-[#0f172a]"
                                     />
                                 </th>
-                                <th className="px-3 py-3 text-left text-sm font-semibold text-white">Employee</th>
+                                <th className="px-3 py-3 text-left text-sm font-semibold text-white">Person</th>
                                 <th className="px-3 py-3 text-left text-sm font-semibold text-white">Department</th>
                                 <th className="px-3 py-3 text-left text-sm font-semibold text-white">Asset Type</th>
                                 <th className="px-3 py-3 text-left text-sm font-semibold text-white">Make/Model</th>
@@ -508,19 +508,19 @@ export default function AdminAssets() {
                                         Loading assets...
                                     </td>
                                 </tr>
-                            ) : visibleAssets.length === 0 ? (
+                            ) : visibleEquipment.length === 0 ? (
                                 <tr>
                                     <td colSpan="9" className="px-6 py-8 text-center text-gray-500">
                                         No assets found for this company
                                     </td>
                                 </tr>
                             ) : (
-                                visibleAssets.map((asset) => (
+                                visibleEquipment.map((asset) => (
                                     <tr key={asset.id} className="hover:bg-gray-50">
                                         <td className="px-3 py-3 w-12">
                                             <input
                                                 type="checkbox"
-                                                checked={selectedAssets.includes(asset.id)}
+                                                checked={selectedEquipment.includes(asset.id)}
                                                 onChange={() => handleSelectAsset(asset.id)}
                                                 className="w-4 h-4 rounded border-gray-300 text-[#0f172a] focus:ring-[#0f172a]"
                                             />
@@ -579,9 +579,9 @@ export default function AdminAssets() {
 
             {/* Modal */}
             {showModal && (
-                <div className="fixed inset-0 bg-[#ff6b35]lack bg-opacity-50 flex items-center justify-center z-50 p-4">
+                <div className="fixed inset-0 bg-[#8B5CF6]lack bg-opacity-50 flex items-center justify-center z-50 p-4">
                     <div className="bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-                        <div className="p-6 border-[#ff6b35] border-gray-200 bg-[#0f172a] flex justify-between items-center">
+                        <div className="p-6 border-[#8B5CF6] border-gray-200 bg-[#0f172a] flex justify-between items-center">
                             <h2 className="text-2xl font-bold text-white">
                                 {modalMode === "add"
                                     ? "Issue New Asset"
@@ -598,11 +598,11 @@ export default function AdminAssets() {
                             <div className="p-6 space-y-4">
                                 <div className="grid grid-cols-2 gap-4">
                                     <div>
-                                        <p className="text-sm text-gray-600">Employee Name</p>
+                                        <p className="text-sm text-gray-600">Person Name</p>
                                         <p className="font-medium">{selectedAsset?.employeeName}</p>
                                     </div>
                                     <div>
-                                        <p className="text-sm text-gray-600">Employee ID</p>
+                                        <p className="text-sm text-gray-600">Person ID</p>
                                         <p className="font-medium">{selectedAsset?.employeeId}</p>
                                     </div>
                                     <div>
@@ -647,24 +647,24 @@ export default function AdminAssets() {
                         ) : (
                             <div className="p-6">
                                 <div className="space-y-6">
-                                    {/* Employee Selection */}
+                                    {/* Person Selection */}
                                     <div>
-                                        <h3 className="text-lg font-semibold text-gray-900 mb-4">Select Employee</h3>
+                                        <h3 className="text-lg font-semibold text-gray-900 mb-4">Select Person</h3>
                                         <div className="grid grid-cols-1 gap-4">
                                             <div>
                                                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                                                    Select Employee *
+                                                    Select Person *
                                                 </label>
                                                 <select
                                                     value={formData.employeeId}
-                                                    onChange={handleEmployeeSelect}
+                                                    onChange={handlePersonSelect}
                                                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0f172a] focus:border-transparent"
                                                     disabled={modalMode === "edit"}
                                                 >
-                                                    <option value="">-- Select an Employee --</option>
+                                                    <option value="">-- Select an Person --</option>
                                                     {employees.map((emp) => (
                                                         <option key={emp.id} value={emp.id}>
-                                                            {(emp.fullName || emp.name || emp.email || "Employee")}{emp.employeeId ? ` (${emp.employeeId})` : ""} - {emp.department || "N/A"}
+                                                            {(emp.fullName || emp.name || emp.email || "Person")}{emp.employeeId ? ` (${emp.employeeId})` : ""} - {emp.department || "N/A"}
                                                         </option>
                                                     ))}
                                                 </select>
@@ -672,11 +672,11 @@ export default function AdminAssets() {
                                         </div>
                                     </div>
 
-                                    {/* Selected Employee Preview */}
+                                    {/* Selected Person Preview */}
                                     {formData.employeeId && (
                                         <div className="bg-gray-50 p-4 rounded-lg">
                                             <h3 className="text-sm font-semibold text-gray-700 mb-3">
-                                                Selected Employee Details
+                                                Selected Person Details
                                             </h3>
                                             <div className="grid grid-cols-3 gap-4 text-sm">
                                                 <div>
@@ -684,7 +684,7 @@ export default function AdminAssets() {
                                                     <p className="font-medium">{formData.employeeName}</p>
                                                 </div>
                                                 <div>
-                                                    <p className="text-gray-600">Employee ID:</p>
+                                                    <p className="text-gray-600">Person ID:</p>
                                                     <p className="font-medium">{formData.employeeId}</p>
                                                 </div>
                                                 <div>

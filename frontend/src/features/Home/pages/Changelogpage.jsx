@@ -8,8 +8,8 @@ const S = `
 h1,h2,h3,.fd{font-family:'Sora',sans-serif}
 
 .cb{
-  background:linear-gradient(135deg,#FF6B35,#FF5722);
-  box-shadow:0 4px 20px rgba(255,107,53,.3);
+  background:linear-gradient(135deg,#8B5CF6,#06B6D4);
+  box-shadow:0 4px 20px rgba(139,92,246,.3);
   transition:all .2s;
   border:none;
   cursor:pointer
@@ -17,7 +17,7 @@ h1,h2,h3,.fd{font-family:'Sora',sans-serif}
 
 .cb:hover{
   transform:translateY(-2px);
-  box-shadow:0 8px 28px rgba(255,107,53,.45)
+  box-shadow:0 8px 28px rgba(139,92,246,.45)
 }
 
 .sl{
@@ -28,9 +28,9 @@ h1,h2,h3,.fd{font-family:'Sora',sans-serif}
   font-weight:700;
   letter-spacing:.12em;
   text-transform:uppercase;
-  color:#FF6B35;
-  background:rgba(255,107,53,.08);
-  border:1px solid rgba(255,107,53,.2);
+  color:#8B5CF6;
+  background:rgba(139,92,246,.08);
+  border:1px solid rgba(139,92,246,.2);
   padding:5px 14px;
   border-radius:999px
 }
@@ -44,8 +44,8 @@ h1,h2,h3,.fd{font-family:'Sora',sans-serif}
 }
 
 .gcard:hover{
-  border-color:#FFD4C2;
-  box-shadow:0 8px 32px rgba(255,107,53,.08);
+  border-color:#DDD6FE;
+  box-shadow:0 8px 32px rgba(139,92,246,.08);
   transform:translateY(-3px)
 }
 
@@ -58,7 +58,7 @@ h1,h2,h3,.fd{font-family:'Sora',sans-serif}
 
 export default function ChangelogPage() {
   return (
-    <div style={{ minHeight: "100vh", background: "#F7F8FA" }}>
+    <div style={{ minHeight: "100vh", background: "#F6F8FB" }}>
       <style>{S}</style>
 
       {/* NAVBAR */}
@@ -89,11 +89,11 @@ export default function ChangelogPage() {
               fontFamily: "Sora,sans-serif",
               fontWeight: 900,
               fontSize: 20,
-              color: "#0D1F2D",
+              color: "#0B1020",
               textDecoration: "none",
             }}
           >
-            Samaya<span style={{ color: "#FF6B35" }}>HR</span>
+            CrewSync
           </Link>
 
           <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
@@ -155,7 +155,7 @@ export default function ChangelogPage() {
             style={{
               fontSize: "clamp(2rem,5vw,3rem)",
               fontWeight: 900,
-              color: "#0D1F2D",
+              color: "#0B1020",
               lineHeight: 1.12,
               margin: "16px 0 20px",
             }}
@@ -173,7 +173,7 @@ export default function ChangelogPage() {
             }}
           >
             Every new feature, improvement, and bug fix — documented clearly.
-            SamayaHR releases updates weekly based on customer feedback.
+            CrewSync releases updates weekly based on customer feedback.
           </p>
 
           <div
@@ -208,7 +208,7 @@ export default function ChangelogPage() {
                 borderRadius: 12,
                 textDecoration: "none",
                 border: "2px solid #e5e7eb",
-                color: "#0D1F2D",
+                color: "#0B1020",
                 background: "#fff",
               }}
             >
@@ -228,22 +228,22 @@ export default function ChangelogPage() {
             style={{
               fontSize: "clamp(1.5rem,3vw,2rem)",
               fontWeight: 900,
-              color: "#0D1F2D",
+              color: "#0B1020",
               marginTop: 12,
             }}
           >
-            Built to make your HR team faster
+            Built to make your People team faster
           </h2>
         </div>
 
         <div className="grid3">
           {[
             ["✨", "New features", "Brand new capabilities shipped based on real user requests."],
-            ["⚡", "Performance improvements", "Faster load times, snappier dashboards, smoother flows."],
+            ["⚡", "Momentum improvements", "Faster load times, snappier dashboards, smoother flows."],
             ["🐛", "Bug fixes", "Every fix logged with the issue and resolution clearly stated."],
             ["🔌", "New integrations", "Fresh connectors to popular tools added every month."],
-            ["📱", "Mobile updates", "iOS and Android app improvements released bi-weekly."],
-            ["🛡️", "Security patches", "All security updates applied proactively — zero-day ready."],
+            ["📱", "Pocket updates", "iOS and Android app improvements released bi-weekly."],
+            ["🛡️", "Trust patches", "All security updates applied proactively — zero-day ready."],
           ].map((f, i) => (
             <div className="gcard" key={i}>
               <div style={{ fontSize: 28, marginBottom: 12 }}>{f[0]}</div>
@@ -252,7 +252,7 @@ export default function ChangelogPage() {
                 style={{
                   fontSize: 16,
                   fontWeight: 800,
-                  color: "#0D1F2D",
+                  color: "#0B1020",
                   marginBottom: 6,
                 }}
               >
@@ -269,7 +269,7 @@ export default function ChangelogPage() {
       {/* CTA */}
       <section
         style={{
-          background: "linear-gradient(135deg,#0D1F2D 0%,#162639 100%)",
+          background: "linear-gradient(135deg,#0B1020 0%,#182033 100%)",
           padding: "72px 24px",
           textAlign: "center",
         }}
@@ -334,7 +334,7 @@ export default function ChangelogPage() {
           color: "#4b5563",
         }}
       >
-        © {new Date().getFullYear()} Zlabs Innovation Private Limited · All rights reserved
+        © {new Date().getFullYear()} CrewSync Technologies · All rights reserved
       </footer>
     </div>
   );

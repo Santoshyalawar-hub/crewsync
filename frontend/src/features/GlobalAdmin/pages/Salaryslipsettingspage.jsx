@@ -45,10 +45,10 @@ function Toast({ message, type, onClose }) {
   );
 }
 
-export default function SalarySlipSettingsPage() {
-  const [companies, setCompanies] = useState([]);
+export default function CompensationSlipSettingsPage() {
+  const [companies, setWorkspaces] = useState([]);
   const [selectedTenant, setSelectedTenant] = useState("");
-  const [selectedCompany, setSelectedCompany] = useState(null);
+  const [selectedWorkspace, setSelectedWorkspace] = useState(null);
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [toast, setToast] = useState(null);
@@ -59,11 +59,11 @@ export default function SalarySlipSettingsPage() {
     footerNote: "This is a computer-generated salary slip and does not require a signature.",
     companyLogoBase64: null,
     logoMediaType: null,
-    showEmployeeId: true, showDepartment: true, showDesignation: true,
+    showPersonId: true, showDepartment: true, showDesignation: true,
     showDateOfJoining: true, showPanNumber: false, showUanNumber: true,
     showPfNumber: true, showEsiNumber: false, showBankName: true,
     showAccountNumber: true, showLoanNumber: false,
-    showBasicSalary: true, showHra: true, showSpecialAllowance: true,
+    showBasicCompensation: true, showHra: true, showSpecialAllowance: true,
     showTransportAllowance: false, showMedicalAllowance: false, showOtherAllowances: false,
     showPfDeduction: true, showEsiDeduction: false, showProfessionalTax: true,
     showTds: false, showLoanDeduction: false, showOtherDeductions: false,
@@ -75,7 +75,7 @@ export default function SalarySlipSettingsPage() {
   // Load companies on mount
   useEffect(() => {
     api.get("/api/global-admin/companies")
-      .then(r => { const d = r.data; if (d.success) setCompanies(d.data || []); })
+      .then(r => { const d = r.data; if (d.success) setWorkspaces(d.data || []); })
       .catch(() => {});
   }, []);
 
@@ -96,11 +96,11 @@ export default function SalarySlipSettingsPage() {
       .finally(() => setLoading(false));
   }, [selectedTenant]);
 
-  const handleCompanySelect = (e) => {
+  const handleWorkspaceSelect = (e) => {
     const tc = e.target.value;
     setSelectedTenant(tc);
     const comp = companies.find(c => c.tenantCode === tc);
-    setSelectedCompany(comp || null);
+    setSelectedWorkspace(comp || null);
   };
 
   const handleLogoUpload = (e) => {
@@ -158,12 +158,12 @@ export default function SalarySlipSettingsPage() {
 
       {/* ── Page Header ── */}
       <div style={{ background: "linear-gradient(135deg, #0f172a 0%, #1e293b 60%, #0f172a 100%)", borderRadius: 18, padding: "24px 28px", marginBottom: 24, position: "relative", overflow: "hidden" }}>
-        <div style={{ position: "absolute", top: -30, right: 60, width: 140, height: 140, borderRadius: "50%", background: "rgba(255,107,53,0.08)", pointerEvents: "none" }} />
+        <div style={{ position: "absolute", top: -30, right: 60, width: 140, height: 140, borderRadius: "50%", background: "rgba(139,92,246,0.08)", pointerEvents: "none" }} />
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", position: "relative" }}>
           <div>
-            <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 11, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 6px" }}>SamayaHR · Global Admin</p>
-            <h1 style={{ color: "#fff", fontSize: 24, fontWeight: 800, margin: 0 }}>Salary Slip Settings</h1>
-            <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 13, margin: "6px 0 0" }}>Configure payslip layout and visible fields per company</p>
+            <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 11, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 6px" }}>CrewSync · Global Operator</p>
+            <h1 style={{ color: "#fff", fontSize: 24, fontWeight: 800, margin: 0 }}>PayStatement Setup</h1>
+            <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 13, margin: "6px 0 0" }}>Configure pay statement layout and visible fields per company</p>
           </div>
           <div style={{ display: "flex", gap: 10 }}>
             {selectedTenant && (
@@ -171,7 +171,7 @@ export default function SalarySlipSettingsPage() {
                 <Eye style={{ width: 15, height: 15 }} /> Preview
               </button>
             )}
-            <button onClick={handleSave} disabled={saving || !selectedTenant} style={{ ...S.btn("#ff6b35"), padding: "10px 20px", borderRadius: 11, boxShadow: "0 4px 14px rgba(255,107,53,0.35)", opacity: (!selectedTenant || saving) ? 0.6 : 1 }}>
+            <button onClick={handleSave} disabled={saving || !selectedTenant} style={{ ...S.btn("#8B5CF6"), padding: "10px 20px", borderRadius: 11, boxShadow: "0 4px 14px rgba(139,92,246,0.35)", opacity: (!selectedTenant || saving) ? 0.6 : 1 }}>
               {saving ? <Loader2 style={{ width: 15, height: 15, animation: "spin 1s linear infinite" }} /> : <Save style={{ width: 15, height: 15 }} />}
               Save Settings
             </button>
@@ -179,14 +179,14 @@ export default function SalarySlipSettingsPage() {
         </div>
       </div>
 
-      {/* ── Company Selector ── */}
+      {/* ── Workspace Selector ── */}
       <div style={{ ...S.card, padding: "18px 24px", marginBottom: 24, display: "flex", alignItems: "center", gap: 20 }}>
-        <Building2 style={{ width: 20, height: 20, color: "#ff6b35", flexShrink: 0 }} />
+        <Building2 style={{ width: 20, height: 20, color: "#8B5CF6", flexShrink: 0 }} />
         <div style={{ flex: 1 }}>
-          <label style={S.label}>Select Company to Configure</label>
+          <label style={S.label}>Select Workspace to Configure</label>
           <select
             value={selectedTenant}
-            onChange={handleCompanySelect}
+            onChange={handleWorkspaceSelect}
             style={{ ...S.input, maxWidth: 420 }}
           >
             <option value="">— Choose a company —</option>
@@ -197,14 +197,14 @@ export default function SalarySlipSettingsPage() {
             ))}
           </select>
         </div>
-        {selectedCompany && (
+        {selectedWorkspace && (
           <div style={{ display: "flex", alignItems: "center", gap: 12, padding: "10px 16px", borderRadius: 12, background: "#f8fafc", border: "1px solid #eef0f4" }}>
-            <div style={{ width: 38, height: 38, borderRadius: 10, background: "linear-gradient(135deg,#ff6b35,#8b5cf6)", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: 800, fontSize: 15 }}>
-              {(selectedCompany.displayName || "?").charAt(0)}
+            <div style={{ width: 38, height: 38, borderRadius: 10, background: "linear-gradient(135deg,#8B5CF6,#8b5cf6)", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: 800, fontSize: 15 }}>
+              {(selectedWorkspace.displayName || "?").charAt(0)}
             </div>
             <div>
-              <p style={{ margin: 0, fontWeight: 700, fontSize: 14, color: "#1e293b" }}>{selectedCompany.displayName}</p>
-              <p style={{ margin: "2px 0 0", fontSize: 11, color: "#94a3b8" }}>{selectedCompany.tenantCode} · {selectedCompany.plan} plan · <span style={{ color: selectedCompany.status === "active" ? "#16a34a" : "#dc2626", fontWeight: 700 }}>{selectedCompany.status}</span></p>
+              <p style={{ margin: 0, fontWeight: 700, fontSize: 14, color: "#1e293b" }}>{selectedWorkspace.displayName}</p>
+              <p style={{ margin: "2px 0 0", fontSize: 11, color: "#94a3b8" }}>{selectedWorkspace.tenantCode} · {selectedWorkspace.plan} plan · <span style={{ color: selectedWorkspace.status === "active" ? "#16a34a" : "#dc2626", fontWeight: 700 }}>{selectedWorkspace.status}</span></p>
             </div>
           </div>
         )}
@@ -219,7 +219,7 @@ export default function SalarySlipSettingsPage() {
         <div style={{ ...S.card, padding: "60px 0", textAlign: "center" }}>
           <Settings2 style={{ width: 40, height: 40, color: "#e2e8f0", margin: "0 auto 12px" }} />
           <p style={{ fontSize: 15, fontWeight: 700, color: "#94a3b8", margin: 0 }}>Select a company to configure salary slip settings</p>
-          <p style={{ fontSize: 13, color: "#cbd5e1", margin: "6px 0 0" }}>Each company can have its own logo, fields, and payslip design</p>
+          <p style={{ fontSize: 13, color: "#cbd5e1", margin: "6px 0 0" }}>Each company can have its own logo, fields, and pay statement design</p>
         </div>
       ) : loading ? (
         <div style={{ ...S.card, padding: "60px 0", textAlign: "center", color: "#94a3b8", display: "flex", alignItems: "center", justifyContent: "center", gap: 10 }}>
@@ -234,12 +234,12 @@ export default function SalarySlipSettingsPage() {
             {/* Branding */}
             <div style={S.card}>
               <div style={{ background: "#f8fafc", padding: "12px 18px", borderBottom: "1px solid #eef0f4", display: "flex", alignItems: "center", gap: 8 }}>
-                <FileText style={{ width: 15, height: 15, color: "#ff6b35" }} />
+                <FileText style={{ width: 15, height: 15, color: "#8B5CF6" }} />
                 <span style={{ fontSize: 12, fontWeight: 700, color: "#334155", textTransform: "uppercase", letterSpacing: "0.06em" }}>Branding & Header</span>
               </div>
               <div style={{ padding: "18px" }}>
                 {/* Logo */}
-                <label style={S.label}>Company Logo</label>
+                <label style={S.label}>Workspace Logo</label>
                 <label style={{ display: "flex", alignItems: "center", gap: 12, padding: "14px", borderRadius: 10, border: "1.5px dashed #e2e8f0", cursor: "pointer", background: "#fafbfc", marginBottom: 14 }}>
                   {settings.companyLogoBase64 ? (
                     <div style={{ display: "flex", alignItems: "center", gap: 12, width: "100%" }}>
@@ -259,7 +259,7 @@ export default function SalarySlipSettingsPage() {
                       </div>
                       <div>
                         <p style={{ margin: 0, fontSize: 13, fontWeight: 600, color: "#334155" }}>Upload company logo</p>
-                        <p style={{ margin: "2px 0 0", fontSize: 11, color: "#94a3b8" }}>PNG, JPG or SVG · Max 2MB · Appears on every payslip</p>
+                        <p style={{ margin: "2px 0 0", fontSize: 11, color: "#94a3b8" }}>PNG, JPG or SVG · Max 2MB · Appears on every pay statement</p>
                       </div>
                     </>
                   )}
@@ -278,24 +278,24 @@ export default function SalarySlipSettingsPage() {
               </div>
             </div>
 
-            {/* Employee Info Fields */}
+            {/* Person Info Fields */}
             <ToggleSection
-              title="Employee Information Fields"
+              title="Person Information Fields"
               icon={User}
               color="#6366f1"
               bg="#f5f3ff"
               items={[
-                { key: "showEmployeeId",    label: "Employee ID",     desc: "Show emp. ID on slip"       },
+                { key: "showPersonId",    label: "Person ID",     desc: "Show emp. ID on slip"       },
                 { key: "showDepartment",    label: "Department",      desc: "Show department name"       },
                 { key: "showDesignation",   label: "Designation",     desc: "Show job title"             },
                 { key: "showDateOfJoining", label: "Date of Joining", desc: "Show DOJ"                   },
                 { key: "showPanNumber",     label: "PAN Number",      desc: "Show PAN (income tax)"      },
                 { key: "showUanNumber",     label: "UAN Number",      desc: "Universal Account Number"   },
                 { key: "showPfNumber",      label: "PF Number",       desc: "Provident Fund account"     },
-                { key: "showEsiNumber",     label: "ESI Number",      desc: "Employee State Insurance"   },
-                { key: "showBankName",      label: "Bank Name",       desc: "Employee's bank name"       },
+                { key: "showEsiNumber",     label: "ESI Number",      desc: "Person State Insurance"   },
+                { key: "showBankName",      label: "Bank Name",       desc: "Person's bank name"       },
                 { key: "showAccountNumber", label: "Account Number",  desc: "Bank account number"        },
-                { key: "showLoanNumber",    label: "Loan Number",     desc: "Company loan reference"     },
+                { key: "showLoanNumber",    label: "Loan Number",     desc: "Workspace loan reference"     },
               ]}
             />
           </div>
@@ -310,7 +310,7 @@ export default function SalarySlipSettingsPage() {
               color="#16a34a"
               bg="#f0fdf4"
               items={[
-                { key: "showBasicSalary",        label: "Basic Salary",         desc: "Core base salary component"     },
+                { key: "showBasicCompensation",        label: "Basic Compensation",         desc: "Core base salary component"     },
                 { key: "showHra",                label: "HRA",                  desc: "House Rent Allowance"           },
                 { key: "showSpecialAllowance",   label: "Special Allowance",    desc: "Flexible allowance component"   },
                 { key: "showTransportAllowance", label: "Transport Allowance",  desc: "Conveyance / travel allowance"  },
@@ -326,8 +326,8 @@ export default function SalarySlipSettingsPage() {
               color="#dc2626"
               bg="#fef2f2"
               items={[
-                { key: "showPfDeduction",     label: "Provident Fund (PF)", desc: "Employee PF contribution"   },
-                { key: "showEsiDeduction",    label: "ESI Deduction",       desc: "Employee State Insurance"   },
+                { key: "showPfDeduction",     label: "Provident Fund (PF)", desc: "Person PF contribution"   },
+                { key: "showEsiDeduction",    label: "ESI Deduction",       desc: "Person State Insurance"   },
                 { key: "showProfessionalTax", label: "Professional Tax",    desc: "State-level professional tax" },
                 { key: "showTds",             label: "TDS",                  desc: "Tax Deducted at Source"     },
                 { key: "showLoanDeduction",   label: "Loan Deduction",      desc: "EMI recovery from salary"   },
@@ -337,11 +337,11 @@ export default function SalarySlipSettingsPage() {
 
             {/* Summary card */}
             <div style={{ ...S.card, padding: "16px 20px", background: "linear-gradient(135deg,#0f172a,#1e293b)" }}>
-              <p style={{ color: "rgba(255,255,255,0.5)", fontSize: 11, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.08em", margin: "0 0 12px" }}>Current Configuration Summary</p>
+              <p style={{ color: "rgba(255,255,255,0.5)", fontSize: 11, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.08em", margin: "0 0 12px" }}>Current Settings Summary</p>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 10 }}>
                 {[
-                  { label: "Info Fields",   count: [settings.showEmployeeId,settings.showDepartment,settings.showDesignation,settings.showDateOfJoining,settings.showPanNumber,settings.showUanNumber,settings.showPfNumber,settings.showEsiNumber,settings.showBankName,settings.showAccountNumber,settings.showLoanNumber].filter(Boolean).length, color: "#6366f1" },
-                  { label: "Earnings",      count: [settings.showBasicSalary,settings.showHra,settings.showSpecialAllowance,settings.showTransportAllowance,settings.showMedicalAllowance,settings.showOtherAllowances].filter(Boolean).length, color: "#22c55e" },
+                  { label: "Info Fields",   count: [settings.showPersonId,settings.showDepartment,settings.showDesignation,settings.showDateOfJoining,settings.showPanNumber,settings.showUanNumber,settings.showPfNumber,settings.showEsiNumber,settings.showBankName,settings.showAccountNumber,settings.showLoanNumber].filter(Boolean).length, color: "#6366f1" },
+                  { label: "Earnings",      count: [settings.showBasicCompensation,settings.showHra,settings.showSpecialAllowance,settings.showTransportAllowance,settings.showMedicalAllowance,settings.showOtherAllowances].filter(Boolean).length, color: "#22c55e" },
                   { label: "Deductions",    count: [settings.showPfDeduction,settings.showEsiDeduction,settings.showProfessionalTax,settings.showTds,settings.showLoanDeduction,settings.showOtherDeductions].filter(Boolean).length, color: "#ef4444" },
                 ].map(({ label, count, color }) => (
                   <div key={label} style={{ background: "rgba(255,255,255,0.06)", borderRadius: 10, padding: "12px 14px", textAlign: "center" }}>
@@ -353,7 +353,7 @@ export default function SalarySlipSettingsPage() {
               {settings.companyLogoBase64 && (
                 <div style={{ marginTop: 12, display: "flex", alignItems: "center", gap: 8, padding: "8px 12px", background: "rgba(34,197,94,0.1)", borderRadius: 8 }}>
                   <CheckCircle style={{ width: 13, height: 13, color: "#22c55e" }} />
-                  <p style={{ margin: 0, fontSize: 11, color: "#22c55e", fontWeight: 600 }}>Company logo uploaded</p>
+                  <p style={{ margin: 0, fontSize: 11, color: "#22c55e", fontWeight: 600 }}>Workspace logo uploaded</p>
                 </div>
               )}
             </div>
@@ -367,7 +367,7 @@ export default function SalarySlipSettingsPage() {
           <div style={{ background: "#fff", borderRadius: 18, width: "100%", maxWidth: 700, maxHeight: "90vh", overflowY: "auto", boxShadow: "0 24px 60px rgba(0,0,0,0.3)" }}>
             <div style={{ background: "linear-gradient(135deg,#0f172a,#1e293b)", borderRadius: "18px 18px 0 0", padding: "18px 24px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
               <div>
-                <p style={{ color: "#fff", fontWeight: 800, fontSize: 16, margin: 0 }}>Payslip Preview</p>
+                <p style={{ color: "#fff", fontWeight: 800, fontSize: 16, margin: 0 }}>PayStatement Preview</p>
                 <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 11, margin: "3px 0 0" }}>How the slip will appear to employees</p>
               </div>
               <button onClick={() => setPreviewOpen(false)} style={{ width: 32, height: 32, borderRadius: 9, border: "none", background: "rgba(255,255,255,0.1)", color: "#fff", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -381,17 +381,17 @@ export default function SalarySlipSettingsPage() {
                 <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
                   {settings.companyLogoBase64
                     ? <img src={`data:${settings.logoMediaType};base64,${settings.companyLogoBase64}`} alt="logo" style={{ height: 44, objectFit: "contain", borderRadius: 6, background: "#fff", padding: 4 }} />
-                    : <div style={{ width: 44, height: 44, borderRadius: 10, background: "linear-gradient(135deg,#ff6b35,#8b5cf6)", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: 900, fontSize: 18 }}>
-                        {(selectedCompany?.displayName || "C").charAt(0)}
+                    : <div style={{ width: 44, height: 44, borderRadius: 10, background: "linear-gradient(135deg,#8B5CF6,#8b5cf6)", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: 900, fontSize: 18 }}>
+                        {(selectedWorkspace?.displayName || "C").charAt(0)}
                       </div>
                   }
                   <div>
-                    <p style={{ color: "#fff", fontWeight: 800, fontSize: 16, margin: 0 }}>{selectedCompany?.displayName || "Company Name"}</p>
-                    <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 11, margin: "3px 0 0" }}>{[selectedCompany?.city, selectedCompany?.state].filter(Boolean).join(", ")}</p>
+                    <p style={{ color: "#fff", fontWeight: 800, fontSize: 16, margin: 0 }}>{selectedWorkspace?.displayName || "Workspace Name"}</p>
+                    <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 11, margin: "3px 0 0" }}>{[selectedWorkspace?.city, selectedWorkspace?.state].filter(Boolean).join(", ")}</p>
                   </div>
                 </div>
                 <div style={{ textAlign: "right" }}>
-                  <p style={{ color: "#ff6b35", fontWeight: 800, fontSize: 14, margin: 0 }}>{settings.slipTitle || "SALARY SLIP"}</p>
+                  <p style={{ color: "#8B5CF6", fontWeight: 800, fontSize: 14, margin: 0 }}>{settings.slipTitle || "SALARY SLIP"}</p>
                   <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 11, margin: "3px 0 0" }}>
                     {new Date().toLocaleString("default", { month: "long", year: "numeric" })}
                   </p>
@@ -401,8 +401,8 @@ export default function SalarySlipSettingsPage() {
               {/* Preview info grid */}
               <div style={{ background: "#f8fafc", borderRadius: 10, padding: "14px 16px", marginBottom: 16 }}>
                 <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "10px 20px" }}>
-                  <div><p style={{ fontSize: 9, color: "#94a3b8", margin: 0, textTransform: "uppercase" }}>Employee Name</p><p style={{ fontSize: 12, fontWeight: 600, color: "#1e293b", margin: "2px 0 0" }}>John Doe</p></div>
-                  {settings.showEmployeeId    && <div><p style={{ fontSize: 9, color: "#94a3b8", margin: 0, textTransform: "uppercase" }}>Employee ID</p><p style={{ fontSize: 12, fontWeight: 600, color: "#1e293b", margin: "2px 0 0" }}>EMP001</p></div>}
+                  <div><p style={{ fontSize: 9, color: "#94a3b8", margin: 0, textTransform: "uppercase" }}>Person Name</p><p style={{ fontSize: 12, fontWeight: 600, color: "#1e293b", margin: "2px 0 0" }}>John Doe</p></div>
+                  {settings.showPersonId    && <div><p style={{ fontSize: 9, color: "#94a3b8", margin: 0, textTransform: "uppercase" }}>Person ID</p><p style={{ fontSize: 12, fontWeight: 600, color: "#1e293b", margin: "2px 0 0" }}>EMP001</p></div>}
                   {settings.showDepartment    && <div><p style={{ fontSize: 9, color: "#94a3b8", margin: 0, textTransform: "uppercase" }}>Department</p><p style={{ fontSize: 12, fontWeight: 600, color: "#1e293b", margin: "2px 0 0" }}>Engineering</p></div>}
                   {settings.showDesignation   && <div><p style={{ fontSize: 9, color: "#94a3b8", margin: 0, textTransform: "uppercase" }}>Designation</p><p style={{ fontSize: 12, fontWeight: 600, color: "#1e293b", margin: "2px 0 0" }}>Sr. Developer</p></div>}
                   {settings.showBankName      && <div><p style={{ fontSize: 9, color: "#94a3b8", margin: 0, textTransform: "uppercase" }}>Bank Name</p><p style={{ fontSize: 12, fontWeight: 600, color: "#1e293b", margin: "2px 0 0" }}>HDFC Bank</p></div>}
@@ -418,7 +418,7 @@ export default function SalarySlipSettingsPage() {
                 <div style={{ background: "#f0fdf4", borderRadius: 10, overflow: "hidden" }}>
                   <p style={{ margin: 0, padding: "8px 14px", fontSize: 11, fontWeight: 700, color: "#16a34a", textTransform: "uppercase", borderBottom: "1px solid #bbf7d0" }}>Earnings</p>
                   {[
-                    { show: settings.showBasicSalary,        label: "Basic Salary",       val: "₹ 30,000" },
+                    { show: settings.showBasicCompensation,        label: "Basic Compensation",       val: "₹ 30,000" },
                     { show: settings.showHra,                label: "HRA",                val: "₹ 12,000" },
                     { show: settings.showSpecialAllowance,   label: "Special Allowance",  val: "₹ 5,000"  },
                     { show: settings.showTransportAllowance, label: "Transport Allow.",   val: "₹ 1,600"  },

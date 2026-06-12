@@ -3,7 +3,7 @@ import { FileText, Download, Eye, RefreshCw, Search } from "lucide-react";
 import api from "@/lib/apiClient";
 
 const T = {
-  navy:"#0D1F2D", navyMid:"#1E3448", coral:"#FF6B35", teal:"#00C2A8",
+  navy:"#0B1020", navyMid:"#374151", coral:"#8B5CF6", teal:"#06B6D4",
   bg:"#F5F7FB", border:"#E8ECF2",
 };
 
@@ -26,7 +26,7 @@ const CSS = `
 
 const STATUS_STYLE = {
   PENDING:   { bg:"#FFFBEB",               color:"#B45309", border:"#FDE68A" },
-  APPROVED:  { bg:"rgba(0,194,168,.08)",   color:"#0D7A6A", border:"rgba(0,194,168,.3)" },
+  APPROVED:  { bg:"rgba(6,182,212,.08)",   color:"#0D7A6A", border:"rgba(6,182,212,.3)" },
   PAID:      { bg:"rgba(99,102,241,.08)",  color:"#4F46E5", border:"rgba(99,102,241,.25)" },
   LOCKED:    { bg:"rgba(13,31,45,.06)",    color:T.navy,    border:"rgba(13,31,45,.15)" },
   CANCELLED: { bg:"#FEF2F2",              color:"#991B1B", border:"#FECACA" },
@@ -35,7 +35,7 @@ const STATUS_STYLE = {
 const fmtDate  = d => d ? new Date(d).toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"numeric"}) : "—";
 const fmtAmt   = a => a != null ? `₹${Number(a).toLocaleString("en-IN",{minimumFractionDigits:0})}` : "—";
 
-export default function AdminPayslipManagement() {
+export default function OperatorPayStatementOperations() {
   const [records,   setRecords]  = useState([]);
   const [loading,   setLoading]  = useState(true);
   const [search,    setSearch]   = useState("");
@@ -55,20 +55,20 @@ export default function AdminPayslipManagement() {
       .finally(() => setLoading(false));
   };
 
-  const generatePayslip = async (id) => {
+  const generatePayStatement = async (id) => {
     setGen(p => ({...p,[id]:true}));
     try {
       await api.post(`/api/payroll/${id}/generate-payslip`);
       load();
-    } catch(e) { alert("Error generating payslip: " + (e.response?.data?.message || e.message)); }
+    } catch(e) { alert("Error generating pay statement: " + (e.response?.data?.message || e.message)); }
     finally { setGen(p => ({...p,[id]:false})); }
   };
 
   const normalize = r => ({
     id: r.id,
-    userName: r.userName || r.user_name || r.employeeName || `Employee #${r.userId}`,
+    userName: r.userName || r.user_name || r.employeeName || `Person #${r.userId}`,
     payrollMonth: r.payrollMonth || r.payroll_month || "",
-    netSalary: r.netSalary || r.net_salary || 0,
+    netCompensation: r.netCompensation || r.net_salary || 0,
     status: r.status || "PENDING",
     payslipGenerated: r.payslipGenerated || r.payslip_generated || false,
     payslipPath: r.payslipPath || r.payslip_path || null,
@@ -90,11 +90,11 @@ export default function AdminPayslipManagement() {
       <style>{CSS}</style>
 
       <div style={{background:`linear-gradient(135deg,${T.navy},${T.navyMid})`,padding:"22px 26px",position:"relative",overflow:"hidden"}}>
-        <div style={{position:"absolute",top:-50,right:60,width:180,height:180,borderRadius:"50%",background:"rgba(255,107,53,.07)",pointerEvents:"none"}}/>
+        <div style={{position:"absolute",top:-50,right:60,width:180,height:180,borderRadius:"50%",background:"rgba(139,92,246,.07)",pointerEvents:"none"}}/>
         <div style={{position:"relative"}}>
-          <p style={{fontSize:11,fontWeight:700,color:T.coral,textTransform:"uppercase",letterSpacing:".12em",marginBottom:4}}>SamayaHR · Finance</p>
-          <h1 className="fd" style={{fontSize:23,fontWeight:900,color:"#fff",margin:0}}>Payslip Management</h1>
-          <p style={{fontSize:13,color:"rgba(255,255,255,.5)",marginTop:4}}>Generate and download employee payslips</p>
+          <p style={{fontSize:11,fontWeight:700,color:T.coral,textTransform:"uppercase",letterSpacing:".12em",marginBottom:4}}>CrewSync · MoneyOps</p>
+          <h1 className="fd" style={{fontSize:23,fontWeight:900,color:"#fff",margin:0}}>PayStatement Operations</h1>
+          <p style={{fontSize:13,color:"rgba(255,255,255,.5)",marginTop:4}}>Generate and download person pay statements</p>
         </div>
       </div>
 
@@ -103,8 +103,8 @@ export default function AdminPayslipManagement() {
         {/* Stats */}
         <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(140px,1fr))",gap:12}}>
           {[
-            { label:"Total Payrolls", val:stats.total,     color:T.navy },
-            { label:"Payslips Ready", val:stats.generated, color:T.teal },
+            { label:"Total Payoutss", val:stats.total,     color:T.navy },
+            { label:"PayStatements Ready", val:stats.generated, color:T.teal },
             { label:"Not Generated",  val:stats.pending,   color:"#B45309" },
           ].map(s => (
             <div key={s.label} style={{background:"#fff",border:`1.5px solid ${T.border}`,borderRadius:14,padding:"14px 16px"}}>
@@ -130,12 +130,12 @@ export default function AdminPayslipManagement() {
         <div className="aps-panel aps-in">
           <div style={{background:`linear-gradient(90deg,${T.navy},${T.navyMid})`,padding:"12px 18px",display:"flex",alignItems:"center",gap:10}}>
             <FileText size={15} color={T.coral}/>
-            <p className="fd" style={{fontSize:13,fontWeight:800,color:"#fff"}}>Payroll Records</p>
-            <span style={{marginLeft:"auto",padding:"2px 9px",borderRadius:999,background:"rgba(255,107,53,.2)",color:T.coral,fontSize:10,fontWeight:700}}>{filtered.length}</span>
+            <p className="fd" style={{fontSize:13,fontWeight:800,color:"#fff"}}>Payouts Records</p>
+            <span style={{marginLeft:"auto",padding:"2px 9px",borderRadius:999,background:"rgba(139,92,246,.2)",color:T.coral,fontSize:10,fontWeight:700}}>{filtered.length}</span>
           </div>
 
           <div style={{display:"grid",gridTemplateColumns:"2fr 1fr 1fr 1fr 1.5fr",gap:12,padding:"10px 18px",borderBottom:`1.5px solid ${T.border}`,background:"#FAFBFF"}}>
-            {["Employee","Month","Net Salary","Status","Payslip"].map(h => (
+            {["Person","Month","Net Compensation","Status","PayStatement"].map(h => (
               <p key={h} style={{fontSize:10,fontWeight:700,color:"#94a3b8",textTransform:"uppercase",letterSpacing:".07em",margin:0}}>{h}</p>
             ))}
           </div>
@@ -143,7 +143,7 @@ export default function AdminPayslipManagement() {
           {loading ? (
             <div style={{padding:"40px",textAlign:"center"}}><p style={{fontSize:13,color:"#94a3b8"}}>Loading…</p></div>
           ) : filtered.length === 0 ? (
-            <div style={{padding:"40px",textAlign:"center"}}><p style={{fontSize:13,color:"#94a3b8"}}>No payroll records found.</p></div>
+            <div style={{padding:"40px",textAlign:"center"}}><p style={{fontSize:13,color:"#94a3b8"}}>No payout records found.</p></div>
           ) : (
             filtered.map(r => {
               const st = STATUS_STYLE[r.status] || STATUS_STYLE.PENDING;
@@ -151,14 +151,14 @@ export default function AdminPayslipManagement() {
                 <div key={r.id} className="aps-row">
                   <p className="fd" style={{fontSize:13,fontWeight:800,color:T.navy,margin:0}}>{r.userName}</p>
                   <p style={{fontSize:12,color:"#64748b",margin:0}}>{r.payrollMonth || "—"}</p>
-                  <p className="fd" style={{fontSize:13,fontWeight:800,color:T.navy,margin:0}}>{fmtAmt(r.netSalary)}</p>
+                  <p className="fd" style={{fontSize:13,fontWeight:800,color:T.navy,margin:0}}>{fmtAmt(r.netCompensation)}</p>
                   <span className="aps-badge" style={{background:st.bg,color:st.color,border:`1px solid ${st.border}`}}>{r.status}</span>
                   <div style={{display:"flex",gap:6}}>
                     {r.payslipGenerated ? (
                       <>
                         {r.payslipPath && (
                           <a href={r.payslipPath} target="_blank" rel="noreferrer"
-                            style={{display:"inline-flex",alignItems:"center",gap:4,padding:"5px 11px",borderRadius:8,border:`1.5px solid rgba(0,194,168,.3)`,background:"rgba(0,194,168,.08)",color:T.teal,fontSize:11,fontWeight:700,textDecoration:"none"}}>
+                            style={{display:"inline-flex",alignItems:"center",gap:4,padding:"5px 11px",borderRadius:8,border:`1.5px solid rgba(6,182,212,.3)`,background:"rgba(6,182,212,.08)",color:T.teal,fontSize:11,fontWeight:700,textDecoration:"none"}}>
                             <Eye size={10}/> View
                           </a>
                         )}
@@ -169,8 +169,8 @@ export default function AdminPayslipManagement() {
                       </>
                     ) : (
                       <button className="aps-btn" disabled={generating[r.id] || r.status === "CANCELLED"}
-                        onClick={() => generatePayslip(r.id)}
-                        style={{background:`linear-gradient(135deg,${T.coral},#ff8c5a)`,color:"#fff",boxShadow:"0 3px 10px rgba(255,107,53,.25)"}}>
+                        onClick={() => generatePayStatement(r.id)}
+                        style={{background:`linear-gradient(135deg,${T.coral},#FBBF24)`,color:"#fff",boxShadow:"0 3px 10px rgba(139,92,246,.25)"}}>
                         {generating[r.id] ? "…" : <><FileText size={10}/> Generate</>}
                       </button>
                     )}

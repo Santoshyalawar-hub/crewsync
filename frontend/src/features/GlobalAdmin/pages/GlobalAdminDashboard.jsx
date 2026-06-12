@@ -74,13 +74,13 @@ const T = {
   text:    "#0d1421",
   muted:   "#64748b",
   dim:     "#94a3b8",
-  orange:  "#ff6b35",
+  orange:  "#8B5CF6",
   green:   "#10b981",
   blue:    "#3b82f6",
   purple:  "#8b5cf6",
   amber:   "#f59e0b",
   red:     "#ef4444",
-  teal:    "#14b8a6",
+  teal:    "#06B6D4",
 };
 const COLORS = [T.orange, T.blue, T.green, T.purple, T.amber, T.teal, "#ec4899", "#06b6d4"];
 
@@ -160,7 +160,7 @@ const actIcon = (a = {}) => {
   const { tag, eventType, severity } = a;
   if (tag === "Payment"      || eventType?.includes("PAYMENT"))      return <DollarSign size={11} />;
   if (tag === "Subscription" || eventType?.includes("SUBSCRIPTION")) return <Package size={11} />;
-  if (tag === "Company"      || eventType?.includes("COMPANY"))      return <Building2 size={11} />;
+  if (tag === "Workspace"      || eventType?.includes("COMPANY"))      return <Building2 size={11} />;
   if (tag === "System"       || eventType?.includes("SYSTEM"))       return <Server size={11} />;
   if (tag === "Auth"         || eventType?.includes("LOGIN"))        return <ShieldCheck size={11} />;
   if (severity === "warning" || severity === "danger")               return <AlertCircle size={11} />;
@@ -190,16 +190,16 @@ const SvcTH = ({ children }) => (
 /* ═══════════════════════════════════════════════════════════════
    MAIN COMPONENT
 ═══════════════════════════════════════════════════════════════ */
-export default function GlobalAdminDashboard() {
+export default function GlobalOperatorControlRoom() {
 
   /* ── raw data state ───────────────────────────────────────── */
   const [stats,   setStats]   = useState(null);
   const [statsErr, setStatsErr] = useState("");
   const [statsLoading, setStatsLoading] = useState(false);
 
-  const [companies,    setCompanies]    = useState([]);
-  const [companiesErr, setCompaniesErr] = useState("");
-  const [companiesLoading, setCompaniesLoading] = useState(false);
+  const [companies,    setWorkspaces]    = useState([]);
+  const [companiesErr, setWorkspacesErr] = useState("");
+  const [companiesLoading, setWorkspacesLoading] = useState(false);
 
   const [demos,    setDemos]    = useState([]);
   const [demosErr, setDemosErr] = useState("");
@@ -230,14 +230,14 @@ export default function GlobalAdminDashboard() {
     finally { setStatsLoading(false); }
   }, []);
 
-  const fetchCompanies = useCallback(async () => {
+  const fetchWorkspaces = useCallback(async () => {
     try {
-      setCompaniesLoading(true); setCompaniesErr("");
+      setWorkspacesLoading(true); setWorkspacesErr("");
       const j = await apiFetch("/api/global-admin/companies");
       const list = Array.isArray(j) ? j : Array.isArray(j?.data) ? j.data : [];
-      setCompanies(list);
-    } catch (e) { setCompaniesErr(e.message); }
-    finally { setCompaniesLoading(false); }
+      setWorkspaces(list);
+    } catch (e) { setWorkspacesErr(e.message); }
+    finally { setWorkspacesLoading(false); }
   }, []);
 
   const fetchDemos = useCallback(async () => {
@@ -277,29 +277,29 @@ export default function GlobalAdminDashboard() {
   /* initial load */
   useEffect(() => {
     fetchStats();
-    fetchCompanies();
+    fetchWorkspaces();
     fetchDemos();
     fetchActs();
   }, []);
 
   const handleRefresh = async () => {
     setRefreshing(true);
-    await Promise.all([fetchStats(), fetchCompanies(), fetchDemos(), fetchActs()]);
+    await Promise.all([fetchStats(), fetchWorkspaces(), fetchDemos(), fetchActs()]);
     setRefreshing(false);
   };
 
   const openSvc = () => { setShowSvc(true); setSvcTab("demo"); };
 
   /* ── derive KPIs from real stats ─────────────────────────── */
-  const total     = Number(stats?.totalCompanies)     || companies.length || 0;
-  const active    = Number(stats?.activeCompanies)    || companies.filter(c => (c.status||"").toLowerCase() === "active").length || 0;
-  const suspended = Number(stats?.suspendedCompanies) || companies.filter(c => (c.status||"").toLowerCase() === "suspended").length || 0;
-  const employees = Number(stats?.totalEmployees)     || 0;
+  const total     = Number(stats?.totalWorkspaces)     || companies.length || 0;
+  const active    = Number(stats?.activeWorkspaces)    || companies.filter(c => (c.status||"").toLowerCase() === "active").length || 0;
+  const suspended = Number(stats?.suspendedWorkspaces) || companies.filter(c => (c.status||"").toLowerCase() === "suspended").length || 0;
+  const employees = Number(stats?.totalPersons)     || 0;
   const convRate  = total > 0 ? Math.round((active / total) * 100) : 0;
 
   /* ── derive chart data from real arrays ─────────────────── */
 
-  // Company Growth — registered vs active per month (last 6 months)
+  // Workspace Growth — registered vs active per month (last 6 months)
   // "active" per month = companies whose status is active AND registered that month
   const companyGrowthData = (() => {
     const buckets = lastNMonths(6);
@@ -371,8 +371,8 @@ export default function GlobalAdminDashboard() {
     ? Math.round((acts.filter(a => (a.severity||"") === "success").length / acts.length) * 100) : 100;
 
   const healthItems = [
-    { label: "Active Company Rate",   value: activeRatePct,    color: T.green,  desc: `${active} of ${total} companies active` },
-    { label: "Demo → Company Rate",   value: demoConvPct,      color: T.blue,   desc: `${total} companies from ${demos.length + total} inquiries` },
+    { label: "Active Workspace Rate",   value: activeRatePct,    color: T.green,  desc: `${active} of ${total} companies active` },
+    { label: "Demo → Workspace Rate",   value: demoConvPct,      color: T.blue,   desc: `${total} companies from ${demos.length + total} inquiries` },
     { label: "Platform Activity SLA", value: slaScore,         color: T.purple, desc: `${acts.filter(a=>(a.severity||"")==="success").length} success events` },
     { label: "Suspension Rate",       value: 100 - suspendedPct, color: suspendedPct > 20 ? T.red : T.amber, desc: `${suspended} suspended companies` },
   ];
@@ -382,9 +382,9 @@ export default function GlobalAdminDashboard() {
 
   /* ── KPI cards ────────────────────────────────────────────── */
   const kpis = [
-    { label:"Total Companies",  value: statsLoading?"…":total,     sub:`${suspended} suspended`,      icon:Building2,   color:T.orange },
-    { label:"Active Companies", value: statsLoading?"…":active,    sub:`${convRate}% active rate`,    icon:CheckCircle, color:T.green  },
-    { label:"Total Employees",  value: statsLoading?"…":employees, sub:"Across all tenants",          icon:Users,       color:T.blue   },
+    { label:"Total Workspaces",  value: statsLoading?"…":total,     sub:`${suspended} suspended`,      icon:Building2,   color:T.orange },
+    { label:"Active Workspaces", value: statsLoading?"…":active,    sub:`${convRate}% active rate`,    icon:CheckCircle, color:T.green  },
+    { label:"Total People",  value: statsLoading?"…":employees, sub:"Across all tenants",          icon:Users,       color:T.blue   },
     { label:"Demo Requests",    value: demosLoading?"…":thisMonthDemos, sub:"Registered this month",  icon:Eye,         color:T.purple },
   ];
 
@@ -400,14 +400,14 @@ export default function GlobalAdminDashboard() {
         borderRadius:20, padding:"28px 32px 24px", marginBottom:24,
         position:"relative", overflow:"hidden",
       }}>
-        <div style={{ position:"absolute", top:-60, right:60,  width:260, height:260, borderRadius:"50%", background:"rgba(255,107,53,0.10)", pointerEvents:"none" }} />
+        <div style={{ position:"absolute", top:-60, right:60,  width:260, height:260, borderRadius:"50%", background:"rgba(139,92,246,0.10)", pointerEvents:"none" }} />
         <div style={{ position:"absolute", bottom:-40, right:260, width:180, height:180, borderRadius:"50%", background:"rgba(59,130,246,0.08)", pointerEvents:"none" }} />
 
         {/* top row */}
         <div style={{ display:"flex", alignItems:"flex-start", justifyContent:"space-between", position:"relative", zIndex:1 }}>
           <div>
-            <span style={{ fontSize:10, fontWeight:700, letterSpacing:".12em", textTransform:"uppercase", color:"rgba(255,107,53,0.85)", background:"rgba(255,107,53,0.12)", padding:"3px 10px", borderRadius:20, border:"1px solid rgba(255,107,53,0.2)" }}>
-              SamayaHR · Global Admin
+            <span style={{ fontSize:10, fontWeight:700, letterSpacing:".12em", textTransform:"uppercase", color:"rgba(139,92,246,0.85)", background:"rgba(139,92,246,0.12)", padding:"3px 10px", borderRadius:20, border:"1px solid rgba(139,92,246,0.2)" }}>
+              CrewSync · Global Operator
             </span>
             <h1 style={{ color:"#fff", fontSize:26, fontWeight:800, margin:"10px 0 5px", letterSpacing:"-0.02em" }}>Platform Overview</h1>
             <p style={{ color:"rgba(255,255,255,0.38)", fontSize:12, margin:0 }}>
@@ -420,7 +420,7 @@ export default function GlobalAdminDashboard() {
               <RefreshCw size={13} style={{ animation:refreshing?"spin 1s linear infinite":"none" }} />
               Refresh
             </button>
-            <button onClick={openSvc} style={{ display:"flex", alignItems:"center", gap:6, background:"linear-gradient(135deg,#ff6b35,#ff5722)", border:"none", borderRadius:10, padding:"8px 16px", cursor:"pointer", color:"#fff", fontSize:12, fontWeight:700, boxShadow:"0 4px 16px rgba(255,107,53,0.4)" }}>
+            <button onClick={openSvc} style={{ display:"flex", alignItems:"center", gap:6, background:"linear-gradient(135deg,#8B5CF6,#06B6D4)", border:"none", borderRadius:10, padding:"8px 16px", cursor:"pointer", color:"#fff", fontSize:12, fontWeight:700, boxShadow:"0 4px 16px rgba(139,92,246,0.4)" }}>
               <Zap size={13} /> Services
             </button>
           </div>
@@ -450,7 +450,7 @@ export default function GlobalAdminDashboard() {
           {/* panel header */}
           <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", padding:"16px 20px", borderBottom:`1px solid ${T.border}`, background:"linear-gradient(135deg,#0d1421,#1a2540)" }}>
             <div style={{ display:"flex", alignItems:"center", gap:10 }}>
-              <div style={{ width:34, height:34, borderRadius:10, background:"rgba(255,107,53,0.2)", display:"flex", alignItems:"center", justifyContent:"center" }}>
+              <div style={{ width:34, height:34, borderRadius:10, background:"rgba(139,92,246,0.2)", display:"flex", alignItems:"center", justifyContent:"center" }}>
                 <Zap size={16} color={T.orange} />
               </div>
               <div>
@@ -465,7 +465,7 @@ export default function GlobalAdminDashboard() {
 
           {/* tabs */}
           <div style={{ display:"flex", borderBottom:`1px solid ${T.border}`, background:"#f8f9fc" }}>
-            {[["demo","📋 Demo Requests"],["companies","🏢 Company Registry"]].map(([t,lbl]) => (
+            {[["demo","📋 Demo Requests"],["companies","🏢 Workspace Registry"]].map(([t,lbl]) => (
               <button key={t} onClick={() => setSvcTab(t)}
                 style={{ padding:"12px 24px", border:"none", cursor:"pointer", fontSize:13, fontWeight:700, background:"transparent", transition:"all 0.15s", borderBottom:svcTab===t?`2px solid ${T.orange}`:"2px solid transparent", color:svcTab===t?T.orange:T.muted }}>
                 {lbl}
@@ -511,7 +511,7 @@ export default function GlobalAdminDashboard() {
               demosErr    ? <PlaceholderRow err msg={`Error: ${demosErr}`} /> :
               demos.length === 0 ? <PlaceholderRow msg="No demo requests in database yet." /> : (
                 <table style={{ width:"100%", fontSize:12, borderCollapse:"collapse" }}>
-                  <thead><tr>{["Name","Email","Phone","Company","Role","Action"].map(h=><SvcTH key={h}>{h}</SvcTH>)}</tr></thead>
+                  <thead><tr>{["Name","Email","Phone","Workspace","Role","Action"].map(h=><SvcTH key={h}>{h}</SvcTH>)}</tr></thead>
                   <tbody>
                     {demos.map((r,i) => {
                       const em = r.companyEmail||r.workEmail||r.email||"";
@@ -543,7 +543,7 @@ export default function GlobalAdminDashboard() {
               companiesErr    ? <PlaceholderRow err msg={`Error: ${companiesErr}`} /> :
               companies.length === 0 ? <PlaceholderRow msg="No companies registered yet." /> : (
                 <table style={{ width:"100%", fontSize:12, borderCollapse:"collapse" }}>
-                  <thead><tr>{["Company","Email","Tenant Code","Industry","Status","Employees"].map(h=><SvcTH key={h}>{h}</SvcTH>)}</tr></thead>
+                  <thead><tr>{["Workspace","Email","Tenant Code","Industry","Status","Persons"].map(h=><SvcTH key={h}>{h}</SvcTH>)}</tr></thead>
                   <tbody>
                     {companies.map((c,i) => {
                       const isActive = (c.status||"").toLowerCase()==="active";
@@ -568,7 +568,7 @@ export default function GlobalAdminDashboard() {
                               {c.status||"—"}
                             </span>
                           </td>
-                          <td style={{...svcTd,fontWeight:700,color:T.muted}}>{c.totalEmployees||c.employeeCount||"—"}</td>
+                          <td style={{...svcTd,fontWeight:700,color:T.muted}}>{c.totalPersons||c.employeeCount||"—"}</td>
                         </tr>
                       );
                     })}
@@ -583,9 +583,9 @@ export default function GlobalAdminDashboard() {
       {/* ── CHART ROW 1 ──────────────────────────────────────────── */}
       <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:18, marginBottom:18 }}>
 
-        {/* Company Growth */}
+        {/* Workspace Growth */}
         <ChartCard
-          title="Company Growth"
+          title="Workspace Growth"
           subtitle="Registered & cumulative active companies — from database createdAt dates"
           icon={<TrendingUp size={14} color={T.orange} />}
           loading={companiesLoading}
@@ -681,7 +681,7 @@ export default function GlobalAdminDashboard() {
                 <XAxis type="number" tick={{ fontSize:10, fill:T.dim }} axisLine={false} tickLine={false} allowDecimals={false} />
                 <YAxis type="category" dataKey="plan" tick={{ fontSize:11, fill:T.muted, fontWeight:600 }} axisLine={false} tickLine={false} width={70} />
                 <Tooltip content={<CustomTooltip />} />
-                <Bar dataKey="companies" name="Companies" radius={[0,6,6,0]}>
+                <Bar dataKey="companies" name="Workspaces" radius={[0,6,6,0]}>
                   {planData.map((_, i) => <Cell key={i} fill={COLORS[i % COLORS.length]} />)}
                 </Bar>
               </BarChart>
@@ -793,7 +793,7 @@ export default function GlobalAdminDashboard() {
             <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", padding:"16px 20px", borderBottom:"1px solid #f1f5f9" }}>
               <div style={{ display:"flex", alignItems:"center", gap:10 }}>
                 <div style={{ width:34, height:34, borderRadius:10, background:"#fff4ef", display:"flex", alignItems:"center", justifyContent:"center" }}>
-                  <Activity size={15} color="#FF6B35" />
+                  <Activity size={15} color="#8B5CF6" />
                 </div>
                 <div>
                   <p style={{ fontSize:14, fontWeight:700, color:"#0d1421", margin:0 }}>Recent Activity</p>
@@ -802,7 +802,7 @@ export default function GlobalAdminDashboard() {
               </div>
               <div style={{ display:"flex", alignItems:"center", gap:8 }}>
                 {totalVisible > 0 && (
-                  <span style={{ padding:"3px 10px", borderRadius:20, background:"#fff4ef", color:"#FF6B35", fontSize:11, fontWeight:700 }}>
+                  <span style={{ padding:"3px 10px", borderRadius:20, background:"#fff4ef", color:"#8B5CF6", fontSize:11, fontWeight:700 }}>
                     {totalVisible} events
                   </span>
                 )}
@@ -887,19 +887,19 @@ export default function GlobalAdminDashboard() {
                   <button key={key} onClick={() => setSelectedDay(key)}
                     style={{
                       display:"flex", flexDirection:"column", alignItems:"center",
-                      padding:"8px 14px", borderRadius:12, border: isActive ? "2px solid #FF6B35" : "1.5px solid #e8ecf2",
-                      background: isActive ? "linear-gradient(135deg,rgba(255,107,53,.12),rgba(255,107,53,.04))" : "#fafbfc",
+                      padding:"8px 14px", borderRadius:12, border: isActive ? "2px solid #8B5CF6" : "1.5px solid #e8ecf2",
+                      background: isActive ? "linear-gradient(135deg,rgba(139,92,246,.12),rgba(139,92,246,.04))" : "#fafbfc",
                       cursor:"pointer", flexShrink:0, minWidth:68, transition:"all .15s",
-                      boxShadow: isActive ? "0 4px 12px rgba(255,107,53,.15)" : "none",
+                      boxShadow: isActive ? "0 4px 12px rgba(139,92,246,.15)" : "none",
                     }}>
-                    <span style={{ fontSize:11, fontWeight:800, color: isActive ? "#FF6B35" : "#64748b", textTransform:"uppercase", letterSpacing:".05em" }}>
+                    <span style={{ fontSize:11, fontWeight:800, color: isActive ? "#8B5CF6" : "#64748b", textTransform:"uppercase", letterSpacing:".05em" }}>
                       {fmtDayLabel(d)}
                     </span>
                     <span style={{ fontSize:13, fontWeight:700, color: isActive ? "#0d1421" : "#94a3b8", lineHeight:1.2 }}>
                       {fmtDateSub(d)}
                     </span>
                     {cnt > 0 && (
-                      <span style={{ marginTop:4, padding:"1px 7px", borderRadius:99, background: isActive ? "#FF6B35" : "#e8ecf2", color: isActive ? "#fff" : "#64748b", fontSize:10, fontWeight:700 }}>
+                      <span style={{ marginTop:4, padding:"1px 7px", borderRadius:99, background: isActive ? "#8B5CF6" : "#e8ecf2", color: isActive ? "#fff" : "#64748b", fontSize:10, fontWeight:700 }}>
                         {cnt}
                       </span>
                     )}

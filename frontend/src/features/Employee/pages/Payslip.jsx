@@ -6,7 +6,7 @@ import {
 import api from "@/lib/apiClient";
 const fmt = (n) => `₹ ${Number(n || 0).toLocaleString("en-IN", { minimumFractionDigits: 2 })}`;
 const bool = (v) => v === true || v === "true";
-const normalizePayrollRows = (rows, fallback) => {
+const normalizePayoutsRows = (rows, fallback) => {
   if (Array.isArray(rows) && rows.length > 0) {
     return rows
       .filter((row) => Number(row?.amount || 0) > 0)
@@ -46,7 +46,7 @@ const toMonthValue = (value) => {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
 };
 
-export default function Payslip() {
+export default function PayStatement() {
   const tenantCode = localStorage.getItem("tenantCode") || "";
   const userId = localStorage.getItem("userId") || "";
 
@@ -54,10 +54,10 @@ export default function Payslip() {
   const defMonth = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}`;
 
   const [month, setMonth] = useState(defMonth);
-  const [company, setCompany] = useState(null);
-  const [settings, setSettings] = useState(null);
-  const [allPayrolls, setAllPayrolls] = useState([]);
-  const [payslip, setPayslip] = useState(null);
+  const [company, setWorkspace] = useState(null);
+  const [settings, setConfiguration] = useState(null);
+  const [allPayoutss, setAllPayoutss] = useState([]);
+  const [payslip, setPayStatement] = useState(null);
   const [loading, setLoading] = useState(false);
   const [metaErr, setMetaErr] = useState(null);
   const [slipErr, setSlipErr] = useState(null);
@@ -73,8 +73,8 @@ export default function Payslip() {
       api.get(`/api/salary-slip-settings/${tenantCode}`).then((r) => r.data).catch(() => ({})),
     ])
       .then(([cData, sData]) => {
-        if (cData.success) setCompany(cData.data);
-        if (sData.success) setSettings(sData.data);
+        if (cData.success) setWorkspace(cData.data);
+        if (sData.success) setConfiguration(sData.data);
       })
       .catch((e) => setMetaErr("Could not load company info: " + e.message));
   }, [tenantCode]);
@@ -97,25 +97,25 @@ export default function Payslip() {
         }
         const list = Array.isArray(data?.data) ? data.data : [];
         const sorted = [...list].sort((a, b) => new Date(b.payrollMonth || 0) - new Date(a.payrollMonth || 0));
-        setAllPayrolls(sorted);
+        setAllPayoutss(sorted);
       })
       .catch((e) => {
-        setAllPayrolls([]);
-        setSlipErr("Failed to load payslip: " + e.message);
+        setAllPayoutss([]);
+        setSlipErr("Failed to load pay statement: " + e.message);
       })
       .finally(() => setLoading(false));
   }, [userId]);
 
   useEffect(() => {
-    if (!allPayrolls.length) {
-      setPayslip(null);
+    if (!allPayoutss.length) {
+      setPayStatement(null);
       return;
     }
 
-    const matched = allPayrolls.find((item) => toMonthValue(item.payrollMonth || item.payPeriod) === month);
-    setPayslip(matched || null);
-    setSlipErr(matched ? null : "No payslip found for this month.");
-  }, [allPayrolls, month]);
+    const matched = allPayoutss.find((item) => toMonthValue(item.payrollMonth || item.payPeriod) === month);
+    setPayStatement(matched || null);
+    setSlipErr(matched ? null : "No pay statement found for this month.");
+  }, [allPayoutss, month]);
 
   const changeMonth = (dir) => {
     const [y, m] = month.split("-").map(Number);
@@ -134,7 +134,7 @@ export default function Payslip() {
     win.document.write(`
       <html>
         <head>
-          <title>Salary Slip - ${month}</title>
+          <title>Compensation Slip - ${month}</title>
           <style>
             * { box-sizing: border-box; margin: 0; padding: 0; }
             body { font-family: Arial, sans-serif; font-size: 13px; }
@@ -157,7 +157,7 @@ export default function Payslip() {
   const showAll = !settings || Object.keys(s).length === 0;
 
   const fallbackEarningsRows = [
-    { show: showAll || bool(s.showBasicSalary),        label: "Basic Salary",         value: p.basicSalary         },
+    { show: showAll || bool(s.showBasicCompensation),        label: "Basic Compensation",         value: p.basicCompensation         },
     { show: showAll || bool(s.showHra),                label: "House Rent Allowance", value: p.hra                 },
     { show: showAll || bool(s.showSpecialAllowance),   label: "Special Allowance",    value: p.specialAllowance    },
     { show: showAll || bool(s.showTransportAllowance), label: "Transport Allowance",  value: p.conveyanceAllowance },
@@ -166,29 +166,29 @@ export default function Payslip() {
   ].filter((r) => r.show && Number(r.value || 0) > 0);
 
   const fallbackDeductionRows = [
-    { show: showAll || bool(s.showPfDeduction),     label: "Provident Fund (PF)", value: p.pfEmployee      },
-    { show: showAll || bool(s.showEsiDeduction),    label: "ESI",                  value: p.esiEmployee     },
+    { show: showAll || bool(s.showPfDeduction),     label: "Provident Fund (PF)", value: p.pfPerson      },
+    { show: showAll || bool(s.showEsiDeduction),    label: "ESI",                  value: p.esiPerson     },
     { show: showAll || bool(s.showProfessionalTax), label: "Professional Tax",     value: p.professionalTax },
     { show: showAll || bool(s.showTds),             label: "TDS",                  value: p.taxDeductions   },
     { show: showAll || bool(s.showOtherDeductions), label: "Other Deductions",     value: p.otherDeductions },
   ].filter((r) => r.show && Number(r.value || 0) > 0);
 
-  const earningsRows = normalizePayrollRows(p.earnings, fallbackEarningsRows);
-  const deductionRows = normalizePayrollRows(p.deductions, fallbackDeductionRows);
+  const earningsRows = normalizePayoutsRows(p.earnings, fallbackEarningsRows);
+  const deductionRows = normalizePayoutsRows(p.deductions, fallbackDeductionRows);
 
   const totalEarnings = Number(p.totalEarnings || earningsRows.reduce((sum, r) => sum + Number(r.value || 0), 0));
   const totalDeductions = Number(p.totalDeductions || deductionRows.reduce((sum, r) => sum + Number(r.value || 0), 0));
-  const netPay = p.netSalary != null ? Number(p.netSalary) : totalEarnings - totalDeductions;
+  const netPay = p.netCompensation != null ? Number(p.netCompensation) : totalEarnings - totalDeductions;
   const monthLabel = new Date(`${month}-02`).toLocaleString("default", { month: "long", year: "numeric" });
 
   return (
     <div style={{ fontFamily: "'Inter', system-ui, sans-serif", paddingBottom: 40 }}>
       <div style={{ background: "linear-gradient(135deg, #0f172a 0%, #1e293b 60%, #0f172a 100%)", borderRadius: 18, padding: "22px 28px", marginBottom: 20, position: "relative", overflow: "hidden" }}>
-        <div style={{ position: "absolute", top: -30, right: 60, width: 140, height: 140, borderRadius: "50%", background: "rgba(255,107,53,0.08)", pointerEvents: "none" }} />
+        <div style={{ position: "absolute", top: -30, right: 60, width: 140, height: 140, borderRadius: "50%", background: "rgba(139,92,246,0.08)", pointerEvents: "none" }} />
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", position: "relative" }}>
           <div>
-            <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 11, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 5px" }}>Finance Hub</p>
-            <h1 style={{ color: "#fff", fontSize: 22, fontWeight: 800, margin: 0 }}>My Payslips</h1>
+            <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 11, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 5px" }}>MoneyOps</p>
+            <h1 style={{ color: "#fff", fontSize: 22, fontWeight: 800, margin: 0 }}>My PayStatements</h1>
             <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 13, margin: "5px 0 0" }}>Download your monthly salary statements</p>
           </div>
 
@@ -197,7 +197,7 @@ export default function Payslip() {
               <ChevronLeft style={{ width: 15, height: 15 }} />
             </button>
             <div style={{ background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.15)", borderRadius: 9, padding: "6px 14px", display: "flex", alignItems: "center", gap: 8 }}>
-              <Calendar style={{ width: 14, height: 14, color: "#ff6b35" }} />
+              <Calendar style={{ width: 14, height: 14, color: "#8B5CF6" }} />
               <input
                 type="month"
                 value={month}
@@ -212,7 +212,7 @@ export default function Payslip() {
             <button
               onClick={handleDownload}
               disabled={!payslip || loading}
-              style={{ ...S.btn("#ff6b35"), padding: "9px 18px", borderRadius: 10, boxShadow: "0 4px 12px rgba(255,107,53,0.35)", opacity: (!payslip || loading) ? 0.5 : 1 }}
+              style={{ ...S.btn("#8B5CF6"), padding: "9px 18px", borderRadius: 10, boxShadow: "0 4px 12px rgba(139,92,246,0.35)", opacity: (!payslip || loading) ? 0.5 : 1 }}
             >
               <Download style={{ width: 15, height: 15 }} /> Download
             </button>
@@ -230,14 +230,14 @@ export default function Payslip() {
       {loading && (
         <div style={{ ...S.card, padding: "48px 0", textAlign: "center", color: "#94a3b8", display: "flex", alignItems: "center", justifyContent: "center", gap: 10 }}>
           <Loader2 style={{ width: 20, height: 20, animation: "spin 1s linear infinite" }} />
-          Loading payslip for {monthLabel}...
+          Loading pay statement for {monthLabel}...
         </div>
       )}
 
       {slipErr && !loading && (
         <div style={{ ...S.card, padding: "48px 0", textAlign: "center" }}>
           <FileText style={{ width: 36, height: 36, color: "#e2e8f0", margin: "0 auto 12px" }} />
-          <p style={{ fontSize: 14, fontWeight: 700, color: "#94a3b8", margin: 0 }}>No payslip found</p>
+          <p style={{ fontSize: 14, fontWeight: 700, color: "#94a3b8", margin: 0 }}>No pay statement found</p>
           <p style={{ fontSize: 12, color: "#cbd5e1", margin: "6px 0 0" }}>{slipErr}</p>
         </div>
       )}
@@ -253,12 +253,12 @@ export default function Payslip() {
                       alt="company logo"
                       style={{ height: 52, maxWidth: 120, objectFit: "contain", borderRadius: 8, background: "#fff", padding: 4 }}
                     />
-                  : <div style={{ width: 52, height: 52, borderRadius: 12, background: "linear-gradient(135deg, #ff6b35, #8b5cf6)", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: 900, fontSize: 22 }}>
+                  : <div style={{ width: 52, height: 52, borderRadius: 12, background: "linear-gradient(135deg, #8B5CF6, #8b5cf6)", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: 900, fontSize: 22 }}>
                       {(c.displayName || "C").charAt(0)}
                     </div>
                 }
                 <div>
-                  <p style={{ color: "#fff", fontWeight: 800, fontSize: 18, margin: 0 }}>{c.displayName || c.legalName || "Company"}</p>
+                  <p style={{ color: "#fff", fontWeight: 800, fontSize: 18, margin: 0 }}>{c.displayName || c.legalName || "Workspace"}</p>
                   {[c.address, c.city, c.state, c.pincode].filter(Boolean).length > 0 && (
                     <p style={{ color: "rgba(255,255,255,0.45)", fontSize: 11, margin: "3px 0 0" }}>
                       {[c.address, c.city, c.state, c.pincode].filter(Boolean).join(", ")}
@@ -272,7 +272,7 @@ export default function Payslip() {
                 </div>
               </div>
               <div style={{ textAlign: "right" }}>
-                <p style={{ color: "#ff6b35", fontWeight: 800, fontSize: 15, margin: 0, letterSpacing: "0.08em" }}>
+                <p style={{ color: "#8B5CF6", fontWeight: 800, fontSize: 15, margin: 0, letterSpacing: "0.08em" }}>
                   {s.slipTitle || "SALARY SLIP"}
                 </p>
                 <p style={{ color: "rgba(255,255,255,0.5)", fontSize: 12, margin: "4px 0 0" }}>{monthLabel}</p>
@@ -284,8 +284,8 @@ export default function Payslip() {
 
             <div style={{ padding: "18px 30px", background: "#f8fafc", borderBottom: "1px solid #eef0f4" }}>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "12px 20px" }}>
-                <InfoCell label="Employee Name" value={p.employeeName} />
-                {(showAll || bool(s.showEmployeeId)) && <InfoCell label="Employee ID" value={p.employeeId} />}
+                <InfoCell label="Person Name" value={p.employeeName} />
+                {(showAll || bool(s.showPersonId)) && <InfoCell label="Person ID" value={p.employeeId} />}
                 {(showAll || bool(s.showDepartment)) && <InfoCell label="Department" value={p.department} />}
                 {(showAll || bool(s.showDesignation)) && <InfoCell label="Designation" value={p.designation} />}
                 {(showAll || bool(s.showDateOfJoining)) && <InfoCell label="Date of Joining" value={p.dateOfJoining || p.joiningDate} />}
@@ -371,7 +371,7 @@ export default function Payslip() {
               </div>
               <div style={{ display: "flex", gap: 20, textAlign: "right" }}>
                 <div>
-                  <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 10, textTransform: "uppercase", margin: 0 }}>Gross Salary</p>
+                  <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 10, textTransform: "uppercase", margin: 0 }}>Gross Compensation</p>
                   <p style={{ color: "#22c55e", fontSize: 14, fontWeight: 700, margin: "2px 0 0" }}>{fmt(totalEarnings)}</p>
                 </div>
                 <div>

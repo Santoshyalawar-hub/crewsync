@@ -1,15 +1,15 @@
 // import React, { useState, useEffect, useCallback, useMemo } from "react";
 // import axios from "axios";
-// import LeaveManagement from "./LeaveManagement";
+// import TimeAwayOperations from "./TimeAwayOperations";
 // import { API_BASE_URL } from "@/lib/apiClient";
 
-// // SamayaHR design tokens
+// // CrewSync design tokens
 // const C = {
-//   coral:    "#FF6B35",
-//   teal:     "#00C2A8",
-//   navy:     "#0D1F2D",
-//   navy2:    "#162639",
-//   slate:    "#1E3448",
+//   coral:    "#8B5CF6",
+//   teal:     "#06B6D4",
+//   navy:     "#0B1020",
+//   navy2:    "#182033",
+//   slate:    "#374151",
 //   muted:    "#64748b",
 //   border:   "#E8EDF3",
 //   bg:       "#F4F6F9",
@@ -58,11 +58,11 @@
 
 // const statusBadge = (status="") => {
 //   const s = String(status).toLowerCase();
-//   if (s.includes("present")||s.includes("working")) return <Badge label="Present" color={C.teal} bg="rgba(0,194,168,.12)"/>;
+//   if (s.includes("present")||s.includes("working")) return <Badge label="Present" color={C.teal} bg="rgba(6,182,212,.12)"/>;
 //   if (s.includes("absent"))   return <Badge label="Absent"  color={C.red}   bg="rgba(239,68,68,.1)"/>;
-//   if (s.includes("leave"))    return <Badge label="Leave"   color={C.amber} bg="rgba(245,158,11,.12)"/>;
+//   if (s.includes("leave"))    return <Badge label="TimeAway"   color={C.amber} bg="rgba(245,158,11,.12)"/>;
 //   if (s.includes("break"))    return <Badge label="On Break" color={C.indigo} bg="rgba(99,102,241,.1)"/>;
-//   if (s.includes("late"))     return <Badge label="Late"    color={C.coral} bg="rgba(255,107,53,.1)"/>;
+//   if (s.includes("late"))     return <Badge label="Late"    color={C.coral} bg="rgba(139,92,246,.1)"/>;
 //   if (s.includes("half"))     return <Badge label="Half Day" color={C.purple} bg="rgba(139,92,246,.1)"/>;
 //   return <Badge label={status||"—"}/>;
 // };
@@ -179,11 +179,11 @@
 //   const html = `
 //     <html><head><meta charset="utf-8">
 //     <style>
-//       body{font-family:'Segoe UI',sans-serif;padding:32px;color:#0D1F2D;}
-//       h1{font-size:22px;font-weight:900;color:#0D1F2D;border-bottom:3px solid #FF6B35;padding-bottom:10px;margin-bottom:20px;}
+//       body{font-family:'Segoe UI',sans-serif;padding:32px;color:#0B1020;}
+//       h1{font-size:22px;font-weight:900;color:#0B1020;border-bottom:3px solid #8B5CF6;padding-bottom:10px;margin-bottom:20px;}
 //       .meta{font-size:11px;color:#64748b;margin-bottom:24px;}
 //       table{width:100%;border-collapse:collapse;font-size:12px;}
-//       th{background:#0D1F2D;color:#fff;padding:9px 12px;text-align:left;font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:.06em;}
+//       th{background:#0B1020;color:#fff;padding:9px 12px;text-align:left;font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:.06em;}
 //       td{padding:8px 12px;border-bottom:1px solid #E8EDF3;color:#334155;}
 //       tr:nth-child(even) td{background:#F4F6F9;}
 //       .footer{margin-top:30px;font-size:10px;color:#94a3b8;text-align:center;}
@@ -193,7 +193,7 @@
 //       <div class="meta">Generated: ${new Date().toLocaleString("en-IN")} &nbsp;|&nbsp; Total records: ${rows?.length||0}</div>
 //       <table><thead><tr>${headers.map(h=>`<th>${h}</th>`).join("")}</tr></thead>
 //       <tbody>${tRows}</tbody></table>
-//       <div class="footer">SamayaHR Attendance Report &copy; ${new Date().getFullYear()}</div>
+//       <div class="footer">CrewSync Presence Report &copy; ${new Date().getFullYear()}</div>
 //     </body></html>`;
 //   const blob = new Blob([html], { type:"text/html" });
 //   const a = document.createElement("a");
@@ -263,10 +263,10 @@
 // /* Button */
 // .btn-coral{
 //   display:inline-flex;align-items:center;gap:6px;
-//   background:linear-gradient(135deg,${C.coral},#FF5722);
+//   background:linear-gradient(135deg,${C.coral},#06B6D4);
 //   color:#fff;border:none;border-radius:10px;padding:9px 18px;
 //   font-size:12px;font-weight:800;cursor:pointer;font-family:'DM Sans',sans-serif;
-//   transition:all .2s;box-shadow:0 4px 12px rgba(255,107,53,.25);
+//   transition:all .2s;box-shadow:0 4px 12px rgba(139,92,246,.25);
 // }
 // .btn-coral:hover{transform:translateY(-1px);filter:brightness(1.05);}
 // .btn-coral:disabled{opacity:.55;cursor:not-allowed;transform:none;}
@@ -298,7 +298,7 @@
 // .modal-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:${C.muted};display:block;margin-bottom:6px;}
 
 // /* Dept badge */
-// .dept-chip{font-size:10px;font-weight:700;color:${C.teal};background:rgba(0,194,168,.1);padding:2px 8px;border-radius:999px;}
+// .dept-chip{font-size:10px;font-weight:700;color:${C.teal};background:rgba(6,182,212,.1);padding:2px 8px;border-radius:999px;}
 
 // /* Download strip */
 // .dl-strip{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
@@ -312,7 +312,7 @@
 // // ─────────────────────────────────────────────
 // //  MAIN COMPONENT
 // // ─────────────────────────────────────────────
-// export default function AdminAttendance() {
+// export default function OperatorPresence() {
 //   // ── Auth helpers
 //   const authH = () => {
 //     const t = localStorage.getItem("token");
@@ -325,7 +325,7 @@
 //   };
 //   const tenantH = () => {
 //     const { tenantCode:tc, companyId:ci } = tenantCtx();
-//     return { ...(tc?{"X-Tenant-Code":tc}:{}), ...(ci?{"X-Company-Id":ci}:{}) };
+//     return { ...(tc?{"X-Tenant-Code":tc}:{}), ...(ci?{"X-Workspace-Id":ci}:{}) };
 //   };
 //   const tenantP = () => {
 //     const { tenantCode:tc, companyId:ci } = tenantCtx();
@@ -338,16 +338,16 @@
 //     { id:"live",      label:"Live View",  icon:"M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" },
 //     { id:"monthly",   label:"Monthly",    icon:"M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" },
 //     { id:"trends",    label:"Trends",     icon:"M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" },
-//     { id:"leave",     label:"Leaves",     icon:"M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" },
+//     { id:"leave",     label:"TimeAways",     icon:"M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" },
 //     { id:"timesheet", label:"Timesheets", icon:"M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" },
 //     { id:"assign",    label:"Assign",     icon:"M12 4v16m8-8H4" },
-//     { id:"reports",   label:"Reports",    icon:"M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" },
+//     { id:"reports",   label:"SignalReports",    icon:"M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" },
 //   ];
 
 //   // ── State
 //   const [activeTab,  setActiveTab]  = useState("dashboard");
 //   const [stats,      setStats]      = useState({});
-//   const [employees,  setEmployees]  = useState([]);
+//   const [employees,  setPersons]  = useState([]);
 //   const [timesheets, setTimesheets] = useState([]);
 //   const [loading,    setLoading]    = useState({ stats:false, emp:false, ts:false, monthly:false });
 //   const [searchQ,    setSearchQ]    = useState("");
@@ -361,15 +361,15 @@
 //   const [monthlyEmp, setMonthlyEmp] = useState(null);
 //   const [monthlyView,setMonthlyView]= useState("all"); // all | dept | employee
 //   const [selEmpId,   setSelEmpId]   = useState("");
-//   const [payrollData,setPayrollData]= useState(null);
+//   const [payrollData,setPayoutsData]= useState(null);
 
-//   // Employee search for Single Employee tab
+//   // Person search for Single Person tab
 //   const [empSearch,   setEmpSearch]   = useState("");
 //   const [showEmpDrop, setShowEmpDrop] = useState(false);
 //   const [assignModal, setAssignModal] = useState(null); // employee object
 //   const [assignForm,  setAssignForm]  = useState({ status:"Present", startDate:today(), endDate:today(), reason:"" });
-//   const [leaveModal,  setLeaveModal]  = useState(null);
-//   const [leaveForm,   setLeaveForm]   = useState({ startDate:today(), endDate:today() });
+//   const [leaveModal,  setTimeAwayModal]  = useState(null);
+//   const [leaveForm,   setTimeAwayForm]   = useState({ startDate:today(), endDate:today() });
 //   const [saving,      setSaving]      = useState(false);
 
 //   // Calendar
@@ -390,13 +390,13 @@
 //     } catch { setStats({}); }
 //   }), []);
 
-//   const fetchEmployees = useCallback(() => load("emp", async () => {
+//   const fetchPersons = useCallback(() => load("emp", async () => {
 //     try {
 //       const r = await axios.get(`${API_BASE_URL}/api/admin/attendance/live-employees`,
 //         { headers:{...authH(),...tenantH()}, params:tenantP() });
 //       const raw = r.data?.data ?? r.data ?? [];
 //       const list = Array.isArray(raw) ? raw : Array.isArray(raw.employees) ? raw.employees : [];
-//       setEmployees(list.map(e=>({
+//       setPersons(list.map(e=>({
 //         id:         e.id??e.employeeId??e.userId??"",
 //         name:       e.name??e.fullName??e.employeeName??"",
 //         email:      e.email??e.mailId??"",
@@ -407,7 +407,7 @@
 //         breaks:     e.breaks??e.breakCount??"-",
 //         workSecs:   e.totalSeconds??e.workSeconds??0,
 //       })));
-//     } catch { setEmployees([]); }
+//     } catch { setPersons([]); }
 //   }), []);
 
 //   const fetchTimesheets = useCallback(() => load("ts", async () => {
@@ -441,7 +441,7 @@
 //     } catch { setMonthlyDept(null); }
 //   }), [monthYear]);
 
-//   const fetchPayroll = useCallback(async (empId) => {
+//   const fetchPayouts = useCallback(async (empId) => {
 //     if (!empId) return;
 //     const { tenantCode } = tenantCtx();
 //     try {
@@ -449,13 +449,13 @@
 //         headers:{...authH(),...tenantH()},
 //         params:{ year:monthYear.year, month:monthYear.month, tenantCode }
 //       });
-//       setPayrollData(r.data?.data ?? r.data ?? {});
-//     } catch { setPayrollData(null); }
+//       setPayoutsData(r.data?.data ?? r.data ?? {});
+//     } catch { setPayoutsData(null); }
 //   }, [monthYear]);
 
 //   useEffect(() => {
-//     fetchStats(); fetchEmployees(); fetchTimesheets();
-//     const id = setInterval(()=>{ fetchStats(); fetchEmployees(); }, 30000);
+//     fetchStats(); fetchPersons(); fetchTimesheets();
+//     const id = setInterval(()=>{ fetchStats(); fetchPersons(); }, 30000);
 //     return ()=>clearInterval(id);
 //   }, []);
 
@@ -463,7 +463,7 @@
 //     if (activeTab==="monthly") {
 //       if (monthlyView==="all")  fetchMonthlyAll();
 //       if (monthlyView==="dept") fetchMonthlyDept();
-//       if (monthlyView==="employee" && selEmpId) fetchPayroll(selEmpId);
+//       if (monthlyView==="employee" && selEmpId) fetchPayouts(selEmpId);
 //     }
 //   }, [activeTab, monthlyView, monthYear, selEmpId]);
 
@@ -480,11 +480,11 @@
 
 //   // Quick stats derived from employees
 //   const liveStats = useMemo(()=>({
-//     total:    stats.totalEmployees ?? employees.length,
+//     total:    stats.totalPersons ?? employees.length,
 //     present:  stats.presentToday   ?? employees.filter(e=>e.status?.toLowerCase().includes("working")||e.status?.toLowerCase().includes("present")).length,
 //     absent:   stats.absentToday    ?? employees.filter(e=>e.status?.toLowerCase().includes("absent")).length,
 //     onBreak:  stats.onBreak        ?? employees.filter(e=>e.status?.toLowerCase().includes("break")).length,
-//     onLeave:  stats.onLeave        ?? employees.filter(e=>e.status?.toLowerCase().includes("leave")).length,
+//     onTimeAway:  stats.onTimeAway        ?? employees.filter(e=>e.status?.toLowerCase().includes("leave")).length,
 //     late:     stats.lateToday      ?? employees.filter(e=>e.status?.toLowerCase().includes("late")).length,
 //     pending:  stats.pendingRequests ?? 0,
 //     working:  stats.workingNow     ?? employees.filter(e=>e.status?.toLowerCase().includes("working")).length,
@@ -503,22 +503,22 @@
 //           reason:assignForm.reason||"Marked manually by admin" },
 //         { headers:{"Content-Type":"application/json",...authH(),...tenantH()}, params:tenantP() }
 //       );
-//       alert("Attendance assigned successfully!");
-//       setAssignModal(null); fetchEmployees(); fetchStats();
+//       alert("Presence assigned successfully!");
+//       setAssignModal(null); fetchPersons(); fetchStats();
 //     } catch { alert("Failed to assign attendance"); }
 //     setSaving(false);
 //   };
 
-//   const handleLeave = async () => {
+//   const handleTimeAway = async () => {
 //     if (!leaveModal) return;
 //     setSaving(true);
 //     try {
 //       await axios.post(`${API_BASE_URL}/api/admin/attendance/apply-manual-attendance/${leaveModal.id}`,
-//         { leaveType:"LEAVE", startDate:leaveForm.startDate, endDate:leaveForm.endDate||leaveForm.startDate, reason:"Leave assigned by admin" },
+//         { leaveType:"LEAVE", startDate:leaveForm.startDate, endDate:leaveForm.endDate||leaveForm.startDate, reason:"TimeAway assigned by admin" },
 //         { headers:{"Content-Type":"application/json",...authH(),...tenantH()}, params:tenantP() }
 //       );
-//       alert("Leave assigned!");
-//       setLeaveModal(null); fetchEmployees(); fetchStats();
+//       alert("TimeAway assigned!");
+//       setTimeAwayModal(null); fetchPersons(); fetchStats();
 //     } catch { alert("Failed"); }
 //     setSaving(false);
 //   };
@@ -536,13 +536,13 @@
 //       ID:e.id, Name:e.name, Department:e.department,
 //       Status:e.status, "Punch In":fmtTime(e.punchIn), Hours:e.hours
 //     }));
-//     downloadPDF("Live Attendance Report", rows, `live-attendance-${today()}.html`);
+//     downloadPDF("Live Presence Report", rows, `live-attendance-${today()}.html`);
 //   };
 //   const exportMonthlyCSV = () => {
 //     const rows = (monthlyAll||[]).map(e=>({
 //       ID:e.employeeId, Name:e.employeeName, Department:e.department,
 //       "Full Days":e.fullDays, "Half Days":e.halfDays, "Absent":e.absentDays,
-//       "Leave":e.leaveDays, "Work Hours":e.totalWorkHours, "Effective Days":e.effectiveDays
+//       "TimeAway":e.leaveDays, "Work Hours":e.totalWorkHours, "Effective Days":e.effectiveDays
 //     }));
 //     downloadCSV(rows, `monthly-attendance-${monthYear.year}-${pad(monthYear.month)}.csv`);
 //   };
@@ -550,12 +550,12 @@
 //     const rows = (monthlyAll||[]).map(e=>({
 //       ID:e.employeeId, Name:e.employeeName||"—", Department:e.department||"—",
 //       "Full Days":e.fullDays??0, "Half Days":e.halfDays??0, "Absent":e.absentDays??0,
-//       "Leave":e.leaveDays??0, "Work Hours":e.totalWorkHours??0, "Eff. Days":e.effectiveDays??0
+//       "TimeAway":e.leaveDays??0, "Work Hours":e.totalWorkHours??0, "Eff. Days":e.effectiveDays??0
 //     }));
-//     downloadPDF(`Monthly Attendance — ${pad(monthYear.month)}/${monthYear.year}`, rows,
+//     downloadPDF(`Monthly Presence — ${pad(monthYear.month)}/${monthYear.year}`, rows,
 //       `monthly-attendance-${monthYear.year}-${pad(monthYear.month)}.html`);
 //   };
-//   const exportPayrollCSV = () => {
+//   const exportPayoutsCSV = () => {
 //     const records = payrollData?.dailyRecords ?? payrollData?.summary?.dailyRecords ?? [];
 //     if (!records.length) return;
 //     const rows = records.map(r=>({
@@ -568,16 +568,16 @@
 //   // ─────────────────────────────────────────────
 //   //  RENDER: DASHBOARD
 //   // ─────────────────────────────────────────────
-//   const renderDashboard = () => {
+//   const renderControlRoom = () => {
 //     const statCards = [
-//       { label:"Total Employees", val:liveStats.total,   color:C.coral,  bg:"rgba(255,107,53,.1)",  icon:"M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" },
-//       { label:"Present Today",   val:liveStats.present, color:C.teal,   bg:"rgba(0,194,168,.1)",   icon:"M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z", trend:[62,70,65,78,82,75,presentPct] },
+//       { label:"Total People", val:liveStats.total,   color:C.coral,  bg:"rgba(139,92,246,.1)",  icon:"M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" },
+//       { label:"Present Today",   val:liveStats.present, color:C.teal,   bg:"rgba(6,182,212,.1)",   icon:"M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z", trend:[62,70,65,78,82,75,presentPct] },
 //       { label:"Absent Today",    val:liveStats.absent,  color:C.red,    bg:"rgba(239,68,68,.1)",   icon:"M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" },
-//       { label:"On Leave",        val:liveStats.onLeave, color:C.amber,  bg:"rgba(245,158,11,.1)",  icon:"M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" },
+//       { label:"On TimeAway",        val:liveStats.onTimeAway, color:C.amber,  bg:"rgba(245,158,11,.1)",  icon:"M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" },
 //       { label:"On Break",        val:liveStats.onBreak, color:C.indigo, bg:"rgba(99,102,241,.1)",  icon:"M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z" },
 //       { label:"Late Arrivals",   val:liveStats.late,    color:C.purple, bg:"rgba(139,92,246,.1)",  icon:"M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" },
-//       { label:"Working Now",     val:liveStats.working, color:C.teal,   bg:"rgba(0,194,168,.1)",   icon:"M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" },
-//       { label:"Pending Requests",val:liveStats.pending, color:C.coral,  bg:"rgba(255,107,53,.1)",  icon:"M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" },
+//       { label:"Working Now",     val:liveStats.working, color:C.teal,   bg:"rgba(6,182,212,.1)",   icon:"M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" },
+//       { label:"Pending Requests",val:liveStats.pending, color:C.coral,  bg:"rgba(139,92,246,.1)",  icon:"M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" },
 //     ];
 
 //     const deptData = (() => {
@@ -594,7 +594,7 @@
 //     const statusDist = [
 //       { label:"Present",  value:liveStats.present, color:C.teal   },
 //       { label:"Absent",   value:liveStats.absent,  color:C.red    },
-//       { label:"Leave",    value:liveStats.onLeave, color:C.amber  },
+//       { label:"TimeAway",    value:liveStats.onTimeAway, color:C.amber  },
 //       { label:"Break",    value:liveStats.onBreak, color:C.indigo },
 //     ];
 
@@ -633,14 +633,14 @@
 //               {s.label==="Present Today" && (
 //                 <div style={{ marginTop:8 }}>
 //                   <ProgressBar pct={presentPct} color={s.color}/>
-//                   <span style={{ fontSize:10,color:C.muted,fontWeight:600 }}>{presentPct}% attendance rate</span>
+//                   <span style={{ fontSize:10,color:C.muted,fontWeight:600 }}>{presentPct}% presence rate</span>
 //                 </div>
 //               )}
 //             </div>
 //           ))}
 //         </div>
 
-//         {/* Row 2: Donut + Hourly Activity + Attendance Rate */}
+//         {/* Row 2: Donut + Hourly Activity + Presence Rate */}
 //         <div style={{ display:"grid", gridTemplateColumns:"280px 1fr 240px", gap:16 }}>
 
 //           {/* Donut */}
@@ -670,7 +670,7 @@
 //                 <div style={{ fontSize:13,fontWeight:800,color:C.navy }}>Hourly Activity</div>
 //                 <div style={{ fontSize:11,color:C.muted,marginTop:2 }}>Punch-in pattern throughout the day</div>
 //               </div>
-//               <div style={{ display:"flex",alignItems:"center",gap:6,background:"rgba(0,194,168,.1)",border:`1px solid rgba(0,194,168,.25)`,borderRadius:999,padding:"4px 10px" }}>
+//               <div style={{ display:"flex",alignItems:"center",gap:6,background:"rgba(6,182,212,.1)",border:`1px solid rgba(6,182,212,.25)`,borderRadius:999,padding:"4px 10px" }}>
 //                 <span style={{ width:6,height:6,borderRadius:"50%",background:C.teal,display:"block",animation:"pulse 2s infinite" }}/>
 //                 <span style={{ fontSize:10,fontWeight:800,color:C.teal }}>Live</span>
 //               </div>
@@ -701,7 +701,7 @@
 //               <defs>
 //                 <linearGradient id="activeGrad" x1="0" x2="0" y1="0" y2="1">
 //                   <stop offset="0%" stopColor={C.coral} stopOpacity="1"/>
-//                   <stop offset="100%" stopColor="#FF5722" stopOpacity="0.8"/>
+//                   <stop offset="100%" stopColor="#06B6D4" stopOpacity="0.8"/>
 //                 </linearGradient>
 //               </defs>
 //             </svg>
@@ -715,9 +715,9 @@
 //             </div>
 //           </div>
 
-//           {/* Attendance rate compact */}
+//           {/* Presence rate compact */}
 //           <div className="main-card fade-up2" style={{ padding:22 }}>
-//             <div style={{ fontSize:13,fontWeight:800,color:C.navy,marginBottom:14 }}>Attendance Rate</div>
+//             <div style={{ fontSize:13,fontWeight:800,color:C.navy,marginBottom:14 }}>Presence Rate</div>
 //             {/* Circular rate gauge */}
 //             <div style={{ display:"flex",justifyContent:"center",marginBottom:14 }}>
 //               <div style={{ position:"relative",width:100,height:100 }}>
@@ -736,7 +736,7 @@
 //             {[
 //               { label:"Present",  pct:presentPct, color:C.teal, val:liveStats.present  },
 //               { label:"Absent",   pct:liveStats.total?Math.round(liveStats.absent/liveStats.total*100):0,   color:C.red,   val:liveStats.absent  },
-//               { label:"On Leave", pct:liveStats.total?Math.round(liveStats.onLeave/liveStats.total*100):0,  color:C.amber, val:liveStats.onLeave },
+//               { label:"On TimeAway", pct:liveStats.total?Math.round(liveStats.onTimeAway/liveStats.total*100):0,  color:C.amber, val:liveStats.onTimeAway },
 //             ].map((r,i)=>(
 //               <div key={i} style={{ marginBottom:10 }}>
 //                 <div style={{ display:"flex",justifyContent:"space-between",fontSize:11,color:C.muted,fontWeight:600,marginBottom:4 }}>
@@ -788,7 +788,7 @@
 //                     fontSize:11,fontWeight:900,color:i===0?"#fff":C.muted,flexShrink:0 }}>
 //                     {i+1}
 //                   </div>
-//                   <div style={{ width:32,height:32,borderRadius:10,background:`linear-gradient(135deg,${C.coral},#FF5722)`,
+//                   <div style={{ width:32,height:32,borderRadius:10,background:`linear-gradient(135deg,${C.coral},#06B6D4)`,
 //                     display:"flex",alignItems:"center",justifyContent:"center",color:"#fff",fontSize:13,fontWeight:900,flexShrink:0 }}>
 //                     {String(emp.name||"?")[0].toUpperCase()}
 //                   </div>
@@ -808,13 +808,13 @@
 //         {/* Recent activity strip */}
 //         <div className="main-card fade-up3">
 //           <div style={{ padding:"16px 22px",borderBottom:`1.5px solid ${C.border}`,display:"flex",alignItems:"center",justifyContent:"space-between" }}>
-//             <span style={{ fontSize:13,fontWeight:800,color:C.navy }}>Live Employee Activity</span>
-//             <button type="button" className="btn-coral" onClick={()=>{ fetchStats(); fetchEmployees(); }}>↻ Refresh</button>
+//             <span style={{ fontSize:13,fontWeight:800,color:C.navy }}>Live Person Activity</span>
+//             <button type="button" className="btn-coral" onClick={()=>{ fetchStats(); fetchPersons(); }}>↻ Refresh</button>
 //           </div>
 //           <div style={{ overflowX:"auto" }}>
 //             <table className="adm-table">
 //               <thead><tr>
-//                 <th>Employee</th><th>Department</th><th>Status</th>
+//                 <th>Person</th><th>Department</th><th>Status</th>
 //                 <th>Punch In</th><th>Hours</th><th>Actions</th>
 //               </tr></thead>
 //               <tbody>
@@ -826,7 +826,7 @@
 //                   <tr key={e.id}>
 //                     <td>
 //                       <div style={{ display:"flex",alignItems:"center",gap:10 }}>
-//                         <div style={{ width:32,height:32,borderRadius:9,background:`linear-gradient(135deg,${C.coral},#FF5722)`,display:"flex",alignItems:"center",justifyContent:"center",color:"#fff",fontSize:12,fontWeight:900,flexShrink:0 }}>
+//                         <div style={{ width:32,height:32,borderRadius:9,background:`linear-gradient(135deg,${C.coral},#06B6D4)`,display:"flex",alignItems:"center",justifyContent:"center",color:"#fff",fontSize:12,fontWeight:900,flexShrink:0 }}>
 //                           {String(e.name||"?")[0].toUpperCase()}
 //                         </div>
 //                         <div>
@@ -842,7 +842,7 @@
 //                     <td>
 //                       <div style={{ display:"flex",gap:6 }}>
 //                         <button type="button" className="btn-coral" style={{ padding:"5px 11px",fontSize:11 }} onClick={()=>{ setAssignModal(e); setAssignForm({status:"Present",startDate:today(),endDate:today(),reason:""}); }}>Assign</button>
-//                         <button type="button" className="btn-amber" style={{ padding:"5px 11px",fontSize:11 }} onClick={()=>{ setLeaveModal(e); setLeaveForm({startDate:today(),endDate:today()}); }}>Leave</button>
+//                         <button type="button" className="btn-amber" style={{ padding:"5px 11px",fontSize:11 }} onClick={()=>{ setTimeAwayModal(e); setTimeAwayForm({startDate:today(),endDate:today()}); }}>TimeAway</button>
 //                       </div>
 //                     </td>
 //                   </tr>
@@ -863,8 +863,8 @@
 //       <div style={{ padding:"16px 22px",borderBottom:`1.5px solid ${C.border}` }}>
 //         <div style={{ display:"flex",alignItems:"center",justifyContent:"space-between",flexWrap:"wrap",gap:12,marginBottom:14 }}>
 //           <div style={{ display:"flex",alignItems:"center",gap:10 }}>
-//             <h2 style={{ fontSize:15,fontWeight:800,color:C.navy,fontFamily:"Sora,sans-serif",margin:0 }}>Live Employee Tracking</h2>
-//             <div style={{ display:"flex",alignItems:"center",gap:5,background:"rgba(0,194,168,.1)",border:`1px solid rgba(0,194,168,.25)`,borderRadius:999,padding:"3px 10px" }}>
+//             <h2 style={{ fontSize:15,fontWeight:800,color:C.navy,fontFamily:"Sora,sans-serif",margin:0 }}>Live Person Tracking</h2>
+//             <div style={{ display:"flex",alignItems:"center",gap:5,background:"rgba(6,182,212,.1)",border:`1px solid rgba(6,182,212,.25)`,borderRadius:999,padding:"3px 10px" }}>
 //               <span style={{ width:6,height:6,borderRadius:"50%",background:C.teal,display:"block",animation:"pulse 2s infinite" }}/>
 //               <span style={{ fontSize:10,fontWeight:800,color:C.teal }}>Live</span>
 //             </div>
@@ -872,7 +872,7 @@
 //           <div className="dl-strip">
 //             <button className="btn-ghost" onClick={exportLiveCSV}><Ic d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" size={13}/> CSV</button>
 //             <button className="btn-ghost" onClick={exportLivePDF}><Ic d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" size={13}/> PDF</button>
-//             <button className="btn-coral" onClick={()=>{ fetchEmployees(); fetchStats(); }}>↻ Refresh</button>
+//             <button className="btn-coral" onClick={()=>{ fetchPersons(); fetchStats(); }}>↻ Refresh</button>
 //           </div>
 //         </div>
 //         {/* Filters */}
@@ -886,7 +886,7 @@
 //             {departments.map(d=><option key={d}>{d}</option>)}
 //           </select>
 //           <select value={statusFilter} onChange={e=>setStatusFilter(e.target.value)} className="adm-select">
-//             {["All","Working","Absent","On Leave","Late","On Break"].map(s=><option key={s}>{s}</option>)}
+//             {["All","Working","Absent","On TimeAway","Late","On Break"].map(s=><option key={s}>{s}</option>)}
 //           </select>
 //           <button className="btn-ghost" onClick={()=>{ setSearchQ(""); setDeptFilter("All"); setStatusFilter("All"); }}>Clear</button>
 //         </div>
@@ -895,7 +895,7 @@
 //       <div style={{ overflowX:"auto" }}>
 //         <table className="adm-table">
 //           <thead><tr>
-//             <th>Employee</th><th>Department</th><th>Status</th>
+//             <th>Person</th><th>Department</th><th>Status</th>
 //             <th>Punch In</th><th>Hours Worked</th><th>Breaks</th><th>Actions</th>
 //           </tr></thead>
 //           <tbody>
@@ -909,7 +909,7 @@
 //               <tr key={emp.id}>
 //                 <td>
 //                   <div style={{ display:"flex",alignItems:"center",gap:10 }}>
-//                     <div style={{ width:34,height:34,borderRadius:10,background:`linear-gradient(135deg,${C.coral},#FF5722)`,display:"flex",alignItems:"center",justifyContent:"center",color:"#fff",fontSize:13,fontWeight:900,flexShrink:0 }}>
+//                     <div style={{ width:34,height:34,borderRadius:10,background:`linear-gradient(135deg,${C.coral},#06B6D4)`,display:"flex",alignItems:"center",justifyContent:"center",color:"#fff",fontSize:13,fontWeight:900,flexShrink:0 }}>
 //                       {String(emp.name||"?")[0].toUpperCase()}
 //                     </div>
 //                     <div>
@@ -933,8 +933,8 @@
 //                       Assign
 //                     </button>
 //                     <button className="btn-amber" style={{ padding:"5px 11px",fontSize:11 }}
-//                       onClick={()=>{ setLeaveModal(emp); setLeaveForm({startDate:today(),endDate:today()}); }}>
-//                       Leave
+//                       onClick={()=>{ setTimeAwayModal(emp); setTimeAwayForm({startDate:today(),endDate:today()}); }}>
+//                       TimeAway
 //                     </button>
 //                   </div>
 //                 </td>
@@ -947,7 +947,7 @@
 //       <div style={{ padding:"10px 22px",borderTop:`1px solid ${C.border}`,display:"flex",justifyContent:"space-between",fontSize:11,color:C.muted,fontWeight:600,flexWrap:"wrap",gap:8 }}>
 //         <span>Showing <b style={{color:C.navy}}>{filteredEmps.length}</b> of {employees.length} employees</span>
 //         <div style={{ display:"flex",gap:16 }}>
-//           {[["Working",C.teal,"working"],["Break",C.indigo,"break"],["Absent",C.red,"absent"],["Leave",C.amber,"leave"]].map(([l,c,k])=>(
+//           {[["Working",C.teal,"working"],["Break",C.indigo,"break"],["Absent",C.red,"absent"],["TimeAway",C.amber,"leave"]].map(([l,c,k])=>(
 //             <span key={k}>{l}: <b style={{color:c}}>{filteredEmps.filter(e=>e.status?.toLowerCase().includes(k)).length}</b></span>
 //           ))}
 //         </div>
@@ -975,7 +975,7 @@
 //                 onClick={(e)=>{ e.preventDefault(); setMonthYear(p=>{ const m=p.month===12?1:p.month+1; const y=p.month===12?p.year+1:p.year; return {year:y,month:m}; }); }}>›</button>
 //             </div>
 //             <div style={{ display:"flex",gap:6 }}>
-//               {[["all","All Employees"],["dept","By Department"],["employee","Single Employee"]].map(([id,label])=>(
+//               {[["all","All Persons"],["dept","By Department"],["employee","Single Person"]].map(([id,label])=>(
 //                 <button type="button" key={id} className={`tab-pill ${monthlyView===id?"active":""}`}
 //                   onClick={(e)=>{ e.preventDefault(); setMonthlyView(id); }}>{label}</button>
 //               ))}
@@ -997,12 +997,12 @@
 //                     placeholder="Search name or ID…"
 //                     value={empSearch}
 //                     style={{ border:"none",outline:"none",padding:0,flex:1,fontSize:12 }}
-//                     onChange={e=>{ setEmpSearch(e.target.value); setShowEmpDrop(true); setSelEmpId(""); setPayrollData(null); }}
+//                     onChange={e=>{ setEmpSearch(e.target.value); setShowEmpDrop(true); setSelEmpId(""); setPayoutsData(null); }}
 //                     onFocus={()=>setShowEmpDrop(true)}
 //                     onBlur={()=>setTimeout(()=>setShowEmpDrop(false),200)}
 //                   />
 //                   {empSearch && <button type="button" style={{ border:"none",background:"none",cursor:"pointer",color:C.muted,fontSize:14,lineHeight:1,padding:"0 2px" }}
-//                     onClick={()=>{ setEmpSearch(""); setSelEmpId(""); setPayrollData(null); }}>✕</button>}
+//                     onClick={()=>{ setEmpSearch(""); setSelEmpId(""); setPayoutsData(null); }}>✕</button>}
 //                 </div>
 //                 {showEmpDrop && empSearch.length>0 && (
 //                   <div style={{ position:"fixed",width:280,background:"#fff",border:`1.5px solid ${C.border}`,borderRadius:10,zIndex:9999,maxHeight:220,overflowY:"auto",boxShadow:"0 12px 36px rgba(13,31,45,.18)",marginTop:4 }}>
@@ -1020,7 +1020,7 @@
 //                         style={{ padding:"10px 16px",cursor:"pointer",display:"flex",alignItems:"center",gap:10,borderBottom:`1px solid ${C.border}` }}
 //                         onMouseEnter={e=>e.currentTarget.style.background=C.bg}
 //                         onMouseLeave={e=>e.currentTarget.style.background="#fff"}>
-//                         <div style={{ width:30,height:30,borderRadius:8,background:`linear-gradient(135deg,${C.coral},#FF5722)`,display:"flex",alignItems:"center",justifyContent:"center",color:"#fff",fontSize:12,fontWeight:900,flexShrink:0 }}>
+//                         <div style={{ width:30,height:30,borderRadius:8,background:`linear-gradient(135deg,${C.coral},#06B6D4)`,display:"flex",alignItems:"center",justifyContent:"center",color:"#fff",fontSize:12,fontWeight:900,flexShrink:0 }}>
 //                           {String(emp.name||"?")[0].toUpperCase()}
 //                         </div>
 //                         <div>
@@ -1032,10 +1032,10 @@
 //                   </div>
 //                 )}
 //               </div>
-//               <button type="button" className="btn-coral" onClick={(e)=>{ e.preventDefault(); if(selEmpId) fetchPayroll(selEmpId); }} disabled={!selEmpId}>
+//               <button type="button" className="btn-coral" onClick={(e)=>{ e.preventDefault(); if(selEmpId) fetchPayouts(selEmpId); }} disabled={!selEmpId}>
 //                 Fetch
 //               </button>
-//               {payrollData && <button type="button" className="btn-ghost" onClick={(e)=>{ e.preventDefault(); exportPayrollCSV(); }}><Ic d="M12 10v6m0 0l-3-3m3 3l3-3" size={12}/> Payroll CSV</button>}
+//               {payrollData && <button type="button" className="btn-ghost" onClick={(e)=>{ e.preventDefault(); exportPayoutsCSV(); }}><Ic d="M12 10v6m0 0l-3-3m3 3l3-3" size={12}/> Payouts CSV</button>}
 //             </div>
 //           )}
 //         </div>
@@ -1044,7 +1044,7 @@
 //         {monthlyView==="all" && (
 //           <div className="main-card fade-up2">
 //             <div style={{ padding:"14px 22px",borderBottom:`1.5px solid ${C.border}`,display:"flex",alignItems:"center",justifyContent:"space-between" }}>
-//               <span style={{ fontSize:13,fontWeight:800,color:C.navy }}>Monthly Attendance — All Employees</span>
+//               <span style={{ fontSize:13,fontWeight:800,color:C.navy }}>Monthly Presence — All Persons</span>
 //               <span style={{ fontSize:11,color:C.muted }}>{monthlyAll.length} employees</span>
 //             </div>
 //             {loading.monthly ? (
@@ -1053,9 +1053,9 @@
 //               <div style={{ overflowX:"auto" }}>
 //                 <table className="adm-table">
 //                   <thead><tr>
-//                     <th>Employee</th><th>Dept</th>
+//                     <th>Person</th><th>Dept</th>
 //                     <th>Full Days</th><th>Half Days</th><th>Absent</th>
-//                     <th>Leave</th><th>Work Hours</th><th>Eff. Days</th>
+//                     <th>TimeAway</th><th>Work Hours</th><th>Eff. Days</th>
 //                   </tr></thead>
 //                   <tbody>
 //                     {(monthlyAll||[]).length===0 ? (
@@ -1073,7 +1073,7 @@
 //                         <td><b style={{ color:C.indigo }}>{e.leaveDays??0}</b></td>
 //                         <td style={{ fontFamily:"Sora,sans-serif",fontWeight:800 }}>{e.totalWorkHours??0}h</td>
 //                         <td>
-//                           <span style={{ background:`rgba(0,194,168,.1)`,color:C.teal,fontWeight:900,fontSize:12,padding:"3px 10px",borderRadius:8 }}>
+//                           <span style={{ background:`rgba(6,182,212,.1)`,color:C.teal,fontWeight:900,fontSize:12,padding:"3px 10px",borderRadius:8 }}>
 //                             {e.effectiveDays??0}
 //                           </span>
 //                         </td>
@@ -1096,7 +1096,7 @@
 //                 <div style={{ padding:"14px 22px",borderBottom:`1.5px solid ${C.border}`,display:"flex",alignItems:"center",justifyContent:"space-between",flexWrap:"wrap",gap:10 }}>
 //                   <div style={{ display:"flex",alignItems:"center",gap:10 }}>
 //                     <span style={{ fontSize:14,fontWeight:800,color:C.navy,fontFamily:"Sora,sans-serif" }}>{dept.department}</span>
-//                     <span className="dept-chip">{dept.totalEmployees} employees</span>
+//                     <span className="dept-chip">{dept.totalPersons} employees</span>
 //                   </div>
 //                   <div style={{ display:"flex",alignItems:"center",gap:14,flexWrap:"wrap" }}>
 //                     <div style={{ display:"flex",gap:14,fontSize:12 }}>
@@ -1110,13 +1110,13 @@
 //                         onClick={(e)=>{
 //                           e.preventDefault();
 //                           const rows = (dept.employees||[]).map(emp=>({
-//                             Employee: emp.employeeName||`#${emp.employeeId}`,
+//                             Person: emp.employeeName||`#${emp.employeeId}`,
 //                             Designation: emp.designation||"",
 //                             Department: dept.department,
 //                             "Full Days": emp.fullDays??0,
 //                             "Half Days": emp.halfDays??0,
 //                             "Absent Days": emp.absentDays??0,
-//                             "Leave Days": emp.leaveDays??0,
+//                             "TimeAway Days": emp.leaveDays??0,
 //                             "Work Hours": (emp.totalWorkHours??0)+"h",
 //                             "Effective Days": emp.effectiveDays??0,
 //                           }));
@@ -1128,16 +1128,16 @@
 //                         onClick={(e)=>{
 //                           e.preventDefault();
 //                           const rows = (dept.employees||[]).map(emp=>({
-//                             Employee: emp.employeeName||`#${emp.employeeId}`,
+//                             Person: emp.employeeName||`#${emp.employeeId}`,
 //                             Designation: emp.designation||"",
 //                             "Full Days": emp.fullDays??0,
 //                             "Half Days": emp.halfDays??0,
 //                             "Absent Days": emp.absentDays??0,
-//                             "Leave Days": emp.leaveDays??0,
+//                             "TimeAway Days": emp.leaveDays??0,
 //                             "Work Hours": (emp.totalWorkHours??0)+"h",
 //                             "Effective Days": emp.effectiveDays??0,
 //                           }));
-//                           downloadPDF(`${dept.department} — Monthly Attendance`,rows,`attendance-${dept.department.replace(/\s+/g,"-")}-${monthYear.year}-${pad(monthYear.month)}.html`);
+//                           downloadPDF(`${dept.department} — Monthly Presence`,rows,`attendance-${dept.department.replace(/\s+/g,"-")}-${monthYear.year}-${pad(monthYear.month)}.html`);
 //                         }}>
 //                         <Ic d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" size={11}/> PDF
 //                       </button>
@@ -1147,7 +1147,7 @@
 //                 <div style={{ overflowX:"auto" }}>
 //                   <table className="adm-table">
 //                     <thead><tr>
-//                       <th>Employee</th><th>Full</th><th>Half</th><th>Absent</th><th>Leave</th><th>Hours</th><th>Eff.</th>
+//                       <th>Person</th><th>Full</th><th>Half</th><th>Absent</th><th>TimeAway</th><th>Hours</th><th>Eff.</th>
 //                     </tr></thead>
 //                     <tbody>
 //                       {(dept.employees||[]).map((e,j)=>(
@@ -1161,7 +1161,7 @@
 //                           <td><b style={{color:C.red}}>{e.absentDays??0}</b></td>
 //                           <td><b style={{color:C.indigo}}>{e.leaveDays??0}</b></td>
 //                           <td style={{ fontWeight:800 }}>{e.totalWorkHours??0}h</td>
-//                           <td><span style={{ background:"rgba(0,194,168,.1)",color:C.teal,fontWeight:900,fontSize:12,padding:"2px 8px",borderRadius:6 }}>{e.effectiveDays??0}</span></td>
+//                           <td><span style={{ background:"rgba(6,182,212,.1)",color:C.teal,fontWeight:900,fontSize:12,padding:"2px 8px",borderRadius:6 }}>{e.effectiveDays??0}</span></td>
 //                         </tr>
 //                       ))}
 //                     </tbody>
@@ -1183,30 +1183,30 @@
 //             <div className="main-card" style={{ padding:48,textAlign:"center" }}>
 //               <div style={{ fontSize:32,marginBottom:12 }}>🔍</div>
 //               <div style={{ fontSize:14,fontWeight:700,color:C.navy,marginBottom:6 }}>Search for an employee</div>
-//               <div style={{ fontSize:12,color:C.muted }}>Type a name or ID above to find and fetch their monthly attendance</div>
+//               <div style={{ fontSize:12,color:C.muted }}>Type a name or ID above to find and fetch their monthly presence</div>
 //             </div>
 //           ) : !payrollData ? (
 //             <div className="main-card" style={{ padding:48,textAlign:"center" }}>
 //               <div style={{ fontSize:32,marginBottom:12 }}>📭</div>
 //               <div style={{ fontSize:14,fontWeight:700,color:C.navy,marginBottom:6 }}>No data found</div>
-//               <div style={{ fontSize:12,color:C.muted }}>No attendance records for this employee in the selected month</div>
+//               <div style={{ fontSize:12,color:C.muted }}>No presence records for this employee in the selected month</div>
 //             </div>
 //           ) : (
 //           <div style={{ display:"flex",flexDirection:"column",gap:14 }}>
-//             {/* Employee header */}
+//             {/* Person header */}
 //             <div className="main-card fade-up" style={{ padding:"18px 24px",background:`linear-gradient(135deg,${C.navy},#1a3352)` }}>
 //               <div style={{ display:"flex",alignItems:"center",gap:16 }}>
-//                 <div style={{ width:48,height:48,borderRadius:14,background:`linear-gradient(135deg,${C.coral},#FF5722)`,display:"flex",alignItems:"center",justifyContent:"center",color:"#fff",fontSize:20,fontWeight:900 }}>
+//                 <div style={{ width:48,height:48,borderRadius:14,background:`linear-gradient(135deg,${C.coral},#06B6D4)`,display:"flex",alignItems:"center",justifyContent:"center",color:"#fff",fontSize:20,fontWeight:900 }}>
 //                   {String(payrollData.employeeName||empSearch||"?")[0].toUpperCase()}
 //                 </div>
 //                 <div>
-//                   <div style={{ fontFamily:"Sora,sans-serif",fontSize:16,fontWeight:900,color:"#fff" }}>{payrollData.employeeName||`Employee #${selEmpId}`}</div>
+//                   <div style={{ fontFamily:"Sora,sans-serif",fontSize:16,fontWeight:900,color:"#fff" }}>{payrollData.employeeName||`Person #${selEmpId}`}</div>
 //                   <div style={{ fontSize:12,color:"rgba(255,255,255,.5)",marginTop:2 }}>
 //                     {payrollData.monthName} {payrollData.year} · {payrollData.workingDays||0} working days
 //                   </div>
 //                 </div>
 //                 <div style={{ marginLeft:"auto",display:"flex",gap:8 }}>
-//                   <button type="button" className="btn-ghost" onClick={(e)=>{ e.preventDefault(); exportPayrollCSV(); }} style={{ background:"rgba(255,255,255,.1)",borderColor:"rgba(255,255,255,.2)",color:"#fff" }}>
+//                   <button type="button" className="btn-ghost" onClick={(e)=>{ e.preventDefault(); exportPayoutsCSV(); }} style={{ background:"rgba(255,255,255,.1)",borderColor:"rgba(255,255,255,.2)",color:"#fff" }}>
 //                     <Ic d="M12 10v6m0 0l-3-3m3 3l3-3" size={12} color="#fff"/> CSV
 //                   </button>
 //                 </div>
@@ -1219,7 +1219,7 @@
 //                 { label:"Full Days",    val:payrollData.fullDays??payrollData.summary?.fullDays??0,    color:C.teal   },
 //                 { label:"Half Days",    val:payrollData.halfDays??payrollData.summary?.halfDays??0,    color:C.amber  },
 //                 { label:"Absent",       val:payrollData.absentDays??payrollData.summary?.absentDays??0,  color:C.red    },
-//                 { label:"Leave Days",   val:payrollData.leaveDays??payrollData.summary?.leaveDays??0,   color:C.indigo },
+//                 { label:"TimeAway Days",   val:payrollData.leaveDays??payrollData.summary?.leaveDays??0,   color:C.indigo },
 //                 { label:"Work Hours",   val:`${payrollData.totalWorkHours??payrollData.summary?.totalWorkHours??0}h`, color:C.coral },
 //                 { label:"Eff. Days",    val:payrollData.effectiveDays??payrollData.summary?.effectiveDays??0, color:C.teal  },
 //               ].map((s,i)=>(
@@ -1352,7 +1352,7 @@
 //         <div className="main-card fade-up" style={{ padding:24 }}>
 //           <div style={{ display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:20 }}>
 //             <div>
-//               <div style={{ fontSize:14,fontWeight:800,color:C.navy }}>Weekly Attendance Overview</div>
+//               <div style={{ fontSize:14,fontWeight:800,color:C.navy }}>Weekly Presence Overview</div>
 //               <div style={{ fontSize:11,color:C.muted,marginTop:2 }}>Present vs Absent — this week</div>
 //             </div>
 //             <div style={{ display:"flex",gap:14 }}>
@@ -1416,19 +1416,19 @@
 
 //           {/* Status breakdown with animated progress */}
 //           <div className="main-card fade-up2" style={{ padding:22 }}>
-//             <div style={{ fontSize:13,fontWeight:800,color:C.navy,marginBottom:16 }}>Today's Attendance Breakdown</div>
+//             <div style={{ fontSize:13,fontWeight:800,color:C.navy,marginBottom:16 }}>Today's Presence Breakdown</div>
 //             <div style={{ display:"flex",justifyContent:"center",marginBottom:16 }}>
 //               <Donut segments={[
 //                 { label:"Present",  value:liveStats.present, color:C.teal   },
 //                 { label:"Absent",   value:liveStats.absent,  color:C.red    },
-//                 { label:"Leave",    value:liveStats.onLeave, color:C.amber  },
+//                 { label:"TimeAway",    value:liveStats.onTimeAway, color:C.amber  },
 //                 { label:"Break",    value:liveStats.onBreak, color:C.indigo },
 //               ]} size={120} stroke={18} label={liveStats.total} sublabel="total"/>
 //             </div>
 //             {[
 //               { label:"Present",  val:liveStats.present,  color:C.teal,   pct:presentPct },
 //               { label:"Absent",   val:liveStats.absent,   color:C.red,    pct:liveStats.total?Math.round(liveStats.absent/liveStats.total*100):0 },
-//               { label:"On Leave", val:liveStats.onLeave,  color:C.amber,  pct:liveStats.total?Math.round(liveStats.onLeave/liveStats.total*100):0 },
+//               { label:"On TimeAway", val:liveStats.onTimeAway,  color:C.amber,  pct:liveStats.total?Math.round(liveStats.onTimeAway/liveStats.total*100):0 },
 //               { label:"On Break", val:liveStats.onBreak,  color:C.indigo, pct:liveStats.total?Math.round(liveStats.onBreak/liveStats.total*100):0 },
 //             ].map((r,i)=>(
 //               <div key={i} style={{ display:"flex",alignItems:"center",gap:10,marginBottom:10 }}>
@@ -1445,7 +1445,7 @@
 
 //         {/* Punch-in heatmap by hour */}
 //         <div className="main-card fade-up3" style={{ padding:22 }}>
-//           <div style={{ fontSize:13,fontWeight:800,color:C.navy,marginBottom:6 }}>Work Hours Distribution — Live Employees</div>
+//           <div style={{ fontSize:13,fontWeight:800,color:C.navy,marginBottom:6 }}>Work Hours Distribution — Live Persons</div>
 //           <div style={{ fontSize:11,color:C.muted,marginBottom:16 }}>Based on current session data</div>
 //           <div style={{ display:"flex",gap:10,flexWrap:"wrap" }}>
 //             {employees.length===0 ? (
@@ -1488,7 +1488,7 @@
 //       </div>
 //       <div style={{ overflowX:"auto" }}>
 //         <table className="adm-table">
-//           <thead><tr><th>#ID</th><th>Employee</th><th>Tasks</th><th>Remarks</th><th>Submitted</th></tr></thead>
+//           <thead><tr><th>#ID</th><th>Person</th><th>Tasks</th><th>Remarks</th><th>Submitted</th></tr></thead>
 //           <tbody>
 //             {loading.ts ? (
 //               <tr><td colSpan={5} style={{ padding:56,textAlign:"center",color:C.muted }}>Loading…</td></tr>
@@ -1518,8 +1518,8 @@
 //   const renderAssign = () => (
 //     <div className="main-card fade-up" style={{ padding:22 }}>
 //       <div style={{ marginBottom:18 }}>
-//         <h2 style={{ fontSize:15,fontWeight:800,color:C.navy,fontFamily:"Sora,sans-serif",margin:"0 0 4px" }}>Assign Attendance / Leave</h2>
-//         <p style={{ fontSize:12,color:C.muted,margin:0 }}>Manually assign attendance or leave to any employee</p>
+//         <h2 style={{ fontSize:15,fontWeight:800,color:C.navy,fontFamily:"Sora,sans-serif",margin:"0 0 4px" }}>Assign Presence / TimeAway</h2>
+//         <p style={{ fontSize:12,color:C.muted,margin:0 }}>Manually assign presence or time away to any employee</p>
 //       </div>
 //       <div style={{ display:"flex",flexDirection:"column",gap:10,maxHeight:460,overflowY:"auto" }}>
 //         {employees.filter(e=>!searchQ||e.name.toLowerCase().includes(searchQ.toLowerCase())).map(emp=>(
@@ -1527,7 +1527,7 @@
 //             onMouseEnter={e=>e.currentTarget.style.background="#eef2f8"}
 //             onMouseLeave={e=>e.currentTarget.style.background=C.bg}>
 //             <div style={{ display:"flex",alignItems:"center",gap:12 }}>
-//               <div style={{ width:36,height:36,borderRadius:10,background:`linear-gradient(135deg,${C.coral},#FF5722)`,display:"flex",alignItems:"center",justifyContent:"center",color:"#fff",fontSize:14,fontWeight:900 }}>
+//               <div style={{ width:36,height:36,borderRadius:10,background:`linear-gradient(135deg,${C.coral},#06B6D4)`,display:"flex",alignItems:"center",justifyContent:"center",color:"#fff",fontSize:14,fontWeight:900 }}>
 //                 {String(emp.name||"?")[0].toUpperCase()}
 //               </div>
 //               <div>
@@ -1538,11 +1538,11 @@
 //             <div style={{ display:"flex",gap:8 }}>
 //               <button className="btn-coral" style={{ padding:"7px 14px",fontSize:11 }}
 //                 onClick={()=>{ setAssignModal(emp); setAssignForm({status:"Present",startDate:today(),endDate:today(),reason:""}); }}>
-//                 Attendance
+//                 Presence
 //               </button>
 //               <button className="btn-amber" style={{ padding:"7px 14px",fontSize:11 }}
-//                 onClick={()=>{ setLeaveModal(emp); setLeaveForm({startDate:today(),endDate:today()}); }}>
-//                 Leave
+//                 onClick={()=>{ setTimeAwayModal(emp); setTimeAwayForm({startDate:today(),endDate:today()}); }}>
+//                 TimeAway
 //               </button>
 //             </div>
 //           </div>
@@ -1554,7 +1554,7 @@
 //   // ─────────────────────────────────────────────
 //   //  RENDER: REPORTS
 //   // ─────────────────────────────────────────────
-//   const renderReports = () => (
+//   const renderSignalReports = () => (
 //     <div style={{ display:"flex",flexDirection:"column",gap:16 }}>
 //       {/* Summary donut + bars */}
 //       <div style={{ display:"grid",gridTemplateColumns:"1fr 1fr",gap:16 }}>
@@ -1564,11 +1564,11 @@
 //             <Donut segments={[
 //               { label:"Present",value:liveStats.present,color:C.teal  },
 //               { label:"Absent", value:liveStats.absent, color:C.red   },
-//               { label:"Leave",  value:liveStats.onLeave,color:C.amber },
+//               { label:"TimeAway",  value:liveStats.onTimeAway,color:C.amber },
 //               { label:"Break",  value:liveStats.onBreak,color:C.indigo},
 //             ]} size={100} stroke={16} label={liveStats.total} sublabel="total"/>
 //             <div style={{ flex:1 }}>
-//               {[["Present",liveStats.present,C.teal],["Absent",liveStats.absent,C.red],["Leave",liveStats.onLeave,C.amber],["Break",liveStats.onBreak,C.indigo]].map(([l,v,c])=>(
+//               {[["Present",liveStats.present,C.teal],["Absent",liveStats.absent,C.red],["TimeAway",liveStats.onTimeAway,C.amber],["Break",liveStats.onBreak,C.indigo]].map(([l,v,c])=>(
 //                 <div key={l} style={{ marginBottom:10 }}>
 //                   <div style={{ display:"flex",justifyContent:"space-between",fontSize:11,color:C.muted,fontWeight:600,marginBottom:3 }}>
 //                     <span>{l}</span><b style={{color:C.navy}}>{v} <span style={{color:C.muted,fontWeight:400}}>({liveStats.total?Math.round(v/liveStats.total*100):0}%)</span></b>
@@ -1593,11 +1593,11 @@
 
 //       {/* Export panel */}
 //       <div className="main-card fade-up3" style={{ padding:22 }}>
-//         <div style={{ fontSize:13,fontWeight:800,color:C.navy,marginBottom:16 }}>Export Reports</div>
+//         <div style={{ fontSize:13,fontWeight:800,color:C.navy,marginBottom:16 }}>Export SignalReports</div>
 //         <div style={{ display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(200px,1fr))",gap:12 }}>
 //           {[
-//             { title:"Live Attendance", desc:"Current day employee status", onCSV:exportLiveCSV, onPDF:exportLivePDF },
-//             { title:"Monthly Summary", desc:"Full month attendance summary", onCSV:exportMonthlyCSV, onPDF:exportMonthlyPDF },
+//             { title:"Live Presence", desc:"Current day employee status", onCSV:exportLiveCSV, onPDF:exportLivePDF },
+//             { title:"Monthly Summary", desc:"Full month presence summary", onCSV:exportMonthlyCSV, onPDF:exportMonthlyPDF },
 //             { title:"Timesheets",      desc:"All employee timesheets", onCSV:()=>{ const rows=(timesheets||[]).map(t=>({ID:t.id,"Emp ID":t.employeeId,Task:t.tasks||"",Date:fmtDate(t.submittedAt)})); downloadCSV(rows,`timesheets-${today()}.csv`); }, onPDF:()=>{ const rows=(timesheets||[]).map(t=>({ID:t.id,"Emp ID":t.employeeId,Task:t.tasks||"",Date:fmtDate(t.submittedAt)})); downloadPDF("Timesheets",rows,`timesheets.html`); } },
 //           ].map((item,i)=>(
 //             <div key={i} style={{ padding:16,background:C.bg,borderRadius:14,border:`1.5px solid ${C.border}` }}>
@@ -1619,14 +1619,14 @@
 //   // ─────────────────────────────────────────────
 //   const renderContent = () => {
 //     switch(activeTab) {
-//       case "dashboard": return renderDashboard();
+//       case "dashboard": return renderControlRoom();
 //       case "live":      return renderLive();
 //       case "monthly":   return renderMonthly();
 //       case "trends":    return renderTrends();
-//       case "leave":     return <LeaveManagement/>;
+//       case "leave":     return <TimeAwayOperations/>;
 //       case "timesheet": return renderTimesheets();
 //       case "assign":    return renderAssign();
-//       case "reports":   return renderReports();
+//       case "reports":   return renderSignalReports();
 //       default:          return null;
 //     }
 //   };
@@ -1641,16 +1641,16 @@
 
 //         {/* ── Hero Banner ── */}
 //         <div style={{ background:`linear-gradient(135deg,${C.navy} 0%,#1a3352 100%)`,borderRadius:20,padding:"20px 28px",marginBottom:22,position:"relative",overflow:"hidden" }}>
-//           <div style={{ position:"absolute",top:-40,right:60,width:200,height:200,borderRadius:"50%",background:"rgba(255,107,53,.08)",filter:"blur(50px)",pointerEvents:"none" }}/>
-//           <div style={{ position:"absolute",bottom:-30,left:200,width:160,height:160,borderRadius:"50%",background:"rgba(0,194,168,.07)",filter:"blur(40px)",pointerEvents:"none" }}/>
+//           <div style={{ position:"absolute",top:-40,right:60,width:200,height:200,borderRadius:"50%",background:"rgba(139,92,246,.08)",filter:"blur(50px)",pointerEvents:"none" }}/>
+//           <div style={{ position:"absolute",bottom:-30,left:200,width:160,height:160,borderRadius:"50%",background:"rgba(6,182,212,.07)",filter:"blur(40px)",pointerEvents:"none" }}/>
 //           <div style={{ display:"flex",alignItems:"center",justifyContent:"space-between",flexWrap:"wrap",gap:14,position:"relative" }}>
 //             <div>
-//               <h1 style={{ fontFamily:"Sora,sans-serif",fontSize:22,fontWeight:900,color:"#fff",margin:"0 0 5px" }}>Attendance Management</h1>
-//               <p style={{ fontSize:12,color:"rgba(255,255,255,.45)",margin:0 }}>Live tracking · Monthly analytics · Payroll-ready reports</p>
+//               <h1 style={{ fontFamily:"Sora,sans-serif",fontSize:22,fontWeight:900,color:"#fff",margin:"0 0 5px" }}>Presence Operations</h1>
+//               <p style={{ fontSize:12,color:"rgba(255,255,255,.45)",margin:0 }}>Live tracking · Monthly analytics · Payouts-ready reports</p>
 //             </div>
 //             <div style={{ display:"flex",gap:10,alignItems:"center",flexWrap:"wrap" }}>
 //               {/* Live indicator */}
-//               <div style={{ display:"flex",alignItems:"center",gap:7,background:"rgba(0,194,168,.15)",border:"1px solid rgba(0,194,168,.3)",borderRadius:999,padding:"5px 14px" }}>
+//               <div style={{ display:"flex",alignItems:"center",gap:7,background:"rgba(6,182,212,.15)",border:"1px solid rgba(6,182,212,.3)",borderRadius:999,padding:"5px 14px" }}>
 //                 <span style={{ width:7,height:7,borderRadius:"50%",background:C.teal,display:"block",animation:"pulse 2s infinite" }}/>
 //                 <span style={{ fontSize:11,fontWeight:800,color:C.teal }}>Live · Auto-refresh 30s</span>
 //               </div>
@@ -1665,7 +1665,7 @@
 //                   <div style={{ fontSize:9,color:"rgba(255,255,255,.4)",fontWeight:700,textTransform:"uppercase",letterSpacing:".06em" }}>{k.label}</div>
 //                 </div>
 //               ))}
-//               <button type="button" className="btn-coral" onClick={(e)=>{ e.preventDefault(); fetchStats(); fetchEmployees(); fetchTimesheets(); }}
+//               <button type="button" className="btn-coral" onClick={(e)=>{ e.preventDefault(); fetchStats(); fetchPersons(); fetchTimesheets(); }}
 //                 disabled={loading.stats||loading.emp}>
 //                 {(loading.stats||loading.emp)?"Loading…":"↻ Refresh All"}
 //               </button>
@@ -1687,12 +1687,12 @@
 //         {/* ── Content ── */}
 //         {renderContent()}
 
-//         {/* ══ Assign Attendance Modal ══ */}
+//         {/* ══ Assign Presence Modal ══ */}
 //         {assignModal && (
 //           <div className="modal-overlay" onClick={()=>setAssignModal(null)}>
 //             <div className="modal-box" onClick={e=>e.stopPropagation()}>
 //               <div className="modal-hdr">
-//                 <h3 style={{ fontFamily:"Sora,sans-serif",fontSize:16,fontWeight:900,color:"#fff",margin:"0 0 4px" }}>Assign Attendance</h3>
+//                 <h3 style={{ fontFamily:"Sora,sans-serif",fontSize:16,fontWeight:900,color:"#fff",margin:"0 0 4px" }}>Assign Presence</h3>
 //                 <p style={{ fontSize:11,color:"rgba(255,255,255,.4)",margin:0 }}>
 //                   {assignModal.name} · {assignModal.department}{assignModal.employeeId ? ` · ${assignModal.employeeId}` : ""}
 //                 </p>
@@ -1701,7 +1701,7 @@
 //                 <div>
 //                   <label className="modal-label">Status</label>
 //                   <select value={assignForm.status} onChange={e=>setAssignForm(p=>({...p,status:e.target.value}))} className="adm-select" style={{ width:"100%" }}>
-//                     {["Present","Absent","Half Day","Leave","Compensation Off","Saturday Work","Sunday Work"].map(s=><option key={s}>{s}</option>)}
+//                     {["Present","Absent","Half Day","TimeAway","Compensation Off","Saturday Work","Sunday Work"].map(s=><option key={s}>{s}</option>)}
 //                   </select>
 //                 </div>
 //                 <div style={{ display:"grid",gridTemplateColumns:"1fr 1fr",gap:12 }}>
@@ -1721,7 +1721,7 @@
 //                 <div style={{ display:"flex",gap:10,marginTop:4 }}>
 //                   <button className="btn-ghost" style={{ flex:1 }} onClick={()=>setAssignModal(null)}>Cancel</button>
 //                   <button className="btn-coral" style={{ flex:2 }} onClick={handleAssign} disabled={saving}>
-//                     {saving?"Assigning…":"Assign Attendance"}
+//                     {saving?"Assigning…":"Assign Presence"}
 //                   </button>
 //                 </div>
 //               </div>
@@ -1729,12 +1729,12 @@
 //           </div>
 //         )}
 
-//         {/* ══ Assign Leave Modal ══ */}
+//         {/* ══ Assign TimeAway Modal ══ */}
 //         {leaveModal && (
-//           <div className="modal-overlay" onClick={()=>setLeaveModal(null)}>
+//           <div className="modal-overlay" onClick={()=>setTimeAwayModal(null)}>
 //             <div className="modal-box" style={{ maxWidth:420 }} onClick={e=>e.stopPropagation()}>
 //               <div className="modal-hdr">
-//                 <h3 style={{ fontFamily:"Sora,sans-serif",fontSize:16,fontWeight:900,color:"#fff",margin:"0 0 4px" }}>Assign Leave</h3>
+//                 <h3 style={{ fontFamily:"Sora,sans-serif",fontSize:16,fontWeight:900,color:"#fff",margin:"0 0 4px" }}>Assign TimeAway</h3>
 //                 <p style={{ fontSize:11,color:"rgba(255,255,255,.4)",margin:0 }}>{leaveModal.name} · ID: {leaveModal.id}</p>
 //               </div>
 //               <div className="modal-body" style={{ display:"flex",flexDirection:"column",gap:14 }}>
@@ -1742,14 +1742,14 @@
 //                   <div key={key}>
 //                     <label className="modal-label">{lbl}</label>
 //                     <input type="date" value={leaveForm[key]} className="adm-input" style={{ width:"100%" }}
-//                       onChange={e=>setLeaveForm(p=>({...p,[key]:e.target.value}))}/>
+//                       onChange={e=>setTimeAwayForm(p=>({...p,[key]:e.target.value}))}/>
 //                   </div>
 //                 ))}
 //                 <div style={{ display:"flex",gap:10,marginTop:4 }}>
-//                   <button className="btn-ghost" style={{ flex:1 }} onClick={()=>setLeaveModal(null)}>Cancel</button>
+//                   <button className="btn-ghost" style={{ flex:1 }} onClick={()=>setTimeAwayModal(null)}>Cancel</button>
 //                   <button style={{ flex:2,background:`linear-gradient(135deg,${C.amber},#fbbf24)`,color:"#fff",border:"none",borderRadius:10,padding:"10px 0",fontSize:13,fontWeight:800,cursor:"pointer",opacity:saving?0.6:1 }}
-//                     onClick={handleLeave} disabled={saving}>
-//                     {saving?"Assigning…":"Assign Leave"}
+//                     onClick={handleTimeAway} disabled={saving}>
+//                     {saving?"Assigning…":"Assign TimeAway"}
 //                   </button>
 //                 </div>
 //               </div>
@@ -1772,8 +1772,8 @@ import api from "@/lib/apiClient";
 
 // ─── Design tokens ───────────────────────────────────────────────────────────
 const C = {
-  coral:  "#FF6B35", teal:   "#00C2A8", navy:   "#0D1F2D",
-  navy2:  "#162639", muted:  "#64748b", border: "#E8EDF3",
+  coral:  "#8B5CF6", teal:   "#06B6D4", navy:   "#0B1020",
+  navy2:  "#182033", muted:  "#64748b", border: "#E8EDF3",
   bg:     "#F4F6F9", white:  "#FFFFFF", green:  "#10b981",
   amber:  "#f59e0b", red:    "#ef4444", indigo: "#6366f1", purple: "#8b5cf6",
 };
@@ -1832,11 +1832,11 @@ const downloadPDF = (title, rows, filename) => {
   ).join("");
   const html = `<html><head><meta charset="utf-8">
     <style>
-      body{font-family:'Segoe UI',sans-serif;padding:32px;color:#0D1F2D;}
-      h1{font-size:22px;font-weight:900;border-bottom:3px solid #FF6B35;padding-bottom:10px;margin-bottom:20px;}
+      body{font-family:'Segoe UI',sans-serif;padding:32px;color:#0B1020;}
+      h1{font-size:22px;font-weight:900;border-bottom:3px solid #8B5CF6;padding-bottom:10px;margin-bottom:20px;}
       .meta{font-size:11px;color:#64748b;margin-bottom:24px;}
       table{width:100%;border-collapse:collapse;font-size:12px;}
-      th{background:#0D1F2D;color:#fff;padding:9px 12px;text-align:left;font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:.06em;}
+      th{background:#0B1020;color:#fff;padding:9px 12px;text-align:left;font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:.06em;}
       td{padding:8px 12px;border-bottom:1px solid #E8EDF3;color:#334155;}
       tr:nth-child(even) td{background:#F4F6F9;}
       .footer{margin-top:30px;font-size:10px;color:#94a3b8;text-align:center;}
@@ -1846,7 +1846,7 @@ const downloadPDF = (title, rows, filename) => {
       <div class="meta">Generated: ${new Date().toLocaleString("en-IN")} | Records: ${rows?.length||0}</div>
       <table><thead><tr>${headers.map(h=>`<th>${h}</th>`).join("")}</tr></thead>
       <tbody>${tRows}</tbody></table>
-      <div class="footer">SamayaHR Attendance Report © ${new Date().getFullYear()}</div>
+      <div class="footer">CrewSync Presence Report © ${new Date().getFullYear()}</div>
     </body></html>`;
   const a = document.createElement("a");
   a.href = URL.createObjectURL(new Blob([html], { type:"text/html" }));
@@ -1873,15 +1873,15 @@ const Badge = ({ label, color="#64748b", bg="#f1f5f9" }) => (
 const statusBadge = (status="") => {
   const s = String(status).toLowerCase();
   if (s.includes("present")||s.includes("working")||s.includes("completed"))
-    return <Badge label="Present" color={C.teal}   bg="rgba(0,194,168,.12)"/>;
+    return <Badge label="Present" color={C.teal}   bg="rgba(6,182,212,.12)"/>;
   if (s.includes("absent"))
     return <Badge label="Absent"  color={C.red}    bg="rgba(239,68,68,.1)"/>;
   if (s.includes("leave"))
-    return <Badge label="Leave"   color={C.amber}  bg="rgba(245,158,11,.12)"/>;
+    return <Badge label="TimeAway"   color={C.amber}  bg="rgba(245,158,11,.12)"/>;
   if (s.includes("break")||s.includes("on_break"))
     return <Badge label="On Break" color={C.indigo} bg="rgba(99,102,241,.1)"/>;
   if (s.includes("late"))
-    return <Badge label="Late"    color={C.coral}  bg="rgba(255,107,53,.1)"/>;
+    return <Badge label="Late"    color={C.coral}  bg="rgba(139,92,246,.1)"/>;
   if (s.includes("half"))
     return <Badge label="Half Day" color={C.purple} bg="rgba(139,92,246,.1)"/>;
   if (s.includes("partial"))
@@ -1984,9 +1984,9 @@ const CSS = `
 
 .btn-coral{
   display:inline-flex;align-items:center;gap:6px;
-  background:linear-gradient(135deg,${C.coral},#FF5722);color:#fff;border:none;
+  background:linear-gradient(135deg,${C.coral},#06B6D4);color:#fff;border:none;
   border-radius:10px;padding:9px 18px;font-size:12px;font-weight:800;cursor:pointer;
-  font-family:'DM Sans',sans-serif;transition:all .2s;box-shadow:0 4px 12px rgba(255,107,53,.25);
+  font-family:'DM Sans',sans-serif;transition:all .2s;box-shadow:0 4px 12px rgba(139,92,246,.25);
 }
 .btn-coral:hover{transform:translateY(-1px);filter:brightness(1.05);}
 .btn-coral:disabled{opacity:.55;cursor:not-allowed;transform:none;}
@@ -2022,7 +2022,7 @@ const CSS = `
 .modal-body{padding:24px;overflow-y:auto;flex:1;}
 .modal-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:${C.muted};display:block;margin-bottom:6px;}
 
-.dept-chip{font-size:10px;font-weight:700;color:${C.teal};background:rgba(0,194,168,.1);padding:2px 8px;border-radius:999px;}
+.dept-chip{font-size:10px;font-weight:700;color:${C.teal};background:rgba(6,182,212,.1);padding:2px 8px;border-radius:999px;}
 .dl-strip{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
 .adm-att ::-webkit-scrollbar{width:5px;height:5px;}
 .adm-att ::-webkit-scrollbar-track{background:#f1f5f9;}
@@ -2032,23 +2032,23 @@ const CSS = `
 // ═════════════════════════════════════════════════════════════════════════════
 //  MAIN COMPONENT
 // ═════════════════════════════════════════════════════════════════════════════
-export default function AdminAttendance() {
+export default function OperatorPresence() {
 
   const TABS = [
     { id:"dashboard", label:"Overview",    icon:"M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" },
     { id:"live",      label:"Live View",   icon:"M15 12a3 3 0 11-6 0 3 3 0 016 0zM2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" },
     { id:"monthly",   label:"Monthly",     icon:"M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" },
     { id:"trends",    label:"Trends",      icon:"M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" },
-    { id:"leave",     label:"Leaves",      icon:"M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" },
+    { id:"leave",     label:"TimeAways",      icon:"M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" },
     { id:"timesheet", label:"Timesheets",  icon:"M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" },
     { id:"assign",    label:"Assign",      icon:"M12 4v16m8-8H4" },
-    { id:"reports",   label:"Reports",     icon:"M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" },
+    { id:"reports",   label:"SignalReports",     icon:"M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" },
   ];
 
   // ── State ──────────────────────────────────────────────────────────────────
   const [activeTab,    setActiveTab]    = useState("dashboard");
   const [stats,        setStats]        = useState({});
-  const [employees,    setEmployees]    = useState([]);
+  const [employees,    setPersons]    = useState([]);
   const [timesheets,   setTimesheets]   = useState([]);
   const [loading,      setLoading]      = useState({ stats:false, emp:false, ts:false, monthly:false });
   const [searchQ,      setSearchQ]      = useState("");
@@ -2061,19 +2061,19 @@ export default function AdminAttendance() {
   const [monthlyDept, setMonthlyDept] = useState(null);
   const [monthlyView, setMonthlyView] = useState("all");
   const [selEmpId,    setSelEmpId]    = useState("");
-  const [payrollData, setPayrollData] = useState(null);
+  const [payrollData, setPayoutsData] = useState(null);
   const [empSearch,   setEmpSearch]   = useState("");
   const [showEmpDrop, setShowEmpDrop] = useState(false);
   const [empSearchMode, setEmpSearchMode] = useState("name"); // "name" | "id"
   const [dropPos,     setDropPos]     = useState({ top:0, left:0, width:280 });
-  const [allEmployees, setAllEmployees] = useState([]);
+  const [allPersons, setAllPersons] = useState([]);
   const empInputRef = useRef(null);
 
   // Modals
   const [assignModal, setAssignModal] = useState(null);
   const [assignForm,  setAssignForm]  = useState({ status:"Present", startDate:today(), endDate:today(), reason:"" });
-  const [leaveModal,  setLeaveModal]  = useState(null);
-  const [leaveForm,   setLeaveForm]   = useState({ startDate:today(), endDate:today() });
+  const [leaveModal,  setTimeAwayModal]  = useState(null);
+  const [leaveForm,   setTimeAwayForm]   = useState({ startDate:today(), endDate:today() });
   const [saving,      setSaving]      = useState(false);
 
   // ── Loaders ────────────────────────────────────────────────────────────────
@@ -2089,14 +2089,14 @@ export default function AdminAttendance() {
     } catch { setStats({}); }
   }), []);
 
-  const fetchEmployees = useCallback(() => load("emp", async () => {
+  const fetchPersons = useCallback(() => load("emp", async () => {
     try {
       const r = await api.get("/api/admin/attendance/live-employees");
       const raw = r.data?.data ?? r.data ?? [];
       const list = Array.isArray(raw) ? raw
                  : Array.isArray(raw.employees) ? raw.employees : [];
 
-      setEmployees(list.map(e => ({
+      setPersons(list.map(e => ({
         id:           e.id         ?? e.userId       ?? "",
         employeeId:   e.employeeCode || "",
         name:         e.name       ?? e.employeeName ?? e.fullName     ?? "",
@@ -2115,7 +2115,7 @@ export default function AdminAttendance() {
         breakTime:   e.breakDuration ?? e.breaks ?? null,
         workSecs:    e.totalSeconds  ?? e.workSeconds ?? 0,
       })));
-    } catch { setEmployees([]); }
+    } catch { setPersons([]); }
   }), []);
 
   const fetchTimesheets = useCallback(() => load("ts", async () => {
@@ -2147,31 +2147,31 @@ export default function AdminAttendance() {
     } catch { setMonthlyDept(null); }
   }), [monthYear]);
 
-  const fetchPayroll = useCallback(async (empId) => {
+  const fetchPayouts = useCallback(async (empId) => {
     if (!empId) return;
     const { tenantCode } = tenantCtx();
     try {
       const r = await api.get(`/api/admin/attendance/payroll/employee/${empId}`, {
         params: { year:monthYear.year, month:monthYear.month, tenantCode },
       });
-      setPayrollData(r.data?.data ?? r.data ?? {});
-    } catch { setPayrollData(null); }
+      setPayoutsData(r.data?.data ?? r.data ?? {});
+    } catch { setPayoutsData(null); }
   }, [monthYear]);
 
   // Initial load + auto-refresh every 30s
   useEffect(() => {
-    fetchStats(); fetchEmployees(); fetchTimesheets();
-    const id = setInterval(() => { fetchStats(); fetchEmployees(); }, 30000);
+    fetchStats(); fetchPersons(); fetchTimesheets();
+    const id = setInterval(() => { fetchStats(); fetchPersons(); }, 30000);
     return () => clearInterval(id);
   }, []);
 
-  // Load all tenant employees for Single Employee search dropdown
+  // Load all tenant employees for Single Person search dropdown
   useEffect(() => {
     api.get("/api/users/tenant/employees")
       .then(res => {
         const raw = res.data?.data ?? res.data;
         const list = Array.isArray(raw) ? raw : [];
-        setAllEmployees(list.map(e => ({
+        setAllPersons(list.map(e => ({
           id:         String(e.id ?? ""),
           employeeId: e.employeeId ?? e.employeeCode ?? "",
           name:       e.fullName   ?? e.name ?? e.employeeName ?? "",
@@ -2184,7 +2184,7 @@ export default function AdminAttendance() {
           .then(res => {
             const raw = res.data?.data ?? res.data;
             const list = Array.isArray(raw) ? raw : [];
-            setAllEmployees(list
+            setAllPersons(list
               .filter(e => (e.role || "").toUpperCase() !== "ADMIN")
               .map(e => ({
                 id:         String(e.id ?? ""),
@@ -2201,7 +2201,7 @@ export default function AdminAttendance() {
     if (activeTab === "monthly") {
       if (monthlyView === "all")      fetchMonthlyAll();
       if (monthlyView === "dept")     fetchMonthlyDept();
-      if (monthlyView === "employee" && selEmpId) fetchPayroll(selEmpId);
+      if (monthlyView === "employee" && selEmpId) fetchPayouts(selEmpId);
     }
   }, [activeTab, monthlyView, monthYear, selEmpId]);
 
@@ -2220,11 +2220,11 @@ export default function AdminAttendance() {
   );
 
   const liveStats = useMemo(() => ({
-    total:   stats.totalEmployees ?? employees.length,
+    total:   stats.totalPersons ?? employees.length,
     present: stats.presentToday   ?? employees.filter(e => /working|present|completed/i.test(e.status)).length,
     absent:  stats.absentToday    ?? employees.filter(e => /absent/i.test(e.status)).length,
     onBreak: stats.onBreak        ?? employees.filter(e => /break/i.test(e.status)).length,
-    onLeave: stats.onLeave        ?? employees.filter(e => /leave/i.test(e.status)).length,
+    onTimeAway: stats.onTimeAway        ?? employees.filter(e => /leave/i.test(e.status)).length,
     late:    stats.lateToday      ?? employees.filter(e => /late/i.test(e.status)).length,
     pending: stats.pendingRequests ?? 0,
     working: stats.workingNow     ?? employees.filter(e => /working/i.test(e.status)).length,
@@ -2246,22 +2246,22 @@ export default function AdminAttendance() {
           reason:    assignForm.reason || "Marked manually by admin",
         }
       );
-      alert("Attendance assigned successfully!");
-      setAssignModal(null); fetchEmployees(); fetchStats();
+      alert("Presence assigned successfully!");
+      setAssignModal(null); fetchPersons(); fetchStats();
     } catch { alert("Failed to assign attendance"); }
     setSaving(false);
   };
 
-  const handleLeave = async () => {
+  const handleTimeAway = async () => {
     if (!leaveModal) return;
     setSaving(true);
     try {
       await api.post(
         `/api/admin/attendance/apply-manual-attendance/${leaveModal.id}`,
-        { leaveType:"LEAVE", startDate:leaveForm.startDate, endDate:leaveForm.endDate||leaveForm.startDate, reason:"Leave assigned by admin" }
+        { leaveType:"LEAVE", startDate:leaveForm.startDate, endDate:leaveForm.endDate||leaveForm.startDate, reason:"TimeAway assigned by admin" }
       );
-      alert("Leave assigned!");
-      setLeaveModal(null); fetchEmployees(); fetchStats();
+      alert("TimeAway assigned!");
+      setTimeAwayModal(null); fetchPersons(); fetchStats();
     } catch { alert("Failed"); }
     setSaving(false);
   };
@@ -2272,7 +2272,7 @@ export default function AdminAttendance() {
   */
   const exportLiveCSV = () => {
     const rows = filteredEmps.map(e => ({
-      "Employee ID":   e.employeeId || e.id,
+      "Person ID":   e.employeeId || e.id,
       "Name":          e.name,
       "Email":         e.email,
       "Department":    e.department,
@@ -2296,7 +2296,7 @@ export default function AdminAttendance() {
       "Work Duration": fmtDuration(e.hours),
       "Break Time":    fmtDuration(e.breakTime),
     }));
-    downloadPDF("Live Attendance Report", rows, `live-attendance-${today()}.html`);
+    downloadPDF("Live Presence Report", rows, `live-attendance-${today()}.html`);
   };
 
   const exportMonthlyCSV = () => {
@@ -2307,7 +2307,7 @@ export default function AdminAttendance() {
       "Full Days":    e.fullDays,
       "Half Days":    e.halfDays,
       "Absent":       e.absentDays,
-      "Leave":        e.leaveDays,
+      "TimeAway":        e.leaveDays,
       "Work Hours":   e.totalWorkHours,
       "Effective Days": e.effectiveDays,
     }));
@@ -2322,18 +2322,18 @@ export default function AdminAttendance() {
       "Full Days":    e.fullDays     ?? 0,
       "Half Days":    e.halfDays     ?? 0,
       "Absent":       e.absentDays   ?? 0,
-      "Leave":        e.leaveDays    ?? 0,
+      "TimeAway":        e.leaveDays    ?? 0,
       "Work Hours":   e.totalWorkHours ?? 0,
       "Eff. Days":    e.effectiveDays  ?? 0,
     }));
     downloadPDF(
-      `Monthly Attendance — ${pad(monthYear.month)}/${monthYear.year}`,
+      `Monthly Presence — ${pad(monthYear.month)}/${monthYear.year}`,
       rows,
       `monthly-attendance-${monthYear.year}-${pad(monthYear.month)}.html`
     );
   };
 
-  const exportPayrollCSV = () => {
+  const exportPayoutsCSV = () => {
     const records = payrollData?.dailyRecords ?? payrollData?.summary?.dailyRecords ?? [];
     if (!records.length) return;
     const rows = records.map(r => ({
@@ -2351,16 +2351,16 @@ export default function AdminAttendance() {
   // ═══════════════════════════════════════════════════════════════════════════
   //  TAB: DASHBOARD
   // ═══════════════════════════════════════════════════════════════════════════
-  const renderDashboard = () => {
+  const renderControlRoom = () => {
     const statCards = [
-      { label:"Total Employees",  val:liveStats.total,   color:C.coral,  bg:"rgba(255,107,53,.1)",  icon:"M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" },
-      { label:"Present Today",    val:liveStats.present, color:C.teal,   bg:"rgba(0,194,168,.1)",   icon:"M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z", trend:[62,70,65,78,82,75,presentPct] },
+      { label:"Total People",  val:liveStats.total,   color:C.coral,  bg:"rgba(139,92,246,.1)",  icon:"M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" },
+      { label:"Present Today",    val:liveStats.present, color:C.teal,   bg:"rgba(6,182,212,.1)",   icon:"M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z", trend:[62,70,65,78,82,75,presentPct] },
       { label:"Absent Today",     val:liveStats.absent,  color:C.red,    bg:"rgba(239,68,68,.1)",   icon:"M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" },
-      { label:"On Leave",         val:liveStats.onLeave, color:C.amber,  bg:"rgba(245,158,11,.1)",  icon:"M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" },
+      { label:"On TimeAway",         val:liveStats.onTimeAway, color:C.amber,  bg:"rgba(245,158,11,.1)",  icon:"M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" },
       { label:"On Break",         val:liveStats.onBreak, color:C.indigo, bg:"rgba(99,102,241,.1)",  icon:"M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z" },
       { label:"Late Arrivals",    val:liveStats.late,    color:C.purple, bg:"rgba(139,92,246,.1)",  icon:"M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" },
-      { label:"Working Now",      val:liveStats.working, color:C.teal,   bg:"rgba(0,194,168,.1)",   icon:"M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" },
-      { label:"Pending Requests", val:liveStats.pending, color:C.coral,  bg:"rgba(255,107,53,.1)",  icon:"M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" },
+      { label:"Working Now",      val:liveStats.working, color:C.teal,   bg:"rgba(6,182,212,.1)",   icon:"M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" },
+      { label:"Pending Requests", val:liveStats.pending, color:C.coral,  bg:"rgba(139,92,246,.1)",  icon:"M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" },
     ];
 
     // Department breakdown from live employees
@@ -2374,7 +2374,7 @@ export default function AdminAttendance() {
     const statusDist = [
       { label:"Present", value:liveStats.present, color:C.teal   },
       { label:"Absent",  value:liveStats.absent,  color:C.red    },
-      { label:"Leave",   value:liveStats.onLeave, color:C.amber  },
+      { label:"TimeAway",   value:liveStats.onTimeAway, color:C.amber  },
       { label:"Break",   value:liveStats.onBreak, color:C.indigo },
     ];
 
@@ -2404,7 +2404,7 @@ export default function AdminAttendance() {
               {s.label === "Present Today" && (
                 <div style={{ marginTop:8 }}>
                   <ProgressBar pct={presentPct} color={s.color}/>
-                  <span style={{ fontSize:10, color:C.muted, fontWeight:600 }}>{presentPct}% attendance rate</span>
+                  <span style={{ fontSize:10, color:C.muted, fontWeight:600 }}>{presentPct}% presence rate</span>
                 </div>
               )}
             </div>
@@ -2450,9 +2450,9 @@ export default function AdminAttendance() {
             })}
           </div>
 
-          {/* Attendance rate gauge */}
+          {/* Presence rate gauge */}
           <div className="main-card fade-up2" style={{ padding:22 }}>
-            <div style={{ fontSize:13, fontWeight:800, color:C.navy, marginBottom:14 }}>Attendance Rate</div>
+            <div style={{ fontSize:13, fontWeight:800, color:C.navy, marginBottom:14 }}>Presence Rate</div>
             <div style={{ display:"flex", justifyContent:"center", marginBottom:14 }}>
               <svg width={100} height={100} viewBox="0 0 100 100">
                 <circle cx={50} cy={50} r={40} fill="none" stroke={C.border} strokeWidth={10}/>
@@ -2467,7 +2467,7 @@ export default function AdminAttendance() {
             {[
               { label:"Present",  pct:presentPct, color:C.teal,  val:liveStats.present  },
               { label:"Absent",   pct:liveStats.total?Math.round(liveStats.absent/liveStats.total*100):0,   color:C.red,   val:liveStats.absent  },
-              { label:"On Leave", pct:liveStats.total?Math.round(liveStats.onLeave/liveStats.total*100):0,  color:C.amber, val:liveStats.onLeave },
+              { label:"On TimeAway", pct:liveStats.total?Math.round(liveStats.onTimeAway/liveStats.total*100):0,  color:C.amber, val:liveStats.onTimeAway },
             ].map((r,i) => (
               <div key={i} style={{ marginBottom:10 }}>
                 <div style={{ display:"flex", justifyContent:"space-between", fontSize:11, color:C.muted, fontWeight:600, marginBottom:4 }}>
@@ -2498,7 +2498,7 @@ export default function AdminAttendance() {
                     {i+1}
                   </div>
                   <div style={{ width:32, height:32, borderRadius:10,
-                    background:`linear-gradient(135deg,${C.coral},#FF5722)`,
+                    background:`linear-gradient(135deg,${C.coral},#06B6D4)`,
                     display:"flex", alignItems:"center", justifyContent:"center",
                     color:"#fff", fontSize:13, fontWeight:900, flexShrink:0 }}>
                     {String(emp.name||"?")[0].toUpperCase()}
@@ -2520,13 +2520,13 @@ export default function AdminAttendance() {
           {/* Quick live activity strip */}
           <div className="main-card fade-up3">
             <div style={{ padding:"14px 22px", borderBottom:`1.5px solid ${C.border}`, display:"flex", alignItems:"center", justifyContent:"space-between" }}>
-              <span style={{ fontSize:13, fontWeight:800, color:C.navy }}>Live Employee Activity</span>
-              <button className="btn-coral" onClick={() => { fetchStats(); fetchEmployees(); }}>↻ Refresh</button>
+              <span style={{ fontSize:13, fontWeight:800, color:C.navy }}>Live Person Activity</span>
+              <button className="btn-coral" onClick={() => { fetchStats(); fetchPersons(); }}>↻ Refresh</button>
             </div>
             <div style={{ overflowX:"auto" }}>
               <table className="adm-table">
                 <thead><tr>
-                  <th>Employee</th><th>Department</th><th>Status</th>
+                  <th>Person</th><th>Department</th><th>Status</th>
                   <th>Clock In</th><th>Clock Out</th><th>Duration</th><th>Actions</th>
                 </tr></thead>
                 <tbody>
@@ -2537,7 +2537,7 @@ export default function AdminAttendance() {
                       <td>
                         <div style={{ display:"flex", alignItems:"center", gap:10 }}>
                           <div style={{ width:32, height:32, borderRadius:9,
-                            background:`linear-gradient(135deg,${C.coral},#FF5722)`,
+                            background:`linear-gradient(135deg,${C.coral},#06B6D4)`,
                             display:"flex", alignItems:"center", justifyContent:"center",
                             color:"#fff", fontSize:12, fontWeight:900, flexShrink:0 }}>
                             {String(e.name||"?")[0].toUpperCase()}
@@ -2566,8 +2566,8 @@ export default function AdminAttendance() {
                           <button style={{ padding:"5px 11px", fontSize:11,
                             background:`linear-gradient(135deg,${C.amber},#fbbf24)`, color:"#fff",
                             border:"none", borderRadius:8, cursor:"pointer", fontWeight:800 }}
-                            onClick={() => { setLeaveModal(e); setLeaveForm({ startDate:today(), endDate:today() }); }}>
-                            Leave
+                            onClick={() => { setTimeAwayModal(e); setTimeAwayForm({ startDate:today(), endDate:today() }); }}>
+                            TimeAway
                           </button>
                         </div>
                       </td>
@@ -2591,9 +2591,9 @@ export default function AdminAttendance() {
       <div style={{ padding:"16px 22px", borderBottom:`1.5px solid ${C.border}` }}>
         <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", flexWrap:"wrap", gap:12, marginBottom:14 }}>
           <div style={{ display:"flex", alignItems:"center", gap:10 }}>
-            <h2 style={{ fontSize:15, fontWeight:800, color:C.navy, fontFamily:"Sora,sans-serif", margin:0 }}>Live Employee Tracking</h2>
+            <h2 style={{ fontSize:15, fontWeight:800, color:C.navy, fontFamily:"Sora,sans-serif", margin:0 }}>Live Person Tracking</h2>
             <div style={{ display:"flex", alignItems:"center", gap:5,
-              background:"rgba(0,194,168,.1)", border:`1px solid rgba(0,194,168,.25)`,
+              background:"rgba(6,182,212,.1)", border:`1px solid rgba(6,182,212,.25)`,
               borderRadius:999, padding:"3px 10px" }}>
               <span style={{ width:6, height:6, borderRadius:"50%", background:C.teal, display:"block", animation:"pulse 2s infinite" }}/>
               <span style={{ fontSize:10, fontWeight:800, color:C.teal }}>Live</span>
@@ -2606,7 +2606,7 @@ export default function AdminAttendance() {
             <button className="btn-ghost" onClick={exportLivePDF}>
               <Ic d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" size={13}/> PDF
             </button>
-            <button className="btn-coral" onClick={() => { fetchEmployees(); fetchStats(); }}>↻ Refresh</button>
+            <button className="btn-coral" onClick={() => { fetchPersons(); fetchStats(); }}>↻ Refresh</button>
           </div>
         </div>
 
@@ -2623,7 +2623,7 @@ export default function AdminAttendance() {
             {departments.map(d => <option key={d}>{d}</option>)}
           </select>
           <select value={statusFilter} onChange={e => setStatusFilter(e.target.value)} className="adm-select">
-            {["All","Working","Absent","On Leave","Late","On Break"].map(s => <option key={s}>{s}</option>)}
+            {["All","Working","Absent","On TimeAway","Late","On Break"].map(s => <option key={s}>{s}</option>)}
           </select>
           <button className="btn-ghost" onClick={() => { setSearchQ(""); setDeptFilter("All"); setStatusFilter("All"); }}>Clear</button>
         </div>
@@ -2632,7 +2632,7 @@ export default function AdminAttendance() {
       <div style={{ overflowX:"auto" }}>
         <table className="adm-table">
           <thead><tr>
-            <th>Employee</th>
+            <th>Person</th>
             <th>Department</th>
             <th>Status</th>
             <th>Clock In</th>
@@ -2657,7 +2657,7 @@ export default function AdminAttendance() {
                 <td>
                   <div style={{ display:"flex", alignItems:"center", gap:10 }}>
                     <div style={{ width:34, height:34, borderRadius:10,
-                      background:`linear-gradient(135deg,${C.coral},#FF5722)`,
+                      background:`linear-gradient(135deg,${C.coral},#06B6D4)`,
                       display:"flex", alignItems:"center", justifyContent:"center",
                       color:"#fff", fontSize:13, fontWeight:900, flexShrink:0 }}>
                       {String(emp.name||"?")[0].toUpperCase()}
@@ -2681,7 +2681,7 @@ export default function AdminAttendance() {
                 <td>
                   {emp.punchOut ? (
                     <span style={{ fontSize:12, fontWeight:700, color:C.teal,
-                      background:"rgba(0,194,168,.08)", padding:"3px 9px", borderRadius:8 }}>
+                      background:"rgba(6,182,212,.08)", padding:"3px 9px", borderRadius:8 }}>
                       {fmtTime(emp.punchOut)}
                     </span>
                   ) : (
@@ -2710,8 +2710,8 @@ export default function AdminAttendance() {
                     <button style={{ padding:"5px 11px", fontSize:11,
                       background:`linear-gradient(135deg,${C.amber},#fbbf24)`, color:"#fff",
                       border:"none", borderRadius:8, cursor:"pointer", fontWeight:800 }}
-                      onClick={() => { setLeaveModal(emp); setLeaveForm({ startDate:today(), endDate:today() }); }}>
-                      Leave
+                      onClick={() => { setTimeAwayModal(emp); setTimeAwayForm({ startDate:today(), endDate:today() }); }}>
+                      TimeAway
                     </button>
                   </div>
                 </td>
@@ -2726,7 +2726,7 @@ export default function AdminAttendance() {
         display:"flex", justifyContent:"space-between", fontSize:11, color:C.muted, fontWeight:600, flexWrap:"wrap", gap:8 }}>
         <span>Showing <b style={{ color:C.navy }}>{filteredEmps.length}</b> of {employees.length} employees</span>
         <div style={{ display:"flex", gap:16 }}>
-          {[["Working",C.teal,"working"],["Break",C.indigo,"break"],["Absent",C.red,"absent"],["Leave",C.amber,"leave"]].map(([l,c,k]) => (
+          {[["Working",C.teal,"working"],["Break",C.indigo,"break"],["Absent",C.red,"absent"],["TimeAway",C.amber,"leave"]].map(([l,c,k]) => (
             <span key={k}>{l}: <b style={{ color:c }}>{filteredEmps.filter(e => e.status?.toLowerCase().includes(k)).length}</b></span>
           ))}
           <span>Clocked Out: <b style={{ color:C.teal }}>{filteredEmps.filter(e => !!e.punchOut).length}</b></span>
@@ -2764,7 +2764,7 @@ export default function AdminAttendance() {
             </div>
 
             <div style={{ display:"flex", gap:6 }}>
-              {[["all","All Employees"],["dept","By Department"],["employee","Single Employee"]].map(([id,label]) => (
+              {[["all","All Persons"],["dept","By Department"],["employee","Single Person"]].map(([id,label]) => (
                 <button key={id} className={`tab-pill ${monthlyView===id?"active":""}`}
                   onClick={() => setMonthlyView(id)}>{label}</button>
               ))}
@@ -2780,17 +2780,17 @@ export default function AdminAttendance() {
             </div>
           </div>
 
-          {/* Employee search for Single Employee view */}
+          {/* Person search for Single Person view */}
           {monthlyView === "employee" && (
             <div style={{ marginTop:12, display:"flex", gap:10, alignItems:"center", flexWrap:"wrap" }}>
 
               {/* Name / ID toggle */}
               <div style={{ display:"flex", background:"#F1F5F9", borderRadius:9, padding:3, gap:2, flexShrink:0 }}>
                 {[["name","By Name"],["id","By ID"]].map(([val,lbl]) => (
-                  <button key={val} onClick={() => { setEmpSearchMode(val); setEmpSearch(""); setSelEmpId(""); setPayrollData(null); }}
+                  <button key={val} onClick={() => { setEmpSearchMode(val); setEmpSearch(""); setSelEmpId(""); setPayoutsData(null); }}
                     style={{ padding:"5px 12px", borderRadius:7, border:"none", fontSize:11, fontWeight:700, cursor:"pointer",
                       fontFamily:"'DM Sans',sans-serif",
-                      background: empSearchMode===val ? `linear-gradient(135deg,${C.coral},#ff8c5a)` : "transparent",
+                      background: empSearchMode===val ? `linear-gradient(135deg,${C.coral},#FBBF24)` : "transparent",
                       color: empSearchMode===val ? "#fff" : "#64748b", transition:"all .15s" }}>
                     {lbl}
                   </button>
@@ -2809,7 +2809,7 @@ export default function AdminAttendance() {
                     onChange={e => {
                       setEmpSearch(e.target.value);
                       setSelEmpId("");
-                      setPayrollData(null);
+                      setPayoutsData(null);
                       if (e.target.value.length > 0) {
                         const rect = empInputRef.current?.getBoundingClientRect();
                         if (rect) setDropPos({ top: rect.bottom + 4, left: rect.left, width: rect.width });
@@ -2829,13 +2829,13 @@ export default function AdminAttendance() {
                   />
                   {empSearch && (
                     <button style={{ border:"none", background:"none", cursor:"pointer", color:C.muted, fontSize:14, lineHeight:1 }}
-                      onMouseDown={() => { setEmpSearch(""); setSelEmpId(""); setPayrollData(null); setShowEmpDrop(false); }}>✕</button>
+                      onMouseDown={() => { setEmpSearch(""); setSelEmpId(""); setPayoutsData(null); setShowEmpDrop(false); }}>✕</button>
                   )}
                 </div>
 
                 {/* Dropdown rendered via portal to escape overflow:hidden and transform stacking context */}
                 {showEmpDrop && empSearch.length > 0 && ReactDOM.createPortal((() => {
-                  const searchPool = allEmployees.length > 0 ? allEmployees : employees;
+                  const searchPool = allPersons.length > 0 ? allPersons : employees;
                   const matchedEmps = searchPool.filter(e =>
                     empSearchMode === "name"
                       ? (e.name || "").toLowerCase().includes(empSearch.toLowerCase())
@@ -2870,7 +2870,7 @@ export default function AdminAttendance() {
                           onMouseEnter={e => e.currentTarget.style.background = C.bg}
                           onMouseLeave={e => e.currentTarget.style.background = "#fff"}>
                           <div style={{ width:32, height:32, borderRadius:8, flexShrink:0,
-                            background:`linear-gradient(135deg,${C.coral},#FF5722)`,
+                            background:`linear-gradient(135deg,${C.coral},#06B6D4)`,
                             display:"flex", alignItems:"center", justifyContent:"center",
                             color:"#fff", fontSize:13, fontWeight:900 }}>
                             {String(emp.name||"?")[0].toUpperCase()}
@@ -2889,12 +2889,12 @@ export default function AdminAttendance() {
                 })(), document.body)}
               </div>
 
-              <button className="btn-coral" disabled={!selEmpId} onClick={() => { if (selEmpId) fetchPayroll(selEmpId); }}>
+              <button className="btn-coral" disabled={!selEmpId} onClick={() => { if (selEmpId) fetchPayouts(selEmpId); }}>
                 Fetch
               </button>
               {payrollData && (
-                <button className="btn-ghost" onClick={exportPayrollCSV}>
-                  <Ic d="M12 10v6m0 0l-3-3m3 3l3-3" size={12}/> Payroll CSV
+                <button className="btn-ghost" onClick={exportPayoutsCSV}>
+                  <Ic d="M12 10v6m0 0l-3-3m3 3l3-3" size={12}/> Payouts CSV
                 </button>
               )}
             </div>
@@ -2905,7 +2905,7 @@ export default function AdminAttendance() {
         {monthlyView === "all" && (
           <div className="main-card fade-up2">
             <div style={{ padding:"14px 22px", borderBottom:`1.5px solid ${C.border}`, display:"flex", alignItems:"center", justifyContent:"space-between" }}>
-              <span style={{ fontSize:13, fontWeight:800, color:C.navy }}>Monthly Attendance — All Employees</span>
+              <span style={{ fontSize:13, fontWeight:800, color:C.navy }}>Monthly Presence — All Persons</span>
               <span style={{ fontSize:11, color:C.muted }}>{monthlyAll.length} employees</span>
             </div>
             {loading.monthly ? (
@@ -2914,9 +2914,9 @@ export default function AdminAttendance() {
               <div style={{ overflowX:"auto" }}>
                 <table className="adm-table">
                   <thead><tr>
-                    <th>Employee</th><th>Dept</th>
+                    <th>Person</th><th>Dept</th>
                     <th>Full Days</th><th>Half Days</th><th>Partial</th>
-                    <th>Absent</th><th>Leave</th><th>Work Hours</th><th>Eff. Days</th>
+                    <th>Absent</th><th>TimeAway</th><th>Work Hours</th><th>Eff. Days</th>
                   </tr></thead>
                   <tbody>
                     {monthlyAll.length === 0 ? (
@@ -2939,7 +2939,7 @@ export default function AdminAttendance() {
                           {typeof e.totalWorkHours === "number" ? e.totalWorkHours.toFixed(1) : (e.totalWorkHours ?? 0)}h
                         </td>
                         <td>
-                          <span style={{ background:"rgba(0,194,168,.1)", color:C.teal, fontWeight:900, fontSize:12, padding:"3px 10px", borderRadius:8 }}>
+                          <span style={{ background:"rgba(6,182,212,.1)", color:C.teal, fontWeight:900, fontSize:12, padding:"3px 10px", borderRadius:8 }}>
                             {typeof e.effectiveDays === "number" ? e.effectiveDays.toFixed(2) : (e.effectiveDays ?? 0)}
                           </span>
                         </td>
@@ -2962,7 +2962,7 @@ export default function AdminAttendance() {
                 <div style={{ padding:"14px 22px", borderBottom:`1.5px solid ${C.border}`, display:"flex", alignItems:"center", justifyContent:"space-between", flexWrap:"wrap", gap:10 }}>
                   <div style={{ display:"flex", alignItems:"center", gap:10 }}>
                     <span style={{ fontSize:14, fontWeight:800, color:C.navy, fontFamily:"Sora,sans-serif" }}>{dept.department}</span>
-                    <span className="dept-chip">{dept.totalEmployees} employees</span>
+                    <span className="dept-chip">{dept.totalPersons} employees</span>
                   </div>
                   <div style={{ display:"flex", alignItems:"center", gap:14, flexWrap:"wrap" }}>
                     {[["Full",dept.deptFullDays,C.teal],["Half",dept.deptHalfDays,C.amber],["Absent",dept.deptAbsentDays,C.red],["Hours",(dept.deptTotalWorkHours??0)+"h",C.coral]].map(([l,v,c]) => (
@@ -2972,9 +2972,9 @@ export default function AdminAttendance() {
                       <button className="btn-ghost" style={{ padding:"5px 11px", fontSize:11 }}
                         onClick={() => {
                           const rows = (dept.employees||[]).map(emp => ({
-                            "Employee": emp.employeeName||`#${emp.employeeId}`, "Designation": emp.designation||"",
+                            "Person": emp.employeeName||`#${emp.employeeId}`, "Designation": emp.designation||"",
                             "Department": dept.department, "Full Days": emp.fullDays??0, "Half Days": emp.halfDays??0,
-                            "Absent Days": emp.absentDays??0, "Leave Days": emp.leaveDays??0,
+                            "Absent Days": emp.absentDays??0, "TimeAway Days": emp.leaveDays??0,
                             "Work Hours": (emp.totalWorkHours??0)+"h", "Effective Days": emp.effectiveDays??0,
                           }));
                           downloadCSV(rows, `attendance-${dept.department.replace(/\s+/g,"-")}-${monthYear.year}-${pad(monthYear.month)}.csv`);
@@ -2984,12 +2984,12 @@ export default function AdminAttendance() {
                       <button className="btn-ghost" style={{ padding:"5px 11px", fontSize:11 }}
                         onClick={() => {
                           const rows = (dept.employees||[]).map(emp => ({
-                            "Employee": emp.employeeName||`#${emp.employeeId}`, "Designation": emp.designation||"",
+                            "Person": emp.employeeName||`#${emp.employeeId}`, "Designation": emp.designation||"",
                             "Full Days": emp.fullDays??0, "Half Days": emp.halfDays??0,
-                            "Absent Days": emp.absentDays??0, "Leave Days": emp.leaveDays??0,
+                            "Absent Days": emp.absentDays??0, "TimeAway Days": emp.leaveDays??0,
                             "Work Hours": (emp.totalWorkHours??0)+"h", "Effective Days": emp.effectiveDays??0,
                           }));
-                          downloadPDF(`${dept.department} — Monthly Attendance`, rows,
+                          downloadPDF(`${dept.department} — Monthly Presence`, rows,
                             `attendance-${dept.department.replace(/\s+/g,"-")}-${monthYear.year}-${pad(monthYear.month)}.html`);
                         }}>
                         <Ic d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" size={11}/> PDF
@@ -3000,7 +3000,7 @@ export default function AdminAttendance() {
                 <div style={{ overflowX:"auto" }}>
                   <table className="adm-table">
                     <thead><tr>
-                      <th>Employee</th><th>Full</th><th>Half</th><th>Absent</th><th>Leave</th><th>Hours</th><th>Eff.</th>
+                      <th>Person</th><th>Full</th><th>Half</th><th>Absent</th><th>TimeAway</th><th>Hours</th><th>Eff.</th>
                     </tr></thead>
                     <tbody>
                       {(dept.employees||[]).map((e,j) => (
@@ -3014,7 +3014,7 @@ export default function AdminAttendance() {
                           <td><b style={{ color:C.red    }}>{e.absentDays ??0}</b></td>
                           <td><b style={{ color:C.indigo }}>{e.leaveDays  ??0}</b></td>
                           <td style={{ fontWeight:800 }}>{e.totalWorkHours??0}h</td>
-                          <td><span style={{ background:"rgba(0,194,168,.1)", color:C.teal, fontWeight:900, fontSize:12, padding:"2px 8px", borderRadius:6 }}>{e.effectiveDays??0}</span></td>
+                          <td><span style={{ background:"rgba(6,182,212,.1)", color:C.teal, fontWeight:900, fontSize:12, padding:"2px 8px", borderRadius:6 }}>{e.effectiveDays??0}</span></td>
                         </tr>
                       ))}
                     </tbody>
@@ -3037,35 +3037,35 @@ export default function AdminAttendance() {
             <div className="main-card" style={{ padding:48, textAlign:"center" }}>
               <div style={{ fontSize:32, marginBottom:12 }}>🔍</div>
               <div style={{ fontSize:14, fontWeight:700, color:C.navy }}>Search for an employee</div>
-              <div style={{ fontSize:12, color:C.muted, marginTop:4 }}>Type a name or ID above to fetch their monthly attendance</div>
+              <div style={{ fontSize:12, color:C.muted, marginTop:4 }}>Type a name or ID above to fetch their monthly presence</div>
             </div>
           ) : !payrollData ? (
             <div className="main-card" style={{ padding:48, textAlign:"center" }}>
               <div style={{ fontSize:32, marginBottom:12 }}>📭</div>
               <div style={{ fontSize:14, fontWeight:700, color:C.navy }}>No data found</div>
-              <div style={{ fontSize:12, color:C.muted, marginTop:4 }}>No attendance records for this employee in the selected month</div>
+              <div style={{ fontSize:12, color:C.muted, marginTop:4 }}>No presence records for this employee in the selected month</div>
             </div>
           ) : (
             <div style={{ display:"flex", flexDirection:"column", gap:14 }}>
-              {/* Employee header */}
+              {/* Person header */}
               <div className="main-card fade-up" style={{ padding:"18px 24px", background:`linear-gradient(135deg,${C.navy},#1a3352)` }}>
                 <div style={{ display:"flex", alignItems:"center", gap:16 }}>
                   <div style={{ width:48, height:48, borderRadius:14,
-                    background:`linear-gradient(135deg,${C.coral},#FF5722)`,
+                    background:`linear-gradient(135deg,${C.coral},#06B6D4)`,
                     display:"flex", alignItems:"center", justifyContent:"center",
                     color:"#fff", fontSize:20, fontWeight:900 }}>
                     {String(payrollData.employeeName||empSearch||"?")[0].toUpperCase()}
                   </div>
                   <div>
                     <div style={{ fontFamily:"Sora,sans-serif", fontSize:16, fontWeight:900, color:"#fff" }}>
-                      {payrollData.employeeName || `Employee #${selEmpId}`}
+                      {payrollData.employeeName || `Person #${selEmpId}`}
                     </div>
                     <div style={{ fontSize:12, color:"rgba(255,255,255,.5)", marginTop:2 }}>
                       {payrollData.monthName} {payrollData.year} · {payrollData.workingDays||0} working days
                     </div>
                   </div>
                   <div style={{ marginLeft:"auto", display:"flex", gap:8 }}>
-                    <button className="btn-ghost" onClick={exportPayrollCSV}
+                    <button className="btn-ghost" onClick={exportPayoutsCSV}
                       style={{ background:"rgba(255,255,255,.1)", borderColor:"rgba(255,255,255,.2)", color:"#fff" }}>
                       <Ic d="M12 10v6m0 0l-3-3m3 3l3-3" size={12} color="#fff"/> CSV
                     </button>
@@ -3080,7 +3080,7 @@ export default function AdminAttendance() {
                   { label:"Half Days",    val:payrollData.halfDays    ?? payrollData.summary?.halfDays    ?? 0, color:C.amber  },
                   { label:"Partial Days", val:payrollData.partialDays ?? payrollData.summary?.partialDays ?? 0, color:C.purple },
                   { label:"Absent",       val:payrollData.absentDays  ?? payrollData.summary?.absentDays  ?? 0, color:C.red    },
-                  { label:"Leave Days",   val:payrollData.leaveDays   ?? payrollData.summary?.leaveDays   ?? 0, color:C.indigo },
+                  { label:"TimeAway Days",   val:payrollData.leaveDays   ?? payrollData.summary?.leaveDays   ?? 0, color:C.indigo },
                   { label:"Work Hours",   val:`${(payrollData.totalWorkHours ?? payrollData.summary?.totalWorkHours ?? 0).toFixed?.(1) ?? 0}h`, color:C.coral },
                   { label:"Eff. Days",    val:(payrollData.effectiveDays ?? payrollData.summary?.effectiveDays ?? 0).toFixed?.(2) ?? 0, color:C.teal },
                 ].map((s,i) => (
@@ -3118,7 +3118,7 @@ export default function AdminAttendance() {
                           <td>
                             {r.endTime ? (
                               <span style={{ fontSize:12, fontWeight:700, color:C.teal,
-                                background:"rgba(0,194,168,.08)", padding:"2px 8px", borderRadius:6 }}>
+                                background:"rgba(6,182,212,.08)", padding:"2px 8px", borderRadius:6 }}>
                                 {fmtTime(r.endTime)}
                               </span>
                             ) : <span style={{ fontSize:11, color:C.muted }}>—</span>}
@@ -3182,7 +3182,7 @@ export default function AdminAttendance() {
         <div className="main-card fade-up" style={{ padding:24 }}>
           <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:20 }}>
             <div>
-              <div style={{ fontSize:14, fontWeight:800, color:C.navy }}>Weekly Attendance Overview</div>
+              <div style={{ fontSize:14, fontWeight:800, color:C.navy }}>Weekly Presence Overview</div>
               <div style={{ fontSize:11, color:C.muted, marginTop:2 }}>Present vs Absent — this week</div>
             </div>
             <div style={{ display:"flex", gap:14 }}>
@@ -3244,19 +3244,19 @@ export default function AdminAttendance() {
           </div>
 
           <div className="main-card fade-up2" style={{ padding:22 }}>
-            <div style={{ fontSize:13, fontWeight:800, color:C.navy, marginBottom:16 }}>Today's Attendance Breakdown</div>
+            <div style={{ fontSize:13, fontWeight:800, color:C.navy, marginBottom:16 }}>Today's Presence Breakdown</div>
             <div style={{ display:"flex", justifyContent:"center", marginBottom:16 }}>
               <Donut segments={[
                 { label:"Present", value:liveStats.present, color:C.teal   },
                 { label:"Absent",  value:liveStats.absent,  color:C.red    },
-                { label:"Leave",   value:liveStats.onLeave, color:C.amber  },
+                { label:"TimeAway",   value:liveStats.onTimeAway, color:C.amber  },
                 { label:"Break",   value:liveStats.onBreak, color:C.indigo },
               ]} size={120} stroke={18} label={liveStats.total} sublabel="total"/>
             </div>
             {[
               { label:"Present",  val:liveStats.present,  color:C.teal,   pct:presentPct },
               { label:"Absent",   val:liveStats.absent,   color:C.red,    pct:liveStats.total?Math.round(liveStats.absent/liveStats.total*100):0 },
-              { label:"On Leave", val:liveStats.onLeave,  color:C.amber,  pct:liveStats.total?Math.round(liveStats.onLeave/liveStats.total*100):0 },
+              { label:"On TimeAway", val:liveStats.onTimeAway,  color:C.amber,  pct:liveStats.total?Math.round(liveStats.onTimeAway/liveStats.total*100):0 },
               { label:"On Break", val:liveStats.onBreak,  color:C.indigo, pct:liveStats.total?Math.round(liveStats.onBreak/liveStats.total*100):0 },
             ].map((r,i) => (
               <div key={i} style={{ display:"flex", alignItems:"center", gap:10, marginBottom:10 }}>
@@ -3300,7 +3300,7 @@ export default function AdminAttendance() {
       </div>
       <div style={{ overflowX:"auto" }}>
         <table className="adm-table">
-          <thead><tr><th>#ID</th><th>Employee</th><th>Tasks</th><th>Remarks</th><th>Submitted</th></tr></thead>
+          <thead><tr><th>#ID</th><th>Person</th><th>Tasks</th><th>Remarks</th><th>Submitted</th></tr></thead>
           <tbody>
             {loading.ts ? (
               <tr><td colSpan={5} style={{ padding:56, textAlign:"center", color:C.muted }}>Loading…</td></tr>
@@ -3330,8 +3330,8 @@ export default function AdminAttendance() {
   const renderAssign = () => (
     <div className="main-card fade-up" style={{ padding:22 }}>
       <div style={{ marginBottom:18 }}>
-        <h2 style={{ fontSize:15, fontWeight:800, color:C.navy, fontFamily:"Sora,sans-serif", margin:"0 0 4px" }}>Assign Attendance / Leave</h2>
-        <p style={{ fontSize:12, color:C.muted, margin:0 }}>Manually assign attendance or leave to any employee</p>
+        <h2 style={{ fontSize:15, fontWeight:800, color:C.navy, fontFamily:"Sora,sans-serif", margin:"0 0 4px" }}>Assign Presence / TimeAway</h2>
+        <p style={{ fontSize:12, color:C.muted, margin:0 }}>Manually assign presence or time away to any employee</p>
       </div>
       <div style={{ marginBottom:12, display:"flex", alignItems:"center", gap:7,
         background:C.bg, border:`1.5px solid ${C.border}`, borderRadius:10, padding:"8px 12px" }}>
@@ -3347,7 +3347,7 @@ export default function AdminAttendance() {
             onMouseLeave={e => e.currentTarget.style.background = C.bg}>
             <div style={{ display:"flex", alignItems:"center", gap:12 }}>
               <div style={{ width:36, height:36, borderRadius:10,
-                background:`linear-gradient(135deg,${C.coral},#FF5722)`,
+                background:`linear-gradient(135deg,${C.coral},#06B6D4)`,
                 display:"flex", alignItems:"center", justifyContent:"center",
                 color:"#fff", fontSize:14, fontWeight:900 }}>
                 {String(emp.name||"?")[0].toUpperCase()}
@@ -3360,13 +3360,13 @@ export default function AdminAttendance() {
             <div style={{ display:"flex", gap:8 }}>
               <button className="btn-coral" style={{ padding:"7px 14px", fontSize:11 }}
                 onClick={() => { setAssignModal(emp); setAssignForm({ status:"Present", startDate:today(), endDate:today(), reason:"" }); }}>
-                Attendance
+                Presence
               </button>
               <button style={{ padding:"7px 14px", fontSize:11,
                 background:`linear-gradient(135deg,${C.amber},#fbbf24)`, color:"#fff",
                 border:"none", borderRadius:10, cursor:"pointer", fontWeight:800 }}
-                onClick={() => { setLeaveModal(emp); setLeaveForm({ startDate:today(), endDate:today() }); }}>
-                Leave
+                onClick={() => { setTimeAwayModal(emp); setTimeAwayForm({ startDate:today(), endDate:today() }); }}>
+                TimeAway
               </button>
             </div>
           </div>
@@ -3378,7 +3378,7 @@ export default function AdminAttendance() {
   // ═══════════════════════════════════════════════════════════════════════════
   //  TAB: REPORTS
   // ═══════════════════════════════════════════════════════════════════════════
-  const renderReports = () => (
+  const renderSignalReports = () => (
     <div style={{ display:"flex", flexDirection:"column", gap:16 }}>
       {/* Status donut + dept bar */}
       <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:16 }}>
@@ -3388,11 +3388,11 @@ export default function AdminAttendance() {
             <Donut segments={[
               { label:"Present", value:liveStats.present, color:C.teal   },
               { label:"Absent",  value:liveStats.absent,  color:C.red    },
-              { label:"Leave",   value:liveStats.onLeave, color:C.amber  },
+              { label:"TimeAway",   value:liveStats.onTimeAway, color:C.amber  },
               { label:"Break",   value:liveStats.onBreak, color:C.indigo },
             ]} size={100} stroke={16} label={liveStats.total} sublabel="total"/>
             <div style={{ flex:1 }}>
-              {[["Present",liveStats.present,C.teal],["Absent",liveStats.absent,C.red],["Leave",liveStats.onLeave,C.amber],["Break",liveStats.onBreak,C.indigo]].map(([l,v,c]) => (
+              {[["Present",liveStats.present,C.teal],["Absent",liveStats.absent,C.red],["TimeAway",liveStats.onTimeAway,C.amber],["Break",liveStats.onBreak,C.indigo]].map(([l,v,c]) => (
                 <div key={l} style={{ marginBottom:10 }}>
                   <div style={{ display:"flex", justifyContent:"space-between", fontSize:11, color:C.muted, fontWeight:600, marginBottom:3 }}>
                     <span>{l}</span>
@@ -3407,18 +3407,18 @@ export default function AdminAttendance() {
 
         {/* Export panel */}
         <div className="main-card fade-up2" style={{ padding:22 }}>
-          <div style={{ fontSize:13, fontWeight:800, color:C.navy, marginBottom:16 }}>Export Reports</div>
+          <div style={{ fontSize:13, fontWeight:800, color:C.navy, marginBottom:16 }}>Export SignalReports</div>
           <div style={{ display:"flex", flexDirection:"column", gap:12 }}>
             {[
               {
-                title:"Live Attendance",
+                title:"Live Presence",
                 desc:"Current day — includes Clock In & Clock Out times",
                 onCSV: exportLiveCSV,
                 onPDF: exportLivePDF,
               },
               {
                 title:"Monthly Summary",
-                desc:"Full month attendance summary for all employees",
+                desc:"Full month presence summary for all employees",
                 onCSV: exportMonthlyCSV,
                 onPDF: exportMonthlyPDF,
               },
@@ -3457,14 +3457,14 @@ export default function AdminAttendance() {
   // ── Tab router ─────────────────────────────────────────────────────────────
   const renderContent = () => {
     switch (activeTab) {
-      case "dashboard": return renderDashboard();
+      case "dashboard": return renderControlRoom();
       case "live":      return renderLive();
       case "monthly":   return renderMonthly();
       case "trends":    return renderTrends();
-      case "leave":     return <LeaveManagement/>;
+      case "leave":     return <TimeAwayOperations/>;
       case "timesheet": return renderTimesheets();
       case "assign":    return renderAssign();
-      case "reports":   return renderReports();
+      case "reports":   return renderSignalReports();
       default:          return null;
     }
   };
@@ -3482,20 +3482,20 @@ export default function AdminAttendance() {
           borderRadius:20, padding:"20px 28px", marginBottom:22,
           position:"relative", overflow:"hidden" }}>
           <div style={{ position:"absolute", top:-40, right:60, width:200, height:200,
-            borderRadius:"50%", background:"rgba(255,107,53,.08)", filter:"blur(50px)", pointerEvents:"none" }}/>
+            borderRadius:"50%", background:"rgba(139,92,246,.08)", filter:"blur(50px)", pointerEvents:"none" }}/>
           <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", flexWrap:"wrap", gap:14, position:"relative" }}>
             <div>
               <h1 style={{ fontFamily:"Sora,sans-serif", fontSize:22, fontWeight:900, color:"#fff", margin:"0 0 5px" }}>
-                Attendance Management
+                Presence Operations
               </h1>
               <p style={{ fontSize:12, color:"rgba(255,255,255,.45)", margin:0 }}>
-                Live tracking · Monthly analytics · Payroll-ready reports
+                Live tracking · Monthly analytics · Payouts-ready reports
               </p>
             </div>
             <div style={{ display:"flex", gap:10, alignItems:"center", flexWrap:"wrap" }}>
               {/* Live indicator */}
               <div style={{ display:"flex", alignItems:"center", gap:7,
-                background:"rgba(0,194,168,.15)", border:"1px solid rgba(0,194,168,.3)",
+                background:"rgba(6,182,212,.15)", border:"1px solid rgba(6,182,212,.3)",
                 borderRadius:999, padding:"5px 14px" }}>
                 <span style={{ width:7, height:7, borderRadius:"50%", background:C.teal, display:"block", animation:"pulse 2s infinite" }}/>
                 <span style={{ fontSize:11, fontWeight:800, color:C.teal }}>Live · Auto-refresh 30s</span>
@@ -3511,7 +3511,7 @@ export default function AdminAttendance() {
                   <div style={{ fontSize:9, color:"rgba(255,255,255,.4)", fontWeight:700, textTransform:"uppercase", letterSpacing:".06em" }}>{k.label}</div>
                 </div>
               ))}
-              <button className="btn-coral" onClick={() => { fetchStats(); fetchEmployees(); fetchTimesheets(); }}
+              <button className="btn-coral" onClick={() => { fetchStats(); fetchPersons(); fetchTimesheets(); }}
                 disabled={loading.stats||loading.emp}>
                 {(loading.stats||loading.emp) ? "Loading…" : "↻ Refresh All"}
               </button>
@@ -3533,12 +3533,12 @@ export default function AdminAttendance() {
         {/* Content */}
         {renderContent()}
 
-        {/* ── Assign Attendance Modal ── */}
+        {/* ── Assign Presence Modal ── */}
         {assignModal && (
           <div className="modal-overlay" onClick={() => setAssignModal(null)}>
             <div className="modal-box" onClick={e => e.stopPropagation()}>
               <div className="modal-hdr">
-                <h3 style={{ fontFamily:"Sora,sans-serif", fontSize:16, fontWeight:900, color:"#fff", margin:"0 0 4px" }}>Assign Attendance</h3>
+                <h3 style={{ fontFamily:"Sora,sans-serif", fontSize:16, fontWeight:900, color:"#fff", margin:"0 0 4px" }}>Assign Presence</h3>
                 <p style={{ fontSize:11, color:"rgba(255,255,255,.4)", margin:0 }}>
                   {assignModal.name} · {assignModal.department}{assignModal.employeeId ? ` · ${assignModal.employeeId}` : ""}
                 </p>
@@ -3549,7 +3549,7 @@ export default function AdminAttendance() {
                   <select value={assignForm.status}
                     onChange={e => setAssignForm(p => ({ ...p, status:e.target.value }))}
                     className="adm-select" style={{ width:"100%" }}>
-                    {["Present","Absent","Half Day","Leave","Compensation Off","Saturday Work","Sunday Work"].map(s =>
+                    {["Present","Absent","Half Day","TimeAway","Compensation Off","Saturday Work","Sunday Work"].map(s =>
                       <option key={s}>{s}</option>
                     )}
                   </select>
@@ -3572,7 +3572,7 @@ export default function AdminAttendance() {
                 <div style={{ display:"flex", gap:10, marginTop:4 }}>
                   <button className="btn-ghost" style={{ flex:1 }} onClick={() => setAssignModal(null)}>Cancel</button>
                   <button className="btn-coral" style={{ flex:2 }} onClick={handleAssign} disabled={saving}>
-                    {saving ? "Assigning…" : "Assign Attendance"}
+                    {saving ? "Assigning…" : "Assign Presence"}
                   </button>
                 </div>
               </div>
@@ -3580,12 +3580,12 @@ export default function AdminAttendance() {
           </div>
         )}
 
-        {/* ── Assign Leave Modal ── */}
+        {/* ── Assign TimeAway Modal ── */}
         {leaveModal && (
-          <div className="modal-overlay" onClick={() => setLeaveModal(null)}>
+          <div className="modal-overlay" onClick={() => setTimeAwayModal(null)}>
             <div className="modal-box" style={{ maxWidth:420 }} onClick={e => e.stopPropagation()}>
               <div className="modal-hdr">
-                <h3 style={{ fontFamily:"Sora,sans-serif", fontSize:16, fontWeight:900, color:"#fff", margin:"0 0 4px" }}>Assign Leave</h3>
+                <h3 style={{ fontFamily:"Sora,sans-serif", fontSize:16, fontWeight:900, color:"#fff", margin:"0 0 4px" }}>Assign TimeAway</h3>
                 <p style={{ fontSize:11, color:"rgba(255,255,255,.4)", margin:0 }}>{leaveModal.name}{leaveModal.employeeId ? ` · ${leaveModal.employeeId}` : ""}</p>
               </div>
               <div className="modal-body" style={{ display:"flex", flexDirection:"column", gap:14 }}>
@@ -3593,17 +3593,17 @@ export default function AdminAttendance() {
                   <div key={key}>
                     <label className="modal-label">{lbl}</label>
                     <input type="date" value={leaveForm[key]} className="adm-input" style={{ width:"100%" }}
-                      onChange={e => setLeaveForm(p => ({ ...p, [key]:e.target.value }))}/>
+                      onChange={e => setTimeAwayForm(p => ({ ...p, [key]:e.target.value }))}/>
                   </div>
                 ))}
                 <div style={{ display:"flex", gap:10, marginTop:4 }}>
-                  <button className="btn-ghost" style={{ flex:1 }} onClick={() => setLeaveModal(null)}>Cancel</button>
+                  <button className="btn-ghost" style={{ flex:1 }} onClick={() => setTimeAwayModal(null)}>Cancel</button>
                   <button style={{ flex:2,
                     background:`linear-gradient(135deg,${C.amber},#fbbf24)`, color:"#fff",
                     border:"none", borderRadius:10, padding:"10px 0",
                     fontSize:13, fontWeight:800, cursor:"pointer", opacity:saving?0.6:1 }}
-                    onClick={handleLeave} disabled={saving}>
-                    {saving ? "Assigning…" : "Assign Leave"}
+                    onClick={handleTimeAway} disabled={saving}>
+                    {saving ? "Assigning…" : "Assign TimeAway"}
                   </button>
                 </div>
               </div>

@@ -2,9 +2,9 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Plus, Search, MessageSquare, Clock, HelpCircle, RefreshCw, X } from 'lucide-react';
 import api from "@/lib/apiClient";
 
-/* ── SamayaHR design tokens ── */
+/* ── CrewSync design tokens ── */
 const T = {
-  navy:"#0D1F2D", navyMid:"#1E3448", coral:"#FF6B35", teal:"#00C2A8",
+  navy:"#0B1020", navyMid:"#374151", coral:"#8B5CF6", teal:"#06B6D4",
   bg:"#F5F7FB", border:"#E8ECF2",
 };
 
@@ -23,22 +23,22 @@ const CSS = `
   padding:16px 18px; text-align:left; cursor:pointer; transition:all .18s;
   display:flex; flex-direction:column; height:100%;
 }
-.mt-ticket:hover { border-color:rgba(255,107,53,.3); box-shadow:0 8px 24px rgba(13,31,45,.09); transform:translateY(-2px); }
+.mt-ticket:hover { border-color:rgba(139,92,246,.3); box-shadow:0 8px 24px rgba(13,31,45,.09); transform:translateY(-2px); }
 
 /* filter tabs */
 .mt-tab { padding:6px 16px; border-radius:9px; font-size:11px; font-weight:700; cursor:pointer; font-family:'DM Sans',sans-serif; transition:all .15s; border:1.5px solid transparent; }
 
 /* search input */
 .mt-search { border:1.5px solid ${T.border}; border-radius:10px; padding:9px 12px 9px 36px; font-size:13px; font-family:'DM Sans',sans-serif; color:${T.navy}; outline:none; transition:border-color .15s; background:#fff; width:100%; box-sizing:border-box; }
-.mt-search:focus { border-color:${T.coral}; box-shadow:0 0 0 3px rgba(255,107,53,.1); }
+.mt-search:focus { border-color:${T.coral}; box-shadow:0 0 0 3px rgba(139,92,246,.1); }
 
 /* modal input */
 .mt-input { border:1.5px solid ${T.border}; border-radius:10px; padding:9px 12px; font-size:13px; font-family:'DM Sans',sans-serif; color:${T.navy}; outline:none; transition:border-color .15s; background:#fff; width:100%; box-sizing:border-box; }
-.mt-input:focus { border-color:${T.coral}; box-shadow:0 0 0 3px rgba(255,107,53,.1); }
+.mt-input:focus { border-color:${T.coral}; box-shadow:0 0 0 3px rgba(139,92,246,.1); }
 
 /* buttons */
-.mt-btn-primary { display:inline-flex; align-items:center; gap:6px; padding:9px 20px; border-radius:11px; border:none; background:linear-gradient(135deg,${T.coral},#ff8c5a); color:#fff; font-size:12px; font-weight:700; font-family:'DM Sans',sans-serif; cursor:pointer; box-shadow:0 4px 14px rgba(255,107,53,.3); transition:all .15s; }
-.mt-btn-primary:hover { transform:translateY(-1px); box-shadow:0 6px 18px rgba(255,107,53,.35); }
+.mt-btn-primary { display:inline-flex; align-items:center; gap:6px; padding:9px 20px; border-radius:11px; border:none; background:linear-gradient(135deg,${T.coral},#FBBF24); color:#fff; font-size:12px; font-weight:700; font-family:'DM Sans',sans-serif; cursor:pointer; box-shadow:0 4px 14px rgba(139,92,246,.3); transition:all .15s; }
+.mt-btn-primary:hover { transform:translateY(-1px); box-shadow:0 6px 18px rgba(139,92,246,.35); }
 .mt-btn-ghost { display:inline-flex; align-items:center; gap:6px; padding:9px 16px; border-radius:11px; border:1.5px solid ${T.border}; background:#fff; color:#64748b; font-size:12px; font-weight:700; font-family:'DM Sans',sans-serif; cursor:pointer; transition:all .15s; }
 .mt-btn-ghost:hover { border-color:${T.coral}; color:${T.coral}; }
 .mt-btn-ghost:disabled { opacity:.5; cursor:not-allowed; }
@@ -64,9 +64,9 @@ const priorityStyle = p => {
 };
 
 const statusStyle = s => {
-  if(s==='open')        return {bg:'rgba(255,107,53,.08)',color:T.coral,border:'rgba(255,107,53,.25)',dot:T.coral};
+  if(s==='open')        return {bg:'rgba(139,92,246,.08)',color:T.coral,border:'rgba(139,92,246,.25)',dot:T.coral};
   if(s==='in-progress') return {bg:'#FFFBEB',color:'#B45309',border:'#FDE68A',dot:'#F59E0B'};
-  if(s==='resolved')    return {bg:'rgba(0,194,168,.08)',color:T.teal,border:'rgba(0,194,168,.25)',dot:T.teal};
+  if(s==='resolved')    return {bg:'rgba(6,182,212,.08)',color:T.teal,border:'rgba(6,182,212,.25)',dot:T.teal};
   return {bg:'#F1F5F9',color:'#64748b',border:'#E2E8F0',dot:'#94a3b8'};
 };
 
@@ -163,12 +163,12 @@ export default function MyTickets() {
 
       {/* ── HERO ── */}
       <div style={{background:`linear-gradient(135deg,${T.navy},${T.navyMid})`,padding:'22px 26px',position:'relative',overflow:'hidden'}}>
-        <div style={{position:'absolute',top:-50,right:60,width:180,height:180,borderRadius:'50%',background:'rgba(255,107,53,.07)',pointerEvents:'none'}}/>
-        <div style={{position:'absolute',bottom:-30,right:260,width:100,height:100,borderRadius:'50%',background:'rgba(0,194,168,.07)',pointerEvents:'none'}}/>
+        <div style={{position:'absolute',top:-50,right:60,width:180,height:180,borderRadius:'50%',background:'rgba(139,92,246,.07)',pointerEvents:'none'}}/>
+        <div style={{position:'absolute',bottom:-30,right:260,width:100,height:100,borderRadius:'50%',background:'rgba(6,182,212,.07)',pointerEvents:'none'}}/>
         <div style={{position:'relative',display:'flex',alignItems:'center',justifyContent:'space-between',flexWrap:'wrap',gap:12}}>
           <div>
-            <p style={{fontSize:11,fontWeight:700,color:T.coral,textTransform:'uppercase',letterSpacing:'.12em',marginBottom:4}}>SamayaHR · Support</p>
-            <h1 className="fd" style={{fontSize:23,fontWeight:900,color:'#fff',margin:0}}>My Support Tickets</h1>
+            <p style={{fontSize:11,fontWeight:700,color:T.coral,textTransform:'uppercase',letterSpacing:'.12em',marginBottom:4}}>CrewSync · CareDesk</p>
+            <h1 className="fd" style={{fontSize:23,fontWeight:900,color:'#fff',margin:0}}>My Care Requests</h1>
             <p style={{fontSize:13,color:'rgba(255,255,255,.5)',marginTop:4}}>Track and manage your raised issues.</p>
           </div>
           <div style={{display:'flex',gap:10}}>
@@ -196,9 +196,9 @@ export default function MyTickets() {
         <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:14}} className="mt-kpi mt-in">
           <style>{`@media(max-width:580px){.mt-kpi{grid-template-columns:1fr!important}}`}</style>
           {[
-            {icon:'🎫',cap:'Open',      val:openCount,     accent:T.coral,   bg:'rgba(255,107,53,.08)'},
+            {icon:'🎫',cap:'Open',      val:openCount,     accent:T.coral,   bg:'rgba(139,92,246,.08)'},
             {icon:'⚙️',cap:'In Progress',val:progressCount,accent:'#F59E0B', bg:'rgba(245,158,11,.08)'},
-            {icon:'✅',cap:'Resolved',  val:resolvedCount, accent:T.teal,    bg:'rgba(0,194,168,.08)'},
+            {icon:'✅',cap:'Resolved',  val:resolvedCount, accent:T.teal,    bg:'rgba(6,182,212,.08)'},
           ].map(k=>(
             <div key={k.cap} className="mt-card" style={{padding:'16px 18px',display:'flex',alignItems:'center',gap:14}}>
               <div style={{width:42,height:42,borderRadius:12,background:k.bg,display:'flex',alignItems:'center',justifyContent:'center',fontSize:18,flexShrink:0}}>{k.icon}</div>
@@ -211,9 +211,9 @@ export default function MyTickets() {
         </div>
 
         {/* ── INFO BANNER ── */}
-        <div style={{padding:'10px 16px',borderRadius:12,background:'rgba(255,107,53,.06)',border:`1.5px solid rgba(255,107,53,.2)`,display:'flex',alignItems:'center',gap:10}}>
+        <div style={{padding:'10px 16px',borderRadius:12,background:'rgba(139,92,246,.06)',border:`1.5px solid rgba(139,92,246,.2)`,display:'flex',alignItems:'center',gap:10}}>
           <HelpCircle size={15} color={T.coral}/>
-          <p style={{fontSize:12,color:'#475569'}}>For urgent issues, call your HR / IT contact <strong style={{color:T.navy}}>in addition</strong> to raising a ticket.</p>
+          <p style={{fontSize:12,color:'#475569'}}>For urgent issues, call your PeopleOps / IT contact <strong style={{color:T.navy}}>in addition</strong> to raising a ticket.</p>
         </div>
 
         {/* ── FILTER TABS ── */}
@@ -312,7 +312,7 @@ export default function MyTickets() {
             {/* modal header */}
             <div style={{background:`linear-gradient(135deg,${T.navy},${T.navyMid})`,padding:'16px 22px',display:'flex',alignItems:'center',justifyContent:'space-between'}}>
               <div>
-                <p style={{fontSize:11,fontWeight:700,color:T.coral,textTransform:'uppercase',letterSpacing:'.1em',marginBottom:2}}>SamayaHR · Support</p>
+                <p style={{fontSize:11,fontWeight:700,color:T.coral,textTransform:'uppercase',letterSpacing:'.1em',marginBottom:2}}>CrewSync · CareDesk</p>
                 <p className="fd" style={{fontSize:16,fontWeight:900,color:'#fff'}}>Raise New Ticket</p>
               </div>
               <button onClick={()=>setShowCreateModal(false)} style={{width:30,height:30,borderRadius:8,border:'1px solid rgba(255,255,255,.2)',background:'rgba(255,255,255,.1)',display:'flex',alignItems:'center',justifyContent:'center',cursor:'pointer',color:'#fff'}}>
@@ -332,7 +332,7 @@ export default function MyTickets() {
                 <div>
                   <label style={{fontSize:10,fontWeight:700,color:'#64748b',textTransform:'uppercase',letterSpacing:'.07em',display:'block',marginBottom:5}}>Category</label>
                   <select value={newCategory} onChange={e=>setNewCategory(e.target.value)} className="mt-input">
-                    {['General','Access','Payroll','Hardware','HR','IT_SUPPORT'].map(o=><option key={o}>{o}</option>)}
+                    {['General','Access','Payouts','Hardware','PeopleOps','IT_SUPPORT'].map(o=><option key={o}>{o}</option>)}
                   </select>
                 </div>
                 <div style={{minWidth:130}}>

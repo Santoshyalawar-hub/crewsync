@@ -7,21 +7,21 @@
 // //       <div className="flex items-center gap-3">
 // //         <div className="w-11 h-11 rounded-xl bg-white border border-slate-200 shadow-sm flex items-center justify-center">
 // //           <img
-// //             src="/assets/Zlabs-Logo.png"
-// //             alt="Admin"
+// //             src="/assets/crewsync-mark.svg"
+// //             alt="Operator"
 // //             className="h-8 w-8 object-contain"
 // //           />
 // //         </div>
 // //         <div className="leading-tight">
-// //           <p className="subtle-label">SamayaHR</p>
-// //           <h1 className="text-lg font-bold text-slate-900">Admin Console</h1>
+// //           <p className="subtle-label">CrewSync</p>
+// //           <h1 className="text-lg font-bold text-slate-900">Ops Console</h1>
 // //         </div>
 // //       </div>
 
 // //       <div className="flex items-center gap-3">
 // //         <button
 // //           className="flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold text-white shadow-lg transition-all duration-300"
-// //           style={{ background: "linear-gradient(120deg,#0f172a,#ff6b35)" }}
+// //           style={{ background: "linear-gradient(120deg,#0f172a,#8B5CF6)" }}
 // //           onClick={onLogout}
 // //         >
 // //           <svg
@@ -68,7 +68,7 @@
 //     d.toLocaleDateString("en-IN", { weekday: "short", day: "numeric", month: "short" });
 
 //   const companyName = (localStorage.getItem("companyName") || "").trim() || "Workspace";
-//   const role = (localStorage.getItem("role") || "Admin").trim();
+//   const role = (localStorage.getItem("role") || "Operator").trim();
 
 //   return (
 //     <>
@@ -107,7 +107,7 @@
 //           font-weight: 600;
 //         }
 //         .tn-breadcrumb span.active {
-//           color: #0D1F2D;
+//           color: #0B1020;
 //           font-weight: 700;
 //         }
 //         .tn-breadcrumb svg { color: #d1d5db; }
@@ -117,7 +117,7 @@
 //           display: flex;
 //           align-items: center;
 //           gap: 8px;
-//           background: #F7F8FA;
+//           background: #F6F8FB;
 //           border: 1px solid #e5e7eb;
 //           border-radius: 12px;
 //           padding: 6px 16px;
@@ -125,11 +125,11 @@
 //         .tn-dot {
 //           width: 7px; height: 7px;
 //           border-radius: 50%;
-//           background: #00C2A8;
+//           background: #06B6D4;
 //           animation: tn-pulse 2s ease-in-out infinite;
 //         }
 //         @keyframes tn-pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(1.5)} }
-//         .tn-clock { font-size: 13px; font-weight: 700; color: #0D1F2D; letter-spacing: .02em; }
+//         .tn-clock { font-size: 13px; font-weight: 700; color: #0B1020; letter-spacing: .02em; }
 //         .tn-date { font-size: 11px; color: #9ca3af; font-weight: 500; }
 
 //         /* Right cluster */
@@ -139,47 +139,47 @@
 //           position: relative;
 //           width: 38px; height: 38px;
 //           border-radius: 10px;
-//           background: #F7F8FA;
+//           background: #F6F8FB;
 //           border: 1px solid #e5e7eb;
 //           display: flex; align-items: center; justify-content: center;
 //           cursor: pointer;
 //           transition: all .2s;
 //           color: #6b7280;
 //         }
-//         .tn-notif-btn:hover { background: #fff3ee; border-color: #FF6B35; color: #FF6B35; }
+//         .tn-notif-btn:hover { background: #fff3ee; border-color: #8B5CF6; color: #8B5CF6; }
 //         .tn-badge {
 //           position: absolute;
 //           top: 6px; right: 6px;
 //           width: 8px; height: 8px;
 //           border-radius: 50%;
-//           background: #FF6B35;
+//           background: #8B5CF6;
 //           border: 2px solid #fff;
 //         }
 
 //         .tn-user {
 //           display: flex; align-items: center; gap: 10px;
-//           background: #F7F8FA;
+//           background: #F6F8FB;
 //           border: 1px solid #e5e7eb;
 //           border-radius: 12px;
 //           padding: 5px 12px 5px 5px;
 //           cursor: pointer;
 //           transition: all .2s;
 //         }
-//         .tn-user:hover { border-color: #FF6B35; background: #fff3ee; }
+//         .tn-user:hover { border-color: #8B5CF6; background: #fff3ee; }
 //         .tn-avatar {
 //           width: 30px; height: 30px;
 //           border-radius: 8px;
-//           background: linear-gradient(135deg,#FF6B35,#FF5722);
+//           background: linear-gradient(135deg,#8B5CF6,#06B6D4);
 //           display: flex; align-items: center; justify-content: center;
 //           font-size: 12px; font-weight: 900; color: #fff;
 //           font-family: 'Sora', sans-serif;
 //         }
 //         .tn-user-info { line-height: 1.2; }
-//         .tn-user-name { font-size: 12px; font-weight: 700; color: #0D1F2D; }
+//         .tn-user-name { font-size: 12px; font-weight: 700; color: #0B1020; }
 //         .tn-user-role {
 //           font-size: 10px; font-weight: 700;
-//           color: #FF6B35;
-//           background: rgba(255,107,53,.1);
+//           color: #8B5CF6;
+//           background: rgba(139,92,246,.1);
 //           padding: 0 6px;
 //           border-radius: 999px;
 //           display: inline-block;
@@ -187,7 +187,7 @@
 
 //         .tn-logout {
 //           display: flex; align-items: center; gap: 7px;
-//           background: #0D1F2D;
+//           background: #0B1020;
 //           color: #fff;
 //           border: none;
 //           border-radius: 10px;
@@ -198,14 +198,14 @@
 //           transition: all .2s;
 //           font-family: 'Sora', sans-serif;
 //         }
-//         .tn-logout:hover { background: #FF6B35; transform: translateY(-1px); box-shadow: 0 4px 14px rgba(255,107,53,.3); }
+//         .tn-logout:hover { background: #8B5CF6; transform: translateY(-1px); box-shadow: 0 4px 14px rgba(139,92,246,.3); }
 //       `}</style>
 
 //       <nav className={`tn-root tn-nav ${scrolled ? "scrolled" : ""}`}>
 //         {/* Left */}
 //         <div className="tn-left">
 //           <div className="tn-breadcrumb">
-//             <span>SamayaHR</span>
+//             <span>CrewSync</span>
 //             <svg width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
 //               <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/>
 //             </svg>
@@ -216,7 +216,7 @@
 //             <svg width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2.2" viewBox="0 0 24 24">
 //               <path strokeLinecap="round" strokeLinejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
 //             </svg>
-//             <span className="active">Control Center</span>
+//             <span className="active">ControlRoom</span>
 //           </div>
 //         </div>
 
@@ -241,7 +241,7 @@
 //           <div className="tn-user">
 //             <div className="tn-avatar">A</div>
 //             <div className="tn-user-info">
-//               <div className="tn-user-name">Admin</div>
+//               <div className="tn-user-name">Operator</div>
 //               <div className="tn-user-role">{role}</div>
 //             </div>
 //           </div>
@@ -267,10 +267,10 @@ import React, { useState, useEffect } from "react";
 import api, { API_BASE_URL } from "@/lib/apiClient";
 
 /* ─────────────────────────────────────────────────────────────
-   Company Logo Component
+   Workspace Logo Component
    Shows Cloudinary image if available, else coloured initials
 ───────────────────────────────────────────────────────────── */
-function CompanyLogo({ logoUrl, companyName, size = 36, radius = 9 }) {
+function WorkspaceLogo({ logoUrl, companyName, size = 36, radius = 9 }) {
   const [err, setErr] = useState(false);
 
   const initials = (companyName || "C")
@@ -297,7 +297,7 @@ function CompanyLogo({ logoUrl, companyName, size = 36, radius = 9 }) {
   return (
     <div style={{
       width: size, height: size, borderRadius: radius,
-      background: "linear-gradient(135deg,#FF6B35,#FF5722)",
+      background: "linear-gradient(135deg,#8B5CF6,#06B6D4)",
       display: "flex", alignItems: "center", justifyContent: "center",
       fontSize: size * 0.36, fontWeight: 900, color: "#fff",
       fontFamily: "'Sora',sans-serif", flexShrink: 0,
@@ -311,7 +311,7 @@ function CompanyLogo({ logoUrl, companyName, size = 36, radius = 9 }) {
    TopNav
    Fetches company logo by tenantCode on mount.
    GET /api/global-admin/companies/by-tenant/{tenantCode}
-   → Company.logoUrl (Cloudinary CDN URL)
+   → Workspace.logoUrl (Cloudinary CDN URL)
 ───────────────────────────────────────────────────────────── */
 const TopNav = ({ onLogout }) => {
   const [time,    setTime]    = useState(new Date());
@@ -322,7 +322,7 @@ const TopNav = ({ onLogout }) => {
 
   const companyName = (localStorage.getItem("companyName") || "Workspace").trim();
   const tenantCode  = (localStorage.getItem("tenantCode")  || "").trim();
-  const role        = (localStorage.getItem("role")        || "Admin").trim();
+  const role        = (localStorage.getItem("role")        || "Operator").trim();
 
   /* ── Clock + scroll listener ── */
   useEffect(() => {
@@ -404,20 +404,20 @@ const TopNav = ({ onLogout }) => {
         .tn-brand {
           display: flex; align-items: center; gap: 10px;
           padding: 5px 14px 5px 6px;
-          background: #f7f8fa;
+          background: #F6F8FB;
           border: 1.5px solid #e5e7eb;
           border-radius: 13px;
         }
         .tn-brand-info { line-height: 1.25; }
         .tn-brand-name {
-          font-size: 13px; font-weight: 700; color: #0D1F2D;
+          font-size: 13px; font-weight: 700; color: #0B1020;
           white-space: nowrap; max-width: 160px;
           overflow: hidden; text-overflow: ellipsis;
           font-family: 'Sora', sans-serif;
         }
         .tn-tenant-pill {
           display: inline-block;
-          font-size: 9.5px; font-weight: 800; color: #00C2A8;
+          font-size: 9.5px; font-weight: 800; color: #06B6D4;
           font-family: monospace; letter-spacing: .04em;
         }
 
@@ -426,21 +426,21 @@ const TopNav = ({ onLogout }) => {
           display: flex; align-items: center; gap: 6px;
           font-size: 12px; color: #9ca3af; font-weight: 600;
         }
-        .tn-breadcrumb span.active { color: #0D1F2D; font-weight: 700; }
+        .tn-breadcrumb span.active { color: #0B1020; font-weight: 700; }
         .tn-breadcrumb svg { color: #d1d5db; }
 
         /* ── Center clock ── */
         .tn-center {
           display: flex; align-items: center; gap: 8px;
-          background: #f7f8fa; border: 1px solid #e5e7eb;
+          background: #F6F8FB; border: 1px solid #e5e7eb;
           border-radius: 12px; padding: 6px 16px;
         }
         .tn-dot {
-          width: 7px; height: 7px; border-radius: 50%; background: #00C2A8;
+          width: 7px; height: 7px; border-radius: 50%; background: #06B6D4;
           animation: tn-pulse 2s ease-in-out infinite;
         }
         @keyframes tn-pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(1.5)} }
-        .tn-clock { font-size: 13px; font-weight: 700; color: #0D1F2D; letter-spacing: .02em; font-family:'Sora',sans-serif; }
+        .tn-clock { font-size: 13px; font-weight: 700; color: #0B1020; letter-spacing: .02em; font-family:'Sora',sans-serif; }
         .tn-date  { font-size: 11px; color: #9ca3af; font-weight: 500; }
 
         /* ── Right ── */
@@ -449,59 +449,59 @@ const TopNav = ({ onLogout }) => {
         .tn-notif-btn {
           position: relative;
           width: 38px; height: 38px; border-radius: 10px;
-          background: #f7f8fa; border: 1px solid #e5e7eb;
+          background: #F6F8FB; border: 1px solid #e5e7eb;
           display: flex; align-items: center; justify-content: center;
           cursor: pointer; transition: all .2s; color: #6b7280;
         }
-        .tn-notif-btn:hover { background: #fff3ee; border-color: #FF6B35; color: #FF6B35; }
+        .tn-notif-btn:hover { background: #fff3ee; border-color: #8B5CF6; color: #8B5CF6; }
         .tn-badge {
           position: absolute; top: 6px; right: 6px;
           width: 8px; height: 8px; border-radius: 50%;
-          background: #FF6B35; border: 2px solid #fff;
+          background: #8B5CF6; border: 2px solid #fff;
         }
 
         .tn-user {
           display: flex; align-items: center; gap: 10px;
-          background: #f7f8fa; border: 1px solid #e5e7eb;
+          background: #F6F8FB; border: 1px solid #e5e7eb;
           border-radius: 12px; padding: 5px 12px 5px 5px;
           cursor: pointer; transition: all .2s;
         }
-        .tn-user:hover { border-color: #FF6B35; background: #fff3ee; }
+        .tn-user:hover { border-color: #8B5CF6; background: #fff3ee; }
         .tn-user-avatar {
           width: 30px; height: 30px; border-radius: 8px;
-          background: linear-gradient(135deg,#FF6B35,#FF5722);
+          background: linear-gradient(135deg,#8B5CF6,#06B6D4);
           display: flex; align-items: center; justify-content: center;
           font-size: 12px; font-weight: 900; color: #fff;
           font-family: 'Sora', sans-serif; flex-shrink: 0;
         }
-        .tn-user-name { font-size: 12px; font-weight: 700; color: #0D1F2D; }
+        .tn-user-name { font-size: 12px; font-weight: 700; color: #0B1020; }
         .tn-user-role {
-          font-size: 10px; font-weight: 700; color: #FF6B35;
-          background: rgba(255,107,53,.1); padding: 0 6px; border-radius: 999px;
+          font-size: 10px; font-weight: 700; color: #8B5CF6;
+          background: rgba(139,92,246,.1); padding: 0 6px; border-radius: 999px;
           display: inline-block;
         }
 
         .tn-logout {
           display: flex; align-items: center; gap: 7px;
-          background: #0D1F2D; color: #fff; border: none;
+          background: #0B1020; color: #fff; border: none;
           border-radius: 10px; padding: 8px 14px;
           font-size: 12px; font-weight: 700; cursor: pointer;
           transition: all .2s; font-family: 'Sora', sans-serif;
         }
         .tn-logout:hover {
-          background: #FF6B35; transform: translateY(-1px);
-          box-shadow: 0 4px 14px rgba(255,107,53,.3);
+          background: #8B5CF6; transform: translateY(-1px);
+          box-shadow: 0 4px 14px rgba(139,92,246,.3);
         }
       `}</style>
 
       <nav className={`tn-root tn-nav${scrolled ? " scrolled" : ""}`}>
 
-        {/* ── Left: Company Logo + name ── */}
+        {/* ── Left: Workspace Logo + name ── */}
         <div className="tn-left">
 
           {/* Logo pill — company logo from Cloudinary */}
           <div className="tn-brand">
-            <CompanyLogo
+            <WorkspaceLogo
               logoUrl={logoUrl}
               companyName={companyName}
               size={36}
@@ -523,7 +523,7 @@ const TopNav = ({ onLogout }) => {
               <path strokeLinecap="round" strokeLinejoin="round"
                 d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
             </svg>
-            <span className="active">Control Center</span>
+            <span className="active">ControlRoom</span>
           </div>
         </div>
 
@@ -552,7 +552,7 @@ const TopNav = ({ onLogout }) => {
           <div className="tn-user">
             <div className="tn-user-avatar">A</div>
             <div>
-              <div className="tn-user-name">Admin</div>
+              <div className="tn-user-name">Operator</div>
               <div className="tn-user-role">{role}</div>
             </div>
           </div>

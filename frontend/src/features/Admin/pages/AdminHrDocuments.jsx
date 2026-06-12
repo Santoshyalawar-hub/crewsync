@@ -18,20 +18,20 @@
 //   return {
 //     Authorization:  t.startsWith("Bearer ") ? t : `Bearer ${t}`,
 //     "X-Tenant-Code": getTenant(),
-//     "X-Company-Id":  getCo(),
+//     "X-Workspace-Id":  getCo(),
 //   };
 // };
 
 // // ── Constants ─────────────────────────────────────────────────────────────────
 // const T = {
-//   navy:"#0D1F2D", navyMid:"#1E3448", coral:"#FF6B35", teal:"#00C2A8",
-//   bg:"#F7F8FA", border:"#E8ECF2",
+//   navy:"#0B1020", navyMid:"#374151", coral:"#8B5CF6", teal:"#06B6D4",
+//   bg:"#F6F8FB", border:"#E8ECF2",
 // };
 
-// const HR_DOC_TYPES = [
+// const PeopleOps_DOC_TYPES = [
 //   { value:"OFFER_LETTER",            label:"Offer Letter"             },
 //   { value:"JOINING_LETTER",          label:"Joining Letter"           },
-//   { value:"SALARY_REVISION_LETTER",  label:"Salary Revision Letter"   },
+//   { value:"SALARY_REVISION_LETTER",  label:"Compensation Revision Letter"   },
 //   { value:"APPOINTMENT_LETTER",      label:"Appointment Letter"       },
 //   { value:"CONFIRMATION_LETTER",     label:"Confirmation Letter"      },
 //   { value:"WARNING_LETTER",          label:"Warning Letter"           },
@@ -39,8 +39,8 @@
 //   { value:"EXPERIENCE_CERTIFICATE",  label:"Experience Certificate"   },
 //   { value:"NON_DISCLOSURE_AGREEMENT",label:"Non-Disclosure Agreement" },
 //   { value:"EMPLOYMENT_CONTRACT",     label:"Employment Contract"      },
-//   { value:"POLICY_DOCUMENT",         label:"Policy Document"          },
-//   { value:"ONBOARDING_CHECKLIST",    label:"Onboarding Checklist"     },
+//   { value:"POLICY_DOCUMENT",         label:"Playbook Document"          },
+//   { value:"ONBOARDING_CHECKLIST",    label:"JoinerFlow Checklist"     },
 //   { value:"OTHER",                   label:"Other"                    },
 // ];
 
@@ -65,25 +65,25 @@
 // .adm-card{background:#fff;border-radius:18px;border:1px solid #f0f0f0;box-shadow:0 2px 12px rgba(13,31,45,.05);}
 // .adm-emp:hover{box-shadow:0 6px 24px rgba(13,31,45,.09)!important;}
 // .adm-hdr:hover{background:#fafafa;}
-// .adm-inp{padding:9px 14px;border-radius:10px;border:1.5px solid #e5e7eb;background:#fff;font-size:12px;outline:none;font-family:'DM Sans',sans-serif;color:#0D1F2D;box-sizing:border-box;width:100%;transition:border .15s;}
-// .adm-inp:focus{border-color:#FF6B35;}
+// .adm-inp{padding:9px 14px;border-radius:10px;border:1.5px solid #e5e7eb;background:#fff;font-size:12px;outline:none;font-family:'DM Sans',sans-serif;color:#0B1020;box-sizing:border-box;width:100%;transition:border .15s;}
+// .adm-inp:focus{border-color:#8B5CF6;}
 // .adm-btn{display:inline-flex;align-items:center;gap:6px;padding:9px 18px;border-radius:10px;border:none;font-size:12px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s;}
 // .adm-btn:disabled{opacity:0.55;cursor:not-allowed;}
 // .modal-overlay{position:fixed;inset:0;z-index:999;background:rgba(13,31,45,0.7);display:flex;align-items:center;justify-content:center;padding:16px;}
 // .emp-check-item{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:10px;cursor:pointer;transition:all .15s;border:1.5px solid transparent;}
-// .emp-check-item:hover{background:rgba(255,107,53,.05);border-color:rgba(255,107,53,.15);}
-// .emp-check-item.selected{background:rgba(255,107,53,.08);border-color:rgba(255,107,53,.25);}
+// .emp-check-item:hover{background:rgba(139,92,246,.05);border-color:rgba(139,92,246,.15);}
+// .emp-check-item.selected{background:rgba(139,92,246,.08);border-color:rgba(139,92,246,.25);}
 // `;
 
 // // ─────────────────────────────────────────────────────────────────────────────
 // //  UPLOAD MODAL
 // //  - Target: ONE employee / SELECTED employees / ALL employees
 // // ─────────────────────────────────────────────────────────────────────────────
-// function UploadModal({ employees, onClose, onUploaded, preselectedEmployee }) {
-//   const [targetMode,  setTargetMode]  = useState(preselectedEmployee ? "one" : "one");
+// function UploadModal({ employees, onClose, onUploaded, preselectedPerson }) {
+//   const [targetMode,  setTargetMode]  = useState(preselectedPerson ? "one" : "one");
 //   // "one" = single employee | "selected" = multiple chosen | "all" = everyone
 //   const [selectedIds, setSelectedIds] = useState(
-//     preselectedEmployee ? [String(preselectedEmployee.id)] : []
+//     preselectedPerson ? [String(preselectedPerson.id)] : []
 //   );
 //   const [empSearch,   setEmpSearch]   = useState("");
 //   const [form, setForm] = useState({
@@ -100,7 +100,7 @@
 
 //   // Auto-fill title from doc type
 //   useEffect(() => {
-//     const label = HR_DOC_TYPES.find(t=>t.value===form.docType)?.label || "";
+//     const label = PeopleOps_DOC_TYPES.find(t=>t.value===form.docType)?.label || "";
 //     set("title", label);
 //   }, [form.docType]); // eslint-disable-line
 
@@ -117,7 +117,7 @@
 //   };
 
 //   // Which employees will receive this doc
-//   const targetEmployees = useMemo(() => {
+//   const targetPersons = useMemo(() => {
 //     if (targetMode === "all") return employees;
 //     if (targetMode === "selected") return employees.filter(e=>selectedIds.includes(String(e.id)));
 //     if (targetMode === "one") return employees.filter(e=>selectedIds.includes(String(e.id)));
@@ -140,7 +140,7 @@
 //   };
 
 //   const handleSubmit = async () => {
-//     if (targetEmployees.length===0) { setError("Select at least one employee"); return; }
+//     if (targetPersons.length===0) { setError("Select at least one employee"); return; }
 //     if (!form.title.trim()) { setError("Title is required"); return; }
 //     if (!file) { setError("Select a file to upload"); return; }
 //     setError(""); setSaving(true);
@@ -148,7 +148,7 @@
 //     let successCount = 0;
 //     let failCount    = 0;
 
-//     for (const emp of targetEmployees) {
+//     for (const emp of targetPersons) {
 //       const fd = new FormData();
 //       fd.append("file",             file);
 //       fd.append("employeeId",       emp.id);
@@ -188,13 +188,13 @@
 //           borderBottom:`1px solid ${T.border}`, paddingBottom:16 }}>
 //           <div style={{ display:"flex", alignItems:"center", gap:10 }}>
 //             <div style={{ width:38,height:38,borderRadius:11,
-//               background:"rgba(255,107,53,0.1)",display:"flex",
+//               background:"rgba(139,92,246,0.1)",display:"flex",
 //               alignItems:"center",justifyContent:"center" }}>
 //               <FiUpload size={18} color={T.coral}/>
 //             </div>
 //             <div>
 //               <h2 className="fd" style={{ fontSize:17,fontWeight:800,
-//                 color:T.navy,margin:0 }}>Upload HR Document</h2>
+//                 color:T.navy,margin:0 }}>Upload PeopleOps Document</h2>
 //               <p style={{ fontSize:11,color:"#94a3b8",margin:0 }}>
 //                 Send a document to one, selected, or all employees
 //               </p>
@@ -216,14 +216,14 @@
 //             </label>
 //             <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:10 }}>
 //               {[
-//                 { mode:"one",      label:"One Employee",       icon:"👤", desc:"Select one specific employee" },
-//                 { mode:"selected", label:"Multiple Employees", icon:"👥", desc:"Choose specific employees"    },
-//                 { mode:"all",      label:"All Employees",      icon:"🏢", desc:`All ${employees.length} employees` },
+//                 { mode:"one",      label:"One Person",       icon:"👤", desc:"Select one specific employee" },
+//                 { mode:"selected", label:"Multiple Persons", icon:"👥", desc:"Choose specific employees"    },
+//                 { mode:"all",      label:"All Persons",      icon:"🏢", desc:`All ${employees.length} employees` },
 //               ].map(opt=>(
 //                 <button key={opt.mode} onClick={()=>{setTargetMode(opt.mode);setSelectedIds([]);}}
 //                   style={{ padding:"12px 10px", borderRadius:12, cursor:"pointer",
 //                     border:`2px solid ${targetMode===opt.mode?T.coral:"#e2e8f0"}`,
-//                     background:targetMode===opt.mode?"rgba(255,107,53,.08)":"#fff",
+//                     background:targetMode===opt.mode?"rgba(139,92,246,.08)":"#fff",
 //                     textAlign:"center", transition:"all 0.15s" }}>
 //                   <div style={{ fontSize:22,marginBottom:4 }}>{opt.icon}</div>
 //                   <div style={{ fontSize:12,fontWeight:700,
@@ -234,12 +234,12 @@
 //             </div>
 //           </div>
 
-//           {/* ── Employee selector (one or selected mode) ── */}
+//           {/* ── Person selector (one or selected mode) ── */}
 //           {(targetMode==="one"||targetMode==="selected") && (
 //             <div>
 //               <label style={{ display:"block",fontSize:11,fontWeight:700,color:"#64748b",
 //                 textTransform:"uppercase",letterSpacing:"0.07em",marginBottom:6 }}>
-//                 {targetMode==="one" ? "Select Employee" : "Select Employees"}
+//                 {targetMode==="one" ? "Select Person" : "Select Persons"}
 //                 <span style={{ color:"#ef4444" }}> *</span>
 //                 {targetMode==="selected" && selectedIds.length>0 &&
 //                   <span style={{ marginLeft:8,background:T.coral,color:"#fff",
@@ -273,7 +273,7 @@
 //                       onClick={()=>toggleEmp(emp.id)}>
 //                       {/* Avatar */}
 //                       <div style={{ width:32,height:32,borderRadius:"50%",flexShrink:0,
-//                         background:`linear-gradient(135deg,${T.coral},#ff5722)`,
+//                         background:`linear-gradient(135deg,${T.coral},#06B6D4)`,
 //                         display:"flex",alignItems:"center",justifyContent:"center",
 //                         fontSize:12,fontWeight:900,color:"#fff" }}>
 //                         {initials(emp.fullName||emp.name)}
@@ -302,8 +302,8 @@
 //               {/* Selected summary */}
 //               {targetMode==="selected" && selectedIds.length>0 && (
 //                 <div style={{ marginTop:6,padding:"6px 10px",borderRadius:8,
-//                   background:"rgba(255,107,53,.06)",
-//                   border:"1px solid rgba(255,107,53,.15)",
+//                   background:"rgba(139,92,246,.06)",
+//                   border:"1px solid rgba(139,92,246,.15)",
 //                   fontSize:11,color:T.coral,fontWeight:600 }}>
 //                   Will send to: {employees.filter(e=>selectedIds.includes(String(e.id)))
 //                     .map(e=>e.fullName||e.name).join(", ")}
@@ -332,7 +332,7 @@
 //               </label>
 //               <select className="adm-inp" value={form.docType}
 //                 onChange={e=>set("docType",e.target.value)}>
-//                 {HR_DOC_TYPES.map(t=>(
+//                 {PeopleOps_DOC_TYPES.map(t=>(
 //                   <option key={t.value} value={t.value}>{t.label}</option>
 //                 ))}
 //               </select>
@@ -423,7 +423,7 @@
 //               ) : (
 //                 <>
 //                   <div style={{ width:44,height:44,borderRadius:12,
-//                     background:"rgba(255,107,53,0.1)",display:"flex",
+//                     background:"rgba(139,92,246,0.1)",display:"flex",
 //                     alignItems:"center",justifyContent:"center" }}>
 //                     <FiUpload size={20} color={T.coral}/>
 //                   </div>
@@ -451,13 +451,13 @@
 //           </div>
 
 //           {/* Summary */}
-//           {targetEmployees.length>0 && file && (
-//             <div style={{ background:"rgba(0,194,168,.06)",
-//               border:"1px solid rgba(0,194,168,.2)",
+//           {targetPersons.length>0 && file && (
+//             <div style={{ background:"rgba(6,182,212,.06)",
+//               border:"1px solid rgba(6,182,212,.2)",
 //               borderRadius:10,padding:"10px 14px" }}>
 //               <p style={{ fontSize:12,fontWeight:600,color:"#0d7377",margin:0 }}>
 //                 ✅ Ready to send <strong>"{form.title}"</strong> to{" "}
-//                 <strong>{targetEmployees.length}</strong> employee{targetEmployees.length>1?"s":""}
+//                 <strong>{targetPersons.length}</strong> employee{targetPersons.length>1?"s":""}
 //               </p>
 //             </div>
 //           )}
@@ -483,7 +483,7 @@
 //                 color:"#fff",fontSize:13 }}>
 //               {saving
 //                 ? <><span className="adm-spin" style={{ display:"inline-block",marginRight:6 }}>⟳</span>
-//                     Sending to {targetEmployees.length} employee{targetEmployees.length>1?"s":""}…</>
+//                     Sending to {targetPersons.length} employee{targetPersons.length>1?"s":""}…</>
 //                 : <><FiUpload size={14}/> Send Document</>}
 //             </button>
 //           </div>
@@ -494,10 +494,10 @@
 // }
 
 // // ─────────────────────────────────────────────────────────────────────────────
-// //  MAIN AdminHrDocuments
+// //  MAIN OperatorHrVault
 // // ─────────────────────────────────────────────────────────────────────────────
-// export default function AdminHrDocuments() {
-//   const [employees,    setEmployees]    = useState([]);
+// export default function OperatorHrVault() {
+//   const [employees,    setPersons]    = useState([]);
 //   const [hrDocs,       setHrDocs]       = useState([]);
 //   const [loading,      setLoading]      = useState(false);
 //   const [empLoading,   setEmpLoading]   = useState(false);
@@ -512,7 +512,7 @@
 //   const tenantCode = getTenant();
 //   const companyId  = getCo();
 
-//   useEffect(() => { fetchEmployees(); fetchHrDocs(); }, []);
+//   useEffect(() => { fetchPersons(); fetchHrDocs(); }, []);
 
 //   const showMsg = (type,text) => {
 //     setMessage({type,text});
@@ -522,7 +522,7 @@
 //   // ── Fetch employees by tenantCode ─────────────────────────────────────────
 //   // Uses GET /api/users/tenant/employees with X-Tenant-Code header
 //   // This matches your existing UserController endpoint exactly
-//   const fetchEmployees = async () => {
+//   const fetchPersons = async () => {
 //     setEmpLoading(true);
 //     try {
 //       const token = getToken();
@@ -534,7 +534,7 @@
 //           "Content-Type":  "application/json",
 //           "Authorization": authH,
 //           "X-Tenant-Code": tenantCode,
-//           "X-Company-Id":  companyId,
+//           "X-Workspace-Id":  companyId,
 //         },
 //       });
 
@@ -546,7 +546,7 @@
 //       const data = await res.json();
 //       // Handle both { data: [...] } and direct array responses
 //       const list = Array.isArray(data) ? data : (data?.data || []);
-//       setEmployees(list);
+//       setPersons(list);
 
 //       if (list.length===0) {
 //         showMsg("info", `No employees found for tenant: ${tenantCode}. Make sure employees are registered under this company.`);
@@ -558,7 +558,7 @@
 //     }
 //   };
 
-//   // ── Fetch HR docs grouped by employee ─────────────────────────────────────
+//   // ── Fetch PeopleOps docs grouped by employee ─────────────────────────────────────
 //   const fetchHrDocs = async (silent=false) => {
 //     if(!silent) setLoading(true); else setRefreshing(true);
 //     try {
@@ -569,7 +569,7 @@
 //       if(!res.ok) throw new Error(data.message||"Failed");
 //       setHrDocs(Array.isArray(data)?data:(data?.data||[]));
 //     } catch(e) {
-//       showMsg("error", e.message||"Failed to fetch HR documents");
+//       showMsg("error", e.message||"Failed to fetch PeopleOps documents");
 //     } finally { setLoading(false); setRefreshing(false); }
 //   };
 
@@ -581,7 +581,7 @@
 //   };
 
 //   const handleDelete = async (docId, empId) => {
-//     if(!window.confirm("Delete this HR document?")) return;
+//     if(!window.confirm("Delete this PeopleOps document?")) return;
 //     try {
 //       const res = await fetch(`${API_BASE_URL}/api/hr-documents/admin/${docId}`, {
 //         method:"DELETE", headers:authHdr()
@@ -589,7 +589,7 @@
 //       if(!res.ok) throw new Error("Delete failed");
 //       setHrDocs(prev=>prev.map(emp=>
 //         String(emp.id)===String(empId)
-//           ? {...emp, hrDocuments:(emp.hrDocuments||[]).filter(d=>d.id!==docId)}
+//           ? {...emp, hrVault:(emp.hrVault||[]).filter(d=>d.id!==docId)}
 //           : emp
 //       ));
 //       showMsg("success","Document deleted");
@@ -597,36 +597,36 @@
 //   };
 
 //   // Merge employees with hrDocs data for display
-//   // Even employees with no HR docs will show in the list
-//   const mergedEmployees = useMemo(() => {
+//   // Even employees with no PeopleOps docs will show in the list
+//   const mergedPersons = useMemo(() => {
 //     const hrDocMap = {};
-//     hrDocs.forEach(e => { hrDocMap[String(e.id)] = e.hrDocuments||[]; });
+//     hrDocs.forEach(e => { hrDocMap[String(e.id)] = e.hrVault||[]; });
 
 //     return employees.map(emp => ({
 //       ...emp,
-//       hrDocuments: hrDocMap[String(emp.id)] || [],
+//       hrVault: hrDocMap[String(emp.id)] || [],
 //     }));
 //   }, [employees, hrDocs]);
 
-//   const filtered = useMemo(() => mergedEmployees.filter(emp => {
+//   const filtered = useMemo(() => mergedPersons.filter(emp => {
 //     const matchSearch = !search.trim() ||
 //       (emp.fullName||emp.name||"").toLowerCase().includes(search.toLowerCase()) ||
 //       (emp.email||"").toLowerCase().includes(search.toLowerCase());
 //     if(!matchSearch) return false;
 //     if(statusFilter==="ALL") return true;
-//     return (emp.hrDocuments||[]).some(d=>d.status===statusFilter);
-//   }), [mergedEmployees, search, statusFilter]);
+//     return (emp.hrVault||[]).some(d=>d.status===statusFilter);
+//   }), [mergedPersons, search, statusFilter]);
 
 //   // Stats
 //   const stats = useMemo(()=>{
-//     const all = mergedEmployees.flatMap(e=>e.hrDocuments||[]);
+//     const all = mergedPersons.flatMap(e=>e.hrVault||[]);
 //     return {
 //       total:   all.length,
 //       pending: all.filter(d=>d.status==="PENDING_SIGNATURE").length,
 //       signed:  all.filter(d=>d.status==="SIGNED").length,
 //       emps:    employees.length,
 //     };
-//   },[mergedEmployees, employees]);
+//   },[mergedPersons, employees]);
 
 //   return (
 //     <>
@@ -634,33 +634,33 @@
 //       <div className="adm" style={{ maxWidth:1200,margin:"0 auto" }}>
 
 //         {/* Hero */}
-//         <div style={{ background:`linear-gradient(135deg,${T.navy},#162639)`,
+//         <div style={{ background:`linear-gradient(135deg,${T.navy},#182033)`,
 //           borderRadius:20,padding:"22px 28px",marginBottom:22,
 //           position:"relative",overflow:"hidden" }}>
 //           <div style={{ position:"absolute",top:-30,right:80,width:160,height:160,
-//             borderRadius:"50%",background:"rgba(255,107,53,.1)",
+//             borderRadius:"50%",background:"rgba(139,92,246,.1)",
 //             filter:"blur(40px)",pointerEvents:"none" }}/>
 //           <div style={{ display:"flex",alignItems:"center",
 //             justifyContent:"space-between",flexWrap:"wrap",gap:14,position:"relative" }}>
 //             <div>
 //               <div style={{ display:"flex",alignItems:"center",gap:8,marginBottom:4 }}>
 //                 <h1 className="fd" style={{ fontSize:20,fontWeight:900,
-//                   color:"#fff",margin:0 }}>HR Documents</h1>
+//                   color:"#fff",margin:0 }}>PeopleOps Vault</h1>
 //                 <span style={{ fontSize:9,fontWeight:800,color:T.coral,
-//                   background:"rgba(255,107,53,.2)",padding:"2px 8px",
+//                   background:"rgba(139,92,246,.2)",padding:"2px 8px",
 //                   borderRadius:999,textTransform:"uppercase",letterSpacing:".08em" }}>
-//                   Admin
+//                   Operator
 //                 </span>
 //                 {tenantCode && (
 //                   <span style={{ fontSize:9,fontWeight:800,color:T.teal,
-//                     background:"rgba(0,194,168,.15)",padding:"2px 8px",
+//                     background:"rgba(6,182,212,.15)",padding:"2px 8px",
 //                     borderRadius:999,fontFamily:"monospace" }}>
 //                     {tenantCode}
 //                   </span>
 //                 )}
 //               </div>
 //               <p style={{ fontSize:12,color:"rgba(255,255,255,.4)",margin:0 }}>
-//                 Upload offer letters, joining letters and other HR documents for employees to digitally sign.
+//                 Upload offer letters, joining letters and other PeopleOps documents for employees to digitally sign.
 //                 Send to one, multiple, or all employees at once.
 //               </p>
 //             </div>
@@ -675,7 +675,7 @@
 //               <button onClick={()=>{setPreselected(null);setShowUpload(true);}}
 //                 className="adm-btn"
 //                 style={{ background:`linear-gradient(135deg,${T.coral},#f97316)`,
-//                   color:"#fff",boxShadow:"0 4px 14px rgba(255,107,53,.35)" }}>
+//                   color:"#fff",boxShadow:"0 4px 14px rgba(139,92,246,.35)" }}>
 //                 <FiPlus size={14}/> Upload Document
 //               </button>
 //             </div>
@@ -687,8 +687,8 @@
 //           <div style={{ display:"flex",alignItems:"center",gap:10,
 //             padding:"12px 16px",borderRadius:12,marginBottom:18,
 //             fontSize:13,fontWeight:600,
-//             background:message.type==="success"?"#f0fdf4":message.type==="info"?"rgba(0,194,168,.08)":"#fef2f2",
-//             border:`1px solid ${message.type==="success"?"#86efac":message.type==="info"?"rgba(0,194,168,.3)":"#fca5a5"}`,
+//             background:message.type==="success"?"#f0fdf4":message.type==="info"?"rgba(6,182,212,.08)":"#fef2f2",
+//             border:`1px solid ${message.type==="success"?"#86efac":message.type==="info"?"rgba(6,182,212,.3)":"#fca5a5"}`,
 //             color:message.type==="success"?"#16a34a":message.type==="info"?T.teal:"#b91c1c" }}>
 //             {message.type==="success"?<FiCheckCircle size={16}/>:<FiAlertCircle size={16}/>}
 //             <span style={{ flex:1 }}>{message.text}</span>
@@ -698,10 +698,10 @@
 //         {/* Stats */}
 //         <div style={{ display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:12,marginBottom:22 }}>
 //           {[
-//             { label:"Total Documents",   val:stats.total,   color:T.coral,   bg:"rgba(255,107,53,.08)",  icon:<FiFile size={20}/> },
+//             { label:"Total Vault",   val:stats.total,   color:T.coral,   bg:"rgba(139,92,246,.08)",  icon:<FiFile size={20}/> },
 //             { label:"Pending Signature", val:stats.pending, color:"#f59e0b", bg:"rgba(245,158,11,.08)",  icon:<FiPenTool size={20}/> },
 //             { label:"Signed",            val:stats.signed,  color:"#16a34a", bg:"rgba(22,163,74,.08)",   icon:<FiCheck size={20}/> },
-//             { label:"Employees",         val:empLoading?"…":stats.emps, color:T.teal,    bg:"rgba(0,194,168,.08)",   icon:<FiUsers size={20}/> },
+//             { label:"Persons",         val:empLoading?"…":stats.emps, color:T.teal,    bg:"rgba(6,182,212,.08)",   icon:<FiUsers size={20}/> },
 //           ].map(s=>(
 //             <div key={s.label} className="adm-card" style={{ padding:"18px 20px" }}>
 //               <div style={{ display:"flex",alignItems:"center",gap:12 }}>
@@ -751,24 +751,24 @@
 //         <div style={{ display:"flex",alignItems:"center",
 //           justifyContent:"space-between",marginBottom:14 }}>
 //           <h2 className="fd" style={{ fontSize:17,fontWeight:900,color:T.navy,margin:0 }}>
-//             Employees ({filtered.length})
+//             Persons ({filtered.length})
 //             {empLoading && <span style={{ fontSize:12,fontWeight:500,color:"#94a3b8",
 //               marginLeft:8 }}>loading…</span>}
 //           </h2>
 //           <span style={{ fontSize:12,color:"#9ca3af",fontWeight:600 }}>
-//             {filtered.reduce((s,e)=>s+(e.hrDocuments||[]).length,0)} total HR documents
+//             {filtered.reduce((s,e)=>s+(e.hrVault||[]).length,0)} total PeopleOps documents
 //           </span>
 //         </div>
 
-//         {/* Employee list */}
+//         {/* Person list */}
 //         <div style={{ display:"flex",flexDirection:"column",gap:14 }}>
 //           {loading || empLoading ? (
 //             <div className="adm-card" style={{ padding:"64px",textAlign:"center" }}>
 //               <div style={{ width:48,height:48,borderRadius:"50%",
-//                 border:"3px solid rgba(255,107,53,.2)",borderTopColor:T.coral,
+//                 border:"3px solid rgba(139,92,246,.2)",borderTopColor:T.coral,
 //                 margin:"0 auto 16px",animation:"adm-spin 1s linear infinite" }}/>
 //               <p style={{ fontSize:14,color:"#6b7280",fontWeight:600,margin:0 }}>
-//                 {empLoading?"Loading employees…":"Loading HR documents…"}
+//                 {empLoading?"Loading employees…":"Loading PeopleOps documents…"}
 //               </p>
 //             </div>
 //           ) : filtered.length===0 ? (
@@ -783,25 +783,25 @@
 //                   : "Try adjusting your search or filters"}
 //               </p>
 //               {employees.length===0 && (
-//                 <button className="adm-btn" onClick={fetchEmployees}
+//                 <button className="adm-btn" onClick={fetchPersons}
 //                   style={{ background:`linear-gradient(135deg,${T.coral},#f97316)`,
 //                     color:"#fff",margin:"0 auto" }}>
-//                   <FiRefreshCw size={14}/> Retry Loading Employees
+//                   <FiRefreshCw size={14}/> Retry Loading Persons
 //                 </button>
 //               )}
 //             </div>
 //           ) : filtered.map(emp => {
 //             const docs    = statusFilter==="ALL"
-//               ? (emp.hrDocuments||[])
-//               : (emp.hrDocuments||[]).filter(d=>d.status===statusFilter);
+//               ? (emp.hrVault||[])
+//               : (emp.hrVault||[]).filter(d=>d.status===statusFilter);
 //             const isOpen  = expanded===emp.id;
-//             const pending = (emp.hrDocuments||[]).filter(d=>d.status==="PENDING_SIGNATURE").length;
+//             const pending = (emp.hrVault||[]).filter(d=>d.status==="PENDING_SIGNATURE").length;
 
 //             return (
 //               <div key={emp.id} className="adm-card adm-emp adm-up"
 //                 style={{ overflow:"hidden",transition:"box-shadow .2s" }}>
 
-//                 {/* Employee row */}
+//                 {/* Person row */}
 //                 <div className="adm-hdr"
 //                   onClick={()=>setExpanded(isOpen?null:emp.id)}
 //                   style={{ display:"flex",alignItems:"center",
@@ -811,7 +811,7 @@
 //                   <div style={{ display:"flex",alignItems:"center",gap:14,flex:1,minWidth:0 }}>
 //                     {/* Avatar */}
 //                     <div style={{ width:48,height:48,
-//                       background:`linear-gradient(135deg,${T.coral},#FF5722)`,
+//                       background:`linear-gradient(135deg,${T.coral},#06B6D4)`,
 //                       borderRadius:"50%",display:"flex",alignItems:"center",
 //                       justifyContent:"center",fontSize:18,fontWeight:900,
 //                       color:"#fff",fontFamily:"'Sora',sans-serif",flexShrink:0 }}>
@@ -819,9 +819,9 @@
 //                     </div>
 //                     <div style={{ flex:1,minWidth:0 }}>
 //                       <h3 className="fd" style={{ fontSize:15,fontWeight:800,
-//                         color:"#111827",margin:"0 0 3px",
+//                         color:"#0B1020",margin:"0 0 3px",
 //                         overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap" }}>
-//                         {emp.fullName||emp.name||"Unknown Employee"}
+//                         {emp.fullName||emp.name||"Unknown Person"}
 //                       </h3>
 //                       <div style={{ display:"flex",flexWrap:"wrap",gap:10 }}>
 //                         <span style={{ fontSize:12,color:"#9ca3af" }}>
@@ -829,7 +829,7 @@
 //                         </span>
 //                         {emp.department && (
 //                           <span style={{ fontSize:11,fontWeight:600,color:T.teal,
-//                             background:"rgba(0,194,168,.08)",padding:"1px 7px",
+//                             background:"rgba(6,182,212,.08)",padding:"1px 7px",
 //                             borderRadius:99 }}>{emp.department}</span>
 //                         )}
 //                       </div>
@@ -837,11 +837,11 @@
 
 //                     {/* Chips */}
 //                     <div style={{ display:"flex",gap:6,flexShrink:0 }}>
-//                       <div style={{ background:"rgba(255,107,53,.08)",borderRadius:999,
+//                       <div style={{ background:"rgba(139,92,246,.08)",borderRadius:999,
 //                         padding:"5px 12px",display:"flex",alignItems:"center",gap:5 }}>
 //                         <FiFile size={13} color={T.coral}/>
 //                         <span className="fd" style={{ fontSize:13,fontWeight:800,color:T.coral }}>
-//                           {(emp.hrDocuments||[]).length}
+//                           {(emp.hrVault||[]).length}
 //                         </span>
 //                       </div>
 //                       {pending>0 && (
@@ -868,7 +868,7 @@
 //                       className="adm-btn"
 //                       style={{ background:`linear-gradient(135deg,${T.coral},#f97316)`,
 //                         color:"#fff",padding:"8px 14px" }}>
-//                       <FiPlus size={13}/> Upload for {emp.fullName?.split(" ")[0]||"Employee"}
+//                       <FiPlus size={13}/> Upload for {emp.fullName?.split(" ")[0]||"Person"}
 //                     </button>
 //                     <div style={{ color:"#9ca3af",transition:"transform .2s",fontSize:18,
 //                       transform:isOpen?"rotate(180deg)":"rotate(0deg)" }}>
@@ -884,7 +884,7 @@
 //                       <div style={{ padding:"40px 24px",textAlign:"center" }}>
 //                         <FiFile size={36} color="#d1d5db" style={{ marginBottom:10 }}/>
 //                         <p style={{ fontSize:14,fontWeight:600,color:"#6b7280",margin:"0 0 6px" }}>
-//                           No HR documents sent yet
+//                           No PeopleOps documents sent yet
 //                         </p>
 //                         <p style={{ fontSize:12,color:"#9ca3af",margin:"0 0 14px" }}>
 //                           {statusFilter!=="ALL"
@@ -985,8 +985,8 @@
 //                                       <button title="Download"
 //                                         onClick={()=>window.open(doc.originalFileUrl,"_blank")}
 //                                         style={{ width:30,height:30,borderRadius:7,
-//                                           border:"1.5px solid rgba(0,194,168,.3)",
-//                                           background:"rgba(0,194,168,.06)",
+//                                           border:"1.5px solid rgba(6,182,212,.3)",
+//                                           background:"rgba(6,182,212,.06)",
 //                                           cursor:"pointer",color:T.teal,
 //                                           display:"flex",alignItems:"center",justifyContent:"center" }}>
 //                                         <FiDownload size={13}/>
@@ -1032,7 +1032,7 @@
 //       {showUpload && (
 //         <UploadModal
 //           employees={employees}
-//           preselectedEmployee={preselected}
+//           preselectedPerson={preselected}
 //           onClose={()=>{ setShowUpload(false); setPreselected(null); }}
 //           onUploaded={handleUploaded}
 //         />
@@ -1056,15 +1056,15 @@ const getTenant = () => localStorage.getItem("tenantCode") || "";
 const getCo     = () => localStorage.getItem("companyId")  || "";
 const authHdr   = () => {
   const t = getToken();
-  return { Authorization:t.startsWith("Bearer ")?t:`Bearer ${t}`, "X-Tenant-Code":getTenant(), "X-Company-Id":getCo() };
+  return { Authorization:t.startsWith("Bearer ")?t:`Bearer ${t}`, "X-Tenant-Code":getTenant(), "X-Workspace-Id":getCo() };
 };
 
-const T = { navy:"#0D1F2D", navyMid:"#1E3448", coral:"#FF6B35", teal:"#00C2A8", bg:"#F7F8FA", border:"#E8ECF2" };
+const T = { navy:"#0B1020", navyMid:"#374151", coral:"#8B5CF6", teal:"#06B6D4", bg:"#F6F8FB", border:"#E8ECF2" };
 
-const HR_DOC_TYPES = [
+const PeopleOps_DOC_TYPES = [
   { value:"OFFER_LETTER",             label:"Offer Letter"             },
   { value:"JOINING_LETTER",           label:"Joining Letter"           },
-  { value:"SALARY_REVISION_LETTER",   label:"Salary Revision Letter"   },
+  { value:"SALARY_REVISION_LETTER",   label:"Compensation Revision Letter"   },
   { value:"APPOINTMENT_LETTER",       label:"Appointment Letter"       },
   { value:"CONFIRMATION_LETTER",      label:"Confirmation Letter"      },
   { value:"WARNING_LETTER",           label:"Warning Letter"           },
@@ -1072,8 +1072,8 @@ const HR_DOC_TYPES = [
   { value:"EXPERIENCE_CERTIFICATE",   label:"Experience Certificate"   },
   { value:"NON_DISCLOSURE_AGREEMENT", label:"Non-Disclosure Agreement" },
   { value:"EMPLOYMENT_CONTRACT",      label:"Employment Contract"      },
-  { value:"POLICY_DOCUMENT",          label:"Policy Document"          },
-  { value:"ONBOARDING_CHECKLIST",     label:"Onboarding Checklist"     },
+  { value:"POLICY_DOCUMENT",          label:"Playbook Document"          },
+  { value:"ONBOARDING_CHECKLIST",     label:"JoinerFlow Checklist"     },
   { value:"OTHER",                    label:"Other"                    },
 ];
 
@@ -1130,25 +1130,25 @@ const CSS = `
 .adm-card{background:#fff;border-radius:18px;border:1px solid #f0f0f0;box-shadow:0 2px 12px rgba(13,31,45,.05);}
 .adm-emp:hover{box-shadow:0 6px 24px rgba(13,31,45,.09)!important;}
 .adm-hdr:hover{background:#fafafa;}
-.adm-inp{padding:9px 14px;border-radius:10px;border:1.5px solid #e5e7eb;background:#fff;font-size:12px;outline:none;font-family:'DM Sans',sans-serif;color:#0D1F2D;box-sizing:border-box;width:100%;transition:border .15s;}
-.adm-inp:focus{border-color:#FF6B35;}
+.adm-inp{padding:9px 14px;border-radius:10px;border:1.5px solid #e5e7eb;background:#fff;font-size:12px;outline:none;font-family:'DM Sans',sans-serif;color:#0B1020;box-sizing:border-box;width:100%;transition:border .15s;}
+.adm-inp:focus{border-color:#8B5CF6;}
 .adm-btn{display:inline-flex;align-items:center;gap:6px;padding:9px 18px;border-radius:10px;border:none;font-size:12px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s;}
 .adm-btn:disabled{opacity:.55;cursor:not-allowed;}
 .modal-overlay{position:fixed;inset:0;z-index:999;background:rgba(13,31,45,0.7);display:flex;align-items:center;justify-content:center;padding:16px;}
 .emp-check-item{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:10px;cursor:pointer;transition:all .15s;border:1.5px solid transparent;}
-.emp-check-item:hover{background:rgba(255,107,53,.05);border-color:rgba(255,107,53,.15);}
-.emp-check-item.selected{background:rgba(255,107,53,.08);border-color:rgba(255,107,53,.25);}
+.emp-check-item:hover{background:rgba(139,92,246,.05);border-color:rgba(139,92,246,.15);}
+.emp-check-item.selected{background:rgba(139,92,246,.08);border-color:rgba(139,92,246,.25);}
 .adm-tr:hover{background:#fafafa;}
 `;
 
 // ─────────────────────────────────────────────────────────────────────────────
 //  NOTIFY MODAL
-//  Admin sends a reminder to: one employee / a department / all employees
+//  Operator sends a reminder to: one employee / a department / all employees
 //  Two actions: "Please sign" OR "Please re-upload document"
 // ─────────────────────────────────────────────────────────────────────────────
-function NotifyModal({ employees, preselectedEmployee, onClose, onSent }) {
-  const [scope,       setScope]       = useState(preselectedEmployee ? "one" : "one");
-  const [selectedEmp, setSelectedEmp] = useState(preselectedEmployee ? String(preselectedEmployee.id) : "");
+function NotifyModal({ employees, preselectedPerson, onClose, onSent }) {
+  const [scope,       setScope]       = useState(preselectedPerson ? "one" : "one");
+  const [selectedEmp, setSelectedEmp] = useState(preselectedPerson ? String(preselectedPerson.id) : "");
   const [department,  setDepartment]  = useState("ALL");
   const [action,      setAction]      = useState("sign");   // "sign" | "reupload"
   const [customMsg,   setCustomMsg]   = useState("");
@@ -1169,7 +1169,7 @@ function NotifyModal({ employees, preselectedEmployee, onClose, onSent }) {
   },[scope,selectedEmp,department,employees]);
 
   const defaultMessages = {
-    sign:     "You have an HR document pending your signature. Please sign it at the earliest.",
+    sign:     "You have an PeopleOps document pending your signature. Please sign it at the earliest.",
     reupload: "Your uploaded document requires re-submission. Please re-upload the correct document.",
   };
 
@@ -1209,7 +1209,7 @@ function NotifyModal({ employees, preselectedEmployee, onClose, onSent }) {
         <div style={{ padding:"22px 24px 16px",display:"flex",justifyContent:"space-between",
           alignItems:"center",borderBottom:`1px solid ${T.border}` }}>
           <div style={{ display:"flex",alignItems:"center",gap:10 }}>
-            <div style={{ width:38,height:38,borderRadius:11,background:"rgba(0,194,168,.1)",
+            <div style={{ width:38,height:38,borderRadius:11,background:"rgba(6,182,212,.1)",
               display:"flex",alignItems:"center",justifyContent:"center" }}>
               <FiBell size={18} color={T.teal}/>
             </div>
@@ -1233,14 +1233,14 @@ function NotifyModal({ employees, preselectedEmployee, onClose, onSent }) {
             </label>
             <div style={{ display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:10 }}>
               {[
-                { s:"one",  icon:"👤", label:"One Employee", desc:"Specific employee" },
+                { s:"one",  icon:"👤", label:"One Person", desc:"Specific employee" },
                 { s:"dept", icon:"🏢", label:"Department",   desc:"All in a department" },
-                { s:"all",  icon:"📢", label:"All Employees",desc:`All ${employees.length} employees` },
+                { s:"all",  icon:"📢", label:"All Persons",desc:`All ${employees.length} employees` },
               ].map(opt=>(
                 <button key={opt.s} onClick={()=>setScope(opt.s)}
                   style={{ padding:"12px 8px",borderRadius:12,cursor:"pointer",
                     border:`2px solid ${scope===opt.s?T.teal:"#e2e8f0"}`,
-                    background:scope===opt.s?"rgba(0,194,168,.08)":"#fff",
+                    background:scope===opt.s?"rgba(6,182,212,.08)":"#fff",
                     textAlign:"center",transition:"all .15s" }}>
                   <div style={{ fontSize:20,marginBottom:3 }}>{opt.icon}</div>
                   <div style={{ fontSize:12,fontWeight:700,color:scope===opt.s?T.teal:T.navy }}>{opt.label}</div>
@@ -1250,12 +1250,12 @@ function NotifyModal({ employees, preselectedEmployee, onClose, onSent }) {
             </div>
           </div>
 
-          {/* Employee selector */}
+          {/* Person selector */}
           {scope==="one" && (
             <div>
               <label style={{ display:"block",fontSize:11,fontWeight:700,color:"#64748b",
                 textTransform:"uppercase",letterSpacing:"0.07em",marginBottom:6 }}>
-                Select Employee <span style={{ color:"#ef4444" }}>*</span>
+                Select Person <span style={{ color:"#ef4444" }}>*</span>
               </label>
               <select className="adm-inp" value={selectedEmp} onChange={e=>setSelectedEmp(e.target.value)}>
                 <option value="">— Choose employee —</option>
@@ -1284,7 +1284,7 @@ function NotifyModal({ employees, preselectedEmployee, onClose, onSent }) {
               ) : (
                 <div style={{ background:"#f8fafc",border:`1px solid ${T.border}`,borderRadius:10,
                   padding:"10px 14px",fontSize:12,color:"#94a3b8" }}>
-                  No departments found. Employees may not have department info.
+                  No departments found. Persons may not have department info.
                 </div>
               )}
             </div>
@@ -1292,7 +1292,7 @@ function NotifyModal({ employees, preselectedEmployee, onClose, onSent }) {
 
           {/* All employees info */}
           {scope==="all" && (
-            <div style={{ background:"rgba(0,194,168,.06)",border:"1px solid rgba(0,194,168,.2)",
+            <div style={{ background:"rgba(6,182,212,.06)",border:"1px solid rgba(6,182,212,.2)",
               borderRadius:10,padding:"10px 14px" }}>
               <p style={{ fontSize:12,fontWeight:600,color:"#0d7377",margin:0 }}>
                 📢 Notification will be sent to all <strong>{employees.length}</strong> employees.
@@ -1309,7 +1309,7 @@ function NotifyModal({ employees, preselectedEmployee, onClose, onSent }) {
             <div style={{ display:"grid",gridTemplateColumns:"1fr 1fr",gap:10 }}>
               {[
                 { a:"sign",     icon:<FiPenTool size={18}/>,  label:"Please Sign",    desc:"Remind to sign pending documents", color:T.coral },
-                { a:"reupload", icon:<FiRepeat size={18}/>,   label:"Please Re-upload",desc:"Ask to re-submit a document",     color:"#7c3aed" },
+                { a:"reupload", icon:<FiRepeat size={18}/>,   label:"Please Re-upload",desc:"Ask to re-submit a document",     color:"#A855F7" },
               ].map(opt=>(
                 <button key={opt.a} onClick={()=>setAction(opt.a)}
                   style={{ padding:"14px",borderRadius:12,cursor:"pointer",
@@ -1370,7 +1370,7 @@ function NotifyModal({ employees, preselectedEmployee, onClose, onSent }) {
               fontSize:13,fontWeight:600,cursor:"pointer" }}>Cancel</button>
             <button onClick={handleSend} disabled={sending} className="adm-btn"
               style={{ flex:2,padding:11,borderRadius:10,justifyContent:"center",
-                background:sending?"#94a3b8":`linear-gradient(135deg,${T.teal},#00a896)`,
+                background:sending?"#94a3b8":`linear-gradient(135deg,${T.teal},#0D9488)`,
                 color:"#fff",fontSize:13 }}>
               {sending
                 ? <><span className="adm-spin" style={{ display:"inline-block",marginRight:6 }}>⟳</span>Sending to {targets.length}…</>
@@ -1386,9 +1386,9 @@ function NotifyModal({ employees, preselectedEmployee, onClose, onSent }) {
 // ─────────────────────────────────────────────────────────────────────────────
 //  UPLOAD MODAL
 // ─────────────────────────────────────────────────────────────────────────────
-function UploadModal({ employees, onClose, onUploaded, preselectedEmployee }) {
-  const [targetMode,  setTargetMode]  = useState(preselectedEmployee?"one":"one");
-  const [selectedIds, setSelectedIds] = useState(preselectedEmployee?[String(preselectedEmployee.id)]:[]);
+function UploadModal({ employees, onClose, onUploaded, preselectedPerson }) {
+  const [targetMode,  setTargetMode]  = useState(preselectedPerson?"one":"one");
+  const [selectedIds, setSelectedIds] = useState(preselectedPerson?[String(preselectedPerson.id)]:[]);
   const [empSearch,   setEmpSearch]   = useState("");
   const [form, setForm] = useState({ docType:"OFFER_LETTER",title:"",notes:"",requiresSignature:true,signByDate:"" });
   const [file,    setFile]    = useState(null);
@@ -1398,7 +1398,7 @@ function UploadModal({ employees, onClose, onUploaded, preselectedEmployee }) {
   const fileRef = useRef();
 
   const set = (k,v) => setForm(p=>({...p,[k]:v}));
-  useEffect(()=>{ set("title", HR_DOC_TYPES.find(t=>t.value===form.docType)?.label||""); },[form.docType]);
+  useEffect(()=>{ set("title", PeopleOps_DOC_TYPES.find(t=>t.value===form.docType)?.label||""); },[form.docType]);
 
   const handleFile = (e) => {
     const f=e.target.files[0]; if(!f) return;
@@ -1408,7 +1408,7 @@ function UploadModal({ employees, onClose, onUploaded, preselectedEmployee }) {
     else setPreview(null);
   };
 
-  const targetEmployees = useMemo(()=>{
+  const targetPersons = useMemo(()=>{
     if(targetMode==="all") return employees;
     return employees.filter(e=>selectedIds.includes(String(e.id)));
   },[targetMode,selectedIds,employees]);
@@ -1424,12 +1424,12 @@ function UploadModal({ employees, onClose, onUploaded, preselectedEmployee }) {
   };
 
   const handleSubmit = async () => {
-    if(targetEmployees.length===0){setError("Select at least one employee");return;}
+    if(targetPersons.length===0){setError("Select at least one employee");return;}
     if(!form.title.trim()){setError("Title is required");return;}
     if(!file){setError("Select a file");return;}
     setError(""); setSaving(true);
     let ok=0,fail=0;
-    for(const emp of targetEmployees){
+    for(const emp of targetPersons){
       const fd=new FormData();
       fd.append("file",file); fd.append("employeeId",emp.id); fd.append("docType",form.docType);
       fd.append("title",form.title.trim()); fd.append("notes",form.notes||"");
@@ -1451,11 +1451,11 @@ function UploadModal({ employees, onClose, onUploaded, preselectedEmployee }) {
       <div style={{ background:"#fff",borderRadius:20,width:"100%",maxWidth:640,maxHeight:"92vh",overflowY:"auto",boxShadow:"0 24px 60px rgba(13,31,45,.25)" }}>
         <div style={{ padding:"22px 24px 16px",display:"flex",justifyContent:"space-between",alignItems:"center",borderBottom:`1px solid ${T.border}` }}>
           <div style={{ display:"flex",alignItems:"center",gap:10 }}>
-            <div style={{ width:38,height:38,borderRadius:11,background:"rgba(255,107,53,0.1)",display:"flex",alignItems:"center",justifyContent:"center" }}>
+            <div style={{ width:38,height:38,borderRadius:11,background:"rgba(139,92,246,0.1)",display:"flex",alignItems:"center",justifyContent:"center" }}>
               <FiUpload size={18} color={T.coral}/>
             </div>
             <div>
-              <h2 className="fd" style={{ fontSize:17,fontWeight:800,color:T.navy,margin:0 }}>Upload HR Document</h2>
+              <h2 className="fd" style={{ fontSize:17,fontWeight:800,color:T.navy,margin:0 }}>Upload PeopleOps Document</h2>
               <p style={{ fontSize:11,color:"#94a3b8",margin:0 }}>Send a document to one, selected, or all employees</p>
             </div>
           </div>
@@ -1467,9 +1467,9 @@ function UploadModal({ employees, onClose, onUploaded, preselectedEmployee }) {
           <div>
             <label style={{ display:"block",fontSize:11,fontWeight:700,color:"#64748b",textTransform:"uppercase",letterSpacing:"0.07em",marginBottom:8 }}>Who should receive this document? <span style={{ color:"#ef4444" }}>*</span></label>
             <div style={{ display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:10 }}>
-              {[{mode:"one",label:"One Employee",icon:"👤",desc:"Select one employee"},{mode:"selected",label:"Multiple",icon:"👥",desc:"Choose several"},{mode:"all",label:"All Employees",icon:"🏢",desc:`All ${employees.length}`}].map(opt=>(
+              {[{mode:"one",label:"One Person",icon:"👤",desc:"Select one employee"},{mode:"selected",label:"Multiple",icon:"👥",desc:"Choose several"},{mode:"all",label:"All Persons",icon:"🏢",desc:`All ${employees.length}`}].map(opt=>(
                 <button key={opt.mode} onClick={()=>{setTargetMode(opt.mode);setSelectedIds([]);}}
-                  style={{ padding:"12px 10px",borderRadius:12,cursor:"pointer",border:`2px solid ${targetMode===opt.mode?T.coral:"#e2e8f0"}`,background:targetMode===opt.mode?"rgba(255,107,53,.08)":"#fff",textAlign:"center",transition:"all .15s" }}>
+                  style={{ padding:"12px 10px",borderRadius:12,cursor:"pointer",border:`2px solid ${targetMode===opt.mode?T.coral:"#e2e8f0"}`,background:targetMode===opt.mode?"rgba(139,92,246,.08)":"#fff",textAlign:"center",transition:"all .15s" }}>
                   <div style={{ fontSize:22,marginBottom:4 }}>{opt.icon}</div>
                   <div style={{ fontSize:12,fontWeight:700,color:targetMode===opt.mode?T.coral:T.navy }}>{opt.label}</div>
                   <div style={{ fontSize:10,color:"#94a3b8",marginTop:2 }}>{opt.desc}</div>
@@ -1481,7 +1481,7 @@ function UploadModal({ employees, onClose, onUploaded, preselectedEmployee }) {
           {(targetMode==="one"||targetMode==="selected")&&(
             <div>
               <label style={{ display:"block",fontSize:11,fontWeight:700,color:"#64748b",textTransform:"uppercase",letterSpacing:"0.07em",marginBottom:6 }}>
-                {targetMode==="one"?"Select Employee":"Select Employees"}<span style={{ color:"#ef4444" }}> *</span>
+                {targetMode==="one"?"Select Person":"Select Persons"}<span style={{ color:"#ef4444" }}> *</span>
                 {targetMode==="selected"&&selectedIds.length>0&&<span style={{ marginLeft:8,background:T.coral,color:"#fff",fontSize:10,padding:"2px 7px",borderRadius:99 }}>{selectedIds.length} selected</span>}
               </label>
               <div style={{ position:"relative",marginBottom:8 }}>
@@ -1493,7 +1493,7 @@ function UploadModal({ employees, onClose, onUploaded, preselectedEmployee }) {
                   const sid=String(emp.id); const isSel=selectedIds.includes(sid);
                   return (
                     <div key={emp.id} className={`emp-check-item${isSel?" selected":""}`} onClick={()=>toggleEmp(emp.id)}>
-                      <div style={{ width:32,height:32,borderRadius:"50%",flexShrink:0,background:`linear-gradient(135deg,${T.coral},#ff5722)`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:12,fontWeight:900,color:"#fff" }}>{initials(emp.fullName||emp.name)}</div>
+                      <div style={{ width:32,height:32,borderRadius:"50%",flexShrink:0,background:`linear-gradient(135deg,${T.coral},#06B6D4)`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:12,fontWeight:900,color:"#fff" }}>{initials(emp.fullName||emp.name)}</div>
                       <div style={{ flex:1,minWidth:0 }}>
                         <p style={{ fontSize:13,fontWeight:600,color:T.navy,margin:0,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap" }}>{emp.fullName||emp.name}</p>
                         <p style={{ fontSize:11,color:"#94a3b8",margin:0 }}>{emp.email}{emp.department?` · ${emp.department}`:""}</p>
@@ -1518,7 +1518,7 @@ function UploadModal({ employees, onClose, onUploaded, preselectedEmployee }) {
             <div>
               <label style={{ display:"block",fontSize:11,fontWeight:700,color:"#64748b",textTransform:"uppercase",letterSpacing:"0.07em",marginBottom:6 }}>Document Type</label>
               <select className="adm-inp" value={form.docType} onChange={e=>set("docType",e.target.value)}>
-                {HR_DOC_TYPES.map(t=><option key={t.value} value={t.value}>{t.label}</option>)}
+                {PeopleOps_DOC_TYPES.map(t=><option key={t.value} value={t.value}>{t.label}</option>)}
               </select>
             </div>
             <div>
@@ -1564,7 +1564,7 @@ function UploadModal({ employees, onClose, onUploaded, preselectedEmployee }) {
                 </div>
               ):(
                 <>
-                  <div style={{ width:44,height:44,borderRadius:12,background:"rgba(255,107,53,0.1)",display:"flex",alignItems:"center",justifyContent:"center" }}><FiUpload size={20} color={T.coral}/></div>
+                  <div style={{ width:44,height:44,borderRadius:12,background:"rgba(139,92,246,0.1)",display:"flex",alignItems:"center",justifyContent:"center" }}><FiUpload size={20} color={T.coral}/></div>
                   <div style={{ textAlign:"center" }}>
                     <p style={{ fontSize:13,fontWeight:700,color:T.navy,margin:0 }}>Drop file or click to browse</p>
                     <p style={{ fontSize:11,color:"#94a3b8",margin:"4px 0 0" }}>PDF, JPG, PNG · Max 15 MB</p>
@@ -1576,9 +1576,9 @@ function UploadModal({ employees, onClose, onUploaded, preselectedEmployee }) {
             {file&&<button onClick={()=>{setFile(null);setPreview(null);if(fileRef.current)fileRef.current.value="";}} style={{ marginTop:6,background:"none",border:"none",fontSize:11,color:"#94a3b8",cursor:"pointer",fontWeight:600 }}>✕ Remove file</button>}
           </div>
 
-          {targetEmployees.length>0&&file&&(
-            <div style={{ background:"rgba(0,194,168,.06)",border:"1px solid rgba(0,194,168,.2)",borderRadius:10,padding:"10px 14px" }}>
-              <p style={{ fontSize:12,fontWeight:600,color:"#0d7377",margin:0 }}>✅ Ready to send <strong>"{form.title}"</strong> to <strong>{targetEmployees.length}</strong> employee{targetEmployees.length>1?"s":""}</p>
+          {targetPersons.length>0&&file&&(
+            <div style={{ background:"rgba(6,182,212,.06)",border:"1px solid rgba(6,182,212,.2)",borderRadius:10,padding:"10px 14px" }}>
+              <p style={{ fontSize:12,fontWeight:600,color:"#0d7377",margin:0 }}>✅ Ready to send <strong>"{form.title}"</strong> to <strong>{targetPersons.length}</strong> employee{targetPersons.length>1?"s":""}</p>
             </div>
           )}
 
@@ -1600,8 +1600,8 @@ function UploadModal({ employees, onClose, onUploaded, preselectedEmployee }) {
 // ─────────────────────────────────────────────────────────────────────────────
 //  MAIN
 // ─────────────────────────────────────────────────────────────────────────────
-export default function AdminHrDocuments() {
-  const [employees,    setEmployees]    = useState([]);
+export default function OperatorHrVault() {
+  const [employees,    setPersons]    = useState([]);
   const [hrDocs,       setHrDocs]       = useState([]);
   const [loading,      setLoading]      = useState(false);
   const [empLoading,   setEmpLoading]   = useState(false);
@@ -1616,17 +1616,17 @@ export default function AdminHrDocuments() {
 
   const tenantCode = getTenant(), companyId = getCo();
 
-  useEffect(()=>{ fetchEmployees(); fetchHrDocs(); },[]);
+  useEffect(()=>{ fetchPersons(); fetchHrDocs(); },[]);
 
   const showMsg = (type,text) => { setMessage({type,text}); setTimeout(()=>setMessage({type:"",text:""}),5000); };
 
-  const fetchEmployees = async () => {
+  const fetchPersons = async () => {
     setEmpLoading(true);
     try {
       const t=getToken();
       const res=await api.get("/api/users/tenant/employees");
       const data=res.data;
-      setEmployees(Array.isArray(data)?data:(data?.data||[]));
+      setPersons(Array.isArray(data)?data:(data?.data||[]));
     } catch(e){ showMsg("error",`Failed to fetch employees: ${e.message}`); }
     finally { setEmpLoading(false); }
   };
@@ -1637,7 +1637,7 @@ export default function AdminHrDocuments() {
       const res=await api.get("/api/hr-documents/admin/all");
       const data=res.data;
       setHrDocs(Array.isArray(data)?data:(data?.data||[]));
-    } catch(e){ showMsg("error",e.message||"Failed to fetch HR documents"); }
+    } catch(e){ showMsg("error",e.message||"Failed to fetch PeopleOps documents"); }
     finally { setLoading(false); setRefreshing(false); }
   };
 
@@ -1645,10 +1645,10 @@ export default function AdminHrDocuments() {
   const handleNotifySent=(msg)=>{ setShowNotify(false); setPreselected(null); showMsg("success",msg); };
 
   const handleDelete=async(docId,empId)=>{
-    if(!window.confirm("Delete this HR document?")) return;
+    if(!window.confirm("Delete this PeopleOps document?")) return;
     try {
       await api.delete(`/api/hr-documents/admin/${docId}`);
-      setHrDocs(prev=>prev.map(emp=>String(emp.id)===String(empId)?{...emp,hrDocuments:(emp.hrDocuments||[]).filter(d=>d.id!==docId)}:emp));
+      setHrDocs(prev=>prev.map(emp=>String(emp.id)===String(empId)?{...emp,hrVault:(emp.hrVault||[]).filter(d=>d.id!==docId)}:emp));
       showMsg("success","Document deleted");
     } catch(e){ showMsg("error",e.message); }
   };
@@ -1656,26 +1656,26 @@ export default function AdminHrDocuments() {
   // Mark as "Received" — admin acknowledges receipt of a signed document
   const handleMarkReceived=async(docId,empId)=>{
     showMsg("success","Document marked as received ✅");
-    // Could call backend endpoint to update a "receivedByAdmin" flag if needed
+    // Could call backend endpoint to update a "receivedByOperator" flag if needed
   };
 
-  const mergedEmployees = useMemo(()=>{
+  const mergedPersons = useMemo(()=>{
     const map={};
-    hrDocs.forEach(e=>{ map[String(e.id)]=e.hrDocuments||[]; });
-    return employees.map(emp=>({ ...emp, hrDocuments:map[String(emp.id)]||[] }));
+    hrDocs.forEach(e=>{ map[String(e.id)]=e.hrVault||[]; });
+    return employees.map(emp=>({ ...emp, hrVault:map[String(emp.id)]||[] }));
   },[employees,hrDocs]);
 
-  const filtered = useMemo(()=>mergedEmployees.filter(emp=>{
+  const filtered = useMemo(()=>mergedPersons.filter(emp=>{
     const m=!search.trim()||(emp.fullName||emp.name||"").toLowerCase().includes(search.toLowerCase())||(emp.email||"").toLowerCase().includes(search.toLowerCase());
     if(!m) return false;
     if(statusFilter==="ALL") return true;
-    return (emp.hrDocuments||[]).some(d=>d.status===statusFilter);
-  }),[mergedEmployees,search,statusFilter]);
+    return (emp.hrVault||[]).some(d=>d.status===statusFilter);
+  }),[mergedPersons,search,statusFilter]);
 
   const stats=useMemo(()=>{
-    const all=mergedEmployees.flatMap(e=>e.hrDocuments||[]);
+    const all=mergedPersons.flatMap(e=>e.hrVault||[]);
     return { total:all.length, pending:all.filter(d=>d.status==="PENDING_SIGNATURE").length, signed:all.filter(d=>d.status==="SIGNED").length, emps:employees.length };
-  },[mergedEmployees,employees]);
+  },[mergedPersons,employees]);
 
   return (
     <>
@@ -1683,14 +1683,14 @@ export default function AdminHrDocuments() {
       <div className="adm" style={{ maxWidth:1200,margin:"0 auto" }}>
 
         {/* Hero */}
-        <div style={{ background:`linear-gradient(135deg,${T.navy},#162639)`,borderRadius:20,padding:"22px 28px",marginBottom:22,position:"relative",overflow:"hidden" }}>
-          <div style={{ position:"absolute",top:-30,right:80,width:160,height:160,borderRadius:"50%",background:"rgba(255,107,53,.1)",filter:"blur(40px)",pointerEvents:"none" }}/>
+        <div style={{ background:`linear-gradient(135deg,${T.navy},#182033)`,borderRadius:20,padding:"22px 28px",marginBottom:22,position:"relative",overflow:"hidden" }}>
+          <div style={{ position:"absolute",top:-30,right:80,width:160,height:160,borderRadius:"50%",background:"rgba(139,92,246,.1)",filter:"blur(40px)",pointerEvents:"none" }}/>
           <div style={{ display:"flex",alignItems:"center",justifyContent:"space-between",flexWrap:"wrap",gap:14,position:"relative" }}>
             <div>
               <div style={{ display:"flex",alignItems:"center",gap:8,marginBottom:4 }}>
-                <h1 className="fd" style={{ fontSize:20,fontWeight:900,color:"#fff",margin:0 }}>HR Documents</h1>
-                <span style={{ fontSize:9,fontWeight:800,color:T.coral,background:"rgba(255,107,53,.2)",padding:"2px 8px",borderRadius:999,textTransform:"uppercase",letterSpacing:".08em" }}>Admin</span>
-                {tenantCode&&<span style={{ fontSize:9,fontWeight:800,color:T.teal,background:"rgba(0,194,168,.15)",padding:"2px 8px",borderRadius:999,fontFamily:"monospace" }}>{tenantCode}</span>}
+                <h1 className="fd" style={{ fontSize:20,fontWeight:900,color:"#fff",margin:0 }}>PeopleOps Vault</h1>
+                <span style={{ fontSize:9,fontWeight:800,color:T.coral,background:"rgba(139,92,246,.2)",padding:"2px 8px",borderRadius:999,textTransform:"uppercase",letterSpacing:".08em" }}>Operator</span>
+                {tenantCode&&<span style={{ fontSize:9,fontWeight:800,color:T.teal,background:"rgba(6,182,212,.15)",padding:"2px 8px",borderRadius:999,fontFamily:"monospace" }}>{tenantCode}</span>}
               </div>
               <p style={{ fontSize:12,color:"rgba(255,255,255,.4)",margin:0 }}>
                 Upload, track, view signed copies. Send notifications to employees to sign or re-upload.
@@ -1703,11 +1703,11 @@ export default function AdminHrDocuments() {
               </button>
               {/* Notify All */}
               <button onClick={()=>{setPreselected(null);setShowNotify(true);}} className="adm-btn"
-                style={{ background:"rgba(0,194,168,.2)",border:"1px solid rgba(0,194,168,.3)",color:"#e0fffe" }}>
+                style={{ background:"rgba(6,182,212,.2)",border:"1px solid rgba(6,182,212,.3)",color:"#e0fffe" }}>
                 <FiBell size={14}/> Notify
               </button>
               <button onClick={()=>{setPreselected(null);setShowUpload(true);}} className="adm-btn"
-                style={{ background:`linear-gradient(135deg,${T.coral},#f97316)`,color:"#fff",boxShadow:"0 4px 14px rgba(255,107,53,.35)" }}>
+                style={{ background:`linear-gradient(135deg,${T.coral},#f97316)`,color:"#fff",boxShadow:"0 4px 14px rgba(139,92,246,.35)" }}>
                 <FiPlus size={14}/> Upload Document
               </button>
             </div>
@@ -1717,8 +1717,8 @@ export default function AdminHrDocuments() {
         {/* Toast */}
         {message.text&&(
           <div style={{ display:"flex",alignItems:"center",gap:10,padding:"12px 16px",borderRadius:12,marginBottom:18,fontSize:13,fontWeight:600,
-            background:message.type==="success"?"#f0fdf4":message.type==="info"?"rgba(0,194,168,.08)":"#fef2f2",
-            border:`1px solid ${message.type==="success"?"#86efac":message.type==="info"?"rgba(0,194,168,.3)":"#fca5a5"}`,
+            background:message.type==="success"?"#f0fdf4":message.type==="info"?"rgba(6,182,212,.08)":"#fef2f2",
+            border:`1px solid ${message.type==="success"?"#86efac":message.type==="info"?"rgba(6,182,212,.3)":"#fca5a5"}`,
             color:message.type==="success"?"#16a34a":message.type==="info"?T.teal:"#b91c1c" }}>
             {message.type==="success"?<FiCheckCircle size={16}/>:<FiAlertCircle size={16}/>}
             <span style={{ flex:1 }}>{message.text}</span>
@@ -1728,10 +1728,10 @@ export default function AdminHrDocuments() {
         {/* Stats */}
         <div style={{ display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:12,marginBottom:22 }}>
           {[
-            { label:"Total Documents",   val:stats.total,   color:T.coral,   bg:"rgba(255,107,53,.08)",  icon:<FiFile size={20}/> },
+            { label:"Total Vault",   val:stats.total,   color:T.coral,   bg:"rgba(139,92,246,.08)",  icon:<FiFile size={20}/> },
             { label:"Pending Signature", val:stats.pending, color:"#f59e0b", bg:"rgba(245,158,11,.08)",  icon:<FiPenTool size={20}/> },
             { label:"Signed",            val:stats.signed,  color:"#16a34a", bg:"rgba(22,163,74,.08)",   icon:<FiCheck size={20}/> },
-            { label:"Employees",         val:empLoading?"…":stats.emps, color:T.teal, bg:"rgba(0,194,168,.08)", icon:<FiUsers size={20}/> },
+            { label:"Persons",         val:empLoading?"…":stats.emps, color:T.teal, bg:"rgba(6,182,212,.08)", icon:<FiUsers size={20}/> },
           ].map(s=>(
             <div key={s.label} className="adm-card" style={{ padding:"18px 20px" }}>
               <div style={{ display:"flex",alignItems:"center",gap:12 }}>
@@ -1768,49 +1768,49 @@ export default function AdminHrDocuments() {
         {/* Section title */}
         <div style={{ display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:14 }}>
           <h2 className="fd" style={{ fontSize:17,fontWeight:900,color:T.navy,margin:0 }}>
-            Employees ({filtered.length}){empLoading&&<span style={{ fontSize:12,fontWeight:500,color:"#94a3b8",marginLeft:8 }}>loading…</span>}
+            Persons ({filtered.length}){empLoading&&<span style={{ fontSize:12,fontWeight:500,color:"#94a3b8",marginLeft:8 }}>loading…</span>}
           </h2>
-          <span style={{ fontSize:12,color:"#9ca3af",fontWeight:600 }}>{filtered.reduce((s,e)=>s+(e.hrDocuments||[]).length,0)} total HR documents</span>
+          <span style={{ fontSize:12,color:"#9ca3af",fontWeight:600 }}>{filtered.reduce((s,e)=>s+(e.hrVault||[]).length,0)} total PeopleOps documents</span>
         </div>
 
-        {/* Employee list */}
+        {/* Person list */}
         <div style={{ display:"flex",flexDirection:"column",gap:14 }}>
           {loading||empLoading ? (
             <div className="adm-card" style={{ padding:"64px",textAlign:"center" }}>
-              <div style={{ width:48,height:48,borderRadius:"50%",border:"3px solid rgba(255,107,53,.2)",borderTopColor:T.coral,margin:"0 auto 16px",animation:"adm-spin 1s linear infinite" }}/>
-              <p style={{ fontSize:14,color:"#6b7280",fontWeight:600,margin:0 }}>{empLoading?"Loading employees…":"Loading HR documents…"}</p>
+              <div style={{ width:48,height:48,borderRadius:"50%",border:"3px solid rgba(139,92,246,.2)",borderTopColor:T.coral,margin:"0 auto 16px",animation:"adm-spin 1s linear infinite" }}/>
+              <p style={{ fontSize:14,color:"#6b7280",fontWeight:600,margin:0 }}>{empLoading?"Loading employees…":"Loading PeopleOps documents…"}</p>
             </div>
           ) : filtered.length===0 ? (
             <div className="adm-card" style={{ padding:"56px 24px",textAlign:"center" }}>
               <FiUsers size={48} color="#d1d5db" style={{ marginBottom:12 }}/>
               <p style={{ fontSize:15,fontWeight:700,color:"#6b7280",margin:"0 0 6px" }}>{employees.length===0?"No employees found":"No results match your filter"}</p>
               <p style={{ fontSize:13,color:"#9ca3af",margin:"0 0 16px" }}>{employees.length===0?`No employees found for "${tenantCode}"`:""}</p>
-              {employees.length===0&&<button className="adm-btn" onClick={fetchEmployees} style={{ background:`linear-gradient(135deg,${T.coral},#f97316)`,color:"#fff",margin:"0 auto" }}><FiRefreshCw size={14}/> Retry</button>}
+              {employees.length===0&&<button className="adm-btn" onClick={fetchPersons} style={{ background:`linear-gradient(135deg,${T.coral},#f97316)`,color:"#fff",margin:"0 auto" }}><FiRefreshCw size={14}/> Retry</button>}
             </div>
           ) : filtered.map(emp=>{
-            const docs    = statusFilter==="ALL"?(emp.hrDocuments||[]):(emp.hrDocuments||[]).filter(d=>d.status===statusFilter);
+            const docs    = statusFilter==="ALL"?(emp.hrVault||[]):(emp.hrVault||[]).filter(d=>d.status===statusFilter);
             const isOpen  = expanded===emp.id;
-            const pending = (emp.hrDocuments||[]).filter(d=>d.status==="PENDING_SIGNATURE").length;
+            const pending = (emp.hrVault||[]).filter(d=>d.status==="PENDING_SIGNATURE").length;
 
             return (
               <div key={emp.id} className="adm-card adm-emp adm-up" style={{ overflow:"hidden",transition:"box-shadow .2s" }}>
                 <div className="adm-hdr" onClick={()=>setExpanded(isOpen?null:emp.id)}
                   style={{ display:"flex",alignItems:"center",justifyContent:"space-between",padding:"18px 22px",cursor:"pointer",gap:16,transition:"background .15s" }}>
                   <div style={{ display:"flex",alignItems:"center",gap:14,flex:1,minWidth:0 }}>
-                    <div style={{ width:48,height:48,background:`linear-gradient(135deg,${T.coral},#FF5722)`,borderRadius:"50%",display:"flex",alignItems:"center",justifyContent:"center",fontSize:18,fontWeight:900,color:"#fff",flexShrink:0 }}>
+                    <div style={{ width:48,height:48,background:`linear-gradient(135deg,${T.coral},#06B6D4)`,borderRadius:"50%",display:"flex",alignItems:"center",justifyContent:"center",fontSize:18,fontWeight:900,color:"#fff",flexShrink:0 }}>
                       {initials(emp.fullName||emp.name)}
                     </div>
                     <div style={{ flex:1,minWidth:0 }}>
-                      <h3 className="fd" style={{ fontSize:15,fontWeight:800,color:"#111827",margin:"0 0 3px",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap" }}>{emp.fullName||emp.name||"Unknown"}</h3>
+                      <h3 className="fd" style={{ fontSize:15,fontWeight:800,color:"#0B1020",margin:"0 0 3px",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap" }}>{emp.fullName||emp.name||"Unknown"}</h3>
                       <div style={{ display:"flex",flexWrap:"wrap",gap:10 }}>
                         <span style={{ fontSize:12,color:"#9ca3af" }}>{emp.email}</span>
-                        {(emp.department||emp.departmentName)&&<span style={{ fontSize:11,fontWeight:600,color:T.teal,background:"rgba(0,194,168,.08)",padding:"1px 7px",borderRadius:99 }}>{emp.department||emp.departmentName}</span>}
+                        {(emp.department||emp.departmentName)&&<span style={{ fontSize:11,fontWeight:600,color:T.teal,background:"rgba(6,182,212,.08)",padding:"1px 7px",borderRadius:99 }}>{emp.department||emp.departmentName}</span>}
                       </div>
                     </div>
                     <div style={{ display:"flex",gap:6,flexShrink:0 }}>
-                      <div style={{ background:"rgba(255,107,53,.08)",borderRadius:999,padding:"5px 12px",display:"flex",alignItems:"center",gap:5 }}>
+                      <div style={{ background:"rgba(139,92,246,.08)",borderRadius:999,padding:"5px 12px",display:"flex",alignItems:"center",gap:5 }}>
                         <FiFile size={13} color={T.coral}/>
-                        <span className="fd" style={{ fontSize:13,fontWeight:800,color:T.coral }}>{(emp.hrDocuments||[]).length}</span>
+                        <span className="fd" style={{ fontSize:13,fontWeight:800,color:T.coral }}>{(emp.hrVault||[]).length}</span>
                       </div>
                       {pending>0&&<div style={{ background:"#fffbeb",borderRadius:999,padding:"5px 12px",border:"1px solid #fde68a",display:"flex",alignItems:"center",gap:5 }}>
                         <FiPenTool size={12} color="#d97706"/>
@@ -1822,7 +1822,7 @@ export default function AdminHrDocuments() {
                   <div style={{ display:"flex",alignItems:"center",gap:8,flexShrink:0 }}>
                     {/* Notify this employee */}
                     <button onClick={e=>{e.stopPropagation();setPreselected(emp);setShowNotify(true);}} className="adm-btn"
-                      style={{ background:"rgba(0,194,168,.1)",border:"1px solid rgba(0,194,168,.25)",color:T.teal,padding:"7px 12px" }}>
+                      style={{ background:"rgba(6,182,212,.1)",border:"1px solid rgba(6,182,212,.25)",color:T.teal,padding:"7px 12px" }}>
                       <FiBell size={13}/> Notify
                     </button>
                     <button onClick={e=>{e.stopPropagation();setPreselected(emp);setShowUpload(true);}} className="adm-btn"
@@ -1840,7 +1840,7 @@ export default function AdminHrDocuments() {
                     {docs.length===0?(
                       <div style={{ padding:"40px 24px",textAlign:"center" }}>
                         <FiFile size={36} color="#d1d5db" style={{ marginBottom:10 }}/>
-                        <p style={{ fontSize:14,fontWeight:600,color:"#6b7280",margin:"0 0 6px" }}>No HR documents sent yet</p>
+                        <p style={{ fontSize:14,fontWeight:600,color:"#6b7280",margin:"0 0 6px" }}>No PeopleOps documents sent yet</p>
                         <p style={{ fontSize:12,color:"#9ca3af",margin:"0 0 14px" }}>{statusFilter!=="ALL"?`No ${statusFilter.toLowerCase().replace("_"," ")} documents`:"Upload a document using the button above"}</p>
                         <div style={{ display:"flex",gap:10,justifyContent:"center" }}>
                           <button className="adm-btn" onClick={()=>{setPreselected(emp);setShowUpload(true);}}
@@ -1848,7 +1848,7 @@ export default function AdminHrDocuments() {
                             <FiPlus size={13}/> Upload Document
                           </button>
                           <button className="adm-btn" onClick={()=>{setPreselected(emp);setShowNotify(true);}}
-                            style={{ background:"rgba(0,194,168,.1)",border:"1px solid rgba(0,194,168,.25)",color:T.teal }}>
+                            style={{ background:"rgba(6,182,212,.1)",border:"1px solid rgba(6,182,212,.25)",color:T.teal }}>
                             <FiBell size={13}/> Send Reminder
                           </button>
                         </div>
@@ -1899,7 +1899,7 @@ export default function AdminHrDocuments() {
                                       </button>
                                       {/* Download original */}
                                       <button title="Download original" onClick={()=>downloadFile(doc.originalFileUrl,doc.originalFileName||doc.title)}
-                                        style={{ width:30,height:30,borderRadius:7,border:"1.5px solid rgba(0,194,168,.3)",background:"rgba(0,194,168,.06)",cursor:"pointer",color:T.teal,display:"flex",alignItems:"center",justifyContent:"center" }}>
+                                        style={{ width:30,height:30,borderRadius:7,border:"1.5px solid rgba(6,182,212,.3)",background:"rgba(6,182,212,.06)",cursor:"pointer",color:T.teal,display:"flex",alignItems:"center",justifyContent:"center" }}>
                                         <FiDownload size={13}/>
                                       </button>
                                       {/* View signed copy */}
@@ -1919,14 +1919,14 @@ export default function AdminHrDocuments() {
                                       {/* Mark received */}
                                       {doc.status==="SIGNED"&&(
                                         <button title="Mark as received" onClick={()=>handleMarkReceived(doc.id,emp.id)}
-                                          style={{ width:30,height:30,borderRadius:7,border:"1.5px solid rgba(99,102,241,.3)",background:"rgba(99,102,241,.06)",cursor:"pointer",color:"#7c3aed",display:"flex",alignItems:"center",justifyContent:"center" }}>
+                                          style={{ width:30,height:30,borderRadius:7,border:"1.5px solid rgba(99,102,241,.3)",background:"rgba(99,102,241,.06)",cursor:"pointer",color:"#A855F7",display:"flex",alignItems:"center",justifyContent:"center" }}>
                                           <FiCheckCircle size={13}/>
                                         </button>
                                       )}
                                       {/* Notify individual for this doc */}
                                       {doc.status==="PENDING_SIGNATURE"&&(
                                         <button title="Send reminder to sign" onClick={()=>{setPreselected(emp);setShowNotify(true);}}
-                                          style={{ width:30,height:30,borderRadius:7,border:"1.5px solid rgba(0,194,168,.3)",background:"rgba(0,194,168,.06)",cursor:"pointer",color:T.teal,display:"flex",alignItems:"center",justifyContent:"center" }}>
+                                          style={{ width:30,height:30,borderRadius:7,border:"1.5px solid rgba(6,182,212,.3)",background:"rgba(6,182,212,.06)",cursor:"pointer",color:T.teal,display:"flex",alignItems:"center",justifyContent:"center" }}>
                                           <FiBell size={13}/>
                                         </button>
                                       )}
@@ -1952,8 +1952,8 @@ export default function AdminHrDocuments() {
         </div>
       </div>
 
-      {showUpload&&<UploadModal employees={employees} preselectedEmployee={preselected} onClose={()=>{setShowUpload(false);setPreselected(null);}} onUploaded={handleUploaded}/>}
-      {showNotify&&<NotifyModal employees={employees} preselectedEmployee={preselected} onClose={()=>{setShowNotify(false);setPreselected(null);}} onSent={handleNotifySent}/>}
+      {showUpload&&<UploadModal employees={employees} preselectedPerson={preselected} onClose={()=>{setShowUpload(false);setPreselected(null);}} onUploaded={handleUploaded}/>}
+      {showNotify&&<NotifyModal employees={employees} preselectedPerson={preselected} onClose={()=>{setShowNotify(false);setPreselected(null);}} onSent={handleNotifySent}/>}
     </>
   );
 }

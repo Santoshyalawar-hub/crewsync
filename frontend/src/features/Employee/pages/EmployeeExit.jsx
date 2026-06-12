@@ -3,9 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { LogOut, FileText, Calendar, MessageSquare, AlertCircle, CheckCircle, Clock } from "lucide-react";
 import api from "@/lib/apiClient";
 
-/* ── SamayaHR design tokens ── */
+/* ── CrewSync design tokens ── */
 const T = {
-  navy:"#0D1F2D", navyMid:"#1E3448", coral:"#FF6B35", teal:"#00C2A8",
+  navy:"#0B1020", navyMid:"#374151", coral:"#8B5CF6", teal:"#06B6D4",
   bg:"#F5F7FB", border:"#E8ECF2",
 };
 
@@ -23,17 +23,17 @@ const CSS = `
   padding:10px 13px; font-size:13px; font-family:'DM Sans',sans-serif;
   color:${T.navy}; outline:none; transition:border-color .15s; background:#fff; box-sizing:border-box;
 }
-.ee-input:focus { border-color:${T.coral}; box-shadow:0 0 0 3px rgba(255,107,53,.1); }
+.ee-input:focus { border-color:${T.coral}; box-shadow:0 0 0 3px rgba(139,92,246,.1); }
 
 .ee-step { display:flex; gap:12px; padding:10px 12px; border-radius:12px; border:1.5px solid ${T.border}; transition:all .15s; }
-.ee-step.current { background:rgba(255,107,53,.05); border-color:rgba(255,107,53,.3); }
+.ee-step.current { background:rgba(139,92,246,.05); border-color:rgba(139,92,246,.3); }
 .ee-step-num { width:30px; height:30px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:800; font-family:'Sora',sans-serif; flex-shrink:0; }
 
-.ee-btn-primary { display:inline-flex; align-items:center; gap:7px; padding:11px 24px; border-radius:11px; border:none; background:linear-gradient(135deg,${T.coral},#ff8c5a); color:#fff; font-size:13px; font-weight:700; font-family:'DM Sans',sans-serif; cursor:pointer; box-shadow:0 4px 14px rgba(255,107,53,.3); transition:all .15s; }
+.ee-btn-primary { display:inline-flex; align-items:center; gap:7px; padding:11px 24px; border-radius:11px; border:none; background:linear-gradient(135deg,${T.coral},#FBBF24); color:#fff; font-size:13px; font-weight:700; font-family:'DM Sans',sans-serif; cursor:pointer; box-shadow:0 4px 14px rgba(139,92,246,.3); transition:all .15s; }
 .ee-btn-primary:disabled { opacity:.5; cursor:not-allowed; }
-.ee-btn-primary:hover:not(:disabled) { transform:translateY(-1px); box-shadow:0 6px 18px rgba(255,107,53,.35); }
+.ee-btn-primary:hover:not(:disabled) { transform:translateY(-1px); box-shadow:0 6px 18px rgba(139,92,246,.35); }
 .ee-btn-outline { display:inline-flex; align-items:center; gap:7px; padding:11px 20px; border-radius:11px; border:1.5px solid ${T.coral}; background:#fff; color:${T.coral}; font-size:13px; font-weight:700; font-family:'DM Sans',sans-serif; cursor:pointer; transition:all .15s; }
-.ee-btn-outline:hover { background:rgba(255,107,53,.06); }
+.ee-btn-outline:hover { background:rgba(139,92,246,.06); }
 
 @keyframes eeUp { from{opacity:0;transform:translateY(7px)} to{opacity:1;transform:translateY(0)} }
 .ee-in { animation:eeUp .35s ease both; }
@@ -56,12 +56,12 @@ const REASON_OPTS  = [
 const STEPS = [
   { n:1, title:"Submit Request",       desc:"Fill and submit the exit form",     current:true  },
   { n:2, title:"Team Leader Review",   desc:"Team Leader reviews your request",  current:false },
-  { n:3, title:"HR Approval",          desc:"HR approval process",               current:false },
+  { n:3, title:"PeopleOps Approval",          desc:"PeopleOps approval process",               current:false },
   { n:4, title:"Exit Clearance",       desc:"Asset return & clearance",          current:false },
   { n:5, title:"Final Settlement",     desc:"Complete exit formalities",         current:false },
 ];
 
-export default function EmployeeExit() {
+export default function PersonExit() {
   const navigate = useNavigate();
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState(null);
@@ -106,15 +106,15 @@ export default function EmployeeExit() {
 
       {/* ── HERO ── */}
       <div style={{background:`linear-gradient(135deg,${T.navy},${T.navyMid})`,padding:"22px 26px",position:"relative",overflow:"hidden"}}>
-        <div style={{position:"absolute",top:-50,right:60,width:180,height:180,borderRadius:"50%",background:"rgba(255,107,53,.07)",pointerEvents:"none"}}/>
-        <div style={{position:"absolute",bottom:-30,right:260,width:100,height:100,borderRadius:"50%",background:"rgba(0,194,168,.07)",pointerEvents:"none"}}/>
+        <div style={{position:"absolute",top:-50,right:60,width:180,height:180,borderRadius:"50%",background:"rgba(139,92,246,.07)",pointerEvents:"none"}}/>
+        <div style={{position:"absolute",bottom:-30,right:260,width:100,height:100,borderRadius:"50%",background:"rgba(6,182,212,.07)",pointerEvents:"none"}}/>
         <div style={{position:"relative",display:"flex",alignItems:"center",gap:14}}>
-          <div style={{width:44,height:44,borderRadius:13,background:"rgba(255,107,53,.2)",display:"flex",alignItems:"center",justifyContent:"center",border:"1.5px solid rgba(255,107,53,.3)"}}>
+          <div style={{width:44,height:44,borderRadius:13,background:"rgba(139,92,246,.2)",display:"flex",alignItems:"center",justifyContent:"center",border:"1.5px solid rgba(139,92,246,.3)"}}>
             <LogOut size={20} color={T.coral}/>
           </div>
           <div>
-            <p style={{fontSize:11,fontWeight:700,color:T.coral,textTransform:"uppercase",letterSpacing:".12em",marginBottom:3}}>SamayaHR · HR</p>
-            <h1 className="fd" style={{fontSize:23,fontWeight:900,color:"#fff",margin:0}}>Employee Exit Request</h1>
+            <p style={{fontSize:11,fontWeight:700,color:T.coral,textTransform:"uppercase",letterSpacing:".12em",marginBottom:3}}>CrewSync · PeopleOps</p>
+            <h1 className="fd" style={{fontSize:23,fontWeight:900,color:"#fff",margin:0}}>Person Exit Request</h1>
             <p style={{fontSize:13,color:"rgba(255,255,255,.5)",marginTop:3}}>Submit your exit request and track its status.</p>
           </div>
         </div>
@@ -123,7 +123,7 @@ export default function EmployeeExit() {
       <div style={{padding:"22px 26px",display:"flex",flexDirection:"column",gap:18}}>
 
         {/* info banner */}
-        <div className="ee-in" style={{padding:"13px 16px",borderRadius:12,background:"rgba(255,107,53,.06)",border:"1.5px solid rgba(255,107,53,.2)",display:"flex",alignItems:"flex-start",gap:10}}>
+        <div className="ee-in" style={{padding:"13px 16px",borderRadius:12,background:"rgba(139,92,246,.06)",border:"1.5px solid rgba(139,92,246,.2)",display:"flex",alignItems:"flex-start",gap:10}}>
           <AlertCircle size={15} color={T.coral} style={{flexShrink:0,marginTop:1}}/>
           <div>
             <p style={{fontSize:12,fontWeight:700,color:T.navy,marginBottom:2}}>Important</p>
@@ -212,7 +212,7 @@ export default function EmployeeExit() {
           {/* ── SIDEBAR STEPS ── */}
           <div style={{display:"flex",flexDirection:"column",gap:16}}>
             <div className="ee-card ee-in" style={{animationDelay:".06s"}}>
-              <div style={{background:"linear-gradient(135deg,#6366F1,#7C3AED)",padding:"14px 20px"}}>
+              <div style={{background:"linear-gradient(135deg,#6366F1,#A855F7)",padding:"14px 20px"}}>
                 <p className="fd" style={{fontSize:14,fontWeight:800,color:"#fff"}}>Exit Process</p>
               </div>
               <div style={{padding:"16px 18px",display:"flex",flexDirection:"column",gap:10}}>
@@ -221,7 +221,7 @@ export default function EmployeeExit() {
                     <div className="ee-step-num" style={{
                       background:s.current?T.coral:"#F1F5F9",
                       color:s.current?"#fff":"#94a3b8",
-                      boxShadow:s.current?`0 4px 12px rgba(255,107,53,.3)`:"none",
+                      boxShadow:s.current?`0 4px 12px rgba(139,92,246,.3)`:"none",
                     }}>{s.n}</div>
                     <div>
                       <p style={{fontSize:12,fontWeight:700,color:s.current?T.navy:"#64748b"}}>{s.title}</p>
@@ -236,7 +236,7 @@ export default function EmployeeExit() {
             <div className="ee-card ee-in" style={{animationDelay:".1s",padding:"16px 18px"}}>
               <p style={{fontSize:11,fontWeight:700,color:T.navy,marginBottom:4}}>Need Help?</p>
               <p style={{fontSize:12,color:"#64748b",lineHeight:1.65}}>
-                Contact your Team Leader or HR at{" "}
+                Contact your Team Leader or PeopleOps at{" "}
                 <a href="mailto:hr@company.com" style={{color:T.coral,fontWeight:700,textDecoration:"none"}}>hr@company.com</a>
               </p>
             </div>

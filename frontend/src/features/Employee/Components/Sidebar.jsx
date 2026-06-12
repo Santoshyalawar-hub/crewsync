@@ -6,8 +6,8 @@
 // } from "lucide-react";
 
 // const T = {
-//   navy:     "#0D1F2D",
-//   coral:    "#FF6B35",
+//   navy:     "#0B1020",
+//   coral:    "#8B5CF6",
 //   border:   "#E8ECF2",
 //   textSoft: "#64748B",
 // };
@@ -24,17 +24,17 @@
 //   cursor:pointer; background:transparent; width:100%; text-align:left;
 // }
 // .esb-link:hover {
-//   background:linear-gradient(135deg,rgba(255,107,53,.08),rgba(0,194,168,.04));
-//   color:${T.coral}; border-color:rgba(255,107,53,.10); transform:translateX(2px);
+//   background:linear-gradient(135deg,rgba(139,92,246,.08),rgba(6,182,212,.04));
+//   color:${T.coral}; border-color:rgba(139,92,246,.10); transform:translateX(2px);
 // }
 // .esb-link.active {
-//   background:linear-gradient(135deg,rgba(255,107,53,.14),rgba(0,194,168,.05));
-//   color:${T.navy}; font-weight:800; border-color:rgba(255,107,53,.14);
-//   box-shadow:inset 3px 0 0 ${T.coral},0 8px 18px rgba(255,107,53,.08);
+//   background:linear-gradient(135deg,rgba(139,92,246,.14),rgba(6,182,212,.05));
+//   color:${T.navy}; font-weight:800; border-color:rgba(139,92,246,.14);
+//   box-shadow:inset 3px 0 0 ${T.coral},0 8px 18px rgba(139,92,246,.08);
 // }
 // .esb-link.active .esb-icon-wrap {
-//   background:linear-gradient(135deg,${T.coral},#FF8C5A); color:#fff;
-//   box-shadow:0 6px 14px rgba(255,107,53,.25);
+//   background:linear-gradient(135deg,${T.coral},#FBBF24); color:#fff;
+//   box-shadow:0 6px 14px rgba(139,92,246,.25);
 // }
 // .esb-link.collapsed-link { justify-content:center; padding:11px 0; gap:0; }
 
@@ -43,7 +43,7 @@
 //   display:flex; align-items:center; justify-content:center;
 //   transition:all .18s ease; background:transparent; color:inherit;
 // }
-// .esb-link:hover .esb-icon-wrap { background:rgba(255,107,53,.10); color:${T.coral}; }
+// .esb-link:hover .esb-icon-wrap { background:rgba(139,92,246,.10); color:${T.coral}; }
 
 // .esb-section-label {
 //   font-size:9px; font-weight:800; letter-spacing:.14em; text-transform:uppercase;
@@ -53,10 +53,10 @@
 // .esb-collapse-btn {
 //   position:absolute; top:50%; transform:translateY(-50%); right:-11px; z-index:10;
 //   width:24px; height:24px; border-radius:999px;
-//   background:linear-gradient(135deg,${T.coral},#FF8C5A);
+//   background:linear-gradient(135deg,${T.coral},#FBBF24);
 //   color:#fff; border:2.5px solid #fff; display:flex; align-items:center;
 //   justify-content:center; cursor:pointer;
-//   box-shadow:0 4px 12px rgba(255,107,53,.30); transition:all .18s ease;
+//   box-shadow:0 4px 12px rgba(139,92,246,.30); transition:all .18s ease;
 // }
 // .esb-collapse-btn:hover { transform:translateY(-50%) scale(1.05); }
 
@@ -74,32 +74,32 @@
 //   {
 //     label: "Main",
 //     items: [
-//       { key: "em_home",    label: "Dashboard",      Icon: Home         },
-//       { key: "em_time",    label: "Attendance",     Icon: Clock4       },
-//       { key: "em_leave",   label: "Leave",          Icon: CalendarDays },
-//       { key: "em_perf",    label: "Performance",    Icon: BarChart3    },
+//       { key: "em_home",    label: "Control Room",      Icon: Home         },
+//       { key: "em_time",    label: "Presence",     Icon: Clock4       },
+//       { key: "em_leave",   label: "Time Away",          Icon: CalendarDays },
+//       { key: "em_perf",    label: "Momentum",    Icon: BarChart3    },
 //     ],
 //   },
 //   {
-//     label: "Work & Finance",
+//     label: "Work & MoneyOps",
 //     items: [
-//       { key: "em_finance", label: "Finance Hub",    Icon: IndianRupee  },
-//       { key: "em_claims",  label: "Reimbursements", Icon: Receipt      },
-//       { key: "em_docs",    label: "Documents",      Icon: FileText     },
-//       { key: "em_gear",    label: "Assets",         Icon: Laptop       },
-//       { key: "em_policy",  label: "Policies",       Icon: ScrollText   },
+//       { key: "em_finance", label: "Money Desk",    Icon: IndianRupee  },
+//       { key: "em_claims",  label: "ClaimsDesk", Icon: Receipt      },
+//       { key: "em_docs",    label: "Vault",      Icon: FileText     },
+//       { key: "em_gear",    label: "Equipment",         Icon: Laptop       },
+//       { key: "em_policy",  label: "Playbooks",       Icon: ScrollText   },
 //     ],
 //   },
 //   {
-//     label: "Support",
+//     label: "Care Desk",
 //     items: [
-//       { key: "em_alerts",  label: "Notifications",  Icon: Bell         },
-//       { key: "em_support", label: "Help & Support", Icon: HelpCircle   },
+//       { key: "em_alerts",  label: "Signals",  Icon: Bell         },
+//       { key: "em_support", label: "Care Desk", Icon: HelpCircle   },
 //     ],
 //   },
 // ];
 
-// export default function EmployeeSidebar({ currentPage, navigateTo }) {
+// export default function PersonSidebar({ currentPage, navigateTo }) {
 //   const [collapsed, setCollapsed] = useState(false);
 
 //   return (
@@ -127,16 +127,16 @@
 //       }}>
 //         <div className="fd" style={{
 //           width:38, height:38, borderRadius:12,
-//           background:"linear-gradient(135deg,#FF6B35,#FF8C5A)",
+//           background:"linear-gradient(135deg,#8B5CF6,#FBBF24)",
 //           display:"flex", alignItems:"center", justifyContent:"center",
 //           color:"#fff", fontSize:15, fontWeight:900, flexShrink:0,
-//           boxShadow:"0 8px 18px rgba(255,107,53,.25)",
+//           boxShadow:"0 8px 18px rgba(139,92,246,.25)",
 //         }}>S</div>
 //         {!collapsed && (
 //           <div style={{ lineHeight:1.15 }}>
-//             <p style={{ fontSize:10, fontWeight:800, color:T.coral, textTransform:"uppercase", letterSpacing:".12em", margin:"0 0 2px" }}>Employee Portal</p>
+//             <p style={{ fontSize:10, fontWeight:800, color:T.coral, textTransform:"uppercase", letterSpacing:".12em", margin:"0 0 2px" }}>Person Portal</p>
 //             <p className="fd" style={{ fontSize:16, fontWeight:900, color:T.navy, lineHeight:1, margin:0 }}>
-//               Samaya<span style={{ background:"linear-gradient(135deg,#FF6B35,#FF9A5C)", WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent", backgroundClip:"text" }}>HR</span>
+//               CrewSync<span style={{ background:"linear-gradient(135deg,#8B5CF6,#60A5FA)", WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent", backgroundClip:"text" }}>PeopleOps</span>
 //             </p>
 //           </div>
 //         )}
@@ -163,7 +163,7 @@
 //                   <span className="esb-icon-wrap"><Icon size={15} /></span>
 //                   {!collapsed && <span>{label}</span>}
 //                   {!collapsed && active && (
-//                     <span style={{ marginLeft:"auto", width:6, height:6, borderRadius:"50%", background:T.coral, flexShrink:0, boxShadow:"0 0 0 4px rgba(255,107,53,.10)" }} />
+//                     <span style={{ marginLeft:"auto", width:6, height:6, borderRadius:"50%", background:T.coral, flexShrink:0, boxShadow:"0 0 0 4px rgba(139,92,246,.10)" }} />
 //                   )}
 //                 </button>
 //               );
@@ -196,11 +196,11 @@ import {
   Laptop, LogOut, Receipt, CalendarDays, Network,
 } from "lucide-react";
 
-/* Company logo — reads from localStorage cache (populated by EmployeeNavbar) */
-function CompanyLogoMark({ size = 38 }) {
+/* Workspace logo — reads from localStorage cache (populated by PersonNavbar) */
+function WorkspaceLogoMark({ size = 38 }) {
   const [logoUrl, setLogoUrl] = useState(() => localStorage.getItem("companyLogoUrl") || "");
   const [err, setErr] = useState(false);
-  const companyName = (localStorage.getItem("companyName") || "Company").trim();
+  const companyName = (localStorage.getItem("companyName") || "Workspace").trim();
   const initials = companyName.split(" ").slice(0, 2).map(w => w[0]).join("").toUpperCase();
 
   /* Listen for Navbar updating the cache */
@@ -222,10 +222,10 @@ function CompanyLogoMark({ size = 38 }) {
   }
   return (
     <div style={{ width: size, height: size, borderRadius: 10,
-      background: "linear-gradient(135deg,#FF6B35,#FF8C5A)",
+      background: "linear-gradient(135deg,#8B5CF6,#FBBF24)",
       display: "flex", alignItems: "center", justifyContent: "center",
       color: "#fff", fontSize: Math.round(size * 0.38), fontWeight: 900,
-      flexShrink: 0, boxShadow: "0 6px 16px rgba(255,107,53,.28)",
+      flexShrink: 0, boxShadow: "0 6px 16px rgba(139,92,246,.28)",
       fontFamily: "'Sora',sans-serif" }}>
       {initials}
     </div>
@@ -233,9 +233,9 @@ function CompanyLogoMark({ size = 38 }) {
 }
 
 const T = {
-  navy:     "#0D1F2D",
-  coral:    "#FF6B35",
-  teal:     "#00C2A8",
+  navy:     "#0B1020",
+  coral:    "#8B5CF6",
+  teal:     "#06B6D4",
   border:   "#E8ECF2",
   textSoft: "#64748B",
 };
@@ -252,17 +252,17 @@ const CSS = `
   cursor:pointer; background:transparent; width:100%; text-align:left;
 }
 .esb-link:hover {
-  background:linear-gradient(135deg,rgba(255,107,53,.08),rgba(0,194,168,.04));
-  color:${T.coral}; border-color:rgba(255,107,53,.10); transform:translateX(2px);
+  background:linear-gradient(135deg,rgba(139,92,246,.08),rgba(6,182,212,.04));
+  color:${T.coral}; border-color:rgba(139,92,246,.10); transform:translateX(2px);
 }
 .esb-link.active {
-  background:linear-gradient(135deg,rgba(255,107,53,.14),rgba(0,194,168,.05));
-  color:${T.navy}; font-weight:800; border-color:rgba(255,107,53,.14);
-  box-shadow:inset 3px 0 0 ${T.coral},0 8px 18px rgba(255,107,53,.08);
+  background:linear-gradient(135deg,rgba(139,92,246,.14),rgba(6,182,212,.05));
+  color:${T.navy}; font-weight:800; border-color:rgba(139,92,246,.14);
+  box-shadow:inset 3px 0 0 ${T.coral},0 8px 18px rgba(139,92,246,.08);
 }
 .esb-link.active .esb-icon-wrap {
-  background:linear-gradient(135deg,${T.coral},#FF8C5A); color:#fff;
-  box-shadow:0 6px 14px rgba(255,107,53,.25);
+  background:linear-gradient(135deg,${T.coral},#FBBF24); color:#fff;
+  box-shadow:0 6px 14px rgba(139,92,246,.25);
 }
 .esb-link.collapsed-link { justify-content:center; padding:11px 0; gap:0; }
 
@@ -271,7 +271,7 @@ const CSS = `
   display:flex; align-items:center; justify-content:center;
   transition:all .18s ease; background:transparent; color:inherit;
 }
-.esb-link:hover .esb-icon-wrap { background:rgba(255,107,53,.10); color:${T.coral}; }
+.esb-link:hover .esb-icon-wrap { background:rgba(139,92,246,.10); color:${T.coral}; }
 
 .esb-section-label {
   font-size:9px; font-weight:800; letter-spacing:.14em; text-transform:uppercase;
@@ -281,10 +281,10 @@ const CSS = `
 .esb-collapse-btn {
   position:absolute; top:50%; transform:translateY(-50%); right:-11px; z-index:10;
   width:24px; height:24px; border-radius:999px;
-  background:linear-gradient(135deg,${T.coral},#FF8C5A);
+  background:linear-gradient(135deg,${T.coral},#FBBF24);
   color:#fff; border:2.5px solid #fff; display:flex; align-items:center;
   justify-content:center; cursor:pointer;
-  box-shadow:0 4px 12px rgba(255,107,53,.30); transition:all .18s ease;
+  box-shadow:0 4px 12px rgba(139,92,246,.30); transition:all .18s ease;
 }
 .esb-collapse-btn:hover { transform:translateY(-50%) scale(1.05); }
 
@@ -297,9 +297,9 @@ const CSS = `
 .esb-exit-btn:hover { background:rgba(220,38,38,.08); border-color:rgba(220,38,38,.20); transform:translateX(2px); }
 .esb-exit-btn.collapsed-link { justify-content:center; padding:11px 0; gap:0; }
 
-/* SamayaHR logo text gradient */
+/* CrewSync logo text gradient */
 .esb-logo-text {
-  background: linear-gradient(135deg,#FF6B35,#FF9A5C);
+  background: linear-gradient(135deg,#8B5CF6,#60A5FA);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -310,38 +310,38 @@ const NAV_SECTIONS = [
   {
     label: "Main",
     items: [
-      { key: "em_home",    label: "Dashboard",      Icon: Home         },
-      { key: "em_time",    label: "Attendance",     Icon: Clock4       },
-      { key: "em_leave",   label: "Leave",          Icon: CalendarDays },
-      { key: "em_perf",    label: "Performance",    Icon: BarChart3    },
+      { key: "em_home",    label: "Control Room",      Icon: Home         },
+      { key: "em_time",    label: "Presence",     Icon: Clock4       },
+      { key: "em_leave",   label: "Time Away",          Icon: CalendarDays },
+      { key: "em_perf",    label: "Momentum",    Icon: BarChart3    },
     ],
   },
   {
-    label: "Work & Finance",
+    label: "Work & MoneyOps",
     items: [
-      { key: "em_finance", label: "Finance Hub",    Icon: IndianRupee  },
-      { key: "em_claims",  label: "Reimbursements", Icon: Receipt      },
-      { key: "em_docs",    label: "Documents",      Icon: FileText     },
-      { key: "em_gear",    label: "Assets",         Icon: Laptop       },
-      { key: "em_policy",  label: "Policies",       Icon: ScrollText   },
+      { key: "em_finance", label: "Money Desk",    Icon: IndianRupee  },
+      { key: "em_claims",  label: "ClaimsDesk", Icon: Receipt      },
+      { key: "em_docs",    label: "Vault",      Icon: FileText     },
+      { key: "em_gear",    label: "Equipment",         Icon: Laptop       },
+      { key: "em_policy",  label: "Playbooks",       Icon: ScrollText   },
     ],
   },
   {
     label: "Organisation",
     items: [
-      { key: "em_org",     label: "Org Chart",      Icon: Network      },
+      { key: "em_org",     label: "People Map",      Icon: Network      },
     ],
   },
   {
-    label: "Support",
+    label: "Care Desk",
     items: [
-      { key: "em_alerts",  label: "Notifications",  Icon: Bell         },
-      { key: "em_support", label: "Help & Support", Icon: HelpCircle   },
+      { key: "em_alerts",  label: "Signals",  Icon: Bell         },
+      { key: "em_support", label: "Care Desk", Icon: HelpCircle   },
     ],
   },
 ];
 
-export default function EmployeeSidebar({ currentPage, navigateTo }) {
+export default function PersonSidebar({ currentPage, navigateTo }) {
   const [collapsed, setCollapsed] = useState(false);
 
   return (
@@ -368,10 +368,10 @@ export default function EmployeeSidebar({ currentPage, navigateTo }) {
         background: "linear-gradient(180deg,#fff 0%,#fafbfd 100%)",
       }}>
         {collapsed ? (
-          <img src="/SamayaHRSidebar.png" alt="SamayaHR"
+          <img src="/crewsync-mark.svg" alt="CrewSync"
             style={{ width: 40, height: 40, borderRadius: 12, objectFit: "contain", flexShrink: 0 }} />
         ) : (
-          <img src="/SamayaHR.png" alt="SamayaHR"
+          <img src="/crewsync-logo.svg" alt="CrewSync"
             style={{ height: 44, maxWidth: 180, objectFit: "contain", objectPosition: "left", flexShrink: 0 }} />
         )}
       </div>
@@ -419,7 +419,7 @@ export default function EmployeeSidebar({ currentPage, navigateTo }) {
                     <span style={{
                       marginLeft: "auto", width: 6, height: 6,
                       borderRadius: "50%", background: T.coral, flexShrink: 0,
-                      boxShadow: "0 0 0 4px rgba(255,107,53,.10)",
+                      boxShadow: "0 0 0 4px rgba(139,92,246,.10)",
                     }} />
                   )}
                 </button>

@@ -23,12 +23,12 @@ function Bar({ value, max, color }) {
 
 function exportCSV(companies, stats, logs) {
   const rows = [["Metric", "Value"]];
-  rows.push(["Total Companies", stats.totalCompanies || 0]);
-  rows.push(["Active Companies", stats.activeCompanies || 0]);
-  rows.push(["Suspended Companies", stats.suspendedCompanies || 0]);
-  rows.push(["Total Employees", stats.totalEmployees || 0]);
+  rows.push(["Total Workspaces", stats.totalWorkspaces || 0]);
+  rows.push(["Active Workspaces", stats.activeWorkspaces || 0]);
+  rows.push(["Suspended Workspaces", stats.suspendedWorkspaces || 0]);
+  rows.push(["Total People", stats.totalPersons || 0]);
   rows.push(["", ""]);
-  rows.push(["Company", "Plan", "Employees", "Status", "Created"]);
+  rows.push(["Workspace", "Plan", "Persons", "Status", "Created"]);
   companies.forEach(c => rows.push([
     `"${(c.displayName || "").replace(/"/g, '""')}"`,
     c.plan || "—",
@@ -88,11 +88,11 @@ function buildActivityDist(logs) {
     .map(([tag, count]) => ({ tag, count }));
 }
 
-const PLAN_COLORS = { Enterprise: "#7c3aed", Professional: "#ff6b35", Basic: "#22c55e", Starter: "#0ea5e9" };
-const TAG_COLORS  = { Company: "#ff6b35", Auth: "#6366f1", Payment: "#22c55e", Subscription: "#0ea5e9", System: "#f59e0b", Support: "#8b5cf6" };
+const PLAN_COLORS = { Enterprise: "#A855F7", Professional: "#8B5CF6", Basic: "#22c55e", Starter: "#0ea5e9" };
+const TAG_COLORS  = { Workspace: "#8B5CF6", Auth: "#6366f1", Payment: "#22c55e", Subscription: "#0ea5e9", System: "#f59e0b", CareDesk: "#8b5cf6" };
 
-export default function ReportsAnalytics() {
-  const [companies, setCompanies] = useState([]);
+export default function SignalReportsSignals() {
+  const [companies, setWorkspaces] = useState([]);
   const [stats,     setStats]     = useState({});
   const [logs,      setLogs]      = useState([]);
   const [loading,   setLoading]   = useState(false);
@@ -106,7 +106,7 @@ export default function ReportsAnalytics() {
         api.get("/api/global-admin/companies/statistics"),
         api.get("/api/global-admin/activity?limit=200"),
       ]);
-      setCompanies(cRes.data?.data || []);
+      setWorkspaces(cRes.data?.data || []);
       setStats(sRes.data?.data || {});
       const arr = Array.isArray(aRes.data) ? aRes.data : (aRes.data?.data || []);
       setLogs(arr);
@@ -122,8 +122,8 @@ export default function ReportsAnalytics() {
   const activityDist = buildActivityDist(logs);
   const maxMonthly  = Math.max(...monthly.map(m => m.count), 1);
 
-  const totalEmployees = companies.reduce((s, c) => s + (c.employees || 0), 0);
-  const avgEmployees   = companies.length > 0 ? Math.round(totalEmployees / companies.length) : 0;
+  const totalPersons = companies.reduce((s, c) => s + (c.employees || 0), 0);
+  const avgPersons   = companies.length > 0 ? Math.round(totalPersons / companies.length) : 0;
   const growthRate     = companies.length > 0
     ? Math.round((companies.filter(c => {
         const d = new Date(c.createdDate);
@@ -140,8 +140,8 @@ export default function ReportsAnalytics() {
         <div style={{ position: "absolute", top: -30, right: 60, width: 130, height: 130, borderRadius: "50%", background: "rgba(99,102,241,0.1)", pointerEvents: "none" }} />
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", position: "relative" }}>
           <div>
-            <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 11, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 6px" }}>SamayaHR · Global Admin</p>
-            <h1 style={{ color: "#fff", fontSize: 24, fontWeight: 800, margin: 0, letterSpacing: "-0.02em" }}>Reports & Analytics</h1>
+            <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 11, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 6px" }}>CrewSync · Global Operator</p>
+            <h1 style={{ color: "#fff", fontSize: 24, fontWeight: 800, margin: 0, letterSpacing: "-0.02em" }}>Signals Studio</h1>
             <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 13, margin: "6px 0 0" }}>
               {loading ? "Loading…" : `Live data · ${companies.length} companies · ${logs.length} events tracked`}
             </p>
@@ -174,8 +174,8 @@ export default function ReportsAnalytics() {
           {/* KPI Cards */}
           <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 14, marginBottom: 20 }}>
             {[
-              { label: "Total Companies",  value: stats.totalCompanies   || 0, icon: Building2,   accent: "#ff6b35", bg: "#fff4ef", sub: `${stats.activeCompanies || 0} active` },
-              { label: "Total Employees",  value: totalEmployees,              icon: Users,        accent: "#0ea5e9", bg: "#f0f9ff", sub: `avg ${avgEmployees} / company` },
+              { label: "Total Workspaces",  value: stats.totalWorkspaces   || 0, icon: Building2,   accent: "#8B5CF6", bg: "#fff4ef", sub: `${stats.activeWorkspaces || 0} active` },
+              { label: "Total People",  value: totalPersons,              icon: Users,        accent: "#0ea5e9", bg: "#f0f9ff", sub: `avg ${avgPersons} / company` },
               { label: "Platform Events",  value: logs.length,                 icon: Activity,     accent: "#6366f1", bg: "#eef2ff", sub: "all time" },
               { label: "Growth This Month",value: `${growthRate}%`,            icon: TrendingUp,   accent: "#22c55e", bg: "#f0fdf4", sub: "new companies" },
             ].map(({ label, value, icon: Icon, accent, bg, sub }) => (
@@ -195,11 +195,11 @@ export default function ReportsAnalytics() {
           </div>
 
           <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr", gap: 16, marginBottom: 16 }}>
-            {/* Monthly Company Registrations Chart */}
+            {/* Monthly Workspace Registrations Chart */}
             <div style={{ ...S.card, padding: "20px 24px" }}>
               <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 24 }}>
                 <div>
-                  <p style={{ fontSize: 15, fontWeight: 800, color: "#0f172a", margin: 0 }}>Company Registrations</p>
+                  <p style={{ fontSize: 15, fontWeight: 800, color: "#0f172a", margin: 0 }}>Workspace Registrations</p>
                   <p style={{ fontSize: 12, color: "#94a3b8", margin: "3px 0 0" }}>Monthly breakdown (last 7 months)</p>
                 </div>
                 <Calendar size={16} color="#94a3b8" />
@@ -212,7 +212,7 @@ export default function ReportsAnalytics() {
                 <div style={{ display: "flex", gap: 12, alignItems: "flex-end", height: 180 }}>
                   {monthly.map(({ label, count }) => (
                     <div key={label} style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
-                      <Bar value={count} max={maxMonthly} color="#ff6b35" />
+                      <Bar value={count} max={maxMonthly} color="#8B5CF6" />
                       <span style={{ fontSize: 10, fontWeight: 600, color: "#94a3b8", whiteSpace: "nowrap" }}>{label}</span>
                     </div>
                   ))}
@@ -276,9 +276,9 @@ export default function ReportsAnalytics() {
               )}
             </div>
 
-            {/* Top Companies by Employees */}
+            {/* Top Workspaces by Persons */}
             <div style={{ ...S.card, padding: "20px 24px" }}>
-              <p style={{ fontSize: 15, fontWeight: 800, color: "#0f172a", margin: "0 0 20px" }}>Top Companies by Employees</p>
+              <p style={{ fontSize: 15, fontWeight: 800, color: "#0f172a", margin: "0 0 20px" }}>Top Workspaces by Persons</p>
               {companies.length === 0 ? (
                 <div style={{ color: "#94a3b8", fontSize: 13, textAlign: "center", padding: "30px 0" }}>No company data</div>
               ) : (
@@ -293,10 +293,10 @@ export default function ReportsAnalytics() {
                         <div key={c.id || i}>
                           <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
                             <span style={{ fontSize: 13, fontWeight: 600, color: "#1e293b", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", maxWidth: "70%" }}>{c.displayName}</span>
-                            <span style={{ fontSize: 13, fontWeight: 700, color: "#ff6b35" }}>{c.employees || 0}</span>
+                            <span style={{ fontSize: 13, fontWeight: 700, color: "#8B5CF6" }}>{c.employees || 0}</span>
                           </div>
                           <div style={{ height: 5, borderRadius: 4, background: "#f1f5f9" }}>
-                            <div style={{ width: `${pct}%`, height: "100%", borderRadius: 4, background: "linear-gradient(90deg, #ff6b35, #ff8c5a)" }} />
+                            <div style={{ width: `${pct}%`, height: "100%", borderRadius: 4, background: "linear-gradient(90deg, #8B5CF6, #FBBF24)" }} />
                           </div>
                         </div>
                       );

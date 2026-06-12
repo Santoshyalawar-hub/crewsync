@@ -9,9 +9,9 @@
 
 // const api = axios.create({ baseURL: API_BASE_URL, withCredentials: true });
 
-// /* ── SamayaHR design tokens ── */
+// /* ── CrewSync design tokens ── */
 // const T = {
-//   navy:"#0D1F2D", navyMid:"#1E3448", coral:"#FF6B35", teal:"#00C2A8",
+//   navy:"#0B1020", navyMid:"#374151", coral:"#8B5CF6", teal:"#06B6D4",
 //   bg:"#F5F7FB", border:"#E8ECF2",
 // };
 
@@ -30,7 +30,7 @@
 //   transition:box-shadow .18s, border-color .18s, transform .15s;
 //   cursor:pointer; overflow:hidden;
 // }
-// .ac-row:hover { box-shadow:0 8px 28px rgba(13,31,45,.1); border-color:rgba(255,107,53,.3); transform:translateY(-1px); }
+// .ac-row:hover { box-shadow:0 8px 28px rgba(13,31,45,.1); border-color:rgba(139,92,246,.3); transform:translateY(-1px); }
 // .ac-row.high   { border-left:4px solid #EF4444; }
 // .ac-row.unseen { border-left:4px solid ${T.coral}; }
 
@@ -61,8 +61,8 @@
 // const TABS = ['all','unread','action'];
 // const TAB_LABELS = { all:'All Alerts', unread:'Unseen', action:'Needs Sign-off' };
 
-// export default function EmployeeNotifications() {
-//   const [notifications, setNotifications] = useState([]);
+// export default function PersonSignals() {
+//   const [notifications, setSignals] = useState([]);
 //   const [loading,  setLoading]  = useState(true);
 //   const [errMsg,   setErrMsg]   = useState("");
 //   const [tab,      setTab]      = useState('all');
@@ -81,7 +81,7 @@
 //         if(a.reqAck!==b.reqAck&&!a.isAcknowledged) return a.reqAck?-1:1;
 //         return new Date(b.createdAt)-new Date(a.createdAt);
 //       });
-//       setNotifications(sorted);
+//       setSignals(sorted);
 //     } catch { setErrMsg("Couldn't load your alerts. Try again."); }
 //     finally  { setLoading(false); }
 //   },[]);
@@ -90,21 +90,21 @@
 
 //   /* ── actions ── */
 //   const markRead = async id => {
-//     setNotifications(p=>p.map(n=>n.id===id?{...n,read:true}:n));
+//     setSignals(p=>p.map(n=>n.id===id?{...n,read:true}:n));
 //     try { await api.put(`/api/employee/notifications/${id}/read`); } catch(e){ console.error(e); }
 //   };
 
 //   const markAllRead = async ()=>{
 //     if(!notifications.some(n=>!n.read)) return;
 //     const prev=[...notifications];
-//     setNotifications(p=>p.map(n=>({...n,read:true})));
+//     setSignals(p=>p.map(n=>({...n,read:true})));
 //     try { await api.put("/api/employee/notifications/read-all"); }
-//     catch { setErrMsg("Couldn't mark all as seen."); setNotifications(prev); }
+//     catch { setErrMsg("Couldn't mark all as seen."); setSignals(prev); }
 //   };
 
 //   const acknowledge = async(id,e)=>{
 //     e.stopPropagation();
-//     setNotifications(p=>p.map(n=>n.id===id?{...n,isAcknowledged:true,read:true}:n));
+//     setSignals(p=>p.map(n=>n.id===id?{...n,isAcknowledged:true,read:true}:n));
 //     try { await api.put(`/api/employee/notifications/${id}/acknowledge`); }
 //     catch { setErrMsg("Sign-off failed."); }
 //   };
@@ -119,9 +119,9 @@
 //     e.stopPropagation();
 //     if(!confirm("Remove this alert?")) return;
 //     const prev=[...notifications];
-//     setNotifications(p=>p.filter(n=>n.id!==id));
+//     setSignals(p=>p.filter(n=>n.id!==id));
 //     try { await api.delete(`/api/employee/notifications/${id}`); }
-//     catch { setErrMsg("Couldn't remove alert."); setNotifications(prev); }
+//     catch { setErrMsg("Couldn't remove alert."); setSignals(prev); }
 //   };
 
 //   /* ── computed ── */
@@ -147,7 +147,7 @@
 //   const prioBg = p=>{
 //     if(p==='HIGH') return 'rgba(239,68,68,.1)';
 //     if(p==='LOW')  return 'rgba(148,163,184,.1)';
-//     return `rgba(255,107,53,.1)`;
+//     return `rgba(139,92,246,.1)`;
 //   };
 
 //   return (
@@ -156,13 +156,13 @@
 
 //       {/* ── HERO BANNER ── */}
 //       <div style={{background:`linear-gradient(135deg,${T.navy},${T.navyMid})`,padding:'22px 26px',position:'relative',overflow:'hidden'}}>
-//         <div style={{position:'absolute',top:-50,right:60,width:180,height:180,borderRadius:'50%',background:'rgba(255,107,53,.07)',pointerEvents:'none'}}/>
-//         <div style={{position:'absolute',bottom:-30,right:260,width:100,height:100,borderRadius:'50%',background:'rgba(0,194,168,.07)',pointerEvents:'none'}}/>
+//         <div style={{position:'absolute',top:-50,right:60,width:180,height:180,borderRadius:'50%',background:'rgba(139,92,246,.07)',pointerEvents:'none'}}/>
+//         <div style={{position:'absolute',bottom:-30,right:260,width:100,height:100,borderRadius:'50%',background:'rgba(6,182,212,.07)',pointerEvents:'none'}}/>
 //         <div style={{position:'relative',display:'flex',alignItems:'center',justifyContent:'space-between',flexWrap:'wrap',gap:12}}>
 //           <div>
-//             <p style={{fontSize:11,fontWeight:700,color:T.coral,textTransform:'uppercase',letterSpacing:'.12em',marginBottom:4}}>SamayaHR · Inbox</p>
+//             <p style={{fontSize:11,fontWeight:700,color:T.coral,textTransform:'uppercase',letterSpacing:'.12em',marginBottom:4}}>CrewSync · Inbox</p>
 //             <h1 className="fd" style={{fontSize:23,fontWeight:900,color:'#fff',margin:0}}>Alert Centre</h1>
-//             <p style={{fontSize:13,color:'rgba(255,255,255,.5)',marginTop:4}}>Policy updates, sign-offs and compliance notices.</p>
+//             <p style={{fontSize:13,color:'rgba(255,255,255,.5)',marginTop:4}}>Playbook updates, sign-offs and compliance notices.</p>
 //           </div>
 //           <button onClick={markAllRead}
 //             style={{padding:'9px 20px',borderRadius:11,border:'1.5px solid rgba(255,255,255,.18)',background:'rgba(255,255,255,.08)',color:'#fff',fontSize:12,fontWeight:700,cursor:'pointer',backdropFilter:'blur(4px)',display:'flex',alignItems:'center',gap:7}}>
@@ -187,7 +187,7 @@
 
 //           {/* unseen */}
 //           <div className="ac-card" style={{padding:'16px 18px',display:'flex',alignItems:'center',gap:14}}>
-//             <div className="ac-ico" style={{background:'rgba(255,107,53,.1)'}}>
+//             <div className="ac-ico" style={{background:'rgba(139,92,246,.1)'}}>
 //               <Bell size={20} color={T.coral}/>
 //             </div>
 //             <div>
@@ -198,7 +198,7 @@
 
 //           {/* sign-off */}
 //           <div className="ac-card" style={{padding:'16px 18px',display:'flex',alignItems:'center',gap:14}}>
-//             <div className="ac-ico" style={{background:'rgba(0,194,168,.1)'}}>
+//             <div className="ac-ico" style={{background:'rgba(6,182,212,.1)'}}>
 //               <Eye size={20} color={T.teal}/>
 //             </div>
 //             <div>
@@ -269,7 +269,7 @@
 //                   <div style={{display:'flex',alignItems:'center',gap:6,flexWrap:'wrap',marginBottom:6}}>
 //                     <p style={{fontSize:13,fontWeight:n.read?600:800,color:n.read?'#64748b':T.navy}}>{n.title}</p>
 //                     {n.isPinned&&(
-//                       <span className="ac-pill" style={{background:'rgba(255,107,53,.1)',color:T.coral,border:`1px solid rgba(255,107,53,.22)`}}>
+//                       <span className="ac-pill" style={{background:'rgba(139,92,246,.1)',color:T.coral,border:`1px solid rgba(139,92,246,.22)`}}>
 //                         <Pin size={8}/> Pinned
 //                       </span>
 //                     )}
@@ -277,7 +277,7 @@
 //                       <span className="ac-pill" style={{background:T.coral,color:'#fff'}}>New</span>
 //                     )}
 //                     {n.reqAck&&!n.isAcknowledged&&(
-//                       <span className="ac-pill" style={{background:'rgba(0,194,168,.1)',color:T.teal,border:`1px solid rgba(0,194,168,.25)`}}>
+//                       <span className="ac-pill" style={{background:'rgba(6,182,212,.1)',color:T.teal,border:`1px solid rgba(6,182,212,.25)`}}>
 //                         Sign-off Required
 //                       </span>
 //                     )}
@@ -289,7 +289,7 @@
 //                   {/* attachment */}
 //                   {n.attachmentName&&(
 //                     <div className="ac-attach" onClick={e=>handleDownload(n,e)}>
-//                       <div style={{width:32,height:32,borderRadius:9,background:'rgba(255,107,53,.1)',display:'flex',alignItems:'center',justifyContent:'center'}}>
+//                       <div style={{width:32,height:32,borderRadius:9,background:'rgba(139,92,246,.1)',display:'flex',alignItems:'center',justifyContent:'center'}}>
 //                         <FileText size={15} color={T.coral}/>
 //                       </div>
 //                       <div>
@@ -323,12 +323,12 @@
 
 //                   {n.reqAck&&!n.isAcknowledged?(
 //                     <button className="ac-btn" onClick={e=>acknowledge(n.id,e)}
-//                       style={{background:`linear-gradient(135deg,${T.teal},#00a895)`,color:'#fff',boxShadow:'0 4px 12px rgba(0,194,168,.3)'}}>
+//                       style={{background:`linear-gradient(135deg,${T.teal},#00a895)`,color:'#fff',boxShadow:'0 4px 12px rgba(6,182,212,.3)'}}>
 //                       <Eye size={11}/> Sign Off
 //                     </button>
 //                   ):!n.read?(
 //                     <button className="ac-btn" onClick={e=>{e.stopPropagation();markRead(n.id);}}
-//                       style={{background:'rgba(255,107,53,.08)',color:T.coral,border:`1px solid rgba(255,107,53,.2)`}}>
+//                       style={{background:'rgba(139,92,246,.08)',color:T.coral,border:`1px solid rgba(139,92,246,.2)`}}>
 //                       <CheckCheck size={11}/> Mark Seen
 //                     </button>
 //                   ):(
@@ -362,7 +362,7 @@ import api from "@/lib/apiClient";
 
 /* ── Design tokens ── */
 const T = {
-  navy:"#0D1F2D", navyMid:"#1E3448", coral:"#FF6B35", teal:"#00C2A8",
+  navy:"#0B1020", navyMid:"#374151", coral:"#8B5CF6", teal:"#06B6D4",
   bg:"#F5F7FB", border:"#E8ECF2",
 };
 
@@ -379,7 +379,7 @@ const CSS = `
   transition:box-shadow .18s, border-color .18s, transform .15s;
   cursor:pointer; overflow:hidden;
 }
-.ac-row:hover { box-shadow:0 8px 28px rgba(13,31,45,.1); border-color:rgba(255,107,53,.3); transform:translateY(-1px); }
+.ac-row:hover { box-shadow:0 8px 28px rgba(13,31,45,.1); border-color:rgba(139,92,246,.3); transform:translateY(-1px); }
 .ac-row.high   { border-left:4px solid #EF4444; }
 .ac-row.unseen { border-left:4px solid ${T.coral}; }
 
@@ -404,8 +404,8 @@ const CSS = `
 const TABS = ['all','unread','action'];
 const TAB_LABELS = { all:'All Alerts', unread:'Unseen', action:'Needs Sign-off' };
 
-export default function EmployeeNotifications() {
-  const [notifications, setNotifications] = useState([]);
+export default function PersonSignals() {
+  const [notifications, setSignals] = useState([]);
   const [loading,  setLoading]  = useState(true);
   const [errMsg,   setErrMsg]   = useState("");
   const [tab,      setTab]      = useState('all');
@@ -430,7 +430,7 @@ export default function EmployeeNotifications() {
         if (a.reqAck    !== b.reqAck && !a.isAcknowledged) return a.reqAck ? -1 : 1;
         return new Date(b.createdAt) - new Date(a.createdAt);
       });
-      setNotifications(sorted);
+      setSignals(sorted);
     } catch (e) {
       console.error("fetchAlerts error:", e);
       setErrMsg("Couldn't load your alerts. Try again.");
@@ -443,7 +443,7 @@ export default function EmployeeNotifications() {
 
   /* ── Actions ── */
   const markRead = async id => {
-    setNotifications(p => p.map(n => n.id === id ? { ...n, read: true } : n));
+    setSignals(p => p.map(n => n.id === id ? { ...n, read: true } : n));
     try { await api.put(`/api/employee/notifications/${id}/read`); }
     catch (e) { console.error(e); }
   };
@@ -451,14 +451,14 @@ export default function EmployeeNotifications() {
   const markAllRead = async () => {
     if (!notifications.some(n => !n.read)) return;
     const prev = [...notifications];
-    setNotifications(p => p.map(n => ({ ...n, read: true })));
+    setSignals(p => p.map(n => ({ ...n, read: true })));
     try { await api.put("/api/employee/notifications/read-all"); }
-    catch { setErrMsg("Couldn't mark all as seen."); setNotifications(prev); }
+    catch { setErrMsg("Couldn't mark all as seen."); setSignals(prev); }
   };
 
   const acknowledge = async (id, e) => {
     e.stopPropagation();
-    setNotifications(p => p.map(n => n.id === id ? { ...n, isAcknowledged: true, read: true } : n));
+    setSignals(p => p.map(n => n.id === id ? { ...n, isAcknowledged: true, read: true } : n));
     try { await api.post(`/api/employee/notifications/${id}/acknowledge`); }
     catch { setErrMsg("Sign-off failed."); }
   };
@@ -474,10 +474,10 @@ export default function EmployeeNotifications() {
     e.stopPropagation();
     if (!window.confirm("Remove this alert?")) return;
     const prev = [...notifications];
-    setNotifications(p => p.filter(n => n.id !== id));
+    setSignals(p => p.filter(n => n.id !== id));
     try {
       await api.delete(`/api/employee/notifications/${id}`);
-    } catch { setErrMsg("Couldn't remove alert."); setNotifications(prev); }
+    } catch { setErrMsg("Couldn't remove alert."); setSignals(prev); }
   };
 
   /* ── Computed ── */
@@ -499,7 +499,7 @@ export default function EmployeeNotifications() {
   const prioBg  = p => {
     if (p === 'HIGH')   return 'rgba(239,68,68,.1)';
     if (p === 'LOW')    return 'rgba(148,163,184,.1)';
-    return `rgba(255,107,53,.1)`;
+    return `rgba(139,92,246,.1)`;
   };
 
   return (
@@ -508,13 +508,13 @@ export default function EmployeeNotifications() {
 
       {/* HERO */}
       <div style={{ background:`linear-gradient(135deg,${T.navy},${T.navyMid})`, padding:'22px 26px', position:'relative', overflow:'hidden' }}>
-        <div style={{ position:'absolute', top:-50, right:60, width:180, height:180, borderRadius:'50%', background:'rgba(255,107,53,.07)', pointerEvents:'none' }} />
-        <div style={{ position:'absolute', bottom:-30, right:260, width:100, height:100, borderRadius:'50%', background:'rgba(0,194,168,.07)', pointerEvents:'none' }} />
+        <div style={{ position:'absolute', top:-50, right:60, width:180, height:180, borderRadius:'50%', background:'rgba(139,92,246,.07)', pointerEvents:'none' }} />
+        <div style={{ position:'absolute', bottom:-30, right:260, width:100, height:100, borderRadius:'50%', background:'rgba(6,182,212,.07)', pointerEvents:'none' }} />
         <div style={{ position:'relative', display:'flex', alignItems:'center', justifyContent:'space-between', flexWrap:'wrap', gap:12 }}>
           <div>
-            <p style={{ fontSize:11, fontWeight:700, color:T.coral, textTransform:'uppercase', letterSpacing:'.12em', marginBottom:4 }}>SamayaHR · Inbox</p>
+            <p style={{ fontSize:11, fontWeight:700, color:T.coral, textTransform:'uppercase', letterSpacing:'.12em', marginBottom:4 }}>CrewSync · Inbox</p>
             <h1 className="fd" style={{ fontSize:23, fontWeight:900, color:'#fff', margin:0 }}>Alert Centre</h1>
-            <p style={{ fontSize:13, color:'rgba(255,255,255,.5)', marginTop:4 }}>Policy updates, sign-offs and compliance notices.</p>
+            <p style={{ fontSize:13, color:'rgba(255,255,255,.5)', marginTop:4 }}>Playbook updates, sign-offs and compliance notices.</p>
           </div>
           <button onClick={markAllRead}
             style={{ padding:'9px 20px', borderRadius:11, border:'1.5px solid rgba(255,255,255,.18)', background:'rgba(255,255,255,.08)', color:'#fff', fontSize:12, fontWeight:700, cursor:'pointer', backdropFilter:'blur(4px)', display:'flex', alignItems:'center', gap:7 }}>
@@ -538,7 +538,7 @@ export default function EmployeeNotifications() {
           <style>{`@media(max-width:640px){.ac-stats{grid-template-columns:1fr!important}}`}</style>
 
           <div className="ac-card" style={{ padding:'16px 18px', display:'flex', alignItems:'center', gap:14 }}>
-            <div className="ac-ico" style={{ background:'rgba(255,107,53,.1)' }}><Bell size={20} color={T.coral} /></div>
+            <div className="ac-ico" style={{ background:'rgba(139,92,246,.1)' }}><Bell size={20} color={T.coral} /></div>
             <div>
               <p style={{ fontSize:9, fontWeight:700, color:'#94a3b8', textTransform:'uppercase', letterSpacing:'.08em', marginBottom:3 }}>Unseen</p>
               <p className="fd" style={{ fontSize:28, fontWeight:900, color:T.coral, lineHeight:1 }}>{unreadCount}</p>
@@ -546,7 +546,7 @@ export default function EmployeeNotifications() {
           </div>
 
           <div className="ac-card" style={{ padding:'16px 18px', display:'flex', alignItems:'center', gap:14 }}>
-            <div className="ac-ico" style={{ background:'rgba(0,194,168,.1)' }}><Eye size={20} color={T.teal} /></div>
+            <div className="ac-ico" style={{ background:'rgba(6,182,212,.1)' }}><Eye size={20} color={T.teal} /></div>
             <div>
               <p style={{ fontSize:9, fontWeight:700, color:'#94a3b8', textTransform:'uppercase', letterSpacing:'.08em', marginBottom:3 }}>Needs Sign-off</p>
               <p className="fd" style={{ fontSize:28, fontWeight:900, color:T.teal, lineHeight:1 }}>{actionCount}</p>
@@ -614,13 +614,13 @@ export default function EmployeeNotifications() {
                   <div style={{ display:'flex', alignItems:'center', gap:6, flexWrap:'wrap', marginBottom:6 }}>
                     <p style={{ fontSize:13, fontWeight: n.read ? 600 : 800, color: n.read ? '#64748b' : T.navy }}>{n.title}</p>
                     {n.isPinned && (
-                      <span className="ac-pill" style={{ background:'rgba(255,107,53,.1)', color:T.coral, border:`1px solid rgba(255,107,53,.22)` }}>
+                      <span className="ac-pill" style={{ background:'rgba(139,92,246,.1)', color:T.coral, border:`1px solid rgba(139,92,246,.22)` }}>
                         <Pin size={8} /> Pinned
                       </span>
                     )}
                     {!n.read && <span className="ac-pill" style={{ background:T.coral, color:'#fff' }}>New</span>}
                     {n.reqAck && !n.isAcknowledged && (
-                      <span className="ac-pill" style={{ background:'rgba(0,194,168,.1)', color:T.teal, border:`1px solid rgba(0,194,168,.25)` }}>
+                      <span className="ac-pill" style={{ background:'rgba(6,182,212,.1)', color:T.teal, border:`1px solid rgba(6,182,212,.25)` }}>
                         Sign-off Required
                       </span>
                     )}
@@ -631,7 +631,7 @@ export default function EmployeeNotifications() {
                   {/* attachment — Cloudinary URL opens directly */}
                   {n.attachmentName && (
                     <div className="ac-attach" onClick={e => handleDownload(n, e)}>
-                      <div style={{ width:32, height:32, borderRadius:9, background:'rgba(255,107,53,.1)', display:'flex', alignItems:'center', justifyContent:'center' }}>
+                      <div style={{ width:32, height:32, borderRadius:9, background:'rgba(139,92,246,.1)', display:'flex', alignItems:'center', justifyContent:'center' }}>
                         <FileText size={15} color={T.coral} />
                       </div>
                       <div>
@@ -663,12 +663,12 @@ export default function EmployeeNotifications() {
 
                   {n.reqAck && !n.isAcknowledged ? (
                     <button className="ac-btn" onClick={e => acknowledge(n.id, e)}
-                      style={{ background:`linear-gradient(135deg,${T.teal},#00a895)`, color:'#fff', boxShadow:'0 4px 12px rgba(0,194,168,.3)' }}>
+                      style={{ background:`linear-gradient(135deg,${T.teal},#00a895)`, color:'#fff', boxShadow:'0 4px 12px rgba(6,182,212,.3)' }}>
                       <Eye size={11} /> Sign Off
                     </button>
                   ) : !n.read ? (
                     <button className="ac-btn" onClick={e => { e.stopPropagation(); markRead(n.id); }}
-                      style={{ background:'rgba(255,107,53,.08)', color:T.coral, border:`1px solid rgba(255,107,53,.2)` }}>
+                      style={{ background:'rgba(139,92,246,.08)', color:T.coral, border:`1px solid rgba(139,92,246,.2)` }}>
                       <CheckCheck size={11} /> Mark Seen
                     </button>
                   ) : (

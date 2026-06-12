@@ -3,14 +3,14 @@ import api, { API_BASE_URL } from "@/lib/apiClient";
 
 const ASSET_TYPE_META = {
   laptop:  { label:"Laptop",       emoji:"💻", color:"#6366F1", bg:"rgba(99,102,241,.1)"  },
-  mobile:  { label:"Mobile Phone", emoji:"📱", color:"#0891B2", bg:"rgba(8,145,178,.1)"   },
+  fieldDevice:  { label:"Pocket Phone", emoji:"📱", color:"#0891B2", bg:"rgba(8,145,178,.1)"   },
   tablet:  { label:"Tablet",       emoji:"📋", color:"#0D9488", bg:"rgba(13,148,136,.1)"  },
-  sim:     { label:"SIM Card",     emoji:"📡", color:"#7C3AED", bg:"rgba(124,58,237,.1)"  },
+  sim:     { label:"SIM Card",     emoji:"📡", color:"#A855F7", bg:"rgba(124,58,237,.1)"  },
   other:   { label:"Equipment",    emoji:"🔧", color:"#64748B", bg:"rgba(100,116,139,.1)" },
 };
 
 const T = {
-  navy:"#0D1F2D", navyMid:"#1E3448", coral:"#FF6B35", teal:"#00C2A8",
+  navy:"#0B1020", navyMid:"#374151", coral:"#8B5CF6", teal:"#06B6D4",
   bg:"#F5F7FB", border:"#E8ECF2",
 };
 
@@ -30,17 +30,17 @@ const Skeleton = ({w=80,h=16})=>(
   <span style={{display:'inline-block',width:w,height:h,borderRadius:6,background:'linear-gradient(90deg,#f0f0f0 25%,#e0e0e0 50%,#f0f0f0 75%)',backgroundSize:'200% 100%',animation:'shimmer 1.4s infinite'}} />
 );
 
-export default function EmployeeAssets() {
-  const [assets,   setAssets]   = useState([]);
+export default function PersonEquipment() {
+  const [assets,   setEquipment]   = useState([]);
   const [loading,  setLoading]  = useState(true);
-  const [employee, setEmployee] = useState({ staffId:"", employeeName:"", department:"", email:"", role:"" });
+  const [employee, setPerson] = useState({ staffId:"", employeeName:"", department:"", email:"", role:"" });
   const [error,    setError]    = useState(null);
 
-  // Returns { userId (numeric, for API calls), staffId (HR code e.g. ZLE01, for display) }
+  // Returns { userId (numeric, for API calls), staffId (PeopleOps code e.g. ZLE01, for display) }
   const getUserFromLocalStorage = () => {
     try {
       const userId       = localStorage.getItem('userId');       // numeric DB id — used for API
-      const employeeId   = localStorage.getItem('employeeId');   // HR employee code e.g. ZLE01
+      const employeeId   = localStorage.getItem('employeeId');   // PeopleOps employee code e.g. ZLE01
       const employeeName = localStorage.getItem('employeeName');
       const userRole     = localStorage.getItem('userRole');
       const userDepartment = localStorage.getItem('userDepartment');
@@ -75,11 +75,11 @@ export default function EmployeeAssets() {
       const d = r.data;
       if (d.success && d.data) {
         const u = d.data;
-        // u.employeeId = HR code (e.g. ZLE01); u.id = DB primary key (e.g. 4)
-        // staffId shows the HR employee code; userId is used for asset API calls
+        // u.employeeId = PeopleOps code (e.g. ZLE01); u.id = DB primary key (e.g. 4)
+        // staffId shows the PeopleOps employee code; userId is used for asset API calls
         return {
           userId:       u.id?.toString() || "",
-          staffId:      u.employeeId || u.id?.toString() || "",  // HR code for display
+          staffId:      u.employeeId || u.id?.toString() || "",  // PeopleOps code for display
           employeeName: u.fullName || u.name || "",
           department:   u.department || "N/A",
           email:        u.email || "",
@@ -92,12 +92,12 @@ export default function EmployeeAssets() {
     }
   };
 
-  const fetchEmployeeAssets = async (userId) => {
+  const fetchPersonEquipment = async (userId) => {
     try {
       const r = await api.get(`/api/assets/employee/${userId}`);
       const d = r.data;
-      if (d.success) setAssets(d.data || []);
-      else setAssets([]);
+      if (d.success) setEquipment(d.data || []);
+      else setEquipment([]);
     } catch {
       setError("Unable to load equipment. Please refresh.");
     }
@@ -109,8 +109,8 @@ export default function EmployeeAssets() {
       try {
         const user = await fetchCurrentUser();
         if (user?.userId) {
-          setEmployee(user);
-          await fetchEmployeeAssets(user.userId);   // always use numeric userId for API
+          setPerson(user);
+          await fetchPersonEquipment(user.userId);   // always use numeric userId for API
         } else {
           setError("Please log in to view your equipment.");
         }
@@ -139,7 +139,7 @@ export default function EmployeeAssets() {
         <p className="fd" style={{fontSize:16,fontWeight:800,color:T.navy,marginBottom:8}}>Access Problem</p>
         <p style={{fontSize:13,color:'#64748b',marginBottom:20}}>{error}</p>
         <button onClick={() => window.location.href = '/login'}
-          style={{padding:'10px 24px',borderRadius:10,border:'none',background:`linear-gradient(135deg,${T.coral},#ff8c5a)`,color:'#fff',fontSize:13,fontWeight:700,cursor:'pointer',boxShadow:'0 4px 14px rgba(255,107,53,.3)'}}>
+          style={{padding:'10px 24px',borderRadius:10,border:'none',background:`linear-gradient(135deg,${T.coral},#FBBF24)`,color:'#fff',fontSize:13,fontWeight:700,cursor:'pointer',boxShadow:'0 4px 14px rgba(139,92,246,.3)'}}>
           Go to Login
         </button>
       </div>
@@ -152,10 +152,10 @@ export default function EmployeeAssets() {
 
       {/* HERO */}
       <div style={{background:`linear-gradient(135deg,${T.navy},${T.navyMid})`,padding:'20px 24px',position:'relative',overflow:'hidden'}}>
-        <div style={{position:'absolute',top:-40,right:40,width:160,height:160,borderRadius:'50%',background:'rgba(255,107,53,.08)',pointerEvents:'none'}} />
-        <div style={{position:'absolute',bottom:-20,right:200,width:90,height:90,borderRadius:'50%',background:'rgba(0,194,168,.07)',pointerEvents:'none'}} />
+        <div style={{position:'absolute',top:-40,right:40,width:160,height:160,borderRadius:'50%',background:'rgba(139,92,246,.08)',pointerEvents:'none'}} />
+        <div style={{position:'absolute',bottom:-20,right:200,width:90,height:90,borderRadius:'50%',background:'rgba(6,182,212,.07)',pointerEvents:'none'}} />
         <div style={{position:'relative'}}>
-          <p style={{fontSize:11,fontWeight:700,color:T.coral,textTransform:'uppercase',letterSpacing:'.12em',marginBottom:4}}>SamayaHR · Equipment Registry</p>
+          <p style={{fontSize:11,fontWeight:700,color:T.coral,textTransform:'uppercase',letterSpacing:'.12em',marginBottom:4}}>CrewSync · Equipment Registry</p>
           <h1 className="fd" style={{fontSize:22,fontWeight:900,color:'#fff',margin:0}}>My Issued Equipment</h1>
           <p style={{fontSize:13,color:'rgba(255,255,255,.5)',marginTop:4}}>All company hardware and devices assigned to you.</p>
         </div>
@@ -185,9 +185,9 @@ export default function EmployeeAssets() {
         <div className="ast-kpi-grid ast-animate" style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:'14px',animationDelay:'.05s'}}>
           <style>{`@media(max-width:580px){.ast-kpi-grid{grid-template-columns:1fr!important}}`}</style>
           {[
-            {label:'Total Issued',   val:assets.length,  icon:'📦', color:T.coral,   bg:'rgba(255,107,53,.08)'},
+            {label:'Total Issued',   val:assets.length,  icon:'📦', color:T.coral,   bg:'rgba(139,92,246,.08)'},
             {label:'Laptops',        val:laptopCount,    icon:'💻', color:'#6366F1', bg:'rgba(99,102,241,.08)'},
-            {label:'Mobile Devices', val:mobileCount,    icon:'📱', color:'#0891B2', bg:'rgba(8,145,178,.08)'},
+            {label:'Pocket Devices', val:mobileCount,    icon:'📱', color:'#0891B2', bg:'rgba(8,145,178,.08)'},
           ].map(k => (
             <div key={k.label} className="ast-card" style={{padding:'16px 18px',display:'flex',alignItems:'center',gap:14}}>
               <div style={{width:42,height:42,borderRadius:12,background:k.bg,display:'flex',alignItems:'center',justifyContent:'center',fontSize:18,flexShrink:0}}>{k.icon}</div>
@@ -278,7 +278,7 @@ export default function EmployeeAssets() {
         </div>
 
         {/* RESPONSIBILITY NOTICE */}
-        <div className="ast-animate" style={{padding:'14px 18px',borderRadius:14,background:'rgba(0,194,168,.06)',border:`1.5px solid rgba(0,194,168,.2)`,display:'flex',alignItems:'flex-start',gap:12,animationDelay:'.15s'}}>
+        <div className="ast-animate" style={{padding:'14px 18px',borderRadius:14,background:'rgba(6,182,212,.06)',border:`1.5px solid rgba(6,182,212,.2)`,display:'flex',alignItems:'flex-start',gap:12,animationDelay:'.15s'}}>
           <span style={{fontSize:18,flexShrink:0,marginTop:1}}>🛡️</span>
           <div>
             <p style={{fontSize:12,fontWeight:700,color:T.teal,marginBottom:3}}>Equipment Responsibility</p>
